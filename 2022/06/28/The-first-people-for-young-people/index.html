@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="当我感到压力很大并且有太多事情要做时，我会产生一种自相矛盾的感觉，而我用另一件事情来麻痹这种感觉，一般是写个小程序…  Introduction 在计算机科学中，垃圾收集器 (GC) 是一种自动内存管理方式。垃圾收集器尝试回收那些由程序分配但不再被引用的内存，这些内存就是垃圾。垃圾收集器是由计算机科学家约翰麦卡锡在 1959 年左右发明的，用于简化 Lisp 中的手动内存管理。 垃圾回收的基本原">
+<meta property="og:type" content="article">
+<meta property="og:title" content="年轻人的第一个GC">
+<meta property="og:url" content="https://muqiuhan.github.io/2022/06/28/The-first-people-for-young-people/index.html">
+<meta property="og:site_name" content="韩暮秋">
+<meta property="og:description" content="当我感到压力很大并且有太多事情要做时，我会产生一种自相矛盾的感觉，而我用另一件事情来麻痹这种感觉，一般是写个小程序…  Introduction 在计算机科学中，垃圾收集器 (GC) 是一种自动内存管理方式。垃圾收集器尝试回收那些由程序分配但不再被引用的内存，这些内存就是垃圾。垃圾收集器是由计算机科学家约翰麦卡锡在 1959 年左右发明的，用于简化 Lisp 中的手动内存管理。 垃圾回收的基本原">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-06-28T00:07:34.000Z">
+<meta property="article:modified_time" content="2022-07-01T09:15:20.780Z">
+<meta property="article:author" content="Muqiu Han">
+<meta property="article:tag" content="gc c">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>年轻人的第一个GC</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="韩暮秋" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/muqiuhan">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2022/06/28/Write-a-Shell-in-C/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/06/27/Write-a-simple-memory-allocator/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://muqiuhan.github.io/2022/06/28/The-first-people-for-young-people/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://muqiuhan.github.io/2022/06/28/The-first-people-for-young-people/&text=年轻人的第一个GC"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://muqiuhan.github.io/2022/06/28/The-first-people-for-young-people/&title=年轻人的第一个GC"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://muqiuhan.github.io/2022/06/28/The-first-people-for-young-people/&is_video=false&description=年轻人的第一个GC"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=年轻人的第一个GC&body=Check out this article: https://muqiuhan.github.io/2022/06/28/The-first-people-for-young-people/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://muqiuhan.github.io/2022/06/28/The-first-people-for-young-people/&title=年轻人的第一个GC"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://muqiuhan.github.io/2022/06/28/The-first-people-for-young-people/&title=年轻人的第一个GC"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://muqiuhan.github.io/2022/06/28/The-first-people-for-young-people/&title=年轻人的第一个GC"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://muqiuhan.github.io/2022/06/28/The-first-people-for-young-people/&title=年轻人的第一个GC"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://muqiuhan.github.io/2022/06/28/The-first-people-for-young-people/&name=年轻人的第一个GC&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://muqiuhan.github.io/2022/06/28/The-first-people-for-young-people/&t=年轻人的第一个GC"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">Reduce, reuse, recycle</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">Marking and sweeping</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">A pair of objects</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">A minimal virtual machine</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">6.</span> <span class="toc-text">Marky mark</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">7.</span> <span class="toc-text">Sweepy sweep</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">8.</span> <span class="toc-text">测试</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">9.</span> <span class="toc-text">Reference</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        年轻人的第一个GC
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Muqiu Han</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-06-28T00:07:34.000Z" itemprop="datePublished">2022-06-28</time>
+        
+        (Updated: <time datetime="2022-07-01T09:15:20.780Z" itemprop="dateModified">2022-07-01</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/gc-c/" rel="tag">gc c</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <blockquote>
+<p>当我感到压力很大并且有太多事情要做时，我会产生一种自相矛盾的感觉，而我用另一件事情来麻痹这种感觉，一般是写个小程序…</p>
+</blockquote>
+<h1>Introduction</h1>
+<p>在计算机科学中，垃圾收集器 (GC) 是一种自动内存管理方式。垃圾收集器尝试回收那些由程序分配但不再被引用的内存，这些内存就是垃圾。垃圾收集器是由计算机科学家约翰麦卡锡在 1959 年左右发明的，用于简化 Lisp 中的手动内存管理。</p>
+<p>垃圾回收的基本原理是在程序中找到以后无法访问的数据对象，并回收这些对象使用的资源。</p>
+<h1>Reduce, reuse, recycle</h1>
+<p>GC背后的基本思想是使用了GC的语言在大多数情况下可以访问无限多的内存，开发人员使用该语言可以一直分配，内存永远用不完。显然，机器没有无限多的内存，所以实现这种无限的内存的方式是：当需要分配内存而内存不足时，就使用GC收集垃圾释放掉，然后再分配内存。<br>
+先前说过，垃圾就是那些无用的内存，程序中的一个对象甚至是一个字节都可能有着至关重要的作用，所以垃圾收集器必须保证回收的精准，否则会出现未知的问题。同样的，当垃圾从成为垃圾到被回收的过程中，都必须保证程序中的其他有效的对象不能使用垃圾。</p>
+<p>垃圾就是不再使用的对象，我们第一步要做的就是去锁定那些不再使用的对象，一般情况下有两种方案：</p>
+<ol>
+<li>在作用于内仍然存在某对象的引用在被使用的情况</li>
+<li>另一个正在使用的对象以及那个对象被其他任何正在使用的对象使用的情况</li>
+</ol>
+<p>第一条比较好理解，而第二条并不是很清晰，其实第二条规则是递归的，即：如果对象A被对象B引用，那么A和B只要有一个是正在使用的，那么他们中的任何一个都不能被释放。这样一个一个对象互相引用环环相扣，最终会形成一个“可达对象图”，这个可达对象图展示了整个程序中的所有可用的对象，你可以从任何一个节点入手来遍历所有的对象，那么不在可达对象图中的对象就是垃圾了。</p>
+<h1>Marking and sweeping</h1>
+<p>有很多方案来实现垃圾回收，不过最简单的方案就是标题中给出的 “标记清除”， 这个方案也是麦卡锡发明的，它的工作原理几乎和上面的可达对象图的定义完全相同：</p>
+<ol>
+<li>从根部开始遍历整个对象图，将每一个遍历到的对象标记为正在使用</li>
+<li>完成后将所有未标记为正在使用的对象全部删除即可</li>
+</ol>
+<h1>A pair of objects</h1>
+<p>在我们实现标记清除算法的GC之前，我们需要做一些准备工作，本文直接使用C语言而不会去实现一个解释器，虚拟机什么的题外之物，而是专注于GC。假设我们正在为一门语言编写解释器。它是动态类型的，并且有两种类型的对象：整数和对组(pair)。这是一个标识对象类型的枚举：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">enum</span></span></span><br><span class="line"><span class="class">  &#123;</span></span><br><span class="line">    OBJ_INT,</span><br><span class="line">    OBJ_PAIR</span><br><span class="line">  &#125; Object_Type ;</span><br></pre></td></tr></table></figure>
+<p>pair可以是任何类型的组合，比如两个整数或者一个整数和一个对组，无论如何，目前就只有这俩类型给我们耍。接下来我们定义一个对象类型：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Object</span></span></span><br><span class="line"><span class="class">  &#123;</span></span><br><span class="line">    Object_Type type;</span><br><span class="line">    <span class="class"><span class="keyword">union</span></span></span><br><span class="line"><span class="class">      &#123;</span></span><br><span class="line">	      <span class="type">int</span> value;</span><br><span class="line"></span><br><span class="line">	      <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">	        &#123;</span></span><br><span class="line">	          <span class="class"><span class="keyword">struct</span> <span class="title">Object</span>* <span class="title">head</span>;</span></span><br><span class="line">	          <span class="class"><span class="keyword">struct</span> <span class="title">Object</span>* <span class="title">tail</span>;</span></span><br><span class="line">	        &#125;;</span><br><span class="line">      &#125;;</span><br><span class="line">  &#125; Object ;</span><br></pre></td></tr></table></figure>
+<p>Object结构有个type字段用来表示Object的类型，一个对象使用一个union来保存对象的数据。</p>
+<h1>A minimal virtual machine</h1>
+<p>现在我们可以在一个小型虚拟机中使用刚刚定义的对象类型。虚拟机只需要创建一个栈来存储当前作用于内的变量。大多数语言的虚拟机要么基于栈（如 JVM 和 CLR），要么基于寄存器（如 Lua）。不管使用哪种虚拟机实现方案都会涉及到一个栈，它用于存储表达式处理时所需的局部变量和临时变量。我们简单的对虚拟机进行建模：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">  &#123;</span></span><br><span class="line">    Object* <span class="built_in">stack</span>[STACK_MAX];</span><br><span class="line">    <span class="type">int</span> stackSize;</span><br><span class="line">  &#125; VM ;</span><br></pre></td></tr></table></figure>
+<p>这个模型非常简单，也可以很容易的创建一个这么简单的虚拟机：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">VM* <span class="title function_">newVM</span><span class="params">()</span></span><br><span class="line">  &#123;</span><br><span class="line">    VM * vm = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(VM));</span><br><span class="line">    vm -&gt; stackSize = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> vm;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>我们还需要能操作这个虚拟机的栈：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span></span><br><span class="line"><span class="title function_">push</span><span class="params">(VM * vm, Object * value)</span></span><br><span class="line">  &#123;</span><br><span class="line">    assert(vm-&gt;stackSize &lt; STACK_MAX, <span class="string">&quot;STACK OVERFLOW!!!&quot;</span>);</span><br><span class="line">    vm-&gt;<span class="built_in">stack</span>[vm-&gt;stackSize ++] = value;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">Object*</span><br><span class="line"><span class="title function_">pop</span><span class="params">(VM *vm)</span></span><br><span class="line">  &#123;</span><br><span class="line">    assert(vm-&gt;stackSize &gt; <span class="number">0</span>, <span class="string">&quot;STACK UNDERFLOW!!!&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> vm-&gt;<span class="built_in">stack</span>[--vm -&gt; stackSize];</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>有了栈就可以创建对象了，所以我们编写一个方便创建一个对象的辅助函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Object*</span><br><span class="line"><span class="title function_">newObject</span><span class="params">(VM * vm, Object_Type type)</span></span><br><span class="line">  &#123;</span><br><span class="line">    Object *object = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Object));</span><br><span class="line">    object -&gt; type = type;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>这还不够，因为我们需要将每一种对象都push到栈中，所以要在push之上再抽象一层:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span></span><br><span class="line"><span class="title function_">pushInt</span><span class="params">(VM * vm, <span class="type">int</span> intValue)</span></span><br><span class="line">  &#123;</span><br><span class="line">    Object* object = newObject(vm, OBJ_INT);</span><br><span class="line">    object -&gt; value = intValue;</span><br><span class="line">    push(vm, object);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">Object*</span><br><span class="line"><span class="title function_">pushPair</span><span class="params">(VM * vm)</span></span><br><span class="line">  &#123;</span><br><span class="line">    Object* object = newObject(vm, OBJ_PAIR);</span><br><span class="line">    object -&gt; tail = pop(vm);</span><br><span class="line">    object -&gt; head = pop(vm);</span><br><span class="line"></span><br><span class="line">    push(vm, object);</span><br><span class="line">    <span class="keyword">return</span> object;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>接下来拥有了制造垃圾的条件，可以开始批量产出垃圾了。</p>
+<h1>Marky mark</h1>
+<p>标记清除算法的第一步就是标记，我们需要遍历所有可达对象并标记它们，所以现在得先向Object添加一个标记字段：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Object</span></span></span><br><span class="line"><span class="class">  &#123;</span></span><br><span class="line">    Object_Type type;</span><br><span class="line">    <span class="type">bool</span> marked;</span><br><span class="line">    </span><br><span class="line">    <span class="class"><span class="keyword">union</span></span></span><br><span class="line"><span class="class">      &#123;</span></span><br><span class="line">	    <span class="type">int</span> value;</span><br><span class="line"></span><br><span class="line">        <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">	      &#123;</span></span><br><span class="line">	        <span class="class"><span class="keyword">struct</span> <span class="title">Object</span>* <span class="title">head</span>;</span></span><br><span class="line">	        <span class="class"><span class="keyword">struct</span> <span class="title">Object</span>* <span class="title">tail</span>;</span></span><br><span class="line">	      &#125;;</span><br><span class="line">      &#125;;</span><br><span class="line">  &#125; Object ;</span><br></pre></td></tr></table></figure>
+<p>可以看到，这里添加了一个<code>bool marked</code>，用于标记对象是否处在可达对象图中，当我们使用<code>newObject()</code>创建一个新的对象时，就将这个新对象的<code>marked</code>设置为false，因为刚创建的对象并没有被任何对象引用，它并不存在可达对象图中，是垃圾。为了标记所有可达对象，我们需要遍历栈，不过在此之前，我们先实现一个<code>mark()</code>函数用于将对象的<code>marked</code>标记设置为true:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">mark</span><span class="params">(Object * object)</span></span><br><span class="line">  &#123;</span><br><span class="line">    object -&gt; marked = <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>从字面上看我们可以通过mark字段将对象标记为可访问，直观上来讲就是将这个对象放入了可达对象图中，但是这还不够，因为还有引用的情况 —— 可达性是递归的，如果对象是一个pair，那么它的另外两个字段的<code>marked</code>也要标记为<code>true</code>，这写起来不难：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span></span><br><span class="line"><span class="title function_">mark</span><span class="params">(Object * object)</span></span><br><span class="line">  &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> (object -&gt; marked) <span class="keyword">return</span>;</span><br><span class="line">	</span><br><span class="line">    object -&gt; marked = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (object -&gt; type == OBJ_PAIR) &#123;</span><br><span class="line">      mark(object -&gt; head);</span><br><span class="line">      mark(object -&gt; tail);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p><code>mark()</code>函数的递归边界是一个<code>if (object -&gt; marked) return;</code>的检查，它检查对象是否被标记，如果是的话就停止递归。</p>
+<p>接下来可以实现<code>markAll()</code>函数，这个函数会标记所有的可达对象，所以它其实就是遍历可达对象图并标记访问到的对象:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span></span><br><span class="line"><span class="title function_">markAll</span><span class="params">(VM * vm)</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; vm -&gt; stackSize; i ++) &#123;</span><br><span class="line">      mark(vm -&gt; <span class="built_in">stack</span>[i]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h1>Sweepy sweep</h1>
+<p>下一步就是扫描我们创建的所有对象并且释放那些<code>marked</code>字段为false的对象，但是这里有一个问题：根据定义来讲，所有<code>marked == false</code>的对象都不在可达对象图内，也就是说这些对象都访问不到，那我们也就无法释放他们。</p>
+<p>要解决这个问题，我们需要让虚拟机拥有自己的对象引用，这些对象与外界不同，我们可以自己跟踪它们。最简单的一个实现方式是用一个链表保存所有的对象，所以我们只需要让每个对象成为一个节点即可：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Object</span></span></span><br><span class="line"><span class="class">  &#123;</span></span><br><span class="line">    Object_Type type;</span><br><span class="line">    <span class="type">bool</span> marked;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Object</span> * <span class="title">next</span>;</span></span><br><span class="line">    </span><br><span class="line">      <span class="class"><span class="keyword">union</span></span></span><br><span class="line"><span class="class">        &#123;</span></span><br><span class="line">	      <span class="type">int</span> value;</span><br><span class="line"></span><br><span class="line">	      <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">	        &#123;</span></span><br><span class="line">	          <span class="class"><span class="keyword">struct</span> <span class="title">Object</span>* <span class="title">head</span>;</span></span><br><span class="line">	          <span class="class"><span class="keyword">struct</span> <span class="title">Object</span>* <span class="title">tail</span>;</span></span><br><span class="line">	        &#125;;</span><br><span class="line">        &#125;;</span><br><span class="line">  &#125; Object ;</span><br></pre></td></tr></table></figure>
+<p>这里我们添加了一个<code>struct Object * next;</code>用于让一个对象指向其他的对象，这样串成一个链表，而虚拟机只需要保存这个链表的头部即可：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">  &#123;</span></span><br><span class="line">    Object * <span class="built_in">stack</span>[STACK_MAX];</span><br><span class="line">    Object * firstObject;</span><br><span class="line">    <span class="type">int</span> stackSize;</span><br><span class="line">  &#125; VM ;</span><br></pre></td></tr></table></figure>
+<p>即<code>Object * firstObject;</code>，同时更改 <code>newVM()</code>，确保将<code>firstObject</code>初始化为NULL。并且每当我们创建一个对象时，都将它添加到链表中：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">VM*</span><br><span class="line"><span class="title function_">newVM</span><span class="params">()</span></span><br><span class="line">  &#123;</span><br><span class="line">    VM * vm = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(VM));</span><br><span class="line">    vm -&gt; stackSize = <span class="number">0</span>;</span><br><span class="line">    vm -&gt; firstObject = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">return</span> vm;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Object*</span><br><span class="line"><span class="title function_">newObject</span><span class="params">(VM * vm, Object_Type type)</span></span><br><span class="line">  &#123;</span><br><span class="line">    Object *object = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Object));</span><br><span class="line">    object -&gt; type = type;</span><br><span class="line">    object -&gt; marked = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    object -&gt; next = vm -&gt; firstObject;</span><br><span class="line">    vm -&gt; firstObject = object;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>这么做的话，虚拟机就可以跟踪所有对象了，就算对象不在可达对象图中，也在虚拟机的对象表中。</p>
+<p>接下来我们遍历这个链表（虚拟机对象表）：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span></span><br><span class="line"><span class="title function_">sweep</span><span class="params">(VM * vm)</span></span><br><span class="line">  &#123;</span><br><span class="line">    Object ** object = &amp;vm -&gt; firstObject;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (*object) &#123;</span><br><span class="line">      <span class="keyword">if</span> (!(*object) -&gt; marked) &#123;</span><br><span class="line">		Object * unreached = *object;</span><br><span class="line">		*object = unreached -&gt; next;</span><br><span class="line">		<span class="built_in">free</span>(unreached);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		(*object) -&gt; marked = <span class="literal">false</span>;</span><br><span class="line">		object = &amp;(*object) -&gt; next;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p><code>sweep()</code>函数遍历整个链表。每当它碰到一个未标记的对象(<code>marked = false</code>)时，它就会释放其内存并将其从列表中删除。</p>
+<p>现在我们将<code>markAll()</code>和<code>sweep()</code>给包装起来，交给外界一个gc:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span></span><br><span class="line"><span class="title function_">gc</span><span class="params">(VM * vm)</span></span><br><span class="line">  &#123;</span><br><span class="line">    markAll(vm);</span><br><span class="line">    sweep(vm);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>接下来，我们通过增加<code>numObjects</code>和<code>maxObjects</code>字段到VM，让VM规定一个最大的对象数量，如果到达这个数量就启动GC:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">  &#123;</span></span><br><span class="line">    Object * <span class="built_in">stack</span>[STACK_MAX];</span><br><span class="line">    Object * firstObject;</span><br><span class="line">    <span class="type">int</span> stackSize;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> numObjects;</span><br><span class="line">    <span class="type">int</span> maxObjects;</span><br><span class="line">  &#125; VM ;</span><br></pre></td></tr></table></figure>
+<p><code>numObjects</code>是当前的对象数量，<code>maxObjects</code>是最大的对象数量，这里先将其初始化为0</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">VM*</span><br><span class="line"><span class="title function_">newVM</span><span class="params">()</span></span><br><span class="line">  &#123;</span><br><span class="line">    VM * vm = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(VM));</span><br><span class="line">    vm -&gt; stackSize = <span class="number">0</span>;</span><br><span class="line">    vm -&gt; firstObject = <span class="literal">NULL</span>;</span><br><span class="line">    vm -&gt; numObjects = <span class="number">0</span>;</span><br><span class="line">    vm -&gt; maxObjects = INITIAL_GC_THRESHOLD;</span><br><span class="line">    <span class="keyword">return</span> vm;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p><code>INITIAL_GC_THRESHOLD</code> 是对象数量的最大值，这个值如果太小的话内存的使用会更加保守，太大的话垃圾收集上花费的时间更少（因为GC频率会降低），自己调整口味即可。</p>
+<p>每当我们创建一个对象时，就将虚拟机的<code>numObjects</code>加一，当<code>numObjects == maxObjects</code>时就触发gc:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Object*</span><br><span class="line"><span class="title function_">newObject</span><span class="params">(VM * vm, Object_Type type)</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> (vm -&gt; numObjects == vm -&gt; maxObjects) &#123;</span><br><span class="line">      gc(vm);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    Object *object = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Object));</span><br><span class="line">    object -&gt; type = type;</span><br><span class="line">    object -&gt; marked = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    object -&gt; next = vm -&gt; firstObject;</span><br><span class="line">    vm -&gt; firstObject = object;</span><br><span class="line">    vm -&gt; numObjects ++;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>也要记住在<code>sweep()</code>函数内每次释放一个对象的时候将VM的<code>numObjects</code>减一：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span></span><br><span class="line"><span class="title function_">sweep</span><span class="params">(VM * vm)</span></span><br><span class="line">  &#123;</span><br><span class="line">    Object ** object = &amp;vm -&gt; firstObject;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> (*object) &#123;</span><br><span class="line">      <span class="keyword">if</span> (!(*object) -&gt; marked) &#123;</span><br><span class="line">	    Object * unreached = *object;</span><br><span class="line">		*object = unreached -&gt; next;</span><br><span class="line">		<span class="built_in">free</span>(unreached);</span><br><span class="line">		vm -&gt; numObjects = (vm -&gt; numObjects) - <span class="number">1</span>;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	    (*object) -&gt; marked = <span class="literal">false</span>;</span><br><span class="line">	  	object = &amp;(*object) -&gt; next;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>即<code>vm -&gt; numObjects = (vm -&gt; numObjects) - 1;</code></p>
+<p>然后我们向<code>gc()</code>函数中添加一个打印语句来提示我们gc被调用了:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span></span><br><span class="line"><span class="title function_">gc</span><span class="params">(VM * vm)</span></span><br><span class="line">  &#123;</span><br><span class="line">    markAll(vm);</span><br><span class="line">    sweep(vm);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;call gc!&quot;</span>);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h1>测试</h1>
+<p>你可以在 <a target="_blank" rel="noopener" href="https://github.com/muqiuhan/babygc">https://github.com/muqiuhan/babygc</a> 找到本文的代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span></span><br><span class="line"><span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span></span><br><span class="line">  &#123;</span><br><span class="line">    VM * vm = newVM();</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; INITIAL_GC_THRESHOLD * <span class="number">10</span>; i ++) &#123;</span><br><span class="line">      newObject(vm, OBJ_INT);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">./a.out</span></span><br><span class="line">call gc!</span><br><span class="line">call gc!</span><br><span class="line">call gc!</span><br><span class="line">call gc!</span><br><span class="line">call gc!</span><br><span class="line">call gc!</span><br><span class="line">call gc!</span><br><span class="line">call gc!</span><br><span class="line">call gc!</span><br></pre></td></tr></table></figure>
+<h1>Reference</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://journal.stuffwithstuff.com/2013/12/08/babys-first-garbage-collector/">http://journal.stuffwithstuff.com/2013/12/08/babys-first-garbage-collector/</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)">https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)</a></li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/muqiuhan">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">Reduce, reuse, recycle</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">Marking and sweeping</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">A pair of objects</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">A minimal virtual machine</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">6.</span> <span class="toc-text">Marky mark</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">7.</span> <span class="toc-text">Sweepy sweep</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">8.</span> <span class="toc-text">测试</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">9.</span> <span class="toc-text">Reference</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://muqiuhan.github.io/2022/06/28/The-first-people-for-young-people/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://muqiuhan.github.io/2022/06/28/The-first-people-for-young-people/&text=年轻人的第一个GC"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://muqiuhan.github.io/2022/06/28/The-first-people-for-young-people/&title=年轻人的第一个GC"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://muqiuhan.github.io/2022/06/28/The-first-people-for-young-people/&is_video=false&description=年轻人的第一个GC"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=年轻人的第一个GC&body=Check out this article: https://muqiuhan.github.io/2022/06/28/The-first-people-for-young-people/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://muqiuhan.github.io/2022/06/28/The-first-people-for-young-people/&title=年轻人的第一个GC"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://muqiuhan.github.io/2022/06/28/The-first-people-for-young-people/&title=年轻人的第一个GC"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://muqiuhan.github.io/2022/06/28/The-first-people-for-young-people/&title=年轻人的第一个GC"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://muqiuhan.github.io/2022/06/28/The-first-people-for-young-people/&title=年轻人的第一个GC"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://muqiuhan.github.io/2022/06/28/The-first-people-for-young-people/&name=年轻人的第一个GC&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://muqiuhan.github.io/2022/06/28/The-first-people-for-young-people/&t=年轻人的第一个GC"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022
+    Muqiu Han
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/muqiuhan">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
