@@ -14,7 +14,7 @@
 <meta property="og:description" content="当我感到压力很大并且有太多事情要做时，我会产生一种自相矛盾的感觉，我只能用另一件事情来麻痹这种感觉，写个小程序吧   Introduction 在计算机科学中，垃圾收集器 (GC) 是一种自动内存管理方式。垃圾收集器尝试回收那些由程序分配但不再被引用的内存，这些内存就是垃圾。垃圾收集器是由计算机科学家约翰麦卡锡在 1959 年左右发明的，用于简化 Lisp 中的手动内存管理。 垃圾回收的基本原理">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-06-28T00:07:34.000Z">
-<meta property="article:modified_time" content="2022-07-01T09:26:12.005Z">
+<meta property="article:modified_time" content="2022-07-01T14:38:34.350Z">
 <meta property="article:author" content="Muqiu Han">
 <meta property="article:tag" content="C">
 <meta property="article:tag" content="GC">
@@ -139,7 +139,7 @@
       
         <time datetime="2022-06-28T00:07:34.000Z" itemprop="datePublished">2022-06-28</time>
         
-        (Updated: <time datetime="2022-07-01T09:26:12.005Z" itemprop="dateModified">2022-07-01</time>)
+        (Updated: <time datetime="2022-07-01T14:38:34.350Z" itemprop="dateModified">2022-07-01</time>)
         
       
     </div>
@@ -166,7 +166,7 @@
 <p>在计算机科学中，垃圾收集器 (GC) 是一种自动内存管理方式。垃圾收集器尝试回收那些由程序分配但不再被引用的内存，这些内存就是垃圾。垃圾收集器是由计算机科学家约翰麦卡锡在 1959 年左右发明的，用于简化 Lisp 中的手动内存管理。</p>
 <p>垃圾回收的基本原理是在程序中找到以后无法访问的数据对象，并回收这些对象使用的资源。</p>
 <h1 id="reduce-reuse-recycle"><a class="markdownIt-Anchor" href="#reduce-reuse-recycle"></a> Reduce, reuse, recycle</h1>
-<p>GC背后的基本思想是使用了GC的语言在大多数情况下可以访问无限多的内存，开发人员使用该语言可以一直分配，内存永远用不完。显然，机器没有无限多的内存，所以实现这种无限的内存的方式是：当需要分配内存而内存不足时，就使用GC收集垃圾释放掉，然后再分配内存。<br />
+<p>GC的基本思想是：使用了GC的语言在大多数情况下可以访问无限多的内存，开发人员使用该语言可以一直创建对象，并且内存永远用不完。显然，机器没有无限多的内存，所以实现这种无限的内存的方式是：当需要分配内存而内存不足时，就使用GC收集垃圾释放掉，然后再分配内存。<br />
 先前说过，垃圾就是那些无用的内存，程序中的一个对象甚至是一个字节都可能有着至关重要的作用，所以垃圾收集器必须保证回收的精准，否则会出现未知的问题。同样的，当垃圾从成为垃圾到被回收的过程中，都必须保证程序中的其他有效的对象不能使用垃圾。</p>
 <p>垃圾就是不再使用的对象，我们第一步要做的就是去锁定那些不再使用的对象，一般情况下有两种方案：</p>
 <ol>
