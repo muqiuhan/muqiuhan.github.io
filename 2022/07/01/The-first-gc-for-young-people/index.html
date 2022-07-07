@@ -9,15 +9,15 @@
     <meta name="description" content="当我感到压力很大并且有太多事情要做时，我会产生一种自相矛盾的感觉，我只能用另一件事情来麻痹这种感觉，写个小程序吧   Introduction 在计算机科学中，垃圾收集器 (GC) 是一种自动内存管理方式。垃圾收集器尝试回收那些由程序分配但不再被引用的内存，这些内存就是垃圾。垃圾收集器是由计算机科学家约翰麦卡锡在 1959 年左右发明的，用于简化 Lisp 中的手动内存管理。 垃圾回收的基本原理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="年轻人的第一个GC">
-<meta property="og:url" content="https://muqiuhan.github.io/2022/06/28/The-first-gc-for-young-people/index.html">
+<meta property="og:url" content="https://muqiuhan.github.io/2022/07/01/The-first-gc-for-young-people/index.html">
 <meta property="og:site_name" content="韩暮秋">
 <meta property="og:description" content="当我感到压力很大并且有太多事情要做时，我会产生一种自相矛盾的感觉，我只能用另一件事情来麻痹这种感觉，写个小程序吧   Introduction 在计算机科学中，垃圾收集器 (GC) 是一种自动内存管理方式。垃圾收集器尝试回收那些由程序分配但不再被引用的内存，这些内存就是垃圾。垃圾收集器是由计算机科学家约翰麦卡锡在 1959 年左右发明的，用于简化 Lisp 中的手动内存管理。 垃圾回收的基本原理">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-06-28T00:07:34.000Z">
-<meta property="article:modified_time" content="2022-07-01T14:38:34.350Z">
+<meta property="article:published_time" content="2022-07-01T00:07:34.000Z">
+<meta property="article:modified_time" content="2022-07-02T02:39:26.224Z">
 <meta property="article:author" content="Muqiu Han">
-<meta property="article:tag" content="C">
 <meta property="article:tag" content="GC">
+<meta property="article:tag" content="C">
 <meta name="twitter:card" content="summary">
     
     
@@ -82,10 +82,8 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" aria-label="Previous post" href="/2022/06/28/Write-a-Shell-in-C/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
-        
-        <li><a class="icon" aria-label="Next post" href="/2022/06/27/Write-a-simple-memory-allocator/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Next post" href="/2022/06/28/Write-a-Shell-in-C/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
@@ -98,17 +96,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://muqiuhan.github.io/2022/06/28/The-first-gc-for-young-people/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://muqiuhan.github.io/2022/06/28/The-first-gc-for-young-people/&text=年轻人的第一个GC"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://muqiuhan.github.io/2022/06/28/The-first-gc-for-young-people/&title=年轻人的第一个GC"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://muqiuhan.github.io/2022/06/28/The-first-gc-for-young-people/&is_video=false&description=年轻人的第一个GC"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=年轻人的第一个GC&body=Check out this article: https://muqiuhan.github.io/2022/06/28/The-first-gc-for-young-people/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://muqiuhan.github.io/2022/06/28/The-first-gc-for-young-people/&title=年轻人的第一个GC"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://muqiuhan.github.io/2022/06/28/The-first-gc-for-young-people/&title=年轻人的第一个GC"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://muqiuhan.github.io/2022/06/28/The-first-gc-for-young-people/&title=年轻人的第一个GC"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://muqiuhan.github.io/2022/06/28/The-first-gc-for-young-people/&title=年轻人的第一个GC"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://muqiuhan.github.io/2022/06/28/The-first-gc-for-young-people/&name=年轻人的第一个GC&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://muqiuhan.github.io/2022/06/28/The-first-gc-for-young-people/&t=年轻人的第一个GC"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://muqiuhan.github.io/2022/07/01/The-first-gc-for-young-people/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://muqiuhan.github.io/2022/07/01/The-first-gc-for-young-people/&text=年轻人的第一个GC"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://muqiuhan.github.io/2022/07/01/The-first-gc-for-young-people/&title=年轻人的第一个GC"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://muqiuhan.github.io/2022/07/01/The-first-gc-for-young-people/&is_video=false&description=年轻人的第一个GC"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=年轻人的第一个GC&body=Check out this article: https://muqiuhan.github.io/2022/07/01/The-first-gc-for-young-people/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://muqiuhan.github.io/2022/07/01/The-first-gc-for-young-people/&title=年轻人的第一个GC"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://muqiuhan.github.io/2022/07/01/The-first-gc-for-young-people/&title=年轻人的第一个GC"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://muqiuhan.github.io/2022/07/01/The-first-gc-for-young-people/&title=年轻人的第一个GC"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://muqiuhan.github.io/2022/07/01/The-first-gc-for-young-people/&title=年轻人的第一个GC"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://muqiuhan.github.io/2022/07/01/The-first-gc-for-young-people/&name=年轻人的第一个GC&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://muqiuhan.github.io/2022/07/01/The-first-gc-for-young-people/&t=年轻人的第一个GC"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -137,9 +135,9 @@
       
     <div class="postdate">
       
-        <time datetime="2022-06-28T00:07:34.000Z" itemprop="datePublished">2022-06-28</time>
+        <time datetime="2022-07-01T00:07:34.000Z" itemprop="datePublished">2022-07-01</time>
         
-        (Updated: <time datetime="2022-07-01T14:38:34.350Z" itemprop="dateModified">2022-07-01</time>)
+        (Updated: <time datetime="2022-07-02T02:39:26.224Z" itemprop="dateModified">2022-07-02</time>)
         
       
     </div>
@@ -275,17 +273,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://muqiuhan.github.io/2022/06/28/The-first-gc-for-young-people/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://muqiuhan.github.io/2022/06/28/The-first-gc-for-young-people/&text=年轻人的第一个GC"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://muqiuhan.github.io/2022/06/28/The-first-gc-for-young-people/&title=年轻人的第一个GC"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://muqiuhan.github.io/2022/06/28/The-first-gc-for-young-people/&is_video=false&description=年轻人的第一个GC"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=年轻人的第一个GC&body=Check out this article: https://muqiuhan.github.io/2022/06/28/The-first-gc-for-young-people/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://muqiuhan.github.io/2022/06/28/The-first-gc-for-young-people/&title=年轻人的第一个GC"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://muqiuhan.github.io/2022/06/28/The-first-gc-for-young-people/&title=年轻人的第一个GC"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://muqiuhan.github.io/2022/06/28/The-first-gc-for-young-people/&title=年轻人的第一个GC"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://muqiuhan.github.io/2022/06/28/The-first-gc-for-young-people/&title=年轻人的第一个GC"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://muqiuhan.github.io/2022/06/28/The-first-gc-for-young-people/&name=年轻人的第一个GC&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://muqiuhan.github.io/2022/06/28/The-first-gc-for-young-people/&t=年轻人的第一个GC"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://muqiuhan.github.io/2022/07/01/The-first-gc-for-young-people/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://muqiuhan.github.io/2022/07/01/The-first-gc-for-young-people/&text=年轻人的第一个GC"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://muqiuhan.github.io/2022/07/01/The-first-gc-for-young-people/&title=年轻人的第一个GC"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://muqiuhan.github.io/2022/07/01/The-first-gc-for-young-people/&is_video=false&description=年轻人的第一个GC"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=年轻人的第一个GC&body=Check out this article: https://muqiuhan.github.io/2022/07/01/The-first-gc-for-young-people/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://muqiuhan.github.io/2022/07/01/The-first-gc-for-young-people/&title=年轻人的第一个GC"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://muqiuhan.github.io/2022/07/01/The-first-gc-for-young-people/&title=年轻人的第一个GC"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://muqiuhan.github.io/2022/07/01/The-first-gc-for-young-people/&title=年轻人的第一个GC"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://muqiuhan.github.io/2022/07/01/The-first-gc-for-young-people/&title=年轻人的第一个GC"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://muqiuhan.github.io/2022/07/01/The-first-gc-for-young-people/&name=年轻人的第一个GC&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://muqiuhan.github.io/2022/07/01/The-first-gc-for-young-people/&t=年轻人的第一个GC"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
