@@ -8,13 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
     <meta name="description" content="In programming language theory, lazy evaluation, or call-by-need, is an evaluation strategy which delays the evaluation of an expression until its value is needed (non-strict evaluation) and which al">
 <meta property="og:type" content="article">
-<meta property="og:title" content="OCaml中的惰性求值">
+<meta property="og:title" content="Lazy Evaluation OCaml">
 <meta property="og:url" content="https://muqiuhan.github.io/2022/06/24/ocaml-lazy/index.html">
 <meta property="og:site_name" content="韩暮秋">
 <meta property="og:description" content="In programming language theory, lazy evaluation, or call-by-need, is an evaluation strategy which delays the evaluation of an expression until its value is needed (non-strict evaluation) and which al">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-06-24T07:51:22.000Z">
-<meta property="article:modified_time" content="2022-07-01T09:22:47.270Z">
+<meta property="article:modified_time" content="2022-07-11T03:28:32.848Z">
 <meta property="article:author" content="Muqiu Han">
 <meta property="article:tag" content="OCaml">
 <meta name="twitter:card" content="summary">
@@ -37,7 +37,7 @@
       
     
     <!-- title -->
-    <title>OCaml中的惰性求值</title>
+    <title>Lazy Evaluation OCaml</title>
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -96,16 +96,16 @@
     <div id="share" style="display: none">
       <ul>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&text=OCaml中的惰性求值"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&title=OCaml中的惰性求值"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&is_video=false&description=OCaml中的惰性求值"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=OCaml中的惰性求值&body=Check out this article: https://muqiuhan.github.io/2022/06/24/ocaml-lazy/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&title=OCaml中的惰性求值"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&title=OCaml中的惰性求值"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&title=OCaml中的惰性求值"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&title=OCaml中的惰性求值"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&name=OCaml中的惰性求值&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&t=OCaml中的惰性求值"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&text=Lazy Evaluation OCaml"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&title=Lazy Evaluation OCaml"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&is_video=false&description=Lazy Evaluation OCaml"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Lazy Evaluation OCaml&body=Check out this article: https://muqiuhan.github.io/2022/06/24/ocaml-lazy/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&title=Lazy Evaluation OCaml"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&title=Lazy Evaluation OCaml"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&title=Lazy Evaluation OCaml"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&title=Lazy Evaluation OCaml"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&name=Lazy Evaluation OCaml&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&t=Lazy Evaluation OCaml"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -122,7 +122,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        OCaml中的惰性求值
+        Lazy Evaluation OCaml
     </h1>
 
 
@@ -136,7 +136,7 @@
       
         <time datetime="2022-06-24T07:51:22.000Z" itemprop="datePublished">2022-06-24</time>
         
-        (Updated: <time datetime="2022-07-01T09:22:47.270Z" itemprop="dateModified">2022-07-01</time>)
+        (Updated: <time datetime="2022-07-11T03:28:32.848Z" itemprop="dateModified">2022-07-11</time>)
         
       
     </div>
@@ -232,16 +232,16 @@
     <div id="share-footer" style="display: none">
       <ul>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&text=OCaml中的惰性求值"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&title=OCaml中的惰性求值"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&is_video=false&description=OCaml中的惰性求值"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=OCaml中的惰性求值&body=Check out this article: https://muqiuhan.github.io/2022/06/24/ocaml-lazy/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&title=OCaml中的惰性求值"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&title=OCaml中的惰性求值"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&title=OCaml中的惰性求值"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&title=OCaml中的惰性求值"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&name=OCaml中的惰性求值&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&t=OCaml中的惰性求值"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&text=Lazy Evaluation OCaml"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&title=Lazy Evaluation OCaml"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&is_video=false&description=Lazy Evaluation OCaml"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Lazy Evaluation OCaml&body=Check out this article: https://muqiuhan.github.io/2022/06/24/ocaml-lazy/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&title=Lazy Evaluation OCaml"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&title=Lazy Evaluation OCaml"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&title=Lazy Evaluation OCaml"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&title=Lazy Evaluation OCaml"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&name=Lazy Evaluation OCaml&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://muqiuhan.github.io/2022/06/24/ocaml-lazy/&t=Lazy Evaluation OCaml"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

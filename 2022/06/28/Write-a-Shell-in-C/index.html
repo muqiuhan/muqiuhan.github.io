@@ -8,13 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
     <meta name="description" content="开发大型软件项目并不容易，但是很多时候这些大型软件的基本思想非常简单，我们自己去实现它是不错的学习方式，至少可以证明你具有成为一位真正的程序员所需要的基本条件。 在本文中，我会使用C语言编写一个简单的shell程序来让你理解shell的基本运作方式，shell当然不止这么简单，但是它已足够将你领进门了。  注意: 不要过度依赖这篇文章，倒杯热水，慢慢思考  INTRUDUCTION 如果你已经非">
 <meta property="og:type" content="article">
-<meta property="og:title" content="用C编写一个简单的shell">
+<meta property="og:title" content="Write a shell in C">
 <meta property="og:url" content="https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/index.html">
 <meta property="og:site_name" content="韩暮秋">
 <meta property="og:description" content="开发大型软件项目并不容易，但是很多时候这些大型软件的基本思想非常简单，我们自己去实现它是不错的学习方式，至少可以证明你具有成为一位真正的程序员所需要的基本条件。 在本文中，我会使用C语言编写一个简单的shell程序来让你理解shell的基本运作方式，shell当然不止这么简单，但是它已足够将你领进门了。  注意: 不要过度依赖这篇文章，倒杯热水，慢慢思考  INTRUDUCTION 如果你已经非">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-06-28T00:07:34.000Z">
-<meta property="article:modified_time" content="2022-07-01T09:23:07.464Z">
+<meta property="article:modified_time" content="2022-07-11T03:29:38.678Z">
 <meta property="article:author" content="Muqiu Han">
 <meta property="article:tag" content="C">
 <meta property="article:tag" content="System">
@@ -38,7 +38,7 @@
       
     
     <!-- title -->
-    <title>用C编写一个简单的shell</title>
+    <title>Write a shell in C</title>
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -99,16 +99,16 @@
     <div id="share" style="display: none">
       <ul>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&text=用C编写一个简单的shell"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&title=用C编写一个简单的shell"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&is_video=false&description=用C编写一个简单的shell"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=用C编写一个简单的shell&body=Check out this article: https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&title=用C编写一个简单的shell"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&title=用C编写一个简单的shell"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&title=用C编写一个简单的shell"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&title=用C编写一个简单的shell"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&name=用C编写一个简单的shell&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&t=用C编写一个简单的shell"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&text=Write a shell in C"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&title=Write a shell in C"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&is_video=false&description=Write a shell in C"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Write a shell in C&body=Check out this article: https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&title=Write a shell in C"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&title=Write a shell in C"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&title=Write a shell in C"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&title=Write a shell in C"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&name=Write a shell in C&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&t=Write a shell in C"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -125,7 +125,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        用C编写一个简单的shell
+        Write a shell in C
     </h1>
 
 
@@ -139,7 +139,7 @@
       
         <time datetime="2022-06-28T00:07:34.000Z" itemprop="datePublished">2022-06-28</time>
         
-        (Updated: <time datetime="2022-07-01T09:23:07.464Z" itemprop="dateModified">2022-07-01</time>)
+        (Updated: <time datetime="2022-07-11T03:29:38.678Z" itemprop="dateModified">2022-07-11</time>)
         
       
     </div>
@@ -254,16 +254,16 @@
     <div id="share-footer" style="display: none">
       <ul>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&text=用C编写一个简单的shell"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&title=用C编写一个简单的shell"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&is_video=false&description=用C编写一个简单的shell"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=用C编写一个简单的shell&body=Check out this article: https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&title=用C编写一个简单的shell"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&title=用C编写一个简单的shell"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&title=用C编写一个简单的shell"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&title=用C编写一个简单的shell"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&name=用C编写一个简单的shell&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&t=用C编写一个简单的shell"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&text=Write a shell in C"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&title=Write a shell in C"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&is_video=false&description=Write a shell in C"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Write a shell in C&body=Check out this article: https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&title=Write a shell in C"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&title=Write a shell in C"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&title=Write a shell in C"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&title=Write a shell in C"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&name=Write a shell in C&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://muqiuhan.github.io/2022/06/28/Write-a-Shell-in-C/&t=Write a shell in C"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
