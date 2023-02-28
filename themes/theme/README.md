@@ -1,93 +1,181 @@
-![One-paper 预览图](https://raw.githubusercontent.com/zheli-design/hexo-theme-one-paper/main/source/img/one-paper.png)
+English | [简体中文](README-CN.md)
+
+![cover](https://clio-space-1300725494.cos.ap-guangzhou.myqcloud.com/frame/featured_img/hexo_cover.jpg)
+
+Frame is a minimal hexo theme. Inspired by traditional paintings and their frames, Frame is designed to showcase personal blogs, profiles, or portfolios in a concise and elegant way.
+
+[👉 Demo Site](https://frame.zhangyongqi.com/)
+
+## Getting started
+
+### Installation
+
+If this is your first time using hexo, please go to the official [hexo website](https://hexo.io/) to install and initialize your hexo project. Then, clone the theme in your hexo project:
 
 
+```
+# go to your hexo theme folder
+cd themes
 
-这是一个 [Hexo](https://hexo.io/) 主题，设计、开发于 2022 年 2 月。
-
-这是一个「小而美」的主题，实话说，它应该叫做「skin」而不是「theme」，可这又有什么所谓呢 :-)
-
-我不想把这个主题做成一个「大而全」的东西，它仅仅针对于 **写作**，你也可以理解为是 **传统意义上的博客**。主要是以 **朴素干净轻量** 为主。它的第一视觉效果是一张白纸，希望可以模拟在实体纸张阅读上的感受。
-
-功能上尽量与官方的靠齐，非必要不新增。
-
-
-
-### Live Demo
-
-[https://zheli.design/one-paper](https://zheli.design/one-paper)
-
-
-
-### 功能
-
--   响应式设计，兼容手机端、pad 端以及 PC 端；
--   支持所有现代浏览器；
--   Markdown 常用格式支持；
--   代码高亮、行数显示支持；
--   目前版本支持的模版页：首页、文章详情页、归档页、单页；
--   无预留评论位置（后续可能会安排）。
-
-
-
-### 安装
-
-1.   下载 zip 压缩包并解压；
-2.   Terminal 中 `Control + C` 停止 Hexo 服务；
-3.   复制 one-paper 到 hexo/themes 目录下；
-4.   更改 _config.yml 配置：`theme: one-paper`；
-5.   `hexo s` 预览效果。
-
-
-
-### 内置第三方字体
-
-主题内置了一个 [Google 字体 Montserrat](https://fonts.google.com/specimen/Montserrat)，如果不喜欢或有其他原因的，请删改以下三处内容：
-
-1.   source/fonts 中的所有文件
-2.   source/css/fonts.css
-3.   source/css/style.css 中 line 21 的 `Montserrat`：
-
-```css
-body
-{
-    font-family: "Montserrat", "SF UI Text", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", "Helvetica Neue", Helvetica, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
-}
+# clone the project
+git clone https://github.com/zoeingwingkei/frame.git
 ```
 
+### Configuration
 
+Go to the hexo configuration file `config.yml`, and change the following theme settings:
 
-### 已开启高亮代码
-
-主题内置了 [highlightjs](https://highlightjs.org/) 以及 [highlightjs-line-numbers.js](https://github.com/wcoder/highlightjs-line-numbers.js) 两个插件，默认启用，无需手动开启。如无效果，请将 hexo/_config.yml 中的以下两处 `true` 改为 `false`：
-
-```yml
-highlight:
-  enable: false
-prismjs:
-  enable: false
+```
+theme: frame
 ```
 
+### Run Server
 
+Now that **Frame** is all set up 👌. You can test the theme through:
 
-### 更换 favicon
+```
+hexo server
+```
 
-请同命名覆盖替换 source/img/favicon.png 图片。
+## Color Mode
 
+Frame provides 3 color modes: default, classic and dark.
 
+![color mode](https://clio-space-1300725494.cos.ap-guangzhou.myqcloud.com/frame/featured_img/color_mode.jpg)
 
-### 其他
+To change the color mode, go to the `config.yml` file under the `frame` theme folder, and modify the following settings:
 
--   如果你觉得主题不错，欢迎分享出去；使用中遇到问题，可以在 [GitHub Issues](https://github.com/zheli-design/hexo-theme-one-paper/issues) 提交反馈；
--   如果你熟悉 Hexo、Wordpress 主题开发，正巧缺设计，也可以与我 [取得联系](https://zheli.design/)。
+```
+# color mode: default / classic / dark
+color_mode: classic
+```
 
+## Gallery View
 
+Frame provides a gallery view, where blog posts are presented with their featured images and tags. Simply add a category "gallery" to your post, then it would be listed in the gallery view.
 
-### 作者
+```
+categories:
+- [gallery]
+```
 
-[這李設計](https://zheli.design/)
+The featured image of the post can also be added to the [Front-matter](https://hexo.io/docs/front-matter) of the post:
 
+```
+featured_image: /path/to/your/image.jpg 
+```
 
+## Profile Page
 
-### 版权声明
+The profile page, or the home page, is the very first page of your site. By default, there is a title, some body text, several links and a profile image on this page. You can customize the content of your profile at the `config.yml` file of the theme:
 
-遵守 [MIT License](https://zh.wikipedia.org/wiki/MIT許可證) 协议
+```
+# profile
+profile:
+  title: Your profile title.
+  body: Your profile body
+  image: /path/to/your/image.jpg 
+
+  links:
+  	Blogs: /archive/
+  	Resume: /path/to/your/resume.pdf
+  	Projects: /categories/gallery/
+```
+
+In case you prefer to customize your profile page, go to `frame/layout/pages/profile.ejs` and modify the layout and style of your own page, have fun 🙌.
+
+## Tag Page
+
+Frame provides a tag cloud on the `/tag/` page, which contains all possible tags in your blog. In order to set up the tag cloud, you need to create a hexo page named `tag`. 
+
+```
+hexo new page tag
+```
+
+Inside the `source/tag/index.html` file, type the following:
+
+```
+---
+title: '''tag'''
+layout: tag
+---
+```
+
+## Configurations
+
+### Header
+
+The header is simply consist of a site logo and a navigation menu, you can change those content at the `config.yml` file under the theme folder. You can upload an image as the site logo, otherwise it would be your site name.
+
+```
+# header
+site_brand_name: Frame.
+
+logo_image:
+  enable: true
+  image_path: /logo.png # path to your logo image
+
+menu:
+  Home: /
+  Archive: /archives/
+  Gallery: /categories/gallery/
+  About: /about/
+```
+
+### Footer
+
+You can also customize the content of your footer at the `config.yml` file:
+
+```
+# footer
+footer:
+  copyright_info:
+    enable: true
+    author: © Your name
+
+  powered_by: # Powered by Hexo & Frame
+    enable: true
+
+  other_info:
+    enable: true
+    content: Customized content.
+```
+
+### Favicon
+
+Add your own favicon of the website at the `frame/source/` folder, then configure it at the `config.yml` file:
+
+```
+# favicon
+favicon: /favicon.ico
+```
+
+### Math
+
+In case you would like to use math equations in your blog, go to the `config.yml` file and turn on the [MathJax](*https://github.com/hexojs/hexo-math*) tool:
+
+```
+# mathjax setting
+mathjax_enable: true
+```
+
+Note: if you haven't install the hexo math plugin, you need to install it first:
+
+```
+npm i hexo-math --save
+```
+
+### Blog Comments
+
+Frame now supports third-party comment systems: [valine](https://valine.js.org/) and [disqus](https://disqus.com/). A detailed description can be found in [this post](https://frame.zhangyongqi.com/2021/11/11/comment/).
+
+### Local Search
+
+Frame now supports local search with the hexo plugin [hexo-generator-searchdb](https://github.com/theme-next/hexo-generator-searchdb).  A detailed description can be found in [this post](https://frame.zhangyongqi.com/2022/08/05/local-search/).
+
+## License
+
+This project is released under [MIT License](https://opensource.org/licenses/MIT).
+
+All the images used in the [demo site](https://frame.zhangyongqi.com) are the works from Claude Monet (1840 - 1926), which is considered to be in the public domain in its country of origin and other countries and areas.
+
