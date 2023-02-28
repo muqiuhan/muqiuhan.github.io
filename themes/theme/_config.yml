@@ -24,15 +24,15 @@ scripts:
 - /js/frame.js
 
 # favicon
-favicon: /favicon.ico
+favicon:
 
 date_format: MMM D, YYYY
 
 # profile
 profile:
   title: 暮秋小屋
-  body: 希望路过的人可以添点柴火让这里暖和点
-  image: /profile_cover.png
+  body: 这里是暮秋小屋，思念和灵感的寄存处
+  image: /profile_cover.jpg
 
   links:
     技术博客: /archives/
@@ -45,7 +45,7 @@ footer:
     enable: false
     author:
 
-  powered_by: # Powered by Hexo & Frame
+  powered_by:
     enable: true
 
   other_info:
