@@ -11,7 +11,7 @@ logo_image:
 
 menu:
   主页: /
-  归档: /archives/
+  技术文章: /tags/Technique/
   日记本: /categories/gallery/
   关于: /about
 
@@ -35,14 +35,15 @@ profile:
   image: /profile_cover.jpg
 
   links:
-    技术博客: /archives/
+    归档: /archives/
+    技术文章: /tags/Technique/
     日记本: /categories/gallery/
     关于我: /about
 
 # footer
 footer:
   copyright_info:
-    enable: false
+    enable: true
     author:
 
   powered_by:
@@ -57,7 +58,7 @@ color_mode: default
 
 # mathjax setting
 # note: need to install the hexo plugin for math: https://github.com/hexojs/hexo-math
-mathjax_enable: false
+mathjax_enable: true
 
 # comments: support disqus and valine
 valine: # valine setup guide: https://valine.js.org/quickstart.html
