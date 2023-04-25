@@ -33,7 +33,7 @@ date_format: MMM D, YYYY
 # profile
 profile:
   title: 暮秋小屋
-  body: 这里是暮秋小屋，思念和灵感的寄存处
+  body: "这里是暮秋小屋，思念和灵感的寄存处"
   image: /profile_cover.jpg
 
   links:
