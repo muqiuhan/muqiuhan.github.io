@@ -1130,10 +1130,11 @@ ul li.task-list-item>input[type=checkbox]:before {
   --webkit-touch-callout: none;
 }
 .icon {
-  display: block;
-  background-color: #373633;
-  width: 1.25rem;
-  height: 1.25rem;
+  display: inline;
+  background-color: $color-icon-background;
+  width: 3em;
+  height: auto;
+  float: right;
 }
 .arrow-up {
   -webkit-mask-image: url("../icon/arrow-up.svg");
