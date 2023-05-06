@@ -179,10 +179,10 @@
 </ol>
 <p>所以：</p>
 <hr>
-<h1 id="？？？-二零二三年四月二十九日"><a href="#？？？-二零二三年四月二十九日" class="headerlink" title="？？？ - 二零二三年四月二十九日"></a>？？？ - 二零二三年四月二十九日</h1><h2 id="论坛"><a href="#论坛" class="headerlink" title="论坛"></a>论坛</h2><h3 id="呼吁新的-opam-存储库维护者"><a href="#呼吁新的-opam-存储库维护者" class="headerlink" title="呼吁新的 opam 存储库维护者"></a>呼吁新的 opam 存储库维护者</h3><p><a target="_blank" rel="noopener" href="https://opam.ocaml.org/">OPAM</a>是OCaml的官方包管理器，它通过<a target="_blank" rel="noopener" href="https://github.com/ocaml/opam-repository">opam-repository</a>存储OCaml包，opam-repository由少数人力共同维护，以确保包的时效性、和高质量。OPAM的维护团队正在寻找新的贡献者来帮助他们维护opam-repository。</p>
+<h1 id="？？？-二零二三年四月二十九日"><a href="#？？？-二零二三年四月二十九日" class="headerlink" title="？？？ - 二零二三年四月二十九日"></a>？？？ - 二零二三年四月二十九日</h1><h2 id="呼吁新的-opam-存储库维护者"><a href="#呼吁新的-opam-存储库维护者" class="headerlink" title="呼吁新的 opam 存储库维护者"></a>呼吁新的 opam 存储库维护者</h2><p><a target="_blank" rel="noopener" href="https://opam.ocaml.org/">OPAM</a>是OCaml的官方包管理器，它通过<a target="_blank" rel="noopener" href="https://github.com/ocaml/opam-repository">opam-repository</a>存储OCaml包，opam-repository由少数人力共同维护，以确保包的时效性、和高质量。OPAM的维护团队正在寻找新的贡献者来帮助他们维护opam-repository。</p>
 <p>帮助维护opam-repository并不是OCaml或OPAM方面的专家才能参与。新加入的维护者将从审查和批准对repo的更改开始，经过几周的工作后，你可以决定留下来继续做这份工作，届时将被授予完全访问权限。</p>
 <p>论坛原帖：<a target="_blank" rel="noopener" href="https://discuss.ocaml.org/t/call-for-new-opam-repository-maintainers/12041">https://discuss.ocaml.org/t/call-for-new-opam-repository-maintainers/12041</a></p>
-<h3 id="Local-Type-Definition"><a href="#Local-Type-Definition" class="headerlink" title="Local Type Definition"></a>Local Type Definition</h3><p>OCaml目前并不支持类似如下的Local Type Definition:</p>
+<h2 id="Local-Type-Definition"><a href="#Local-Type-Definition" class="headerlink" title="Local Type Definition"></a>Local Type Definition</h2><p>OCaml目前并不支持类似如下的Local Type Definition:</p>
 <figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> f : <span class="built_in">unit</span> -&gt; <span class="built_in">unit</span> = </span><br><span class="line"> <span class="keyword">fun</span> <span class="literal">()</span> -&gt;</span><br><span class="line">  <span class="keyword">let</span> <span class="keyword">type</span> t = <span class="type">A</span> | <span class="type">B</span> <span class="keyword">in</span></span><br><span class="line">  ...</span><br></pre></td></tr></table></figure>
 
 <p>但可以通过let open一个只有t的module来实现:</p>
@@ -190,9 +190,9 @@
 
 <p>其实前者可以当作后者的糖，但目前还没实现，这是相关PR: <a target="_blank" rel="noopener" href="https://github.com/ocaml/ocaml/pull/12151">Add local type definition syntax #12151</a></p>
 <p>论坛原帖：<a target="_blank" rel="noopener" href="https://discuss.ocaml.org/t/local-type-definition">https://discuss.ocaml.org/t/local-type-definition</a></p>
-<h2 id="生态"><a href="#生态" class="headerlink" title="生态"></a>生态</h2><h3 id="使用LablGtk3实现的七个GUI示例"><a href="#使用LablGtk3实现的七个GUI示例" class="headerlink" title="使用LablGtk3实现的七个GUI示例"></a>使用LablGtk3实现的七个GUI示例</h3><p>行业中存在各种各样不同语言的GUI工具包和各种各样不同的GUI开发方式。7GUIs代表GUI编程中典型的七项任务。</p>
+<h2 id="使用LablGtk3实现的七个GUI示例"><a href="#使用LablGtk3实现的七个GUI示例" class="headerlink" title="使用LablGtk3实现的七个GUI示例"></a>使用LablGtk3实现的七个GUI示例</h2><p>行业中存在各种各样不同语言的GUI工具包和各种各样不同的GUI开发方式。7GUIs代表GUI编程中典型的七项任务。</p>
 <p>项目页面：<a target="_blank" rel="noopener" href="https://7guis.github.io/7guis/">https://7guis.github.io/7guis/</a><br>使用LablGtk3实现的7GUIs Github连接：<a target="_blank" rel="noopener" href="https://github.com/F-loyer/7guis-ocaml-lablgtk3">https://github.com/F-loyer/7guis-ocaml-lablgtk3</a></p>
-<h2 id="文章"><a href="#文章" class="headerlink" title="文章"></a>文章</h2><h3 id="使用Dream编写REST-API"><a href="#使用Dream编写REST-API" class="headerlink" title="使用Dream编写REST API"></a>使用Dream编写REST API</h3><p>这篇文章是使用Dream、Yojson和Caqti的经验之谈，这篇文章的重点不是做出价值判断（X框架好，Y框架不好之类的），而是理解如何将一个工作流程转换为另一个工作流程的概念.</p>
+<h2 id="使用Dream编写REST-API"><a href="#使用Dream编写REST-API" class="headerlink" title="使用Dream编写REST API"></a>使用Dream编写REST API</h2><p>这篇文章是使用Dream、Yojson和Caqti的经验之谈，这篇文章的重点不是做出价值判断（X框架好，Y框架不好之类的），而是理解如何将一个工作流程转换为另一个工作流程的概念.</p>
 <p>文章连接：<a target="_blank" rel="noopener" href="https://jsthomas.github.io/ocaml-dream-api.html">https://jsthomas.github.io/ocaml-dream-api.html</a></p>
 
 </div> 
@@ -205,6 +205,11 @@
     <nav class="post-nav">
         <div class="prev-item">
            
+                <div class="icon arrow-left"></div>
+                <div class="post-link">
+                    <a href="/2023/05/04/OCaml-Effects%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B/">Prev</a>
+                </div>
+            
         </div>
         <div class="next-item">
             
