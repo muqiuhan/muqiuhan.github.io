@@ -1,5 +1,6 @@
 ---
-title: OCaml Effects简明教程
-date: 2023-02-28 19:51:33
+title: 如何表示OCaml运行时类型
+date: 2023-05-04 10:27:00
 tags: [OCaml, Technique]
 ---
+
