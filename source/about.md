@@ -2,15 +2,13 @@
 title: 关于
 ---
 
-## 计算机科学
+<img src="http://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=muqiuhan" style="box-shadow: -5px -5px 10px black; border: 1px solid black; width: 50%;"/>
 
-![](http://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=muqiuhan&theme=github_dark)
-
-
+<div style="box-shadow: 10px 10px 10px black; border: 1px solid black; padding: 3%;3%;3%;3%; margin-top: 5%; margin-bottom: 5%;">
 <a href="https://ocaml.org/"> 
-		<img class="icon" src="https://raw.githubusercontent.com/ocaml/ocaml-logo/master/Colour/PNG/colour-icon.png" height="50px" width="50px"> </a>
-	<a href="https://fsharp.org/"> <img class="icon" src="https://fsharp.org/img/logo/fsharp256.png" height="50px" width="50px"> </a>
-	<a href="https://rescript-lang.org/"> <img class="icon" src="https://rescript-lang.org/static/nav-logo@2x.png" height="50px" width="50px"> </a>
+<img class="icon" src="https://raw.githubusercontent.com/ocaml/ocaml-logo/master/Colour/PNG/colour-icon.png" height="50px" width="50px"> </a>
+<a href="https://fsharp.org/"> <img class="icon" src="https://fsharp.org/img/logo/fsharp256.png" height="50px" width="50px"> </a>
+<a href="https://rescript-lang.org/"> <img class="icon" src="https://rescript-lang.org/static/nav-logo@2x.png" height="50px" width="50px"> </a>
 
 我热衷于实用函数式编程，尤其是ML语言家族。喜欢用OCaml研究编程语言编译器，用F#写Web全栈项目。Rescript很年轻，很有活力，我很期待！
 
@@ -29,18 +27,10 @@ Scala和Clojure可以让我在JVM上获得些许快乐。
 
 一些简单的脚本用Python和Racket是非常不错的解决方案
 
-## 医学
+</div>
 
-传统中医学：
-- 《黄帝内经》
-- 《伤寒杂病论》
-- 《神农本草经》
-- 《炁体源流》（部分）
-- 《米晶子济世良方》
+关于我在学习过程中编写的开源项目，可以看： [项目列表](/Projects/)
 
-及大量西医基础药学理论基础。
-
-## 链接
 - Github: https://github.com/muqiuhan
 - QQ群: 780653172
 
