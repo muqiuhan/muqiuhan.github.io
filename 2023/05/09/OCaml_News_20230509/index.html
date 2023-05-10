@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="含暮秋">
+
+
+    <meta name="subtitle" content="暮秋小屋">
+
+
+    <meta name="description" content="不卑不亢的码农， 朴素的民谣诗人">
+
+
+    <meta name="keywords" content="韩暮秋,MuqiuHan">
+
+
+
+
+<title>OCaml News 2023/5/9 | 暮秋小屋</title>
+
+
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/frame.js"></script>
+    
+
+
+
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+
+
+  <!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+            暮秋小屋
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/">主页</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Technique/">技术</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/Projects">项目</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/gallery/">日记本</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/about">关于</a>
+              </li> 
+                   
+          
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/OCaml/">
+                            OCaml
+                        </a>
+                    </span>    
+                
+                    <span class="post-tag">
+                        <a href="/tags/Technique/">
+                            Technique
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                OCaml News 2023/5/9
+            
+            
+        </div>
+        <span class="post-date">
+            May 9, 2023
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <h1 id="二零二三年五月六日-二零二三年五月九日"><a href="#二零二三年五月六日-二零二三年五月九日" class="headerlink" title="二零二三年五月六日 - 二零二三年五月九日"></a>二零二三年五月六日 - 二零二三年五月九日</h1><h2 id="在Eio中不使用Unix和Sys模块实现所有I-x2F-O和文件系统操作？"><a href="#在Eio中不使用Unix和Sys模块实现所有I-x2F-O和文件系统操作？" class="headerlink" title="在Eio中不使用Unix和Sys模块实现所有I&#x2F;O和文件系统操作？"></a>在Eio中不使用Unix和Sys模块实现所有I&#x2F;O和文件系统操作？</h2><blockquote>
+<p>EIO: <a target="_blank" rel="noopener" href="https://github.com/ocaml-multicore/eio">Effects-based direct-style IO for multicore OCaml</a></p>
+</blockquote>
+<p>例如<code>Sys.is_directory</code>， <code>Sys.file_exists</code>，<code>Sys.is_regular_file</code>这些函数在Eio中并没有相关的实现， 因为Eio目前还缺少很多文件操作的实现： <a target="_blank" rel="noopener" href="https://github.com/ocaml-multicore/eio/issues/510">Add missing file operations #510</a>。</p>
+<p>但退一步，如果需要，可以用 <code>Eio_unix.run_in_systhread</code>来运行Unix的相关操作从而不阻塞Eio线程。</p>
+<p>关于执行外部命令， 例如<code>Sys.command</code>或<code>Unix.create_process</code>函数， 在Eio中可以通过<code>Eio.Process</code>模块实现，例如:</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># <span class="type">Eio_main</span>.run @@ <span class="keyword">fun</span> env -&gt;</span><br><span class="line">  <span class="keyword">let</span> proc_mgr = <span class="type">Eio</span>.<span class="type">Stdenv</span>.process_mgr env <span class="keyword">in</span></span><br><span class="line">  <span class="type">Eio</span>.<span class="type">Process</span>.run proc_mgr [<span class="string">&quot;echo&quot;</span>; <span class="string">&quot;hello&quot;</span>];;</span><br><span class="line">hello</span><br><span class="line">- : <span class="built_in">unit</span> = <span class="literal">()</span></span><br></pre></td></tr></table></figure>
+
+<p>相关文档: <a target="_blank" rel="noopener" href="https://github.com/ocaml-multicore/eio#running-processes">https://github.com/ocaml-multicore/eio#running-processes</a></p>
+<p>论坛原帖：<a target="_blank" rel="noopener" href="https://discuss.ocaml.org/t/what-are-equivalent-to-some-sys-functions-in-eio-and-other-eio-questions/12126">https://discuss.ocaml.org/t/what-are-equivalent-to-some-sys-functions-in-eio-and-other-eio-questions/12126</a></p>
+<h2 id="为一个现有的Dune项目生成最小的mli文件"><a href="#为一个现有的Dune项目生成最小的mli文件" class="headerlink" title="为一个现有的Dune项目生成最小的mli文件"></a>为一个现有的Dune项目生成最小的mli文件</h2><blockquote>
+<p>Reanalyze: <a target="_blank" rel="noopener" href="https://github.com/rescript-association/reanalyze">Experimental analyses for ReScript and OCaml: globally dead values&#x2F;types, exception analysis, and termination analysis.</a></p>
+</blockquote>
+<p>reanalyze可以分析项目中的dead code, 它并不能直接实现这个需求， 但可能可以利用这些信息对实施相关分析提供一个良好的起点。</p>
+<p>论坛原帖: <a target="_blank" rel="noopener" href="https://discuss.ocaml.org/t/how-to-create-the-minimal-mli-files-using-dune/12115">https://discuss.ocaml.org/t/how-to-create-the-minimal-mli-files-using-dune/12115</a></p>
+<h2 id="自动派生枚举转换函数"><a href="#自动派生枚举转换函数" class="headerlink" title="自动派生枚举转换函数"></a>自动派生枚举转换函数</h2><p>主要想实现的是自动生成如下代码中的 <code>_foo</code> 和 <code>_bar</code> 函数。 也就是将具有无参数constructors的variant视为enum，并为每个constructor映射一个整数值:</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> my_enum = <span class="type">A</span> | <span class="type">B</span> | <span class="type">C</span> | <span class="type">D</span> | <span class="type">E</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> _foo (x : my_enum) : <span class="built_in">int</span> =</span><br><span class="line">  <span class="keyword">match</span> x <span class="keyword">with</span></span><br><span class="line">  | <span class="type">A</span> -&gt; <span class="number">0</span></span><br><span class="line">  | <span class="type">B</span> -&gt; <span class="number">1</span></span><br><span class="line">  | <span class="type">C</span> -&gt; <span class="number">2</span></span><br><span class="line">  | <span class="type">D</span> -&gt; <span class="number">3</span></span><br><span class="line">  | <span class="type">E</span> -&gt; <span class="number">4</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> _bar (n : <span class="built_in">int</span>) : my_enum =</span><br><span class="line">  <span class="keyword">match</span> n <span class="keyword">with</span></span><br><span class="line">  | <span class="number">0</span> -&gt; <span class="type">A</span></span><br><span class="line">  | <span class="number">1</span> -&gt; <span class="type">B</span></span><br><span class="line">  | <span class="number">2</span> -&gt; <span class="type">C</span></span><br><span class="line">  | <span class="number">3</span> -&gt; <span class="type">D</span></span><br><span class="line">  | <span class="number">4</span> -&gt; <span class="type">E</span></span><br><span class="line">  | _ -&gt; failwith <span class="string">&quot;not handled&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>ppx_deriving</code>有enum deriver， 可以实现,例如</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># <span class="keyword">type</span> insn = <span class="type">Const</span> | <span class="type">Push</span> | <span class="type">Pop</span> | <span class="type">Add</span> [@@deriving enum];;</span><br><span class="line"><span class="keyword">type</span> insn = <span class="type">Const</span> | <span class="type">Push</span> | <span class="type">Pop</span> | <span class="type">Add</span></span><br><span class="line"><span class="keyword">val</span> insn_to_enum : insn -&gt; <span class="built_in">int</span> = &lt;<span class="keyword">fun</span>&gt;</span><br><span class="line"><span class="keyword">val</span> insn_of_enum : <span class="built_in">int</span> -&gt; insn option = &lt;<span class="keyword">fun</span>&gt;</span><br><span class="line"><span class="keyword">val</span> min_insn : <span class="built_in">int</span> = <span class="number">0</span></span><br><span class="line"><span class="keyword">val</span> max_insn : <span class="built_in">int</span> = <span class="number">3</span></span><br><span class="line"># insn_to_enum <span class="type">Pop</span>;;</span><br><span class="line">- : <span class="built_in">int</span> = <span class="number">2</span></span><br><span class="line"># insn_of_enum <span class="number">3</span>;;</span><br><span class="line">- : insn option = <span class="type">Some</span> <span class="type">Add</span></span><br></pre></td></tr></table></figure>
+
+<p>相关文档: <a target="_blank" rel="noopener" href="https://github.com/ocaml-ppx/ppx_deriving#plugin-enum">https://github.com/ocaml-ppx/ppx_deriving#plugin-enum</a></p>
+<p>论坛原帖: <a target="_blank" rel="noopener" href="https://discuss.ocaml.org/t/auto-derive-enum-conversions/12119">https://discuss.ocaml.org/t/auto-derive-enum-conversions/12119</a></p>
+<h2 id="在Linux上编译OCaml程序，-在FreeBSD上跑"><a href="#在Linux上编译OCaml程序，-在FreeBSD上跑" class="headerlink" title="在Linux上编译OCaml程序， 在FreeBSD上跑"></a>在Linux上编译OCaml程序， 在FreeBSD上跑</h2><blockquote>
+<p>以Linux和FreeBSD都在x86-64架构上运行为例</p>
+</blockquote>
+<p>如果程序是纯OCaml（没有C bindings之类的），那么只要目标系统中有OCaml解释器(ocamlrun)， ocamlc生成的字节码就可以运行， 如果不是的话…</p>
+<p>从Linux x86-64到FreeBSD x86-64从表面上看似乎没有太大的困难。 如果知道怎么配置Linux到FreeBSD的交叉编译器（最好使用clang和FreeBSD sysroot），并且愿意维护交叉编译器,<br>可以联系<a target="_blank" rel="noopener" href="https://discuss.ocaml.org/u/jbeckford">jbeckford</a>，他愿意合作将其添加到<code>dkml-base-compiler.4.14.x</code>中。</p>
+<p>相关阅读: <a target="_blank" rel="noopener" href="https://docs.freebsd.org/en/books/handbook/linuxemu/">Linux的二进制兼容性</a></p>
+<p>论坛原帖: <a target="_blank" rel="noopener" href="https://discuss.ocaml.org/t/how-to-compile-ocaml-program-on-linux-for-running-on-freebsd/12110">https://discuss.ocaml.org/t/how-to-compile-ocaml-program-on-linux-for-running-on-freebsd/12110</a></p>
+<h2 id="OCaml的速度竞赛"><a href="#OCaml的速度竞赛" class="headerlink" title="OCaml的速度竞赛"></a>OCaml的速度竞赛</h2><blockquote>
+<p>speed-comparison: <a target="_blank" rel="noopener" href="https://github.com/niklas-heer/speed-comparison">A repo which compares the speed of different programming languages</a></p>
+</blockquote>
+<p>这里用OCaml实现了莱布尼茨算法用于计算圆周率:</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">(* ocamlopt -O2 -o leibniz leibniz.ml &amp;&amp; strip leibniz *)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">rec</span> calc sum curr upto =</span><br><span class="line">  <span class="keyword">if</span> curr &gt;= upto <span class="keyword">then</span> sum</span><br><span class="line">  <span class="keyword">else</span> calc (sum +. <span class="number">1.</span> /. float_of_int curr) (curr + <span class="number">4</span>) upto</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> calc rounds =</span><br><span class="line">  <span class="keyword">let</span> double = rounds * <span class="number">2</span> <span class="keyword">in</span></span><br><span class="line">  calc <span class="number">0.</span> (<span class="number">1</span> - double) (double + <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="literal">()</span> =</span><br><span class="line">  <span class="keyword">let</span> rounds_txt = open_in_bin <span class="string">&quot;rounds.txt&quot;</span> <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> rounds = int_of_string (input_line rounds_txt) <span class="keyword">in</span></span><br><span class="line">  close_in rounds_txt;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> pi = <span class="number">4.</span> *. calc rounds <span class="keyword">in</span></span><br><span class="line">  <span class="type">Printf</span>.printf <span class="string">&quot;%.16f\n&quot;</span> pi</span><br></pre></td></tr></table></figure>
+
+<p>但性能:</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ time ./leibniz</span><br><span class="line"><span class="number">3.1415926435899633</span></span><br><span class="line">./leibniz  <span class="number">0.38</span>s user <span class="number">0.00</span>s system <span class="number">99</span>% cpu <span class="number">0.388</span> total</span><br></pre></td></tr></table></figure>
+
+<p>比Go版本:</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">time ./leibniz_go</span><br><span class="line"><span class="number">3.141592663589326</span></span><br><span class="line">./leibniz_go  <span class="number">0.13</span>s user <span class="number">0.01</span>s system <span class="number">95</span>% cpu <span class="number">0.142</span> total</span><br></pre></td></tr></table></figure>
+
+<p>慢了很多， 这是因为从生成的<a target="_blank" rel="noopener" href="https://godbolt.org/z/xWrTxa3ov">汇编代码</a>来看， OCaml编译器无法在递归调用中unbox浮点数用于返回值。而命令式版本：</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> calc rounds =</span><br><span class="line">  <span class="keyword">let</span> sum = <span class="built_in">ref</span> <span class="number">0.</span> <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> curr = <span class="built_in">ref</span> (<span class="number">1</span> - rounds * <span class="number">2</span>) <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">for</span> _ = <span class="number">0</span> <span class="keyword">to</span> rounds - <span class="number">1</span> <span class="keyword">do</span></span><br><span class="line">    sum := !sum +. <span class="number">1.</span> /. float_of_int !curr;</span><br><span class="line">    curr := !curr + <span class="number">4</span>;</span><br><span class="line">  <span class="keyword">done</span>;</span><br><span class="line">  !sum</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="literal">()</span> =</span><br><span class="line">  <span class="keyword">let</span> rounds_txt = open_in_bin <span class="string">&quot;rounds.txt&quot;</span> <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> rounds = int_of_string (input_line rounds_txt) <span class="keyword">in</span></span><br><span class="line">  close_in rounds_txt;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> pi = <span class="number">4.</span> *. calc rounds <span class="keyword">in</span></span><br><span class="line">  <span class="type">Printf</span>.printf <span class="string">&quot;%.16f\n&quot;</span> pi</span><br></pre></td></tr></table></figure>
+<p>的性能将会好得多(<a target="_blank" rel="noopener" href="https://godbolt.org/z/sW46nh1GK">对应的汇编</a>)</p>
+<p>所以为了使数字运算的OCaml代码运行得更快，应该避免递归调用（这会抑制unbox浮点值）。</p>
+<p>论坛原帖：<a target="_blank" rel="noopener" href="https://discuss.ocaml.org/t/ocaml-speed-comparison-calculating-pi-with-leibniz-optimize/12112">https://discuss.ocaml.org/t/ocaml-speed-comparison-calculating-pi-with-leibniz-optimize/12112</a></p>
+<hr>
+<h2 id="一些库"><a href="#一些库" class="headerlink" title="一些库"></a>一些库</h2><ul>
+<li>OCaml PPX deriver for reflection : <a target="_blank" rel="noopener" href="https://github.com/thierry-martinez/refl">https://github.com/thierry-martinez/refl</a></li>
+<li>LexiFi runtime types : <a target="_blank" rel="noopener" href="https://github.com/LexiFi/lrt">https://github.com/LexiFi/lrt</a></li>
+<li>Auto generation of idiomatic bindings between Reason and JavaScript: either vanilla or typed with TypeScript&#x2F;FlowType : <a target="_blank" rel="noopener" href="https://github.com/rescript-association/genType">https://github.com/rescript-association/genType</a></li>
+</ul>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2023/05/06/OCaml_News_20230506/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+                 | 
+            
+            
+                希望路过的人可以添点柴火让这里暖和点
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    
+    
+
+  </body>
+</html>
