@@ -15,7 +15,7 @@ tags: [OCaml, Technique]
 
 ---
 
-# ？？？ - 二零二三年四月二十九日
+# ？？？ - 二〇二三年四月二十九日
 
 ## 呼吁新的 opam 存储库维护者
 [OPAM](https://opam.ocaml.org/)是OCaml的官方包管理器，它通过[opam-repository](https://github.com/ocaml/opam-repository)存储OCaml包，opam-repository由少数人力共同维护，以确保包的时效性、和高质量。OPAM的维护团队正在寻找新的贡献者来帮助他们维护opam-repository。
