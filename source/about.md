@@ -2,6 +2,8 @@
 title: 关于
 ---
 
+我现在为X档案研究所工作， <a href="https://github.com/X-FRI"> X档案研究所是一个纯粹的开源组织 <img src="https://avatars.githubusercontent.com/u/119553376?s=200&v=4" style="height: 50px; width:50px"> </a>
+
 <img src="http://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=muqiuhan" style="box-shadow: -5px -5px 10px black; border: 1px solid black; width: 50%;"/>
 
 <div style="box-shadow: 10px 10px 10px black; border: 1px solid black; padding: 3%;3%;3%;3%; margin-top: 5%; margin-bottom: 5%;">
