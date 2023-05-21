@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="含暮秋">
+
+
+    <meta name="subtitle" content="暮秋小屋">
+
+
+    <meta name="description" content="不卑不亢的码农， 朴素的民谣诗人">
+
+
+    <meta name="keywords" content="韩暮秋,MuqiuHan">
+
+
+
+
+<title>OCaml News 2023/5/21 | 暮秋小屋</title>
+
+
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/frame.js"></script>
+    
+
+
+
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+
+
+  <!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+            暮秋小屋
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/">主页</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Technique/">技术</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/Projects">项目</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/gallery/">日记本</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/about">关于</a>
+              </li> 
+                   
+          
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/OCaml/">
+                            OCaml
+                        </a>
+                    </span>    
+                
+                    <span class="post-tag">
+                        <a href="/tags/Technique/">
+                            Technique
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                OCaml News 2023/5/21
+            
+            
+        </div>
+        <span class="post-date">
+            May 21, 2023
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <h1 id="二〇二三年五月十五日-二〇二三年五月二十一日"><a href="#二〇二三年五月十五日-二〇二三年五月二十一日" class="headerlink" title="二〇二三年五月十五日 - 二〇二三年五月二十一日"></a>二〇二三年五月十五日 - 二〇二三年五月二十一日</h1><h2 id="Fmlib-browser-0-5-4"><a href="#Fmlib-browser-0-5-4" class="headerlink" title="Fmlib_browser 0.5.4"></a>Fmlib_browser 0.5.4</h2><p>之前介绍过的<a target="_blank" rel="noopener" href="https://github.com/hbr/fmlib">Fmlib: Ocaml函数式Monadic库</a>更新了其中的 <a target="_blank" rel="noopener" href="https://hbr.github.io/fmlib/odoc/fmlib_browser/">Fmlib_browser</a>模块, Fmlib_browser可以帮助用Elm-Style开发纯函数式风格的Web App。</p>
+<p>论坛原帖: <a target="_blank" rel="noopener" href="https://discuss.ocaml.org/t/ann-release-0-5-4-of-fmlib-browser/12184">https://discuss.ocaml.org/t/ann-release-0-5-4-of-fmlib-browser/12184</a></p>
+<h2 id="测试一下OCaml的FFI"><a href="#测试一下OCaml的FFI" class="headerlink" title="测试一下OCaml的FFI"></a>测试一下OCaml的FFI</h2><p>以 《<a target="_blank" rel="noopener" href="https://lemire.me/blog/2023/05/19/the-absurd-cost-of-finalizers-in-go/">The absurd cost of finalizers in Go</a>》 这篇文章作为动机，测试一下OCaml FFI方面的性能比Go好多少或差多少:</p>
+<table>
+<thead>
+<tr>
+<th>test</th>
+<th>ocaml 5.0</th>
+<th>go 1.19.9</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>native add</td>
+<td>0.3 ns</td>
+<td>0.3 ns</td>
+</tr>
+<tr>
+<td>foreign add</td>
+<td>1.5 ns</td>
+<td>60.4 ns</td>
+</tr>
+<tr>
+<td>c allocate &amp; free</td>
+<td>4.0 ns</td>
+<td>71.6 ns</td>
+</tr>
+<tr>
+<td>allocate &amp; free</td>
+<td>17.2 ns</td>
+<td>133.3 ns</td>
+</tr>
+<tr>
+<td>alloc auto</td>
+<td>125.6 ns</td>
+<td>1180 ns</td>
+</tr>
+<tr>
+<td>alloc dummy</td>
+<td>131.0 ns</td>
+<td>1197 ns</td>
+</tr>
+<tr>
+<td>alloc custom</td>
+<td>109.4 ns</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<p>但这不一定是一个准确的测试,例如应该使用<code>Sys.time</code>还是<code>Unix.gettimeofday</code>来计算时间还有待商榷， 更详细的请看论坛原帖: <a target="_blank" rel="noopener" href="https://discuss.ocaml.org/t/critique-my-use-of-ffi/12193">https://discuss.ocaml.org/t/critique-my-use-of-ffi/12193</a></p>
+<h2 id="OCaml在改善开发人员体验方面取得的进展"><a href="#OCaml在改善开发人员体验方面取得的进展" class="headerlink" title="OCaml在改善开发人员体验方面取得的进展"></a>OCaml在改善开发人员体验方面取得的进展</h2><p><a target="_blank" rel="noopener" href="https://ocaml.org/docs/platform">OCaml Platform</a>是提高OCaml工作效率的工具集。 他们在OCaml平台上所做的所有工作都有一个目标： <em>改善 OCaml开发人员的体验</em>。</p>
+<p>以下是目前正在研究并改善的一些工作流程：</p>
+<ol>
+<li><p>构建包：构建工作流的直接目标是消除与使用两种不同的工具进行包管理和构建系统相关的差异。例如OCaml开发者通常需要使用opam下载包再用dune作为构建系统构建包，为此，他们计划将opam直接集成到dune中，使其成为构建OCaml项目所需的单一工具，就像cargo一样。 这项工作也可以改进其他工作流程，例如处理多个项目，交叉编译等。</p>
+<blockquote>
+<p>计划在此: <a target="_blank" rel="noopener" href="https://discuss.ocaml.org/t/explorations-on-package-management-in-dune/12101">https://discuss.ocaml.org/t/explorations-on-package-management-in-dune/12101</a></p>
+</blockquote>
+</li>
+<li><p>编译为JavaScript： 不断改善将OCaml编译为JavaScript的工具。 改善dune与Js_of_ocaml的集成，他们也一直在致力于Dune和<a target="_blank" rel="noopener" href="https://github.com/melange-re/melange">Melange</a>的集成， Melange fork自<a target="_blank" rel="noopener" href="https://github.com/rescript-lang/rescript-compiler">ReScript</a>编译器，专注于与OCaml生态系统集成。</p>
+</li>
+<li><p>文档生成： OCaml包的文档是 OCaml2020至2022调查中的一个主要痛点。 他们正在努力改善OCaml开发人员创建高质量的文档的体验。 例如通过添加新功能、改进导航和扩展odoc标记语法以支持丰富的内容（例如表格、图像和图形）来使odoc生成的文档手册更加高质量。 初次之外还将把OCaml的编辑器支持引入Web和第三方平台，例如OCaml Playground 和 GitHub Codespaces。</p>
+</li>
+<li><p>代码格式化： 提高准确性， 增强向后兼容性， 更加深入地集成dune和ocamlformat</p>
+</li>
+</ol>
+<p>与此同时，OCaml Platform也一直在寻找新的维护者和贡献者， 具体的可以看论坛原帖: <a target="_blank" rel="noopener" href="https://discuss.ocaml.org/t/ocaml-platform-newsletter-april-2023/12187">https://discuss.ocaml.org/t/ocaml-platform-newsletter-april-2023/12187</a></p>
+<h2 id="在odoc中内嵌HTML"><a href="#在odoc中内嵌HTML" class="headerlink" title="在odoc中内嵌HTML"></a>在odoc中内嵌HTML</h2><p>通过 <code>&#123;%html: <p>foo</p> %&#125;</code> 来实现， <a target="_blank" rel="noopener" href="https://github.com/ocaml/odoc/blob/72ac2cfdf34ecc0ed574f9e4dd692f5d9b3da412/test/generators/cases/markup.mli#L142C1-L152">例如</a>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;1 Raw HTML&#125;</span><br><span class="line"></span><br><span class="line">Raw HTML can be &#123;%html:&lt;input type=&quot;text&quot; placeholder=&quot;inserted&quot;&gt;%&#125; as</span><br><span class="line">inline elements into sentences.</span><br><span class="line"></span><br><span class="line">&#123;%html:</span><br><span class="line">&lt;blockquote&gt;</span><br><span class="line">  If the raw HTML is the only thing in a paragraph, it is treated as a block</span><br><span class="line">  element, and won&#x27;t be wrapped in paragraph tags by the HTML generator.</span><br><span class="line">&lt;/blockquote&gt;</span><br><span class="line">%&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>论坛原帖：<a target="_blank" rel="noopener" href="https://discuss.ocaml.org/t/is-it-possible-to-include-inline-html-in-ocaml-documentation-odoc/12177">https://discuss.ocaml.org/t/is-it-possible-to-include-inline-html-in-ocaml-documentation-odoc/12177</a></p>
+<h2 id="开源的OCaml静态博客生成工具"><a href="#开源的OCaml静态博客生成工具" class="headerlink" title="开源的OCaml静态博客生成工具"></a>开源的OCaml静态博客生成工具</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/xhtmlboi/yocaml">YOCaml: A static site generator, mostly written in OCaml</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/roddyyaga/finch">Finch: Simple and fast site generator </a></li>
+</ul>
+<p>论坛原帖: <a target="_blank" rel="noopener" href="https://discuss.ocaml.org/t/open-source-tool-to-make-a-static-blog-in-ocaml/11967">https://discuss.ocaml.org/t/open-source-tool-to-make-a-static-blog-in-ocaml/11967</a></p>
+<h2 id="一些GADT的实践用法"><a href="#一些GADT的实践用法" class="headerlink" title="一些GADT的实践用法"></a>一些GADT的实践用法</h2><p><a target="_blank" rel="noopener" href="https://discuss.ocaml.org/t/open-source-projects-using-gadts/9640">这个帖子</a> 列出了一些使用了GADT的开源项目，除此之外，还有一篇 <a target="_blank" rel="noopener" href="https://gopiandcode.uk/logs/log-ways-of-sql-in-ocaml.html">《Petrol：使用 GADT 在 OCaml 中嵌入类型安全的 SQL API》</a>。</p>
+<p>函数式语言实现中的LR parser generator生成的代码是无类型的、不必要的低效代码，使用GADT，可以生成类型良好（不会意外崩溃或失败）且高效的解析器， 这篇论文讲了细节: <a target="_blank" rel="noopener" href="http://cambium.inria.fr/~fpottier/publis/fpottier-regis-gianas-typed-lr.pdf">Towards efficient, typed LR parsers</a></p>
+<p>论坛原帖: <a target="_blank" rel="noopener" href="https://discuss.ocaml.org/t/a-bestiary-of-gadt-examples/12143">https://discuss.ocaml.org/t/a-bestiary-of-gadt-examples/12143</a></p>
+<h2 id="对-OCaml-org-的改进"><a href="#对-OCaml-org-的改进" class="headerlink" title="对 OCaml.org 的改进"></a>对 OCaml.org 的改进</h2><p>本月，OCaml发布了从3月开始准备的一项改善 OCaml.org 的Learn板块的<a target="_blank" rel="noopener" href="https://discuss.ocaml.org/t/you-started-to-learn-ocaml-less-than-12-months-ago-please-help-us-with-our-user-survey-on-the-ocaml-org-learning-area/11945">调查结果</a>。该调查在各种平台上进行了推广，包括官方OCaml讨论平台，Discord，LinkedIn，Twitter等，并得到了积极的相应，从五月份开始，官方会根据调查结果改善Learn板块。</p>
+<p>除了的Learn板块的改进之外，官方还对文档进行了一些较小的改进，具体表现在ocaml官网的仓库中许多未完成的包含对学习区域现有文档页面更新的pr， 这些pr将在五月份合并大部分。</p>
+<p>除此之外还有大量细节的更改可以查看论坛原帖: <a target="_blank" rel="noopener" href="https://discuss.ocaml.org/t/ocaml-org-newsletter-april-2023/12173">https://discuss.ocaml.org/t/ocaml-org-newsletter-april-2023/12173</a></p>
+<h2 id="生态"><a href="#生态" class="headerlink" title="生态"></a>生态</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/dinosaure/cri">cri: IRC protocol in OCaml</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/dinosaure/bob">bob: A peer-to-peer file-transfer tool in OCaml</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/dinosaure/art">art: Adaptive Radix Tree in OCaml</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/dbuenzli/uucd">uucd: Unicode character database decoder for OCaml</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/lukstafi/ocannl">OCANNL: OCaml Compiles Algorithms for Neural Networks Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Octachron/codept">codept: Contextual Ocaml DEPendencies Tool: alternative ocaml dependency analyzer</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Armael/pp_loc">pp_loc: Pretty-printing for error source locations</a></li>
+</ul>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2023/05/19/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E4%BA%94%E6%9C%88%E5%8D%81%E4%B9%9D%E6%97%A5/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+                 | 
+            
+            
+                希望路过的人可以添点柴火让这里暖和点
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    
+    
+
+  </body>
+</html>
