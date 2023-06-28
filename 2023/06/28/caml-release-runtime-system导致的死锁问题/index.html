@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="含暮秋">
+
+
+    <meta name="subtitle" content="暮秋小屋">
+
+
+    <meta name="description" content="不卑不亢的码农， 朴素的民谣诗人">
+
+
+    <meta name="keywords" content="韩暮秋,MuqiuHan">
+
+
+
+
+<title>caml_release_runtime_system导致的死锁问题 | 暮秋小屋</title>
+
+
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/frame.js"></script>
+    
+
+
+
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+
+
+  <!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+            暮秋小屋
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/">主页</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Technique/">技术</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/Projects">项目</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/gallery/">日记本</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/about">关于</a>
+              </li> 
+                   
+          
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/Technique/">
+                            Technique
+                        </a>
+                    </span>    
+                
+                    <span class="post-tag">
+                        <a href="/tags/OCaml/">
+                            OCaml
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                caml_release_runtime_system导致的死锁问题
+            
+            
+        </div>
+        <span class="post-date">
+            Jun 28, 2023
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <p>给出一个<code>test.ml</code>:</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Printf</span>.eprintf <span class="string">&quot;hello from OCaml\n%!&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>和<code>test-ocaml-5.c</code>:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;caml/misc.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;caml/callback.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;caml/threads.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span></span><br><span class="line"><span class="title function_">main</span> <span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">fprintf</span> (<span class="built_in">stderr</span>, <span class="string">&quot;starting up ...\n&quot;</span>);</span><br><span class="line">    caml_startup (argv);</span><br><span class="line">    <span class="built_in">fprintf</span> (<span class="built_in">stderr</span>, <span class="string">&quot;acquiring ...\n&quot;</span>);</span><br><span class="line">    caml_acquire_runtime_system ();</span><br><span class="line">    <span class="built_in">fprintf</span> (<span class="built_in">stderr</span>, <span class="string">&quot;acquired\n&quot;</span>);</span><br><span class="line">    <span class="comment">// here is where I would be calling an OCaml callback</span></span><br><span class="line">    <span class="comment">// omitted for simplicity</span></span><br><span class="line">    caml_release_runtime_system ();</span><br><span class="line">    <span class="built_in">exit</span> (<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后用OCaml5的ocaml native compiler编译一下（这里我用的是<code>ocaml-variants.5.0.0+options</code>）：<br><code>ocamlopt -g test-ocaml-5.c test.ml -o test-ocaml-5</code></p>
+<p>运行<code>test-ocaml-5</code> 会出现:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">starting up ...</span><br><span class="line">hello from OCaml</span><br><span class="line">acquiring ...</span><br><span class="line">Fatal error: Fatal error during lock: Resource deadlock avoided</span><br><span class="line"></span><br><span class="line">[1]    8998 IOT instruction (core dumped)  ./test-ocaml-5</span><br></pre></td></tr></table></figure>
+
+<p>这里我尝试了一下 4.14.0 和 4.14.1 ， 都没有出现这个情况，而如果用<code>threads</code>编译的话:<br><code>ocamlopt -g -I +unix unix.cmxa -I +threads threads.cmxa test-ocaml-5.c test.ml -o test-ocaml-5</code></p>
+<p>无论在5.0还是4.14.x，都会挂起。</p>
+<p>出现这个问题的一个可能原因是，在<code>test-ocaml-5.c</code>中，我在开头调用了<code>caml_startup()</code>，这会让当前线程获取锁，而<code>caml_acquire_runtime_system()</code>会再次获取它，<code>caml_acquire_runtime_system()</code> 应该在<code>caml_release_runtime_system（）</code>之后调用：</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span></span><br><span class="line">main (<span class="built_in">int</span> argc, <span class="built_in">char</span> *argv<span class="literal">[]</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    fprintf (stderr, <span class="string">&quot;starting up ...\n&quot;</span>);</span><br><span class="line">    caml_startup (argv);</span><br><span class="line">    fprintf (stderr, <span class="string">&quot;acquiring ...\n&quot;</span>);</span><br><span class="line">    caml_release_runtime_system <span class="literal">()</span>;</span><br><span class="line">    caml_acquire_runtime_system <span class="literal">()</span>;</span><br><span class="line">    fprintf (stderr, <span class="string">&quot;acquired\n&quot;</span>);</span><br><span class="line">    exit (<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果为:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">starting up ...</span><br><span class="line">hello from OCaml</span><br><span class="line">acquiring ...</span><br><span class="line">acquired</span><br></pre></td></tr></table></figure>
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+                <div class="icon arrow-left"></div>
+                <div class="post-link">
+                    <a href="/2023/06/28/%E9%9A%90%E8%97%8F%E4%B8%80%E4%BA%9BOCaml-Effect%E7%9A%84%E6%9C%BA%E5%88%B6%EF%BC%8C%E8%AE%A9%E5%85%B6%E8%AF%AD%E6%B3%95%E5%9C%A8%E7%B2%BE%E7%A5%9E%E4%B8%8A%E6%9B%B4%E6%8E%A5%E8%BF%91delimcc/">Prev</a>
+                </div>
+            
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2023/06/22/%E7%81%AF%E7%AC%BC%E8%8D%89/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+                 | 
+            
+            
+                希望路过的人可以添点柴火让这里暖和点
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    
+    
+
+  </body>
+</html>
