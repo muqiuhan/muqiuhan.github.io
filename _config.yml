@@ -7,13 +7,13 @@ title: 暮秋小屋
 subtitle: '暮秋小屋'
 description: '不卑不亢的码农， 朴素的民谣诗人'
 keywords: 韩暮秋,MuqiuHan
-author: 含暮秋
+author: 韩暮秋
 language: en
 timezone: ''
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: https://muqiuhan.github.io
+url: http://muqiu-han.cn
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
