@@ -2,12 +2,13 @@
 title: 关于
 ---
 
-# 你好呀，我是韩暮秋
+# 我是韩暮秋
+> 以下是我的生活，学习以及工作梗概：
 
 - Github: https://github.com/muqiuhan
 - QQ群: [780653172](http://qm.qq.com/cgi-bin/qm/qr?_wv%253D1027%2526k%253DAdCEKMDgAUg2ppuYqPt-OUeXBUG_jFN0%2526authKey%253D4%252FlDBj2jxzc32hN756pW2wlDkaNR%252FqrstHr6hsIy%252B6pfeRnvPvS7QBMUgeQfkp2V%2526noverify%253D0%2526group_code%253D780653172)
 
-今年十八岁， 热爱医学， 计算机科学与民谣， 在 <a href="https://github.com/X-FRI"> X档案研究所 <img src="https://avatars.githubusercontent.com/u/119553376?s=200&v=4" style="width: 50px;"> </a> 工作。
+热爱医学， 计算机科学与民谣， 在 <a href="https://github.com/X-FRI"> X档案研究所 <img src="https://avatars.githubusercontent.com/u/119553376?s=200&v=4" style="width: 50px;"> </a> 工作。
 
 ## 计算机科学
 
@@ -48,8 +49,8 @@ title: 关于
 ## 医学
 > [Medical-Books: LaTeX写的中文开源医学书籍](https://github.com/muqiuhan/medical-books)
 
-- 中草药： 我处在一个很小的世界里面，这个世界有很多奇怪的花花草草 
-- 精神病学： 人们奇奇怪怪， ta们有时发呆， 发呆好像可以暂缓呼吸， 暂停住坏天气。 有人没流过一滴眼泪却被大雨包围， 还有人在繁华落空时看光阴散落下的满眼飞鸿。
+- 中草药： 我处在一个很小的世界里面，这个世界有很多奇怪的花花草草，我想认识认识他们
+- 精神病学： 我想知道自己在想什么。
 
 
 ## 民谣
