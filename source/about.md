@@ -9,12 +9,6 @@ title: 关于
 
 今年十八岁， 热爱医学， 计算机科学与民谣， 在 <a href="https://github.com/X-FRI"> X档案研究所 <img src="https://avatars.githubusercontent.com/u/119553376?s=200&v=4" style="width: 50px;"> </a> 工作。
 
-## 医学
-> [Medical-Books: LaTeX写的中文开源医学书籍](https://github.com/muqiuhan/medical-books)
-
-- 中草药： 我处在一个很小的世界里面，这个世界有很多奇怪的花花草草 
-- 精神病学： 人们奇奇怪怪， ta们有时发呆， 发呆好像可以暂缓呼吸， 暂停住坏天气。 有人没流过一滴眼泪却被大雨包围， 还有人在繁华落空时看光阴散落下的满眼飞鸿。
-
 ## 计算机科学
 
 <div style="float: right">
@@ -50,6 +44,12 @@ title: 关于
 
 ### Other
 - [Simlog: Simple OCaml Log Library, really crude](https://github.com/muqiuhan/simlog)
+
+## 医学
+> [Medical-Books: LaTeX写的中文开源医学书籍](https://github.com/muqiuhan/medical-books)
+
+- 中草药： 我处在一个很小的世界里面，这个世界有很多奇怪的花花草草 
+- 精神病学： 人们奇奇怪怪， ta们有时发呆， 发呆好像可以暂缓呼吸， 暂停住坏天气。 有人没流过一滴眼泪却被大雨包围， 还有人在繁华落空时看光阴散落下的满眼飞鸿。
 
 
 ## 民谣
