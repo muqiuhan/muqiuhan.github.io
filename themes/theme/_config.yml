@@ -11,8 +11,8 @@ logo_image:
 
 menu:
   主页: /
-  技术: /tags/Technique/
   日记本: /categories/gallery/
+  技术: /tags/Technique/
   关于: /about
 
 # stylesheets loaded in the <head>
