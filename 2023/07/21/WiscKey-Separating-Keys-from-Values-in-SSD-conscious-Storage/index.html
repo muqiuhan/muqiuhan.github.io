@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="韩暮秋">
+
+
+    <meta name="subtitle" content="暮秋小屋">
+
+
+    <meta name="description" content="这里是暮秋小屋，思念和灵感的寄存处">
+
+
+    <meta name="keywords" content="韩暮秋,MuqiuHan">
+
+
+
+
+<title>WiscKey: Separating Keys from Values in SSD-conscious Storage | 暮秋小屋</title>
+
+
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/frame.js"></script>
+    
+
+
+
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+
+
+  <!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+            暮秋小屋
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/">主页</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/gallery/">日记本</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Technique/">计算机科学</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Medicine/">医学</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Life/">生活</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/about">关于</a>
+              </li> 
+                   
+          
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/Technique/">
+                            Technique
+                        </a>
+                    </span>    
+                
+                    <span class="post-tag">
+                        <a href="/tags/Database/">
+                            Database
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                WiscKey: Separating Keys from Values in SSD-conscious Storage
+            
+            
+        </div>
+        <span class="post-date">
+            Jul 21, 2023
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <p>We present WiscKey, a persistent LSM-tree-based key-value store with a performance-oriented data layoutthat separates keys from values to minimize I&#x2F;O amplifi-cation. The design of WiscKey is highly SSD optimized, leveraging both the sequential and random performance characteristics of the device.</p>
+<ul>
+<li><a href="/papers/WiscKey:%20Separating%20Keys%20from%20Values%20in%20SSD-conscious%20Storage.pdf">原始论文</a></li>
+</ul>
+<p>WiscKey是一种基于LSM-Tree的kv存储，它的实现很简单： 将键和值分开存储， 这么做可以显著的减少I&#x2F;O放大。</p>
+<p>WiscKey的设计是针对SSD优化的，充分利用了SSD的性能并提出了一种轻量的GC方案， 除此之外还分析了现代存储硬件的特性和LSM树的读写放大的问题。</p>
+<p>总的来说，WiscKey是基于SSD硬件特性而重新设计的存储结构。虽然LevelDB也是一种键值存储引擎，但它并没有像WiscKey那样专门为SSD硬件而设计。因此，如果将LevelDB的存储结构按照SSD硬件的特性进行优化，可能会提高一些性能，但是不一定能够达到WiscKey的性能水平。</p>
+<h2 id="笔记"><a href="#笔记" class="headerlink" title="笔记"></a>笔记</h2><ul>
+<li><p>The main data structures in LevelDB are an on-disk log file, two in-memory sorted skiplists (memtableand immutable memtable), and seven levels (L0 to L6) of on-disk Sorted String Table (SSTable) files</p>
+<blockquote>
+<p>LSM-trees的内部的各种组件可以使用任意索引结构来实现。通常内存组件会使用skiplist或B+树等并发数据结构，而磁盘组件会使用B+树或SSTables（SSTable包含一个数据块列表和一个索引块：数据块存储按键排序的键值对，索引块存储所有数据块的键范围）</p>
+</blockquote>
+</li>
+<li><p>how LSM-trees maintainsequential I&#x2F;O access by increasing I&#x2F;O amplification.</p>
+<blockquote>
+<p>具体来说，LSM-trees的写放大是指每次写入操作都需要将数据追加到写前日志中，并加入到内存组件C0中。当C0的大小达到一定阈值时，C0会与磁盘上的C1进行归并排序操作，生成新的组件new-C1，并将其顺序写入磁盘，取代旧版本的C1。类似地，当C1的大小达到一定阈值时，C1会与下一层组件Ci+1合并。这种归并排序的过程可以保证数据在磁盘上的存储是有序的，从而保持顺序I&#x2F;O访问</p>
+</blockquote>
+</li>
+<li><p>First, WiscKey separates keys from values, keeping only keys in theLSM-tree and the values in a separate log file. Second,to deal with unsorted values (which necessitate random access during range queries), WiscKey uses the parallel random-read characteristic of SSD devices. Third, WiscKey utilizes unique crash-consistency and garbage-collection techniques to efficiently manage the value log.Finally, WiscKey optimizes performance by removingthe LSM-tree log without sacrificing consistency, thusreducing system-call overhead from small writes.</p>
+<blockquote>
+<p>这是WiscKey的主要优化方式</p>
+</blockquote>
+</li>
+<li><p>For range queries, LevelDB provides the user with an iterator-based interface with Seek(key), Next(), Prev(),Key() and Value() operations. To scan a range of key-value pairs, users can first Seek() to the starting key, then call Next() or Prev() to search keys one by one. To retrieve the key or the value of the current iterator position, users call Key() or Value(), respectively.</p>
+<blockquote>
+<p>如果要查询某个key范围的数据，LevelDB会先找到该范围的起始key在哪个SSTable中，然后按照顺序读取该SSTable中的数据，直到读取到范围之外的key为止。</p>
+<p>而读取SSTable中的数据是通过Binary Search来实现的。为了加速Search，LevelDB为每个SSTable建立了一个稀疏索引，用来记录每个数据块的最大key和最小key。</p>
+</blockquote>
+</li>
+</ul>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+                <div class="icon arrow-left"></div>
+                <div class="post-link">
+                    <a href="/2023/07/26/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%B8%89%E5%B9%B4%E4%B8%83%E6%9C%88%E4%BA%8C%E5%8D%81%E5%85%AD%E6%97%A5/">Prev</a>
+                </div>
+            
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2023/06/29/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%B8%89%E5%B9%B4%E5%85%AD%E6%9C%88%E4%BA%8C%E5%8D%81%E4%B9%9D%E6%97%A5/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+                 | 
+            
+            
+                希望路过的人可以添点柴火让这里暖和点
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    
+    
+
+  </body>
+</html>
