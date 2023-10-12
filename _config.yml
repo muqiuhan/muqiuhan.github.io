@@ -103,3 +103,31 @@ theme: theme
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: ''
+
+math:
+  # Default (false) will load mathjax / katex script on demand.
+  # That is it only render those page which has `mathjax: true` in front-matter.
+  # If you set it to true, it will load mathjax / katex script EVERY PAGE.
+  every_page: false
+
+  mathjax:
+    enable: true
+    # Available values: none | ams | all
+    tags: none
+
+  katex:
+    enable: false
+    # See: https://github.com/KaTeX/KaTeX/tree/master/contrib/copy-tex
+    copy_tex: false
+
+mathjax:
+  tags: none # or 'ams' or 'all'
+  single_dollars: true # enable single dollar signs as in-line math delimiters
+  cjk_width: 0.9 # relative CJK char width
+  normal_width: 0.6 # relative normal (monospace) width
+  append_css: true # add CSS to pages rendered by MathJax
+  every_page: false # if true, every page will be rendered by MathJax regardless the `mathjax` setting in Front-matter
+  packages: # extra packages to load
+  extension_options: {}
+    # you can put your extension options here
+    # see http://docs.mathjax.org/en/latest/options/input/tex.html#tex-extension-options for more detail
