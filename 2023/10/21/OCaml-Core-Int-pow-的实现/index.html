@@ -175,6 +175,22 @@
 <p>其实现在 <a target="_blank" rel="noopener" href="https://github.com/janestreet/base/blob/494a0876168d24cda695cbb9a3d86ad8d1eb97d8/src/int_math_stubs.c#L56-L92">src&#x2F;int_math_stubs.c</a> 中:</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">int64_t</span> <span class="title function_">int_pow</span><span class="params">(<span class="type">int64_t</span> base, <span class="type">int64_t</span> exponent)</span> &#123;</span><br><span class="line">  <span class="type">int64_t</span> ret = <span class="number">1</span>;</span><br><span class="line">  <span class="type">int64_t</span> mul[<span class="number">4</span>];</span><br><span class="line">  mul[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">  mul[<span class="number">1</span>] = base;</span><br><span class="line">  mul[<span class="number">3</span>] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (exponent != <span class="number">0</span>) &#123;</span><br><span class="line">    mul[<span class="number">1</span>] *= mul[<span class="number">3</span>];</span><br><span class="line">    mul[<span class="number">2</span>] = mul[<span class="number">1</span>] * mul[<span class="number">1</span>];</span><br><span class="line">    mul[<span class="number">3</span>] = mul[<span class="number">2</span>] * mul[<span class="number">1</span>];</span><br><span class="line">    ret *= mul[exponent &amp; <span class="number">3</span>];</span><br><span class="line">    exponent &gt;&gt;= <span class="number">2</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>这是一个四分快速幂的实现，它是二分快速幂的一种变种。二分快速幂将指数分为两部分，然后递归地计算每一部分的结果。<br>而四分快速幂将指数分为四部分，然后递归地计算每一部分的结果。<br>这里通过将指数右移2位（相当于除以4）和使用位与操作来实现，进一步减少了乘法次数。</p>
+<p>主要步骤：</p>
+<ul>
+<li>初始化返回值ret为1，和一个包含4个元素的数组mul, mul[0]和mul[3]被初始化为1， mul[1]被初始化为基数</li>
+<li>当指数不为0时，执行循环, 在每次循环中，首先更新mul数组的值<blockquote>
+<p>mul[1]是基数和mul[3]的乘积，mul[2]是mul[1]的平方，mul[3]是mul[2]和基数的乘积</p>
+</blockquote>
+</li>
+<li>然后，将ret乘以mul数组中的一个元素, 这个元素的索引是指数和3的位与运算的结果<blockquote>
+<p>这样做的目的是为了选择正确的乘数，因为指数被分解为4的倍数</p>
+</blockquote>
+</li>
+<li>最后，将指数右移2位，相当于将指数除以4</li>
+<li>当指数变为0时，循环结束，返回ret</li>
+</ul>
+<p>这个实现的优点是它可以在对数时间内计算出幂运算，而且每次循环只需要4次乘法。这比标准的二分快速幂算法需要的乘法次数更少。</p>
 
 </div> 
 
