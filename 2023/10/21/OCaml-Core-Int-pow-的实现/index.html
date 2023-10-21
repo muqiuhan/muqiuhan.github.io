@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="韩暮秋">
+
+
+    <meta name="subtitle" content="暮秋小屋">
+
+
+    <meta name="description" content="这里是暮秋小屋，思念和灵感的寄存处">
+
+
+    <meta name="keywords" content="韩暮秋,MuqiuHan">
+
+
+
+
+<title>OCaml Core.Int.pow 的实现 | 暮秋小屋</title>
+
+
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/frame.js"></script>
+    
+
+
+
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+
+
+  <meta name="generator" content="Hexo 6.3.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+            暮秋小屋
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/">主页</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/gallery/">日记本</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Technique/">计算机科学</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Medicine/">医学</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Life/">生活</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/about">关于</a>
+              </li> 
+                   
+          
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/Technique/">
+                            Technique
+                        </a>
+                    </span>    
+                
+                    <span class="post-tag">
+                        <a href="/tags/OCaml/">
+                            OCaml
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                OCaml Core.Int.pow 的实现
+            
+            
+        </div>
+        <span class="post-date">
+            Oct 21, 2023
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <p>Core内部直接引用的Base的实现， Base的实现在 <a target="_blank" rel="noopener" href="https://github.com/janestreet/base/blob/494a0876168d24cda695cbb9a3d86ad8d1eb97d8/src/int_math.ml#L11-L18">src&#x2F;int_math.ml</a> 中：</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> int_pow base exponent =</span><br><span class="line">  <span class="keyword">if</span> exponent &lt; <span class="number">0</span> <span class="keyword">then</span> negative_exponent <span class="literal">()</span>;</span><br><span class="line">  <span class="keyword">if</span> abs base &gt; <span class="number">1</span></span><br><span class="line">     &amp;&amp; (exponent &gt; <span class="number">63</span></span><br><span class="line">         || abs base &gt; <span class="type">Pow_overflow_bounds</span>.int_positive_overflow_bounds.(exponent))</span><br><span class="line">  <span class="keyword">then</span> overflow <span class="literal">()</span>;</span><br><span class="line">  int_math_int_pow base exponent</span><br><span class="line">;;</span><br></pre></td></tr></table></figure>
+
+<p>其中 <code>int_math_int_pow()</code> 由 C 实现:</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">external</span> int_math_int_pow : <span class="built_in">int</span> -&gt; <span class="built_in">int</span> -&gt; <span class="built_in">int</span> = <span class="string">&quot;Base_int_math_int_pow_stub&quot;</span> [@@noalloc]</span><br></pre></td></tr></table></figure>
+
+<p>其实现在 <a target="_blank" rel="noopener" href="https://github.com/janestreet/base/blob/494a0876168d24cda695cbb9a3d86ad8d1eb97d8/src/int_math_stubs.c#L56-L92">src&#x2F;int_math_stubs.c</a> 中:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">int64_t</span> <span class="title function_">int_pow</span><span class="params">(<span class="type">int64_t</span> base, <span class="type">int64_t</span> exponent)</span> &#123;</span><br><span class="line">  <span class="type">int64_t</span> ret = <span class="number">1</span>;</span><br><span class="line">  <span class="type">int64_t</span> mul[<span class="number">4</span>];</span><br><span class="line">  mul[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">  mul[<span class="number">1</span>] = base;</span><br><span class="line">  mul[<span class="number">3</span>] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (exponent != <span class="number">0</span>) &#123;</span><br><span class="line">    mul[<span class="number">1</span>] *= mul[<span class="number">3</span>];</span><br><span class="line">    mul[<span class="number">2</span>] = mul[<span class="number">1</span>] * mul[<span class="number">1</span>];</span><br><span class="line">    mul[<span class="number">3</span>] = mul[<span class="number">2</span>] * mul[<span class="number">1</span>];</span><br><span class="line">    ret *= mul[exponent &amp; <span class="number">3</span>];</span><br><span class="line">    exponent &gt;&gt;= <span class="number">2</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2023/10/13/%E8%82%9D%E5%8A%9F%E8%83%BD%E6%A3%80%E6%9F%A5%E5%8C%96%E9%AA%8C%E5%8D%95/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+                 | 
+            
+            
+                希望路过的人可以添点柴火让这里暖和点
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    
+    
+
+  </body>
+</html>
