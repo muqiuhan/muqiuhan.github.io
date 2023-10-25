@@ -10,8 +10,7 @@ ness and reduced range of motion, and numbness and paresthesias in his left uppe
 extremity. Ten years prior to presentation, he underwent surgical decompression for
 syringomyelia. A magnetic resonance imaging (MRI) scan of his cervical and thoracic
 spine performed 2 years prior to presentation revealed a recurrent syrinx extending from
-Cl
- C1 to T11, which was not resected because it did not cause symptoms at that time. On
+Cl C1 to T11, which was not resected because it did not cause symptoms at that time. On
 physical examination, he had mild tenderness to palpation and reduced range of motion
 of the left shoulder with abduction and flexion limited to 120° (normal range of motion,
 180°). The left scapular muscles were atrophic, and pain and temperature sensation
