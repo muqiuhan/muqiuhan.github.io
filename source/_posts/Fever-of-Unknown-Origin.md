@@ -5,14 +5,11 @@ tags: Medicine
 ---
 
 
-Fever of unknown origin (FUO) has been recognized as a disease state for over
-100 years. The first commonly accepted definition of FUO was published in 1961
-and included (1) fever greater than 101 F (38.3 C) on multiple occasions (2) at least
-3 week duration of fever (3) without identifiable cause despite at least a 1 week inpa-
-tient evaluation.1 Overtime, this definition was considered both too rigid and too ill
-defined. Given the impracticality of prolonged hospitalizations and advancing technol-
-ogy for diagnosis, the duration of work up was shortened to 3 days inpatient evaluation
-and/or 3 outpatient clinic visits.2
+Fever of unknown origin (FUO) has been recognized as a disease state for over100 years.
+The first commonly accepted definition of FUO was published in 1961 and included fever greater than 101F (38.3C) on multiple occasions at least 3 week duration of fever without identifiable cause despite at least a 1 week inpatient evaluation.
+
+Overtime, this definition was considered both too rigid and too ill defined.
+Given the impracticality of prolonged hospitalizations and advancing technology for diagnosis, the duration of work up was shortened to 3 days inpatient evaluation and/or 3 outpatient clinic visits.
 
 - [Original Document](/papers/Fever%20of%20Unknown%20Origin.pdf)
 
