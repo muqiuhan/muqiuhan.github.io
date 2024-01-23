@@ -20,7 +20,7 @@
 
 
 
-<title>A Brief History of Just-In-Time | 暮秋小屋</title>
+<title>G-Machine | 暮秋小屋</title>
 
 
 
@@ -139,24 +139,18 @@
                             Technique
                         </a>
                     </span>    
-                
-                    <span class="post-tag">
-                        <a href="/tags/Compilation/">
-                            Compilation
-                        </a>
-                    </span>    
                            
             
         </div>
         <div class="post-title">
             
             
-                A Brief History of Just-In-Time
+                G-Machine
             
             
         </div>
         <span class="post-date">
-            Sep 28, 2023
+            Jan 23, 2024
         </span>
     </div>
     <div class="post-img">
@@ -166,30 +160,24 @@
     </div>
 </div>
     <div class="post-content">
-    <p>Software systems have been using “just-in-time” compilation (JIT) techniques since the<br>1960s. Broadly, JIT compilation includes any translation performed dynamically, after a<br>program has started execution. We examine the motivation behind JIT compilation and<br>constraints imposed on JIT compilation systems, and present a classification scheme for<br>such systems. This classification emerges as we survey forty years of JIT work, from<br>1960–2000.</p>
-<ul>
-<li><a href="/papers/A%20Brief%20History%20of%20Just-In-Time.pdf">论文链接</a></li>
+    <ul>
+<li><a target="_blank" rel="noopener" href="https://link.springer.com/chapter/10.1007/3-540-15975-4_50">The G-machine: A fast, graph-reduction evaluator</a></li>
 </ul>
-<p>主要介绍了JIT的历史和发展过程， 从上世纪六十年代开始， 一直到现在的第四代JIT系统， 大概有三点：</p>
+<p>G-Machine 是一种通过图规约来对函数式语言程序求值的抽象架构。<br>与组合子规约不同，组合子规约的control是从表达式图本身动态导出的，而G-Machine是由通过编译Application表达式导出的指令序列指定的。</p>
+<hr>
+<p>FP的程序基本上都可以用一个表达式的图表示，图计算机就是对这个图求值的机器，总的说来对图的求值是一个不停合并图上的节点生产新节点的过程。</p>
+<p>例如：</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> x = <span class="number">2</span> + <span class="number">3</span> <span class="keyword">in</span> </span><br><span class="line">  x * x</span><br></pre></td></tr></table></figure>
+
+<p>先计算出5，然后创建一个新的节点 <code>5 * 5</code>，然后再对这个节点求值，于是求值过程中就产生了很多临时的节点，这些中间节点也被叫做是 spine，求值过程是沿着 spine 进行的。</p>
+<p>但是这样就产生了很多额外的开销，lambda lifting 里提到：可以把程序里，很多捕捉了外围绑定的闭包函数中的这些绑定，转换成函数的参数，从而消除闭包，得到的这个函数就可以自由脱离作用域，被静态的编译到机器码里。这些被 float out 的函数也叫 supercombinator.</p>
+<p>在上面的代码中，如果不创建新的节点，顺序计算完了第一个 <code>x</code>，第二个 <code>x</code> 还会再被算一遍。</p>
+<p>Spineless reduction 的概念：只有当面临需要重复计算的情况时，才去创建节点，不然就一路顺序算下去</p>
 <ul>
-<li>介绍了JIT每一代出现的动机和约束条件</li>
-<li>介绍了对各种JIT技术的分类方式<blockquote>
-<ol>
-<li>Invocation</li>
-<li>Executability</li>
-<li>Concurrency</li>
-</ol>
-</blockquote>
-</li>
-<li>介绍了各个时期JIT技术的实现方式和优缺点</li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Graph_reduction">Graph reduction</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Graph_reduction_machine">Graph reduction machine</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/54834531/answer/144213668">https://www.zhihu.com/question/54834531/answer/144213668</a></li>
 </ul>
-<p>除此之外还介绍了JIT的工具包以及它们在三个不同的方面的支持程度, 分别是</p>
-<ul>
-<li>Binary code generation.</li>
-<li>Cache coherence.</li>
-<li>Execution.</li>
-</ul>
-<p>总体来说，这篇论文算是一个概览，可以当成一个JIT相关论文的查询目录了，它把这过程中的所有研究全部以时间线的方式梳理起来，最后总结分类。</p>
 
 </div> 
 
@@ -201,17 +189,12 @@
     <nav class="post-nav">
         <div class="prev-item">
            
-                <div class="icon arrow-left"></div>
-                <div class="post-link">
-                    <a href="/2023/10/05/v8%E4%B8%AD%E7%9A%84Number-toString/">Prev</a>
-                </div>
-            
         </div>
         <div class="next-item">
             
                 <div class="icon arrow-right"></div>
                 <div class="post-link">
-                  <a href="/2023/09/13/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E4%B9%9D%E6%9C%88%E5%8D%81%E4%B8%89%E6%97%A5/">Next</a>  
+                  <a href="/2024/01/23/%E6%85%A2%E6%80%A7%E8%82%BA%E6%BA%90%E6%80%A7%E5%BF%83%E8%84%8F%E7%97%85/">Next</a>  
                 </div>  
             
         </div>
