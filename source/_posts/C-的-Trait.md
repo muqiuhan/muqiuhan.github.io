@@ -1,6 +1,6 @@
 ---
 title: C++ 的 Trait
-date: 2024-05-13 11:07:52
+date: 2024-05-04 11:07:52
 tags: [Technique, C++]
 ---
 

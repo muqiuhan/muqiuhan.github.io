@@ -1,6 +1,6 @@
 ---
 title: Rust Partial 语义
-date: 2024-05-13 11:12:26
+date: 2024-05-02 11:12:26
 tags: [Technique, Rust]
 ---
 
