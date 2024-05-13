@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="韩暮秋">
+
+
+    <meta name="subtitle" content="暮秋小屋">
+
+
+    <meta name="description" content="这里是暮秋小屋，思念和灵感的寄存处">
+
+
+    <meta name="keywords" content="韩暮秋,MuqiuHan">
+
+
+
+
+<title>C++ 的 Trait | 暮秋小屋</title>
+
+
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/frame.js"></script>
+    
+
+
+
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+
+
+  <meta name="generator" content="Hexo 6.3.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+            暮秋小屋
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/">主页</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/gallery/">日记本</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Medicine/">医学</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Technique/">计算机科学</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Life/">生活</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/about">关于</a>
+              </li> 
+                   
+          
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/Technique/">
+                            Technique
+                        </a>
+                    </span>    
+                
+                    <span class="post-tag">
+                        <a href="/tags/C/">
+                            C++
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                C++ 的 Trait
+            
+            
+        </div>
+        <span class="post-date">
+            May 4, 2024
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <blockquote>
+<p>C++ 的 traits 技术，是一种约定俗称的技术方案，用来为同一类数据（包括自定义数据类型和内置数据类型）提供统一的类型名（traits），这样可以统一的操作函数，例如 advance(), swap(), encode()&#x2F;decode() 等。</p>
+</blockquote>
+<p>例如，拥有义类型Foo, Bar，以及编译器自带类型 int, double, string，我们想要为这些不同的类型提供统一的编码函数 decode() 。</p>
+<p>除了使用 trait 技术之外，函数重载和模板函数 + 内置字段也可以实现，前者每增加一种数据类型就需要重新实现一个函数，而同一类数据（int, unsinged int）可以使用同样的编码方法。我们想要的是针对同一种数据类型，只编写一个函数。后者对于系统自定义变量 int, double 而言，是无法在其内部定义 type 的。</p>
+<p>traits 技术的关键在于，使用另外的模板类 type_traits 来保存不同数据类型的 type，这样就可以兼容自定义数据类型和内置数据类型:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义数据 type 类</span></span><br><span class="line"><span class="keyword">enum</span> <span class="title class_">Type</span> &#123;</span><br><span class="line">  TYPE_1,</span><br><span class="line">  TYPE_2,</span><br><span class="line">  TYPE_3</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于自定义类型，在类内部定义 type，然后在 traits 类中定义同样的 type:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 自定义数据类型</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  Type type = TYPE_1;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Bar</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  Type type = TYPE_2;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">type_traits</span> &#123;</span><br><span class="line">  Type type = T::type;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于内置数据类型，使用模板类的特化为自定义类型生成独有的 type_traits:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 内置数据类型</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> <span class="type">int</span>&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">type_traits</span> &#123;</span><br><span class="line">  Type type = Type::TYPE_1;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> <span class="type">double</span>&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">type_traits</span> &#123;</span><br><span class="line">  Type type = Type::TYPE_3;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样就可以为不同数据类型生成统一的模板函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 统一的编码函数</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="type">void</span> decode&lt;<span class="type">const</span> T&amp; data, <span class="type">char</span>* buf) &#123;</span><br><span class="line">  <span class="keyword">if</span>(type_traits&lt;T&gt;::type == Type::TYPE_1) &#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(type_traits&lt;T&gt;::type == Type::TYPE_2) &#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>总结</p>
+<ul>
+<li>traits 技术的关键在于使用第三方模板类 traits，利用模板特化的功能, 实现对自定义数据和编译器内置数据的统一</li>
+<li>这个例子使用了枚举变量来表示数据类型，而实际操作中通常使用不同的类来表示不同的类型，这样可以在编写模板函数时更好的优化。</li>
+<li>tratis 技术常见于标准库的实现中，但对日常开发中降低代码冗余也有很好的借鉴意义</li>
+<li>C++20 提供了Concept 的特性，使用Concept 可以使得实现类似的功能更加方便</li>
+</ul>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+                <div class="icon arrow-left"></div>
+                <div class="post-link">
+                    <a href="/2024/05/07/%E4%BA%8C%E3%80%87%E4%BA%8C%E5%9B%9B%E5%B9%B4%E4%BA%94%E6%9C%88%E4%B8%83%E6%97%A5/">Prev</a>
+                </div>
+            
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2024/05/03/Rust-NewType-%E6%A8%A1%E5%BC%8F/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+                 | 
+            
+            
+                希望路过的人可以添点柴火让这里暖和点
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    
+    
+
+  </body>
+</html>

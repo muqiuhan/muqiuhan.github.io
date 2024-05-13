@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="韩暮秋">
+
+
+    <meta name="subtitle" content="暮秋小屋">
+
+
+    <meta name="description" content="这里是暮秋小屋，思念和灵感的寄存处">
+
+
+    <meta name="keywords" content="韩暮秋,MuqiuHan">
+
+
+
+
+<title>C++ vector 的 push_back 和 emplace_back | 暮秋小屋</title>
+
+
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/frame.js"></script>
+    
+
+
+
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+
+
+  <meta name="generator" content="Hexo 6.3.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+            暮秋小屋
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/">主页</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/gallery/">日记本</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Medicine/">医学</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Technique/">计算机科学</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Life/">生活</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/about">关于</a>
+              </li> 
+                   
+          
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/Technique/">
+                            Technique
+                        </a>
+                    </span>    
+                
+                    <span class="post-tag">
+                        <a href="/tags/C/">
+                            C++
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                C++ vector 的 push_back 和 emplace_back
+            
+            
+        </div>
+        <span class="post-date">
+            May 11, 2024
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// Inserts a new element at the end of the vector, right after its current last element. This new element is constructed in place using args as the arguments for its constructor.</span></span><br><span class="line"><span class="comment">/// This effectively increases the container size by one, which causes an automatic reallocation of the allocated storage space if -and only if- the new vector size surpasses the current vector capacity.</span></span><br><span class="line"><span class="comment">/// The element is constructed in-place by calling allocator_traits::construct with args forwarded.</span></span><br><span class="line"><span class="comment">///A similar member function exists, push_back, which either copies or moves an existing object into the container.</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span>... Args&gt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">emplace_back</span> <span class="params">(Args&amp;&amp;... args)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p><code>push_back</code> 会构造一个临时对象，这个临时对象会被拷贝或者移入到容器中，然而 <code>emplace_back</code> 会直接根据传入的参数在容器的适当位置进行构造而避免拷贝或者移动。</p>
+<p>传统观点认为 <code>push_back</code> 会构造一个临时对象，这个临时对象会被移入到 v 中，然而 <code>emplace_back</code> 会直接根据传入的参数在适当位置进行构造而避免拷贝或者移动。从标准库代码的实现角度来说这是对的，但是对于提供了优化的编译器来讲，上面示例中最后两行表达式生成的代码其实没有区别。</p>
+<p>真正的区别在于，<code>emplace_back</code> 更加强大，它可以调用任何类型的（只要存在）构造函数。而 push_back 会更加严谨，它只调用隐式构造函数。隐式构造函数被认为是安全的。如果能够通过对象 T 隐式构造对象 U，就认为 U 能够完整包含 T 的所有内容，这样将 T 传递给 U 通常是安全的。正确使用隐式构造的例子是用 <code>std::uint32_t</code> 对象构造 <code>std::uint64_t</code> 对象，错误使用隐式构造的例子是用 <code>double</code> 构造 <code>std::uint8_t</code>。</p>
+<p>如果想要调用显示构造函数，那么就调用 <code>emplace_back</code>。如果只希望调用隐式构造函数，那么请使用更加安全的 <code>push_back</code>:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">std::vector&lt;std::unique_ptr&lt;T&gt;&gt; v;</span><br><span class="line">T a;</span><br><span class="line">v.<span class="built_in">emplace_back</span>(std::<span class="built_in">addressof</span>(a)); <span class="comment">// compiles</span></span><br><span class="line">v.<span class="built_in">push_back</span>(std::<span class="built_in">addressof</span>(a)); <span class="comment">// fails to compile</span></span><br></pre></td></tr></table></figure>
+
+<p><code>std::unique_ptr&lt;T&gt;</code> 包含了显示构造函数通过 <code>T*</code> 进行构造。因为 <code>emplace_back</code> 能够调用显示构造函数，所以传递一个裸指针并不会产生编译错误。然而，当 v 超出了作用域，<code>std::unique_ptr&lt;T&gt;</code> 的析构函数会尝试 delete 类型 <code>T*</code> 的指针，而类型 <code>T*</code> 的指针并不是通过 new 来分配的，因为它保存的是栈对象的地址，因此 delete 行为是未定义的。</p>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+                <div class="icon arrow-left"></div>
+                <div class="post-link">
+                    <a href="/2024/05/12/C-20-%E5%AE%9E%E7%8E%B0-string-split/">Prev</a>
+                </div>
+            
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2024/05/07/%E4%BA%8C%E3%80%87%E4%BA%8C%E5%9B%9B%E5%B9%B4%E4%BA%94%E6%9C%88%E4%B8%83%E6%97%A5/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+                 | 
+            
+            
+                希望路过的人可以添点柴火让这里暖和点
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    
+    
+
+  </body>
+</html>
