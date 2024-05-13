@@ -255,9 +255,10 @@ body {
 }
 .main {
   flex-grow: 1;
-  padding: 0;
+  display: flex;
   margin: 0;
-  margin-top: 3.5rem;
+  padding: 0;
+  justify-content: center;
 }
 div {
   display: block;
