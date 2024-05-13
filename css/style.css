@@ -255,11 +255,8 @@ body {
 }
 .main {
   flex-grow: 1;
-  display: flex;
   margin: 0;
   padding: 0;
-  align-items: center;
-  justify-content: center;
 }
 div {
   display: block;
@@ -318,8 +315,8 @@ input[type="search"]::-webkit-search-results-decoration {
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 .header-inner #menu-btn {
   display: none;
@@ -405,8 +402,8 @@ input[type="search"]::-webkit-search-results-decoration {
   color: #373633;
 }
 .footer .footer-text {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 .post-list a {
   background-image: linear-gradient(#fff, #fff), linear-gradient(#373633, #373633);
