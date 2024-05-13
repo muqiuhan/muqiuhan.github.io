@@ -315,7 +315,7 @@ input[type="search"]::-webkit-search-results-decoration {
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  margin-top: 1.5rem;
+  margin-top: 0.5rem;
   margin-bottom: 0.5rem;
 }
 .header-inner #menu-btn {
@@ -402,8 +402,8 @@ input[type="search"]::-webkit-search-results-decoration {
   color: #373633;
 }
 .footer .footer-text {
-  margin-top: 2rem;
-  margin-bottom: 3.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 .post-list a {
   background-image: linear-gradient(#fff, #fff), linear-gradient(#373633, #373633);
@@ -1130,11 +1130,10 @@ ul li.task-list-item>input[type=checkbox]:before {
   --webkit-touch-callout: none;
 }
 .icon {
-  display: inline;
-  background-color: $color-icon-background;
-  width: 3em;
-  height: auto;
-  float: right;
+  display: block;
+  background-color: #373633;
+  width: 1.25rem;
+  height: 1.25rem;
 }
 .arrow-up {
   -webkit-mask-image: url("../icon/arrow-up.svg");
