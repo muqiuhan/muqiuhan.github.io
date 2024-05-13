@@ -6,7 +6,7 @@
 title: 暮秋小屋
 subtitle: '暮秋小屋'
 description: '这里是暮秋小屋，思念和灵感的寄存处'
-keywords: 韩暮秋,MuqiuHan
+keywords: 韩暮秋,MuqiuHan,'Muqiu Han', 'muqiu han', muqiuhan
 author: 韩暮秋
 language: en
 timezone: ''
@@ -131,3 +131,9 @@ mathjax:
   extension_options: {}
     # you can put your extension options here
     # see http://docs.mathjax.org/en/latest/options/input/tex.html#tex-extension-options for more detail
+
+search:
+  path: search.xml
+  field: all
+  content: true
+  format: html

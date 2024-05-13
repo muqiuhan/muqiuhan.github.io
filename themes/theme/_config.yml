@@ -6,8 +6,8 @@ language: en
 site_brand_name: 暮秋小屋
 
 logo_image:
-  enable: false
-  image_path: /logo.png # path to your logo image
+  enable: true
+  image_path: /logo.ico # path to your logo image
 
 menu:
   主页: /
@@ -26,14 +26,14 @@ scripts:
 - /js/frame.js
 
 # favicon
-favicon:
+favicon: /favicon.ico
 
 date_format: MMM D, YYYY
 
 # profile
 profile:
   title: 暮秋小屋
-  body: "这里是暮秋小屋，思念和灵感的寄存处"
+  body: "思念、灵感、文档的寄存处"
   image: /profile_cover.jpg
 
   links:
@@ -81,7 +81,7 @@ disqus: # disqus setup guide: https://help.disqus.com/en/articles/1717056-publis
 
 # local search
 local_search:
-  enable: false
+  enable: true
   place_holder: Search Anything
   trigger: auto # auto: trigger search whenever input changes
   top_n_per_article: 1 # show top n results per article, show all results by setting to -1
