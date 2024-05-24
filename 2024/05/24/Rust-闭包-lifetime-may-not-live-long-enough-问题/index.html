@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="韩暮秋">
+
+
+    <meta name="subtitle" content="暮秋小屋">
+
+
+    <meta name="description" content="这里是暮秋小屋，思念和灵感的寄存处">
+
+
+    <meta name="keywords" content="韩暮秋,MuqiuHan,'Muqiu Han', 'muqiu han', muqiuhan">
+
+
+
+
+<title>Rust 闭包 lifetime may not live long enough 问题 | 暮秋小屋</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/frame.js"></script>
+    
+
+
+
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+
+
+  <meta name="generator" content="Hexo 6.3.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+            <img class="logo-img" src="/logo.ico" alt="logo_image">
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/">主页</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/gallery/">日记本</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Medicine/">医学</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Technique/">计算机科学</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Life/">生活</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/about">关于</a>
+              </li> 
+                   
+          
+          
+            <li class="menu-item search-btn">
+              <a href="#">Search</a>
+            </li>
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/Technique/">
+                            Technique
+                        </a>
+                    </span>    
+                
+                    <span class="post-tag">
+                        <a href="/tags/Rust/">
+                            Rust
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                Rust 闭包 lifetime may not live long enough 问题
+            
+            
+        </div>
+        <span class="post-date">
+            May 24, 2024
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <p>代码：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">handlers</span>(<span class="keyword">self</span>) <span class="punctuation">-&gt;</span> crate::server::request::Handlers &#123;</span><br><span class="line">        <span class="built_in">vec!</span>[(</span><br><span class="line">            <span class="string">&quot;/tree&quot;</span>,</span><br><span class="line">            routing::<span class="title function_ invoke__">get</span>(<span class="keyword">move</span> || <span class="keyword">async</span> &#123;</span><br><span class="line">                (</span><br><span class="line">                    StatusCode::OK,</span><br><span class="line">                    <span class="title function_ invoke__">Json</span>(json!(<span class="keyword">self</span>.<span class="title function_ invoke__">clone</span>().<span class="title function_ invoke__">tree</span>(<span class="keyword">self</span>.<span class="title function_ invoke__">clone</span>().root))),</span><br><span class="line">                )</span><br><span class="line">            &#125;),</span><br><span class="line">        )]</span><br><span class="line">    &#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>编译错误：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">error: lifetime may not live long enough</span><br><span class="line">  --&gt; src/storage/filesystem/mod.rs:45:34</span><br><span class="line">   |</span><br><span class="line">45 |               routing::get(move || async &#123;</span><br><span class="line">   |  __________________________-------_^</span><br><span class="line">   | |                          |     |</span><br><span class="line">   | |                          |     return type of closure `&#123;async block@src/storage/filesystem/mod.rs:45:34: 50:14&#125;` contains a lifetime `&#x27;2`</span><br><span class="line">   | |                          lifetime `&#x27;1` represents this closure&#x27;s body</span><br><span class="line">46 | |                 (</span><br><span class="line">47 | |                     StatusCode::OK,</span><br><span class="line">48 | |                     Json(json!(self.clone().tree(self.clone().root))),</span><br><span class="line">49 | |                 )</span><br><span class="line">50 | |             &#125;),</span><br><span class="line">   | |_____________^ returning this value requires that `&#x27;1` must outlive `&#x27;2`</span><br><span class="line">   |</span><br><span class="line">   = note: closure implements `Fn`, so references to captured variables can&#x27;t escape the closure</span><br></pre></td></tr></table></figure>
+
+<p>这是因为 <code>handlers</code> 里面的闭包捕获了一个引用，并且尝试返回一个包含该引用的值导致的。</p>
+<p>细说就是：闭包内部使用了 <code>self.clone()</code> 来获取一个新的实例，然后在异步块中返回一个 JSON 对象，这个 JSON 对象依赖于 <code>self.tree()</code> 的结果。因为闭包捕获了 <code>self</code> 的引用，所以它必须保证 <code>self</code> 在闭包执行完毕后仍然有效。</p>
+<p>解决这个问题的思路是：确保闭包中的所有引用都在闭包执行完毕之前就不再被使用。<br>就是说，要将闭包的作用域限制在一个更短的生命周期内，或者使用其他方式来避免闭包捕获长期存在的引用:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">...</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">handlers</span>(<span class="keyword">self</span>) <span class="punctuation">-&gt;</span> crate::server::request::Handlers &#123;</span><br><span class="line">        <span class="keyword">let</span> <span class="variable">tree</span> = json!(<span class="keyword">self</span>.<span class="title function_ invoke__">clone</span>().<span class="title function_ invoke__">tree</span>(<span class="keyword">self</span>.<span class="title function_ invoke__">clone</span>().root));</span><br><span class="line">        <span class="built_in">vec!</span>[(</span><br><span class="line">            <span class="string">&quot;/tree&quot;</span>,</span><br><span class="line">            routing::<span class="title function_ invoke__">get</span>(<span class="keyword">move</span> || <span class="keyword">async</span> &#123; (StatusCode::OK, <span class="title function_ invoke__">Json</span>(tree)) &#125;),</span><br><span class="line">        )]</span><br><span class="line">    &#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2024/05/20/Rescript-genType-import-%E9%97%AE%E9%A2%98/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+                 | 
+            
+            
+                希望路过的人可以添点柴火让这里暖和点
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    
+      <div class="search-popup">
+    <div class="search-popup-overlay">  
+    </div>
+    <div class="search-popup-window" >
+        <div class="search-header">
+            <div class="search-input-container">
+              <input autocomplete="off" autocapitalize="off" maxlength="80"
+                     placeholder="Search Anything" spellcheck="false"
+                     type="search" class="search-input">
+            </div>
+            <div class="search-close-btn">
+                <div class="icon close-btn"></div>
+            </div>
+        </div>
+        <div class="search-result-container">
+        </div>
+    </div>
+</div>
+
+<script>
+    const searchConfig = {
+        path             : "/search.xml",
+        top_n_per_article: "1",
+        unescape         : "false",
+        trigger: "auto",
+        preload: "false"
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js"></script>
+<script src="/js/search.js"></script>
+    
+    
+
+  </body>
+</html>
