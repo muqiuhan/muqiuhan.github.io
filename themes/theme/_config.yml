@@ -6,7 +6,7 @@ language: en
 site_brand_name: 暮秋小屋
 
 logo_image:
-  enable: true
+  enable: false
   image_path: /logo.ico # path to your logo image
 
 menu:
