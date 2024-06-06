@@ -49,7 +49,7 @@
   </entry>
   <entry>
     <title>C++ 20 实现 string split</title>
-    <url>/2024/05/12/C-20-%E5%AE%9E%E7%8E%B0-string-split/</url>
+    <url>/2023/05/12/C-20-%E5%AE%9E%E7%8E%B0-string-split/</url>
     <content><![CDATA[<p>C++20引入了范围库ranges，其中提供的两个范围适配器std::split、std::lazy_split可以使我们以一种更为优雅的形式实现split:</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;concept&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;ranges&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;format&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> stdr  std::ranges</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> stdrv std::ranges::views</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">template</span>&lt;<span class="keyword">typename</span>&gt; <span class="keyword">typename</span> Container = std::vector, <span class="keyword">typename</span> Arg = std::string_view&gt;</span><br><span class="line"><span class="keyword">auto</span> <span class="built_in">Split</span>(std::string_view str, std::string_view delimiter)</span><br><span class="line">&#123;</span><br><span class="line">	Container&lt;Arg&gt; myCont;</span><br><span class="line">	<span class="keyword">auto</span> temp = str </span><br><span class="line">		| stdrv::<span class="built_in">split</span>(delimiter)</span><br><span class="line">		| stdrv::<span class="built_in">transform</span>([](<span class="keyword">auto</span>&amp;&amp; r)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="built_in">Arg</span>(std::<span class="built_in">addressof</span>(*r.<span class="built_in">begin</span>()), stdr::<span class="built_in">distance</span>(r));</span><br><span class="line">			&#125;);</span><br><span class="line">	<span class="keyword">auto</span> iter = std::<span class="built_in">inserter</span>(myCont, myCont.<span class="built_in">end</span>());</span><br><span class="line">	stdr::for_each(temp, [&amp;](<span class="keyword">auto</span>&amp;&amp; x) &#123; iter = &#123;x.<span class="built_in">begin</span>(), x.<span class="built_in">end</span>()&#125;; &#125;);</span><br><span class="line">	<span class="keyword">return</span> myCont;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	std::string str = <span class="string">&quot;Hello233C++20233and233New233Spilt&quot;</span>;</span><br><span class="line">	std::string delimiter = <span class="string">&quot;233&quot;</span>;</span><br><span class="line">	<span class="keyword">auto</span>&amp;&amp; strCont = <span class="built_in">Split</span>&lt;std::list, std::string&gt;(str, delimiter);</span><br><span class="line">	stdr::for_each(strCont, [](<span class="keyword">auto</span>&amp;&amp; x) &#123; std::cout &lt;&lt; std::format(<span class="string">&quot;&#123;&#125; &quot;</span>, x); &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//output: Hello C++20 and New Spilt</span></span><br></pre></td></tr></table></figure>
 
@@ -62,7 +62,7 @@
   </entry>
   <entry>
     <title>C++ vector 的 push_back 和 emplace_back</title>
-    <url>/2024/05/11/C-vector-%E7%9A%84-push-back-%E5%92%8C-emplace-back/</url>
+    <url>/2023/05/11/C-vector-%E7%9A%84-push-back-%E5%92%8C-emplace-back/</url>
     <content><![CDATA[<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/// Inserts a new element at the end of the vector, right after its current last element. This new element is constructed in place using args as the arguments for its constructor.</span></span><br><span class="line"><span class="comment">/// This effectively increases the container size by one, which causes an automatic reallocation of the allocated storage space if -and only if- the new vector size surpasses the current vector capacity.</span></span><br><span class="line"><span class="comment">/// The element is constructed in-place by calling allocator_traits::construct with args forwarded.</span></span><br><span class="line"><span class="comment">///A similar member function exists, push_back, which either copies or moves an existing object into the container.</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span>... Args&gt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">emplace_back</span> <span class="params">(Args&amp;&amp;... args)</span></span>;</span><br></pre></td></tr></table></figure>
 
 <p><code>push_back</code> 会构造一个临时对象，这个临时对象会被拷贝或者移入到容器中，然而 <code>emplace_back</code> 会直接根据传入的参数在容器的适当位置进行构造而避免拷贝或者移动。</p>
@@ -80,7 +80,7 @@
   </entry>
   <entry>
     <title>C++ 的 Trait</title>
-    <url>/2024/05/04/C-%E7%9A%84-Trait/</url>
+    <url>/2023/05/04/C-%E7%9A%84-Trait/</url>
     <content><![CDATA[<blockquote>
 <p>C++ 的 traits 技术，是一种约定俗称的技术方案，用来为同一类数据（包括自定义数据类型和内置数据类型）提供统一的类型名（traits），这样可以统一的操作函数，例如 advance(), swap(), encode()&#x2F;decode() 等。</p>
 </blockquote>
@@ -500,7 +500,7 @@
   </entry>
   <entry>
     <title>Rust NewType 模式</title>
-    <url>/2024/05/03/Rust-NewType-%E6%A8%A1%E5%BC%8F/</url>
+    <url>/2023/05/03/Rust-NewType-%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<p>New Type模式是一种软件设计模式，用于在已有类型的基础上创建一个新的类型。在Rust中，这通常是通过<strong>定义一个结构体，其中只包含一个单一成员。这个结构体（New Type）对外提供了一个新的、独立的类型，用于对原始类型增加额外的语义或限制。</strong></p>
 <h2 id="加强类型安全"><a href="#加强类型安全" class="headerlink" title="加强类型安全"></a>加强类型安全</h2><figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Meters</span>(<span class="type">f64</span>);</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Feet</span>(<span class="type">f64</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">length_in_meters</span> = <span class="title function_ invoke__">Meters</span>(<span class="number">100.0</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">length_in_feet</span> = <span class="title function_ invoke__">Feet</span>(<span class="number">328.084</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 编译器会防止以下代码执行，因为类型不匹配</span></span><br><span class="line"><span class="comment">// let wrong_length = Meters(length_in_feet); // 编译错误</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 正确的构造</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">add_lengths</span>(length1: Meters, length2: Meters) <span class="punctuation">-&gt;</span> Meters &#123;</span><br><span class="line">    <span class="title function_ invoke__">Meters</span>(length1.<span class="number">0</span> + length2.<span class="number">0</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -522,7 +522,7 @@
   </entry>
   <entry>
     <title>Rust Partial 语义</title>
-    <url>/2024/05/02/Rust-Partial-%E8%AF%AD%E4%B9%89/</url>
+    <url>/2023/05/02/Rust-Partial-%E8%AF%AD%E4%B9%89/</url>
     <content><![CDATA[<blockquote>
 <p>在Rust中，PartialEq和PartialOrd trait处理了不是所有值都可以相互比较的情况。</p>
 </blockquote>
@@ -550,7 +550,7 @@
   </entry>
   <entry>
     <title>Rust 虚表布局规则介绍</title>
-    <url>/2024/05/01/Rust-%E8%99%9A%E8%A1%A8%E5%B8%83%E5%B1%80%E8%A7%84%E5%88%99%E4%BB%8B%E7%BB%8D/</url>
+    <url>/2023/05/01/Rust-%E8%99%9A%E8%A1%A8%E5%B8%83%E5%B1%80%E8%A7%84%E5%88%99%E4%BB%8B%E7%BB%8D/</url>
     <content><![CDATA[<p>在 Rust 中，一个指向未知大小对象（!Sized）的引用或指针被实现为一个由两个 usize 大小的域构成的胖指针。这两个域中，其中一个域保存了被引用或被指向的对象的地址，另一个域保存了一个名为 metadata 的数据。对于 slice 的引用或指针来说，其 metadata 为 slice 的长度。对于 trait object 的引用或指针来说，其 metadata 为虚表（vtable）地址。与 C++ 虚表类似，Rust 虚表的存在使得诸多动态语言特性得以实现，例如动态派发（dynamic dispatch）、向上转换（upcasting）、向下转换（downcast）等。本文将对 Rust 中虚表的布局规则进行简要介绍，并在此过程中对 Rust 中若干动态特性的实现方法进行简要介绍。</p>
 <blockquote>
 <p>注意：Rust 虚表及其结构属于 Rust 语言的内部实现细节，不保证稳定性。本文所介绍的虚表布局仅反映本文创作时最新的 Rust 虚表结构[1]，在将来 Rust 虚表结构可能会发生变化。一个 Rust 程序的正确性不应该以任何方式依赖于 Rust 虚表的结构。</p>
@@ -598,7 +598,7 @@
   </entry>
   <entry>
     <title>Rust 闭包 lifetime may not live long enough 问题</title>
-    <url>/2024/05/24/Rust-%E9%97%AD%E5%8C%85-lifetime-may-not-live-long-enough-%E9%97%AE%E9%A2%98/</url>
+    <url>/2023/05/24/Rust-%E9%97%AD%E5%8C%85-lifetime-may-not-live-long-enough-%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<p>代码：</p>
 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">handlers</span>(<span class="keyword">self</span>) <span class="punctuation">-&gt;</span> crate::server::request::Handlers &#123;</span><br><span class="line">        <span class="built_in">vec!</span>[(</span><br><span class="line">            <span class="string">&quot;/tree&quot;</span>,</span><br><span class="line">            routing::<span class="title function_ invoke__">get</span>(<span class="keyword">move</span> || <span class="keyword">async</span> &#123;</span><br><span class="line">                (</span><br><span class="line">                    StatusCode::OK,</span><br><span class="line">                    <span class="title function_ invoke__">Json</span>(json!(<span class="keyword">self</span>.<span class="title function_ invoke__">clone</span>().<span class="title function_ invoke__">tree</span>(<span class="keyword">self</span>.<span class="title function_ invoke__">clone</span>().root))),</span><br><span class="line">                )</span><br><span class="line">            &#125;),</span><br><span class="line">        )]</span><br><span class="line">    &#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 
@@ -616,7 +616,7 @@
   </entry>
   <entry>
     <title>TypeScript With Rust Errors, No Try Catch, Heresy</title>
-    <url>/2024/04/30/TypeScript-With-Rust-Errors-No-Try-Catch-Heresy/</url>
+    <url>/2023/04/30/TypeScript-With-Rust-Errors-No-Try-Catch-Heresy/</url>
     <content><![CDATA[<blockquote>
 <p>It’s hard to miss things when you don’t know different things exist</p>
 </blockquote>
@@ -656,47 +656,6 @@
       <tags>
         <tag>Technique</tag>
         <tag>TypeScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Typed Design Patterns for the Functional Era</title>
-    <url>/2023/08/15/Typed-Design-Patterns-for-the-Functional-Era/</url>
-    <content><![CDATA[]]></content>
-      <tags>
-        <tag>Technique</tag>
-        <tag>OCaml</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>过度疲劳的六种表现</title>
-    <url>/2023/10/12/%E8%BF%87%E5%BA%A6%E7%96%B2%E5%8A%B3%E7%9A%84%E5%85%AD%E7%A7%8D%E8%A1%A8%E7%8E%B0/</url>
-    <content><![CDATA[<ol>
-<li>不知不觉就睡着了， 比如在地铁， 公交车这一类很吵闹的地方无意识睡着了。</li>
-<li>刚起床就感觉很累，怎么睡都睡不够，醒来就很累，很疲惫，身心俱疲的无力感</li>
-<li>长溃疡，结节甚至是囊肿，免疫力下降，反复溃疡，年纪轻轻身上一堆结节和囊肿</li>
-<li>比较严重的体臭，口臭，头发油臭，和正常的味道不同，肝功能下降，氨随汗液排出，这种“疲劳臭”很难闻。</li>
-<li>脱发长痘痘，痘痘反复发作，年纪轻轻头发大把大把掉，梳头一地头发。</li>
-<li>对任何事物都感到厌烦，对任何事物都提不起兴趣，第一反应是很烦，做什么都烦</li>
-</ol>
-<p>身体不舒服应该第一时间去医院，如果你打算明天去医院看看的话，那今天就不要剧烈运动了，也不要再过度劳累，好今晚好好泡一个热水澡早点睡觉噢。</p>
-]]></content>
-      <tags>
-        <tag>Life</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>隐藏一些OCaml Effect的机制，让其语法在精神上更接近delimcc</title>
-    <url>/2023/06/28/%E9%9A%90%E8%97%8F%E4%B8%80%E4%BA%9BOCaml-Effect%E7%9A%84%E6%9C%BA%E5%88%B6%EF%BC%8C%E8%AE%A9%E5%85%B6%E8%AF%AD%E6%B3%95%E5%9C%A8%E7%B2%BE%E7%A5%9E%E4%B8%8A%E6%9B%B4%E6%8E%A5%E8%BF%91delimcc/</url>
-    <content><![CDATA[<p><a href="https://github.com/kayceesrk/delimcc_of_fxhandler">delimcc_of_fxhandler这个库</a>在OCaml5的effect handlers上实现了一些delimcc原语(shift&#x2F;reset, control&#x2F;prompt这些)：</p>
-<figure class="highlight ocaml"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> p = new_prompt <span class="literal">()</span> <span class="keyword">in</span></span><br><span class="line"><span class="keyword">assert</span> (<span class="literal">[]</span> = push_prompt p (<span class="keyword">fun</span> <span class="literal">()</span> -&gt;</span><br><span class="line">               <span class="number">1</span>::<span class="number">2</span>::take_subcont p (<span class="keyword">fun</span> _k -&gt; <span class="literal">[]</span>)));</span><br><span class="line"><span class="keyword">assert</span> ([<span class="number">1</span>;<span class="number">2</span>] = push_prompt p (<span class="keyword">fun</span> <span class="literal">()</span> -&gt;</span><br><span class="line">               <span class="number">1</span>::<span class="number">2</span>::take_subcont p (<span class="keyword">fun</span> k -&gt; push_subcont k <span class="literal">[]</span>)));</span><br><span class="line"><span class="keyword">assert</span> (<span class="number">135</span> =</span><br><span class="line">  <span class="keyword">let</span> p1 = new_prompt <span class="literal">()</span> <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> p2 = new_prompt <span class="literal">()</span> <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> p3 = new_prompt <span class="literal">()</span> <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> pushtwice sk =</span><br><span class="line">    sk (<span class="keyword">fun</span> <span class="literal">()</span> -&gt;</span><br><span class="line">      sk (<span class="keyword">fun</span> <span class="literal">()</span> -&gt;</span><br><span class="line">        shift0 p2 (<span class="keyword">fun</span> sk2 -&gt; sk2 (<span class="keyword">fun</span> <span class="literal">()</span> -&gt;</span><br><span class="line">          sk2 (<span class="keyword">fun</span> <span class="literal">()</span> -&gt; <span class="number">3</span>))) <span class="literal">()</span>))</span><br><span class="line">   <span class="keyword">in</span></span><br><span class="line">   push_prompt p1 (<span class="keyword">fun</span> <span class="literal">()</span> -&gt;</span><br><span class="line">     push_prompt p2 (<span class="keyword">fun</span> <span class="literal">()</span> -&gt;</span><br><span class="line">       push_prompt p3 (<span class="keyword">fun</span> <span class="literal">()</span> -&gt; shift0 p1 pushtwice <span class="literal">()</span>) + <span class="number">10</span>) + <span class="number">1</span>) + <span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">print_endline <span class="string">&quot;Success!&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>另外， <a href="https://github.com/avsm/ocaml/commits/effect-syntax">avsm这里</a>可以看到一些OCaml的Effect Syntax进展。</p>
-<p>还有 <a href="https://github.com/dhil/ocaml-multicont">multi-shot continuations in OCaml</a>，在这个仓库里面还讨论了一些有趣的问题，例如，OCaml 编译器和runtime会做出一些假设从而进行一些优化，这些优化在使用multi-shot continutation时是不可取的（或完全错误的）。编译器优化导致错误的一个例子是堆到栈的转换，例如:</p>
-<figure class="highlight ocaml"><table><tr><td class="code"><pre><span class="line"><span class="comment">(* An illustration of how the heap to stack optimisation is broken.</span></span><br><span class="line"><span class="comment"> * This example is adapted from de Vilhena and Pottier (2021).</span></span><br><span class="line"><span class="comment"> * file: heap2stack.ml</span></span><br><span class="line"><span class="comment"> * compile: ocamlopt -I $(opam var lib)/multicont multicont.cmxa heap2stack.ml</span></span><br><span class="line"><span class="comment"> * run: ./a.out *)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">(* We first require a little bit of setup. The following declares an</span></span><br><span class="line"><span class="comment">   operation `Twice&#x27; which we use to implement multiple returns. *)</span></span><br><span class="line"><span class="keyword">type</span> _ <span class="type">Effect</span>.t += <span class="type">Twice</span> : <span class="built_in">unit</span> <span class="type">Effect</span>.t</span><br><span class="line"></span><br><span class="line"><span class="comment">(* The handler `htwice&#x27; interprets `Twice&#x27; by simply invoking its</span></span><br><span class="line"><span class="comment">   continuation twice. *)</span></span><br><span class="line"><span class="keyword">let</span> htwice : (<span class="built_in">unit</span>, <span class="built_in">unit</span>) <span class="type">Effect</span>.<span class="type">Deep</span>.handler</span><br><span class="line">  = &#123; retc = (<span class="keyword">fun</span> x -&gt; x)</span><br><span class="line">    ; exnc = (<span class="keyword">fun</span> e -&gt; raise e)</span><br><span class="line">    ; effc = (<span class="keyword">fun</span> (<span class="keyword">type</span> a) (eff : a <span class="type">Effect</span>.t) -&gt;</span><br><span class="line">      <span class="keyword">let</span> <span class="keyword">open</span> <span class="type">Effect</span>.<span class="type">Deep</span> <span class="keyword">in</span></span><br><span class="line">      <span class="keyword">match</span> eff <span class="keyword">with</span></span><br><span class="line">      | <span class="type">Twice</span> -&gt; <span class="type">Some</span> (<span class="keyword">fun</span> (k : (a, _) continuation) -&gt;</span><br><span class="line">         continue (<span class="type">Multicont</span>.<span class="type">Deep</span>.clone_continuation k) <span class="literal">()</span>;</span><br><span class="line">         continue k <span class="literal">()</span>)</span><br><span class="line">      | _ -&gt; <span class="type">None</span>) &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">(* Now for the interesting stuff. In the code below, the compiler will</span></span><br><span class="line"><span class="comment">   perform an escape analysis on the reference `i&#x27; and deduce that it</span></span><br><span class="line"><span class="comment">   does not escape the local scope, because it is unaware of the</span></span><br><span class="line"><span class="comment">   semantics of `perform Twice&#x27;, hence the optimiser will transform</span></span><br><span class="line"><span class="comment">   `i&#x27; into an immediate on the stack to save a heap allocation. As a</span></span><br><span class="line"><span class="comment">   consequence, the assertion `(!i = 1)&#x27; will succeed twice, whereas</span></span><br><span class="line"><span class="comment">   it should fail after the second return of `perform Twice&#x27;. *)</span></span><br><span class="line"><span class="keyword">let</span> heap2stack <span class="literal">()</span> =</span><br><span class="line">  <span class="type">Effect</span>.<span class="type">Deep</span>.match_with</span><br><span class="line">    (<span class="keyword">fun</span> <span class="literal">()</span> -&gt;</span><br><span class="line">      <span class="keyword">let</span> i = <span class="built_in">ref</span> <span class="number">0</span> <span class="keyword">in</span></span><br><span class="line">      <span class="type">Effect</span>.perform <span class="type">Twice</span>;</span><br><span class="line">      i := !i + <span class="number">1</span>;</span><br><span class="line">      <span class="type">Printf</span>.printf <span class="string">&quot;i = %d\n%!&quot;</span> !i;</span><br><span class="line">      <span class="keyword">assert</span> (!i = <span class="number">1</span>))</span><br><span class="line">    <span class="literal">()</span> htwice</span><br><span class="line"></span><br><span class="line"><span class="comment">(* The following does not trigger an assertion failure. *)</span></span><br><span class="line"><span class="keyword">let</span> _ = heap2stack <span class="literal">()</span></span><br><span class="line"></span><br><span class="line"><span class="comment">(* To fix this issue, we can wrap reference allocations in an instance</span></span><br><span class="line"><span class="comment">   of `Sys.opaque_identity&#x27;. However, this is not really a viable fix</span></span><br><span class="line"><span class="comment">   in general, as we may not have access to the client code that</span></span><br><span class="line"><span class="comment">   allocates the reference! *)</span></span><br><span class="line"><span class="keyword">let</span> heap2stack&#x27; <span class="literal">()</span> =</span><br><span class="line">  <span class="type">Effect</span>.<span class="type">Deep</span>.match_with</span><br><span class="line">    (<span class="keyword">fun</span> <span class="literal">()</span> -&gt;</span><br><span class="line">      <span class="keyword">let</span> i = <span class="type">Sys</span>.opaque_identity (<span class="built_in">ref</span> <span class="number">0</span>) <span class="keyword">in</span></span><br><span class="line">      <span class="type">Effect</span>.perform <span class="type">Twice</span>;</span><br><span class="line">      i := !i + <span class="number">1</span>;</span><br><span class="line">      <span class="type">Printf</span>.printf <span class="string">&quot;i = %d\n%!&quot;</span> !i;</span><br><span class="line">      <span class="keyword">assert</span> (!i = <span class="number">1</span>))</span><br><span class="line">    <span class="literal">()</span> htwice</span><br><span class="line"></span><br><span class="line"><span class="comment">(* The following triggers an assertion failure. *)</span></span><br><span class="line"><span class="keyword">let</span> _ = heap2stack&#x27; <span class="literal">()</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>Technique</tag>
-        <tag>OCaml</tag>
       </tags>
   </entry>
   <entry>
@@ -2326,6 +2285,23 @@
       </tags>
   </entry>
   <entry>
+    <title>过度疲劳的六种表现</title>
+    <url>/2023/10/12/%E8%BF%87%E5%BA%A6%E7%96%B2%E5%8A%B3%E7%9A%84%E5%85%AD%E7%A7%8D%E8%A1%A8%E7%8E%B0/</url>
+    <content><![CDATA[<ol>
+<li>不知不觉就睡着了， 比如在地铁， 公交车这一类很吵闹的地方无意识睡着了。</li>
+<li>刚起床就感觉很累，怎么睡都睡不够，醒来就很累，很疲惫，身心俱疲的无力感</li>
+<li>长溃疡，结节甚至是囊肿，免疫力下降，反复溃疡，年纪轻轻身上一堆结节和囊肿</li>
+<li>比较严重的体臭，口臭，头发油臭，和正常的味道不同，肝功能下降，氨随汗液排出，这种“疲劳臭”很难闻。</li>
+<li>脱发长痘痘，痘痘反复发作，年纪轻轻头发大把大把掉，梳头一地头发。</li>
+<li>对任何事物都感到厌烦，对任何事物都提不起兴趣，第一反应是很烦，做什么都烦</li>
+</ol>
+<p>身体不舒服应该第一时间去医院，如果你打算明天去医院看看的话，那今天就不要剧烈运动了，也不要再过度劳累，好今晚好好泡一个热水澡早点睡觉噢。</p>
+]]></content>
+      <tags>
+        <tag>Life</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>金匮要略</title>
     <url>/2023/03/04/%E9%87%91%E5%8C%AE%E8%A6%81%E7%95%A5/</url>
     <content><![CDATA[<p>臟腑經絡先後病脈證第一問曰：上工治未病，何也？師曰：夫治未病者，見肝之病，知肝傳脾，當先實脾，四季脾王不受邪，即勿補之；中工不曉相傳，見肝之病，不解實脾，惟治肝也。</p>
@@ -3593,6 +3569,21 @@
       </tags>
   </entry>
   <entry>
+    <title>隐藏一些OCaml Effect的机制，让其语法在精神上更接近delimcc</title>
+    <url>/2023/06/28/%E9%9A%90%E8%97%8F%E4%B8%80%E4%BA%9BOCaml-Effect%E7%9A%84%E6%9C%BA%E5%88%B6%EF%BC%8C%E8%AE%A9%E5%85%B6%E8%AF%AD%E6%B3%95%E5%9C%A8%E7%B2%BE%E7%A5%9E%E4%B8%8A%E6%9B%B4%E6%8E%A5%E8%BF%91delimcc/</url>
+    <content><![CDATA[<p><a href="https://github.com/kayceesrk/delimcc_of_fxhandler">delimcc_of_fxhandler这个库</a>在OCaml5的effect handlers上实现了一些delimcc原语(shift&#x2F;reset, control&#x2F;prompt这些)：</p>
+<figure class="highlight ocaml"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> p = new_prompt <span class="literal">()</span> <span class="keyword">in</span></span><br><span class="line"><span class="keyword">assert</span> (<span class="literal">[]</span> = push_prompt p (<span class="keyword">fun</span> <span class="literal">()</span> -&gt;</span><br><span class="line">               <span class="number">1</span>::<span class="number">2</span>::take_subcont p (<span class="keyword">fun</span> _k -&gt; <span class="literal">[]</span>)));</span><br><span class="line"><span class="keyword">assert</span> ([<span class="number">1</span>;<span class="number">2</span>] = push_prompt p (<span class="keyword">fun</span> <span class="literal">()</span> -&gt;</span><br><span class="line">               <span class="number">1</span>::<span class="number">2</span>::take_subcont p (<span class="keyword">fun</span> k -&gt; push_subcont k <span class="literal">[]</span>)));</span><br><span class="line"><span class="keyword">assert</span> (<span class="number">135</span> =</span><br><span class="line">  <span class="keyword">let</span> p1 = new_prompt <span class="literal">()</span> <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> p2 = new_prompt <span class="literal">()</span> <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> p3 = new_prompt <span class="literal">()</span> <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> pushtwice sk =</span><br><span class="line">    sk (<span class="keyword">fun</span> <span class="literal">()</span> -&gt;</span><br><span class="line">      sk (<span class="keyword">fun</span> <span class="literal">()</span> -&gt;</span><br><span class="line">        shift0 p2 (<span class="keyword">fun</span> sk2 -&gt; sk2 (<span class="keyword">fun</span> <span class="literal">()</span> -&gt;</span><br><span class="line">          sk2 (<span class="keyword">fun</span> <span class="literal">()</span> -&gt; <span class="number">3</span>))) <span class="literal">()</span>))</span><br><span class="line">   <span class="keyword">in</span></span><br><span class="line">   push_prompt p1 (<span class="keyword">fun</span> <span class="literal">()</span> -&gt;</span><br><span class="line">     push_prompt p2 (<span class="keyword">fun</span> <span class="literal">()</span> -&gt;</span><br><span class="line">       push_prompt p3 (<span class="keyword">fun</span> <span class="literal">()</span> -&gt; shift0 p1 pushtwice <span class="literal">()</span>) + <span class="number">10</span>) + <span class="number">1</span>) + <span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">print_endline <span class="string">&quot;Success!&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>另外， <a href="https://github.com/avsm/ocaml/commits/effect-syntax">avsm这里</a>可以看到一些OCaml的Effect Syntax进展。</p>
+<p>还有 <a href="https://github.com/dhil/ocaml-multicont">multi-shot continuations in OCaml</a>，在这个仓库里面还讨论了一些有趣的问题，例如，OCaml 编译器和runtime会做出一些假设从而进行一些优化，这些优化在使用multi-shot continutation时是不可取的（或完全错误的）。编译器优化导致错误的一个例子是堆到栈的转换，例如:</p>
+<figure class="highlight ocaml"><table><tr><td class="code"><pre><span class="line"><span class="comment">(* An illustration of how the heap to stack optimisation is broken.</span></span><br><span class="line"><span class="comment"> * This example is adapted from de Vilhena and Pottier (2021).</span></span><br><span class="line"><span class="comment"> * file: heap2stack.ml</span></span><br><span class="line"><span class="comment"> * compile: ocamlopt -I $(opam var lib)/multicont multicont.cmxa heap2stack.ml</span></span><br><span class="line"><span class="comment"> * run: ./a.out *)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">(* We first require a little bit of setup. The following declares an</span></span><br><span class="line"><span class="comment">   operation `Twice&#x27; which we use to implement multiple returns. *)</span></span><br><span class="line"><span class="keyword">type</span> _ <span class="type">Effect</span>.t += <span class="type">Twice</span> : <span class="built_in">unit</span> <span class="type">Effect</span>.t</span><br><span class="line"></span><br><span class="line"><span class="comment">(* The handler `htwice&#x27; interprets `Twice&#x27; by simply invoking its</span></span><br><span class="line"><span class="comment">   continuation twice. *)</span></span><br><span class="line"><span class="keyword">let</span> htwice : (<span class="built_in">unit</span>, <span class="built_in">unit</span>) <span class="type">Effect</span>.<span class="type">Deep</span>.handler</span><br><span class="line">  = &#123; retc = (<span class="keyword">fun</span> x -&gt; x)</span><br><span class="line">    ; exnc = (<span class="keyword">fun</span> e -&gt; raise e)</span><br><span class="line">    ; effc = (<span class="keyword">fun</span> (<span class="keyword">type</span> a) (eff : a <span class="type">Effect</span>.t) -&gt;</span><br><span class="line">      <span class="keyword">let</span> <span class="keyword">open</span> <span class="type">Effect</span>.<span class="type">Deep</span> <span class="keyword">in</span></span><br><span class="line">      <span class="keyword">match</span> eff <span class="keyword">with</span></span><br><span class="line">      | <span class="type">Twice</span> -&gt; <span class="type">Some</span> (<span class="keyword">fun</span> (k : (a, _) continuation) -&gt;</span><br><span class="line">         continue (<span class="type">Multicont</span>.<span class="type">Deep</span>.clone_continuation k) <span class="literal">()</span>;</span><br><span class="line">         continue k <span class="literal">()</span>)</span><br><span class="line">      | _ -&gt; <span class="type">None</span>) &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">(* Now for the interesting stuff. In the code below, the compiler will</span></span><br><span class="line"><span class="comment">   perform an escape analysis on the reference `i&#x27; and deduce that it</span></span><br><span class="line"><span class="comment">   does not escape the local scope, because it is unaware of the</span></span><br><span class="line"><span class="comment">   semantics of `perform Twice&#x27;, hence the optimiser will transform</span></span><br><span class="line"><span class="comment">   `i&#x27; into an immediate on the stack to save a heap allocation. As a</span></span><br><span class="line"><span class="comment">   consequence, the assertion `(!i = 1)&#x27; will succeed twice, whereas</span></span><br><span class="line"><span class="comment">   it should fail after the second return of `perform Twice&#x27;. *)</span></span><br><span class="line"><span class="keyword">let</span> heap2stack <span class="literal">()</span> =</span><br><span class="line">  <span class="type">Effect</span>.<span class="type">Deep</span>.match_with</span><br><span class="line">    (<span class="keyword">fun</span> <span class="literal">()</span> -&gt;</span><br><span class="line">      <span class="keyword">let</span> i = <span class="built_in">ref</span> <span class="number">0</span> <span class="keyword">in</span></span><br><span class="line">      <span class="type">Effect</span>.perform <span class="type">Twice</span>;</span><br><span class="line">      i := !i + <span class="number">1</span>;</span><br><span class="line">      <span class="type">Printf</span>.printf <span class="string">&quot;i = %d\n%!&quot;</span> !i;</span><br><span class="line">      <span class="keyword">assert</span> (!i = <span class="number">1</span>))</span><br><span class="line">    <span class="literal">()</span> htwice</span><br><span class="line"></span><br><span class="line"><span class="comment">(* The following does not trigger an assertion failure. *)</span></span><br><span class="line"><span class="keyword">let</span> _ = heap2stack <span class="literal">()</span></span><br><span class="line"></span><br><span class="line"><span class="comment">(* To fix this issue, we can wrap reference allocations in an instance</span></span><br><span class="line"><span class="comment">   of `Sys.opaque_identity&#x27;. However, this is not really a viable fix</span></span><br><span class="line"><span class="comment">   in general, as we may not have access to the client code that</span></span><br><span class="line"><span class="comment">   allocates the reference! *)</span></span><br><span class="line"><span class="keyword">let</span> heap2stack&#x27; <span class="literal">()</span> =</span><br><span class="line">  <span class="type">Effect</span>.<span class="type">Deep</span>.match_with</span><br><span class="line">    (<span class="keyword">fun</span> <span class="literal">()</span> -&gt;</span><br><span class="line">      <span class="keyword">let</span> i = <span class="type">Sys</span>.opaque_identity (<span class="built_in">ref</span> <span class="number">0</span>) <span class="keyword">in</span></span><br><span class="line">      <span class="type">Effect</span>.perform <span class="type">Twice</span>;</span><br><span class="line">      i := !i + <span class="number">1</span>;</span><br><span class="line">      <span class="type">Printf</span>.printf <span class="string">&quot;i = %d\n%!&quot;</span> !i;</span><br><span class="line">      <span class="keyword">assert</span> (!i = <span class="number">1</span>))</span><br><span class="line">    <span class="literal">()</span> htwice</span><br><span class="line"></span><br><span class="line"><span class="comment">(* The following triggers an assertion failure. *)</span></span><br><span class="line"><span class="keyword">let</span> _ = heap2stack&#x27; <span class="literal">()</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+        <tag>OCaml</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>关于</title>
     <url>/about.html</url>
     <content><![CDATA[<h2 id="韩暮秋"><a href="#韩暮秋" class="headerlink" title="韩暮秋"></a>韩暮秋</h2><blockquote>
@@ -3604,16 +3595,6 @@
 <li>Telegram: <a href="https://t.me/xfri_cn">The X-Files Research Institute</a></li>
 <li>邮箱: <a href="muqiu-han@outlook.com">muqiu-han@outlook.com</a></li>
 </ul>
-<hr>
-<center>
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=450 src="//music.163.com/outchain/player?type=1&id=185090912&auto=1&height=430"></iframe>
-</center>
-
-
-<p>如果你正在失真的荒野上，渴求那空寂中的一抹回响</p>
-<p>我想给你带来冬日暖阳与暮秋山林所描绘的风的形状</p>
-<p>这是一方小世界中的部分美好所汇聚而成的礼物</p>
-<p>我爱这个因为有我而变得温柔的一方世界，这将是我与周遭一切，热爱一生，共度一生的地方</p>
 ]]></content>
   </entry>
   <entry>
