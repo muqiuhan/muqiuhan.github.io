@@ -1,6 +1,6 @@
 ---
 title: Rust NewType 模式
-date: 2024-05-03 11:12:57
+date: 2023-05-03 11:12:57
 tags: [Technique, Rust]
 ---
 

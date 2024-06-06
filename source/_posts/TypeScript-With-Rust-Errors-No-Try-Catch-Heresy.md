@@ -1,6 +1,6 @@
 ---
 title: TypeScript With Rust Errors, No Try Catch, Heresy
-date: 2024-04-30 11:13:54
+date: 2023-04-30 11:13:54
 tags: [Technique, TypeScript]
 ---
 

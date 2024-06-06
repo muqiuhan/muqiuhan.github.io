@@ -1,6 +1,6 @@
 ---
 title: Rust 闭包 lifetime may not live long enough 问题
-date: 2024-05-24 18:04:23
+date: 2023-05-24 18:04:23
 tags: [Technique, Rust]
 ---
 

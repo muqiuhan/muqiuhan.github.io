@@ -1,6 +1,6 @@
 ---
 title: Rust 虚表布局规则介绍
-date: 2024-05-01 11:11:40
+date: 2023-05-01 11:11:40
 tags: [Technique, Rust]
 ---
 
