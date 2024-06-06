@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="韩暮秋">
+
+
+    <meta name="subtitle" content="暮秋小屋">
+
+
+    <meta name="description" content="这里是暮秋小屋，思念和灵感的寄存处">
+
+
+    <meta name="keywords" content="韩暮秋,MuqiuHan,'Muqiu Han', 'muqiu han', muqiuhan">
+
+
+
+
+<title>.NET AOT 下的 F# 命令行参数解析库选择 | 暮秋小屋</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/frame.js"></script>
+    
+
+
+
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+
+
+  <meta name="generator" content="Hexo 6.3.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+            暮秋小屋
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/">主页</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/gallery/">日记本</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Medicine/">医学</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Technique/">计算机科学</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Life/">生活</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/about">关于</a>
+              </li> 
+                   
+          
+          
+            <li class="menu-item search-btn">
+              <a href="#">Search</a>
+            </li>
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/Technique/">
+                            Technique
+                        </a>
+                    </span>    
+                
+                    <span class="post-tag">
+                        <a href="/tags/F/">
+                            F#
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                .NET AOT 下的 F# 命令行参数解析库选择
+            
+            
+        </div>
+        <span class="post-date">
+            Jun 6, 2024
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <p>Argu 不支持 AOT，不过用 F# 的话可以看整个 .NET 的生态，我看了一下 C# 的 CommandLineParser：<br><a target="_blank" rel="noopener" href="https://github.com/commandlineparser">https://github.com/commandlineparser</a></p>
+<p>在这个 PR 中支持了 Native AOT<br><a target="_blank" rel="noopener" href="https://github.com/commandlineparser/commandline/pull/913">https://github.com/commandlineparser/commandline/pull/913</a></p>
+<p>除此之外，还有一个更加精巧的 F# 库可以用，只有两百多行：<br><a target="_blank" rel="noopener" href="https://github.com/B2R2-org/FsOptParse/">https://github.com/B2R2-org/FsOptParse/</a></p>
+<p>AOT 后的大小很可观，并且支持 full trim.</p>
+<p>用例：</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">(** defines a state to pass to the option parser *)</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">opts</span> <span class="operator">=</span></span><br><span class="line">  &#123;</span><br><span class="line">    optX <span class="operator">:</span> <span class="type">int</span>;</span><br><span class="line">    optY <span class="operator">:</span> <span class="type">bool</span>;</span><br><span class="line">    optZ <span class="operator">:</span> <span class="type">string</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">(** default option state *)</span></span><br><span class="line"><span class="keyword">let</span> defaultOpts <span class="operator">=</span></span><br><span class="line">  &#123;</span><br><span class="line">    optX <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    optY <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">    optZ <span class="operator">=</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">(*</span></span><br><span class="line"><span class="comment">  An example command line specification, which is a list of Options.</span></span><br><span class="line"><span class="comment">  Each Option describes a command line option (switch) that is specified with</span></span><br><span class="line"><span class="comment">  either a short (a single-dash option) or long option (a double-dash option).</span></span><br><span class="line"><span class="comment">*)</span></span><br><span class="line"><span class="keyword">let</span> spec <span class="operator">=</span></span><br><span class="line">  [</span><br><span class="line">    <span class="comment">(* This option can be specified with -x &lt;NUM&gt;. There is an extra argument to</span></span><br><span class="line"><span class="comment">       specify a value in integer. *)</span></span><br><span class="line">    Option (<span class="comment">(* description of the option *)</span></span><br><span class="line">            descr<span class="operator">=</span><span class="string">&quot;this is a testing param X&quot;</span>,</span><br><span class="line">            <span class="comment">(* how many extra argument must be provided by a user? *)</span></span><br><span class="line">            extra<span class="operator">=</span><span class="number">1</span>,</span><br><span class="line">            <span class="comment">(* callback sets up the option and returns it *)</span></span><br><span class="line">            callback<span class="operator">=</span>(<span class="keyword">fun</span> opts arg <span class="operator">-&gt;</span> &#123;opts <span class="keyword">with</span> optX<span class="operator">=</span>(int) arg.[<span class="number">0</span>]&#125;),</span><br><span class="line">            <span class="comment">(* use a short option style -x *)</span></span><br><span class="line">            short<span class="operator">=</span><span class="string">&quot;-x&quot;</span></span><br><span class="line">           );</span><br><span class="line"></span><br><span class="line">    <span class="comment">(* This option can be specified with -y. There is no extra argument. This</span></span><br><span class="line"><span class="comment">       option just sets a flag, optY. *)</span></span><br><span class="line">    Option (<span class="comment">(* description of the option *)</span></span><br><span class="line">            descr<span class="operator">=</span><span class="string">&quot;this is a testing param Y&quot;</span>,</span><br><span class="line">            <span class="comment">(* set the option to be true *)</span></span><br><span class="line">            callback<span class="operator">=</span>(<span class="keyword">fun</span> opts _ <span class="operator">-&gt;</span> &#123;opts <span class="keyword">with</span> optY<span class="operator">=</span><span class="literal">true</span>&#125;),</span><br><span class="line">            <span class="comment">(* use a short option style (-y) *)</span></span><br><span class="line">            short<span class="operator">=</span><span class="string">&quot;-y&quot;</span>,</span><br><span class="line">            <span class="comment">(* also use a long option style (--yoohoo) *)</span></span><br><span class="line">            long<span class="operator">=</span><span class="string">&quot;--yoohoo&quot;</span></span><br><span class="line">           );</span><br><span class="line"></span><br><span class="line">    <span class="comment">(* A dummy option to pretty-print the usage *)</span></span><br><span class="line">    Option (<span class="comment">(* description of the option *)</span></span><br><span class="line">            descr<span class="operator">=</span><span class="string">&quot;&quot;</span>,</span><br><span class="line">            dummy<span class="operator">=</span><span class="literal">true</span></span><br><span class="line">           );</span><br><span class="line">    Option (<span class="comment">(* description of the option *)</span></span><br><span class="line">            descr<span class="operator">=</span><span class="string">&quot;[Required Options]&quot;</span>,</span><br><span class="line">            descrColor<span class="operator">=</span>System.ConsoleColor.DarkCyan,</span><br><span class="line">            dummy<span class="operator">=</span><span class="literal">true</span></span><br><span class="line">           );</span><br><span class="line"></span><br><span class="line">    <span class="comment">(* The third option is a required option. In other words, option parsing</span></span><br><span class="line"><span class="comment">       will raise an exception if this option is not given by a user. This</span></span><br><span class="line"><span class="comment">       option takes in an additional integer argument, and set it to the global</span></span><br><span class="line"><span class="comment">       variable z. *)</span></span><br><span class="line">    Option (<span class="comment">(* description of the option *)</span></span><br><span class="line">            descr<span class="operator">=</span><span class="string">&quot;required parameter &lt;STRING&gt; with an integer option&quot;</span>,</span><br><span class="line">            <span class="comment">(* callback to set the optZ value *)</span></span><br><span class="line">            callback<span class="operator">=</span>(<span class="keyword">fun</span> opts arg <span class="operator">-&gt;</span> &#123;opts <span class="keyword">with</span> optZ<span class="operator">=</span>arg.[<span class="number">0</span>]&#125;),</span><br><span class="line">            <span class="comment">(* specifying this is a required option *)</span></span><br><span class="line">            required<span class="operator">=</span><span class="literal">true</span>,</span><br><span class="line">            <span class="comment">(* one additional argument to specify an integer value *)</span></span><br><span class="line">            extra<span class="operator">=</span><span class="number">1</span>,</span><br><span class="line">            <span class="comment">(* use only a long option style *)</span></span><br><span class="line">            long<span class="operator">=</span><span class="string">&quot;--req&quot;</span></span><br><span class="line">           );</span><br><span class="line">  ]</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> _ <span class="operator">=</span></span><br><span class="line">  <span class="keyword">let</span> prog <span class="operator">=</span> <span class="string">&quot;opttest.fsx&quot;</span></span><br><span class="line">  <span class="keyword">let</span> args <span class="operator">=</span> System.Environment.GetCommandLineArgs ()</span><br><span class="line">  <span class="keyword">let</span> usageGetter () <span class="operator">=</span> <span class="string">&quot;[Usage]\n  %p %o&quot;</span></span><br><span class="line">  <span class="keyword">try</span></span><br><span class="line">    <span class="keyword">let</span> left, opts <span class="operator">=</span> optParse spec usageGetter prog args defaultOpts</span><br><span class="line">    <span class="built_in">printfn</span> <span class="string">&quot;Rest args: %A, x: %d, y: %b, z: %s&quot;</span></span><br><span class="line">      left opts.optX opts.optY opts.optZ</span><br><span class="line">    <span class="number">0</span></span><br><span class="line">  <span class="keyword">with</span></span><br><span class="line">    <span class="operator">|</span> SpecErr msg <span class="operator">-&gt;</span></span><br><span class="line">        <span class="built_in">eprintfn</span> <span class="string">&quot;Invalid spec: %s&quot;</span> msg</span><br><span class="line">        exit <span class="number">1</span></span><br><span class="line">    <span class="operator">|</span> RuntimeErr msg <span class="operator">-&gt;</span></span><br><span class="line">        <span class="built_in">eprintfn</span> <span class="string">&quot;Invalid args given by user: %s&quot;</span> msg</span><br><span class="line">        usagePrint spec prog usageGetter (<span class="keyword">fun</span> () <span class="operator">-&gt;</span> exit <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2024/05/20/Rescript-genType-import-%E9%97%AE%E9%A2%98/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+                 | 
+            
+            
+                希望路过的人可以添点柴火让这里暖和点
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    
+      <div class="search-popup">
+    <div class="search-popup-overlay">  
+    </div>
+    <div class="search-popup-window" >
+        <div class="search-header">
+            <div class="search-input-container">
+              <input autocomplete="off" autocapitalize="off" maxlength="80"
+                     placeholder="Search Anything" spellcheck="false"
+                     type="search" class="search-input">
+            </div>
+            <div class="search-close-btn">
+                <div class="icon close-btn"></div>
+            </div>
+        </div>
+        <div class="search-result-container">
+        </div>
+    </div>
+</div>
+
+<script>
+    const searchConfig = {
+        path             : "/search.xml",
+        top_n_per_article: "1",
+        unescape         : "false",
+        trigger: "auto",
+        preload: "false"
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js"></script>
+<script src="/js/search.js"></script>
+    
+    
+
+  </body>
+</html>
