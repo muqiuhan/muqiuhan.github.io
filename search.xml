@@ -434,7 +434,7 @@
       </tags>
   </entry>
   <entry>
-    <title>OCaml News 2024-3</title>
+    <title>OCaml News 2024-4</title>
     <url>/2024/07/01/OCaml-News-2024-4/</url>
     <content><![CDATA[<h2 id="那么接下来"><a href="#那么接下来" class="headerlink" title="那么接下来"></a>那么接下来</h2><ul>
 <li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/first-beta-release-for-ocaml-5-2-0/14356">First beta release for OCaml 5.2.0</a>.</p>
@@ -554,7 +554,7 @@
       </tags>
   </entry>
   <entry>
-    <title>OCaml News 2024-3</title>
+    <title>OCaml News 2024-5</title>
     <url>/2024/06/27/OCaml-News-2024-5/</url>
     <content><![CDATA[<h2 id="语言的发展"><a href="#语言的发展" class="headerlink" title="语言的发展"></a>语言的发展</h2><ul>
 <li><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13097">Immutable arrays #13097: This PR proposes to add immutable arrays to OCaml.</a></li>
