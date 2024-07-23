@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="韩暮秋">
+
+
+    <meta name="subtitle" content="暮秋小屋">
+
+
+    <meta name="description" content="这里是暮秋小屋，思念和灵感的寄存处">
+
+
+    <meta name="keywords" content="韩暮秋,MuqiuHan,'Muqiu Han', 'muqiu han', muqiuhan">
+
+
+
+
+<title>OCaml News 2024-3 | 暮秋小屋</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/frame.js"></script>
+    
+
+
+
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+
+
+  <meta name="generator" content="Hexo 6.3.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+            暮秋小屋
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/">主页</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/gallery/">日记本</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Medicine/">医学</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Technique/">计算机科学</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Life/">生活</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/about">关于</a>
+              </li> 
+                   
+          
+          
+            <li class="menu-item search-btn">
+              <a href="#">Search</a>
+            </li>
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/Technique/">
+                            Technique
+                        </a>
+                    </span>    
+                
+                    <span class="post-tag">
+                        <a href="/tags/OCaml/">
+                            OCaml
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                OCaml News 2024-3
+            
+            
+        </div>
+        <span class="post-date">
+            Jul 1, 2024
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <h2 id="那么接下来"><a href="#那么接下来" class="headerlink" title="那么接下来"></a>那么接下来</h2><ul>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/first-beta-release-for-ocaml-5-2-0/14356">First beta release for OCaml 5.2.0</a>.</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/issues/12876">#12876</a> 和 <a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/issues/12915">#12915</a> 提供了 ThreadSanitizer 对 Power 和 s390x 上的 Linux 支持。</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/issues/12677">#12677</a> 和 <a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/issues/12889">#12889</a> 实现了 <code>Domain.DLS</code> 的线程安全。</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/issues/12924">#12924</a> 和 <a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/issues/12930">#12930</a> 提到了一个类型系统的错误和其修复方式（merged）:</p>
+</li>
+</ul>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> <span class="keyword">type</span> <span class="type">S</span> = <span class="keyword">sig</span></span><br><span class="line">  <span class="keyword">type</span> t [@@immediate]</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> t = (<span class="keyword">module</span> <span class="type">S</span> <span class="keyword">with</span> <span class="keyword">type</span> t = <span class="built_in">int</span>)</span><br><span class="line">         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span><br><span class="line"><span class="comment">(*</span></span><br><span class="line"><span class="comment">Error: In this with constraint, the new definition of t</span></span><br><span class="line"><span class="comment">       does not match its original definition in the constrained signature:</span></span><br><span class="line"><span class="comment">      Type declarations do not match:</span></span><br><span class="line"><span class="comment">         type t</span></span><br><span class="line"><span class="comment">       is not included in</span></span><br><span class="line"><span class="comment">         type t [@@immediate]</span></span><br><span class="line"><span class="comment">       The first is not an immediate type.</span></span><br><span class="line"><span class="comment">*)</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/ocaml-4-14-2-released/14308">OCaml 4.14.2 released</a>.</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/owl-project-restructured/14226">Owl project restructured</a>.</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/your-feedback-needed-on-ocaml-home-page-wireframe/14366">Your Feedback Needed on OCaml Home Page Wireframe!</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/shape-with-us-the-new-ocaml-org-community-area/14322">Shape with us the New OCaml.org Community Area!</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/ocaml-platform-newsletter-february-2024/14361">OCaml Platform Newsletter: February 2024</a>.</p>
+</li>
+<li><p>其中值得注意的是：<a href="https://link.zhihu.com/?target=https://ocaml.org/docs/platform-roadmap%23w4-build-a-project">探索 dune 和包管理的集成</a> 和 <a href="https://link.zhihu.com/?target=https://ocaml.org/docs/platform-roadmap%23w5-manage-dependencies">opam 2.2 的 Windows Native support</a>.</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/ocaml-workshop-2024-at-icfp-announcement-and-call-for-proposals/14371">OCaml Workshop 2024 at ICFP – announcement and call for proposals</a>.</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/volunteers-for-icfp-2024-artifact-evaluation-committee-aec/14355">Volunteers for ICFP 2024 Artifact Evaluation Committee (AEC)</a>.</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/odoc-3-0-planning/14360">Odoc 3.0 planning</a>.</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/opam-repository-updated-documentation-retirement-and-call-for-maintainers/14325">Opam-repository: Updated documentation, retirement and call for maintainers</a>.</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/u/kit-ty-kate">kit-ty-kate</a> 退休啦。</p>
+</li>
+</ul>
+<h2 id="论文"><a href="#论文" class="headerlink" title="论文"></a>论文</h2><ul>
+<li><a href="https://link.zhihu.com/?target=https://jcheminf.biomedcentral.com/articles/10.1186/s13321-019-0332-0">Chemoinformatics and structural bioinformatics in OCaml</a>.</li>
+</ul>
+<h2 id="帖子-文章"><a href="#帖子-文章" class="headerlink" title="帖子&#x2F;文章"></a>帖子&#x2F;文章</h2><ul>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/ocaml-for-building-shared-libraries-how-are-the-ergonomics-and-performance/14352">OCaml for building shared libraries: how are the ergonomics and performance?</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://mccd.space/posts/awk-with-kakoune/">Using Awk in Kakoune to Generate SQL Types for OCaml</a>.</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://tarides.com/blog/2024-03-20-eio-1-0-release-introducing-a-new-effects-based-i-o-library-for-ocaml/">Eio 1.0 Release: Introducing a new Effects-Based I&#x2F;O Library for OCaml</a>.</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/blog-the-flambda2-snippets-by-ocamlpro/14331">[BLOG] The Flambda2 Snippets, by OCamlPro</a>.</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://ocamlpro.com/blog/2024_03_18_the_flambda2_snippets_0/">The Flambda2 Snippets, Episode 0</a>.</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://ocamlpro.com/blog/2024_03_19_the_flambda2_snippets_1/">CPS Representation and Foundational Design Decisions in Flambda2</a>.</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/monadic-library-for-eio-capabilities/14202">Monadic Library for Eio Capabilities?</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/is-there-any-consensus-on-which-type-to-unify-on-for-errors-in-result-types-whats-your-preference/14304">Is there any consensus on which type to unify on for errors in result types? What’s your preference?</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/create-opam-switch-specifying-custom-c-compiler/14276">Create opam switch specifying custom C compiler</a>.</p>
+</li>
+</ul>
+<h2 id="视频"><a href="#视频" class="headerlink" title="视频"></a>视频</h2><ul>
+<li><p><a href="https://link.zhihu.com/?target=https://watch.ocaml.org/w/b7sv1LQSVZQH6trf4xpwFX">Outreachy Presentations for the December 2023 Round</a>.</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://www.youtube.com/watch?v=IxQ586TS8Gw">Taking Erlang to OCaml 5 (with Leandro Ostera)</a>.</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://www.youtube.com/watch?v=LwD3GxsY-pc">OCaml Unboxed: An Exploration of Jane Street’s Experiments with OCaml</a>.</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://www.youtube.com/watch?v=TxuLrsQZprE">OCaml for Fun &amp; Profit: An Experience Report • Tim McGilchrist • YOW! 2023</a>.</p>
+</li>
+</ul>
+<h2 id="值得注意的项目"><a href="#值得注意的项目" class="headerlink" title="值得注意的项目"></a>值得注意的项目</h2><ul>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml-multicore/eio/releases/tag/v1.0">Eio 1.0: Effects-based direct-style IO for multicore OCaml</a>.</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml-multicore/icfp-2023-eio-tutorial">icfp-2023-eio-tutorial: This tutorial covers how to convert an OCaml 4 program using Lwt for concurrency to use OCaml 5 and Eio.</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://erratique.ch/software/down">Down: An unintrusive user experience upgrade for the OCaml toplevel system (REPL).</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/zshipko/ocaml-rs">ocaml-rs: OCaml extensions in Rust</a>.</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml-multicore/eio-trace">eio-trace: Trace visualisation tool for Eio programs</a>.</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/ann-dkcoder-0-1-0/14327">[ANN] DkCoder 0.1.0: A transparently installed OCaml 4.14 environment with one API: run a script.</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/darrenldl/docfd/releases/tag/3.0.0">[ANN] Docfd 3.0.0: TUI multiline fuzzy document finder</a>.</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/ann-ocaml-windows-5-1-1/14268">[ANN] Ocaml-windows 5.1.1</a>.</p>
+</li>
+<li><p>这里指的是 <a href="https://link.zhihu.com/?target=https://github.com/ocaml-cross/opam-cross-windows">opam-cross-windows</a> 支持 5.1.1 了，不是 Windows 支持。</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ml-in-barcelona/quickjs.ml">[ANN] Bindings to QuickJS</a>.</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/lukstafi/ppx_minidebug">[ANN] ppx_minidebug 1.3.0: toward a logging framework</a>.</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/c-cube/ocaml-iostream/releases/tag/v0.2">[ANN] iostream 0.2</a>.</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocsigen/js_of_ocaml/releases/tag/5.7.1">[ANN] Js_of_ocaml 5.7</a>.</p>
+</li>
+</ul>
+<h2 id="有趣的项目"><a href="#有趣的项目" class="headerlink" title="有趣的项目"></a>有趣的项目</h2><ul>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/pdonadeo/ocaml-lua">ocaml-lua: Lua bindings for OCaml</a>.</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/LexiFi/csml">csml: High-level bindings between .Net and OCaml</a>.</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/LexiFi/landmarks">landmarks: A Simple Profiling Library for OCaml</a>.</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://erratique.ch/software/ttweetnacl">Ttweetnacl: An OCaml module providing thin bindings to the TweetNaCl cryptographic library.</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/xavierleroy/cryptokit">cryptokit: A library of cryptographic primitives (ciphers, hashes, etc) for OCaml</a>.</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/gridbugs/llama">llama: A library for building software-defined modular synthesizers in a declarative style.</a></p>
+</li>
+</ul>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+                <div class="icon arrow-left"></div>
+                <div class="post-link">
+                    <a href="/2024/07/23/OCaml-News-2024-5/">Prev</a>
+                </div>
+            
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2024/06/27/%E4%BA%8C%E3%80%87%E4%BA%8C%E5%9B%9B%E5%B9%B4%E5%85%AD%E6%9C%88%E4%BA%8C%E5%8D%81%E4%B8%83%E6%97%A5/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+                 | 
+            
+            
+                希望路过的人可以添点柴火让这里暖和点
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    
+      <div class="search-popup">
+    <div class="search-popup-overlay">  
+    </div>
+    <div class="search-popup-window" >
+        <div class="search-header">
+            <div class="search-input-container">
+              <input autocomplete="off" autocapitalize="off" maxlength="80"
+                     placeholder="Search Anything" spellcheck="false"
+                     type="search" class="search-input">
+            </div>
+            <div class="search-close-btn">
+                <div class="icon close-btn"></div>
+            </div>
+        </div>
+        <div class="search-result-container">
+        </div>
+    </div>
+</div>
+
+<script>
+    const searchConfig = {
+        path             : "/search.xml",
+        top_n_per_article: "1",
+        unescape         : "false",
+        trigger: "auto",
+        preload: "false"
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js"></script>
+<script src="/js/search.js"></script>
+    
+    
+
+  </body>
+</html>
