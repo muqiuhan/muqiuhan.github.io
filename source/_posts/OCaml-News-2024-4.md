@@ -1,5 +1,5 @@
 ---
-title: OCaml News 2024-3
+title: OCaml News 2024-4
 date: 2024-07-1 10:27:59
 tags: [Technique, OCaml]
 ---
