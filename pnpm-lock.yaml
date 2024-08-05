@@ -36,8 +36,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       hexo-renderer-marked:
-        specifier: ^6.0.0
-        version: 6.1.1
+        specifier: ^6.3.0
+        version: 6.3.0
       hexo-renderer-stylus:
         specifier: ^2.1.0
         version: 2.1.0
@@ -59,6 +59,7 @@ packages:
 
   abab@2.0.6:
     resolution: {integrity: sha512-j2afSsaIENvHZN2B8GOpF566vZ5WVk5opAiMTvWgaQT8DkbOqsTfvNAvHoRGU2zzP8cPoqys+xHTRDWW8L+/BA==}
+    deprecated: Use your platform's native atob() and btoa() methods instead
 
   abbrev@1.1.1:
     resolution: {integrity: sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==}
@@ -279,6 +280,7 @@ packages:
   domexception@4.0.0:
     resolution: {integrity: sha512-A2is4PLG+eeSfoTMA95/s4pvAoSo2mKtiM5jlHkAVewmiO8ISFTFKZjH7UAM1Atli/OT/7JHOrJRJiMKUZKYBw==}
     engines: {node: '>=12'}
+    deprecated: Use your platform's native DOMException instead
 
   domhandler@4.3.1:
     resolution: {integrity: sha512-GrwoxYN+uWlzO8uhUXRl0P+kHE4GtVPfYzVLcUxPL7KNdHKj66vvlhiweIHqYYXWlw+T8iLMp42Lm67ghw4WMQ==}
@@ -388,6 +390,7 @@ packages:
 
   glob@7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
+    deprecated: Glob versions prior to v9 are no longer supported
 
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
@@ -463,8 +466,8 @@ packages:
     resolution: {integrity: sha512-qCjE1IdwgDgv65qyb0KMVCwCdSVAkH0vwAe9XihjvaKWkmb9dtt8DgErOdqCXn0HReSyWiEVP2BrLRj3gyHwOQ==}
     engines: {node: '>=12'}
 
-  hexo-renderer-marked@6.1.1:
-    resolution: {integrity: sha512-vllmRFwl9A1NP/llQW2TbDnyvqaQKgktxXw7c+tK7XVQJmfIUnl32dr8M4jRYqYe5m9972eYm09kBXV8rBtA/A==}
+  hexo-renderer-marked@6.3.0:
+    resolution: {integrity: sha512-V/ATcJ+tZHkTJSbScPzzHKmrwVMohU8i9MfuX9jp07Un/NpPtaTP821unP3JPu+O1nNLWMi+3xRbFRdm+8vajw==}
     engines: {node: '>=14'}
 
   hexo-renderer-stylus@2.1.0:
@@ -523,6 +526,7 @@ packages:
 
   inflight@1.0.6:
     resolution: {integrity: sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==}
+    deprecated: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
 
   inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
@@ -1404,7 +1408,7 @@ snapshots:
     dependencies:
       ejs: 3.1.9
 
-  hexo-renderer-marked@6.1.1:
+  hexo-renderer-marked@6.3.0:
     dependencies:
       dompurify: 3.0.6
       hexo-util: 3.1.0
