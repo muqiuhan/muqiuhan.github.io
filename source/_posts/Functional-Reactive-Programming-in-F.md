@@ -1,8 +1,10 @@
 ---
 title: Functional Reactive Programming in F#
 date: 2024-09-12 21:02:02
-tags: [Technique, F#]
+tags: [Technique, F#, Archive]
 ---
+
+> https://fsharpforfunandprofit.com/posts/concurrency-reactive/
 
 Events are everywhere. Almost every program has to handle events, whether it be button clicks in the user interface, listening to sockets in a server, or even a system shutdown notification.
 
