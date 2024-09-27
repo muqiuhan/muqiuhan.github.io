@@ -1137,6 +1137,226 @@
       </tags>
   </entry>
   <entry>
+    <title>Turborepo 简述</title>
+    <url>/2024/09/27/Turborepo-%E7%AE%80%E8%BF%B0/</url>
+    <content><![CDATA[<h2 id="Turborepo-简介"><a href="#Turborepo-简介" class="headerlink" title="Turborepo 简介"></a>Turborepo 简介</h2><p>Monorepos 有很多优势，但它们难以扩展。每个工作区都有自己的测试套件、自己的 linting 和构建过程。单个 monorepo 可能有数千个任务要执行。</p>
+<p>Turborepo 是一个专为 JavaScript 和 TypeScript 代码库设计的构建系统，旨在优化 monorepos 和 single-package workspace 中的任务。它通过远程缓存（remote caching）和高效的任务调度（task scheduling）来解决 monorepos 中的扩展问题。Turborepo 也可以增量部署（adopted incrementally），并与各种包管理器配合使用。</p>
+<ul>
+<li>远程缓存: 存储所有任务的结果，CI 就不需要重复执行相同的工作了。</li>
+<li>任务调度：利用所有核心的性能并行处理任务，尽可能的加速。</li>
+</ul>
+<p><code>turbo</code> 基于 workspace 构建，workspaces 是 JavaScript 生态系统中包管理器的一项功能，允许将多个包分组到一个存储库中:</p>
+<h3 id="Workspace"><a href="#Workspace" class="headerlink" title="Workspace"></a>Workspace</h3><p>在 JavaScript 中，Workspace 是指仓库中的特定实体，可以是<a href="https://vercel.com/docs/vercel-platform/glossary#single-package-workspace">单个包</a>或<a href="https://vercel.com/docs/vercel-platform/glossary#multi-package-workspace">包的集合</a>。<br>包管理器的 root lock 文件（例如 <code>pnpm-lock.yaml</code>）以及任何其他配置都位于 Wrokspace 的根目录。在 Monorepo 中可以有多个工作区，每个工作区位于存储库的子目录中。</p>
+<h3 id="Single-package-workspace"><a href="#Single-package-workspace" class="headerlink" title="Single-package workspace"></a><a href="https://vercel.com/docs/vercel-platform/glossary#single-package-workspace">Single-package workspace</a></h3><p>只有一个独立包的工作区，在工作区根目录下有一个 <code>package.json</code> 文件。</p>
+<h3 id="Multi-package-workspace"><a href="#Multi-package-workspace" class="headerlink" title="Multi-package workspace"></a><a href="https://vercel.com/docs/vercel-platform/glossary#multi-package-workspace">Multi-package workspace</a></h3><p>包含多个包的工作区，包含多个 <code>package.json</code> 文件，其中一个位于工作区根目录中用于全局配置，其他位于每个包目录中。</p>
+<blockquote>
+<p>这种类型的工作区通常称为 monorepo</p>
+</blockquote>
+<hr>
+<p>以 npm 为例，turbo 会初始化一个这样的目录结构使其成为有效的 workspace:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">|- package.json</span><br><span class="line">|- package-lock.json</span><br><span class="line">|- turbo.json</span><br><span class="line">|- apps</span><br><span class="line">|-- docs</span><br><span class="line">|--- package.json</span><br><span class="line">|-- web</span><br><span class="line">|--- package.json</span><br><span class="line">|- packages</span><br><span class="line">|--- ui</span><br></pre></td></tr></table></figure>
+
+<p>一个 “有效的” turbo 项目至少要有：</p>
+<ul>
+<li>包管理器描述的包</li>
+<li>包管理器的 lock 文件</li>
+<li>根目录下的 <code>package.json</code></li>
+<li>根目录下的 <code>turbo.json</code></li>
+<li>每个包中的 <code>package.json</code></li>
+</ul>
+<p>例如，在根目录的 <code>package.json</code> 中配置:</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;workspaces&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;apps/*&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;packages/*&quot;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>那么 <code>apps</code> 或 <code>packages</code> 目录中有 <code>package.json</code> 的每个目录都将被视为一个包。</p>
+<blockquote>
+<p>注意：Turborepo 不支持嵌套包，例如 <code>apps/**</code> 或 <code>packages/**</code> 这种，将一个包放在<code>apps/a</code> 并将另一个包放在 <code>apps/a/b</code> 的结构将导致错误。</p>
+<p>如果想按目录对包进行分组，可以使用 <code>packages/*</code> 和 <code>packages/group/*</code> 等 glob 来完成此操作，而<strong>不是</strong>创建 <code>packages/group/package.json</code> 文件。</p>
+</blockquote>
+<p>根目录的 <code>package.json</code> 是 workspace 的基础，常见的配置：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;private&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;build&quot;</span><span class="punctuation">:</span> <span class="string">&quot;turbo run build&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;dev&quot;</span><span class="punctuation">:</span> <span class="string">&quot;turbo run dev&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;lint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;turbo run lint&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;devDependencies&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;turbo&quot;</span><span class="punctuation">:</span> <span class="string">&quot;latest&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;packageManager&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npm@10.0.0&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>而根目录的 <code>turbo.json</code> 用于配置 <code>turbo</code> 的行为。那些 lock 文件是包管理器和 <code>turbo</code> 用于 reproducible 的关键。此外，Turborepo 还利用它们分析工作区中<a href="https://turbo.build/repo/docs/core-concepts/internal-packages">内部包</a>之间的依赖关系。</p>
+<hr>
+<h3 id="包中的-package-json"><a href="#包中的-package-json" class="headerlink" title="包中的 package.json"></a>包中的 <code>package.json</code></h3><p><a href="https://nodejs.org/api/packages.html#name"><code>name</code> 字段</a>用于标识包。它在 workspace 中应该是唯一的。</p>
+<blockquote>
+<p>最佳做法是为<a href="https://turbo.build/repo/docs/core-concepts/internal-packages">内部包</a>使用命名空间前缀，以避免与 npm 注册表上的其他包发生冲突。例如，如果组织名为 <code>clin</code>，则可以将包命名为 <code>@clin/package-name</code>。</p>
+</blockquote>
+<p><code>scripts</code> 字段用于定义可在包的上下文中运行的脚本。Turborepo 将使用这些脚本的名称来确定要在包中运行的脚本（如果有）。</p>
+<p><a href="https://nodejs.org/api/packages.html#exports"><code>exports</code> 字段</a>用于指定要使用该包的其他包的入口点。如果要在另一个包中使用一个包中的代码，将从该入口点导入。</p>
+<p>例如，如果有一个 <code>@repo/math</code> 包，则可以这么写 <code>exports</code> 字段:</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;exports&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;.&quot;</span><span class="punctuation">:</span> <span class="string">&quot;./dist/constants.ts&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;./add&quot;</span><span class="punctuation">:</span> <span class="string">&quot;./dist/add.ts&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;./subtract&quot;</span><span class="punctuation">:</span> <span class="string">&quot;./dist/subtract.ts&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后就可以从 <code>@repo/math</code> 包中导入 <code>add</code> 和 <code>subtract</code> 函数了:</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="variable constant_">GRAVITATIONAL_CONSTANT</span>, <span class="variable constant_">SPEED_OF_LIGHT</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@repo/math&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; add &#125; <span class="keyword">from</span> <span class="string">&#x27;@repo/math/add&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; subtract &#125; <span class="keyword">from</span> <span class="string">&#x27;@repo/math/subtract&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>以这种方式使用导出有三个主要好处：</p>
+<ul>
+<li><strong>避免 barrel 文件</strong>：barrel 文件是重新导出同一包中其他文件的文件，从而为整个包创建一个入口点。虽然它们可能看起来很方便，但编译器<a href="https://vercel.com/blog/how-we-optimized-package-imports-in-next-js#what's-the-problem-with-barrel-files">和捆绑程序很难处理</a>它们，并且可能很快导致性能问题。</li>
+<li><strong>更强大的功能</strong>：与<a href="https://nodejs.org/api/packages.html#main"><code>主</code>字段</a>（如 <a href="https://nodejs.org/api/packages.html#conditional-exports">Conditional Exports</a>）相比，<code>exports</code> 还具有其他强大的功能。一般来说，尽可能使用 <code>exports</code> 而不是 <code>main</code> 就行了。</li>
+<li><strong>IDE 友好</strong>：通过使用 <code>export</code> 指定包的入口点，代码编辑器可以为包的导出提供自动完成。</li>
+</ul>
+<hr>
+<p>除此之外还有 <code>import</code> 字段，也就是一种创建包中其他模块的子路径的方法。可以简单地视为 “快捷方式” ，用于编写更简单的导入路径，这些路径对日后文件被移动后的重构更具弹性。</p>
+<blockquote>
+<p>其他：包通常使用 <code>src</code> 目录来存储其源代码并编译到 <code>dist</code> 目录（也应位于包中）。</p>
+</blockquote>
+<h2 id="管理依赖项"><a href="#管理依赖项" class="headerlink" title="管理依赖项"></a>管理依赖项</h2><figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;dependencies&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;next&quot;</span><span class="punctuation">:</span> <span class="string">&quot;latest&quot;</span><span class="punctuation">,</span> <span class="comment">// 外部依赖</span></span><br><span class="line">    <span class="attr">&quot;@repo/ui&quot;</span><span class="punctuation">:</span> <span class="string">&quot;*&quot;</span> <span class="comment">// 内部依赖</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>在存储库中安装依赖项时，应将其直接安装在使用它的软件包中。包的 <code>package.json</code> 将包含所需的每个依赖项。外部和内部依赖项都是如此。</p>
+<p>要在多个包中快速安装依赖项，可以：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install jest --workspace=web --workspace=@repo/ui --save-dev</span><br></pre></td></tr></table></figure>
+
+<p>这种做法有几个好处：</p>
+<ul>
+<li><strong>更清晰</strong>：当软件包的依赖项列在其 <code>package.json</code> 中时，更容易理解软件包所依赖的内容。在存储库中工作的开发人员可以一目了然地看到包中使用了哪些依赖项。</li>
+<li><strong>更具灵活性</strong>：在大规模的 monorepo 中，想让每个包都使用相同版本的外部依赖项可能是不现实的。当有许多团队在同一个代码库中工作时，优先级、时间表和需求会有所不同。通过在 “使用它们的包” 中安装依赖项，可以让 <code>UI</code> 团队能够升级到最新版本的 TypeScript，而 <code>Web</code> 团队可以优先发布新功能并在以后使用 TypeScript。</li>
+<li><strong>更好的缓存能力</strong>：如果在存储库的根目录中安装了太多依赖项，则每当添加、更新或删除依赖项时，都会更改工作区根目录，从而导致不必要的缓存未命中。</li>
+<li><strong>修剪未使用的依赖项</strong>：对于 Docker 用户，<a href="https://turbo.build/repo/docs/reference/prune">Turborepo 的修剪功能</a>可以从 Docker 镜像中删除未使用的依赖项，以创建更轻量级的镜像。当依赖项安装在它们所适用的包中时，Turborepo 可以读取锁文件并删除所需的包中未使用的依赖项。</li>
+</ul>
+<blockquote>
+<p>属于工作区根目录的唯一依赖项是<strong>用于管理存储库的工具，</strong>而用于构建应用程序和库的依赖项安装在各自的包中。一些适合安装在根中的依赖项示例包括 <a href="https://www.npmjs.com/package/turbo"><code>turbo</code></a>、<a href="https://www.npmjs.com/package/husky"><code>husky</code></a> 或 <a href="https://www.npmjs.com/package/lint-staged"><code>lint-staged</code></a>。</p>
+</blockquote>
+<h3 id="保持同一版本的依赖"><a href="#保持同一版本的依赖" class="headerlink" title="保持同一版本的依赖"></a>保持同一版本的依赖</h3><p>一些 monorepo 维护者更喜欢按照规则在所有软件包中保持对相同版本的依赖关系。有几种方法可以实现此目的：</p>
+<ul>
+<li>使用专用的工具，比如 <a href="https://www.npmjs.com/package/syncpack"><code>syncpack</code></a>、<a href="https://www.npmjs.com/package/@manypkg/cli"><code>manypkg</code></a> 和 <a href="https://www.npmjs.com/package/sherif"><code>sherif</code></a> 等工具可用于此特定目的。</li>
+<li>或者单纯的使用包管理器，可以使用软件包管理器通过一个命令更新依赖项版本:<ul>
+<li><code>npm install typescript@latest --workspaces</code></li>
+</ul>
+</li>
+<li>或者最粗暴的用编辑器一次查找并替换存储库中所有 <code>package.json</code> 文件的依赖项版本。用 <code>“next”： “.*”</code> 之类的正则表达式来查找并替换为所需的版本。完成后再运行包管理器的 install 命令来更新 lock 文件.</li>
+</ul>
+<h2 id="内部包"><a href="#内部包" class="headerlink" title="内部包"></a>内部包</h2><p><a href="https://turbo.build/repo/docs/core-concepts/internal-packages">内部包</a>是工作区的构建块（building blocks），是一种在存储库中共享代码的强大方式。Turborepo 读取 <code>package.json</code> 中的依赖项来分析内部包之间的关系，并在后台创建 <a href="https://turbo.build/repo/docs/core-concepts/package-and-task-graph#package-graph">Package Graph</a> 以优化存储库的工作流程。</p>
+<p>在创建内部包时，建议创建具有单一 “用途” 的包。这是最佳实践，具体取决于存储库的规模、组织、团队需求等。此策略具有以下几个优点：</p>
+<ul>
+<li><strong>更易于理解</strong>：随着存储库的扩展，在存储库中工作的开发人员将能够更轻松地找到他们需要的代码。</li>
+<li><strong>减少每个包的依赖项</strong>：每个包使用更少的依赖项，以便 Turborepo 可以更有效地<a href="https://turbo.build/repo/docs/reference/prune">修剪包图的依赖项</a>。</li>
+</ul>
+<p>在创建<a href="https://turbo.build/repo/docs/core-concepts/package-types#application-packages">应用程序包</a>时，最好避免将共享代码放在这些包中。相反，应该为共享代码创建一个单独的包，并让应用程序包依赖于该包。<br>此外，应用程序包不应安装到其他包中。相反，应将它们视为 <a href="https://turbo.build/repo/docs/core-concepts/package-and-task-graph#package-graph">Package Graph</a> 的入口点。</p>
+<h2 id="配置任务"><a href="#配置任务" class="headerlink" title="配置任务"></a>配置任务</h2><p>Turborepo 将始终按照 <a href="https://turbo.build/repo/docs/reference/configuration"><code>turbo.json</code> 配置</a>和 <a href="https://turbo.build/repo/docs/core-concepts/package-and-task-graph#package-graph">Package Graph</a> 中描述的顺序运行任务，并尽可能并行化工作以确保一切尽可能快地运行。</p>
+<p>根目录的 <code>turbo.json</code> 文件是注册 Turborepo 将运行的任务的位置。定义任务后，将能够使用 <a href="https://turbo.build/repo/docs/reference/run"><code>turbo run</code></a> 运行一个或多个任务。</p>
+<p><code>tasks</code> 对象中的每个 key 都是一个可以通过 <code>turbo run</code> 执行的任务。Turborepo 将在 <code>package.json</code> 中搜索与<strong>任务同名的软件包</strong>:</p>
+<p><a href="https://turbo.build/repo/docs/reference/configuration#dependson"><code>dependsOn</code> 键</a>用于指定在其他任务开始运行之前必须完成的任务。在大多数情况下，库的<code>build</code>脚本在应用程序的<code>build</code>脚本运行之前完成，所以可以这么写:</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;build&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;dependsOn&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;^build&quot;</span><span class="punctuation">]</span> </span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>^</code> 这个语法告诉 Turborepo 从依赖关系图的底部开始运行任务。如果应用程序依赖于名为 <code>ui</code> 的库，并且该库具有<code>build</code>任务，则 <code>ui</code> 中的<code>build</code>脚本将<strong>首先</strong>运行。成功完成后，才会运行应用程序中的<code>build</code>任务。<br>这是一个重要的形式，因为它可以确保应用程序的<code>build</code>任务具有编译所需的所有必要依赖项。当依赖关系图发展到具有多个级别的任务依赖关系的更复杂的结构时，此概念也适用。</p>
+</blockquote>
+<p>有时可能需要确保同一包中的两个任务按特定顺序运行。例如需要先在库中运行<code>build</code>任务，然后再在同一库中运行<code>test</code>任务。这种情况删掉 <code>^</code> 就行了:</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;test&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;dependsOn&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;build&quot;</span><span class="punctuation">]</span> </span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>还可以在特定包中指定要依赖的单个任务。例如在任何 <code>lint</code> 任务之前运行 <code>utils</code> 中的<code>build</code>任务:</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;lint&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;dependsOn&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;utils#build&quot;</span><span class="punctuation">]</span> </span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>或者更加细致的限定 <code>lint</code>:</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;web#lint&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;dependsOn&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;utils#build&quot;</span><span class="punctuation">]</span> </span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>即 <code>Web 包中的</code> <code>lint</code> 任务只能在 <code>utils</code> 包中的<code>build</code>任务完成后运行。</p>
+<p>某些任务可能没有任何依赖项。例如用于在 Markdown 文件中查找拼写错误的任务可能不需要关心其他任务的状态。在这种情况下，省略 <code>dependsOn</code> 键或给个空数组就行了:</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;spell-check&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;dependsOn&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span> </span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="指定输入输出"><a href="#指定输入输出" class="headerlink" title="指定输入输出"></a>指定输入输出</h3><p><code>outputs</code> 键告诉 Turborepo 文件和目录在任务成功完成时应该缓存在哪。如果未定义此 key，Turborepo 将不会缓存任何文件。</p>
+<p>例如缓存 vite 的输出一般可以这么写:</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;build&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;outputs&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;dist/**&quot;</span><span class="punctuation">]</span> </span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>inputs</code> 键用于指定要包含在任务哈希中以进行<a href="https://turbo.build/repo/docs/crafting-your-repository/caching">缓存</a>的文件。默认情况下，Turborepo 将包含包中由 Git 跟踪的所有文件。但是也可以使用 <code>inputs</code> 键更具体地说明哈希中包含哪些文件, 例如，在 Markdown 文件中查找拼写错误的任务可以定义如下：:</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;spell-check&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;inputs&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;**/*.md&quot;</span><span class="punctuation">,</span> <span class="string">&quot;**/*.mdx&quot;</span><span class="punctuation">]</span> </span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以通过微调 <code>input</code> 以忽略对已知不会影响任务输出的文件的更改来提高某些任务的缓存命中率, 可以使用 <code>$TURBO_DEFAULT$</code> 微语法来微调默认 <code>input</code> 行为：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;build&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;inputs&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;$TURBO_DEFAULT$&quot;</span><span class="punctuation">,</span> <span class="string">&quot;!README.md&quot;</span><span class="punctuation">]</span> </span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里 Turborepo 使用<code>build</code>任务的默认<code>input</code>，但会忽略对 <code>README.md</code> 文件的更改。如果 <code>README.md</code> 文件发生更改，任务仍将用上缓存。</p>
+<h3 id="Root-任务"><a href="#Root-任务" class="headerlink" title="Root 任务"></a>Root 任务</h3><p>还可以使用 <code>turbo</code> 在 Workspace 根的 <code>package.json</code>中运行脚本。例如，除了每个软件包中的 <code>lint</code> 任务外，可能还需要对 Workspace 根目录中的文件运行 <code>lint：root</code> 任务：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;lint&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;dependsOn&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;^lint&quot;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;//#lint:root&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span><span class="punctuation">&#125;</span> </span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><ul>
+<li><p><a href="https://turbo.build/repo/docs/reference/package-configurations">包配置</a>是直接放入包中的<code>turbo.json</code>文件。这允许软件包为其自己的任务定义特定行为，而不会影响存储库的其余部分。</p>
+</li>
+<li><p>有一些始终需要运行的任务，例如缓存生成后的部署脚本。对于这些任务，用 <code>“cache”： false</code> :</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;deploy&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;dependsOn&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;^build&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;cache&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;build&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;outputs&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;dist/**&quot;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>某些任务可以并行运行，例如 Linter 不需要等待依赖项中的输出成功才能运行：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;transit&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;dependsOn&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;^transit&quot;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;check-types&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;dependsOn&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;transit&quot;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这里用到了 <a href="https://turbo.build/repo/docs/core-concepts/package-and-task-graph#transit-nodes">Transit Nodes</a> （就是名为 <code>transit</code> 的任务），这些 Transit Node 使用不执行任何操作的任务在软件包依赖项之间创建关系，这里用了名称 <code>transit</code>，但可以将任务命名为 Workspace 中尚未包含脚本的任何名称。</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="正在运行的任务"><a href="#正在运行的任务" class="headerlink" title="正在运行的任务"></a>正在运行的任务</h2><p>当在软件包的目录中时，<code>turbo</code> 会自动将命令范围限定为该软件包的 <a href="https://turbo.build/repo/docs/core-concepts/package-and-task-graph#package-graph">Package Graph</a>:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd apps/docs</span><br><span class="line">turbo build</span><br></pre></td></tr></table></figure>
+<p>将使用 <code>turbo.json</code> 中注册的<code>build</code>任务运行 <code>docs</code> 包的<code>build</code>任务。</p>
+<blockquote>
+<p>但也可以<a href="https://turbo.build/repo/docs/crafting-your-repository/running-tasks#using-filters">使用过滤器</a>覆盖 Automatic Package Scoping。</p>
+</blockquote>
+<h3 id="运行多个任务"><a href="#运行多个任务" class="headerlink" title="运行多个任务"></a>运行多个任务</h3><p><code>Turbo</code> 能够运行多个任务，并尽可能并行化:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">turbo run build test lint check-types</span><br></pre></td></tr></table></figure>
+
+<h2 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h2><p>Turborepo 的缓存在本地工作时可以节省大量时间 - 启用<a href="https://turbo.build/repo/docs/core-concepts/remote-caching">远程缓存</a>时，它的功能更加强大，可在整个团队和 CI 之间共享缓存。</p>
+<h3 id="缓存什么？"><a href="#缓存什么？" class="headerlink" title="缓存什么？"></a>缓存什么？</h3><ul>
+<li>在 <a href="https://turbo.build/repo/docs/reference/configuration#outputs"><code>turbo.json 的 outputs</code> 键</a>中定义的任务的文件输出。</li>
+<li>任务的终端输出，从任务第一次运行时开始将这些日志恢复到终端。</li>
+<li>对输入进行哈希处理，为任务运行创建一个 “fingerprints”。当 “fingerprints” 匹配时，运行任务将命中缓存。</li>
+</ul>
+<h3 id="其他-1"><a href="#其他-1" class="headerlink" title="其他"></a>其他</h3><ul>
+<li><a href="https://turbo.build/repo/docs/reference/run#--dry----dry-run"><code>--dry</code> 标志</a>，可用于查看如果在没有实际运行任务的情况下运行任务会发生什么。当不确定正在运行的任务时，这对于调试缓存问题非常有用。</li>
+<li><a href="https://turbo.build/repo/docs/reference/run#--summarize"><code>--summarize</code> 标志</a>，可用于获取任务的所有输入、输出等的概览。比较两个摘要将揭示两个任务的哈希值不同的原因。</li>
+<li>强制 <code>turbo</code> 重新执行已缓存的任务，请使用 <a href="https://turbo.build/repo/docs/reference/run#--force"><code>--force</code> 标志</a>。请注意，这将禁用<strong>读取</strong>缓存，<strong>而不是写入</strong>。</li>
+</ul>
+<h2 id="开发工作流"><a href="#开发工作流" class="headerlink" title="开发工作流"></a>开发工作流</h2><p>在 <code>turbo.json</code> 中定义开发任务 (development task) 会告诉 Turborepo 将运行一个长期任务。这对于运行开发服务器、运行测试或构建应用程序等操作非常有用:</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;dev&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;cache&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;persistent&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>&quot;cache&quot;： false</code>：告诉 Turborepo 不要尝试缓存任务的结果。由于这是一项开发任务，可能会频繁更改代码，因此缓存结果没有用。</li>
+<li><code>&quot;persistent&quot;: true</code>：告诉 Turborepo 保持任务运行，直到停止它。此键用作终端 UI 的信号，用于将任务视为长时间运行和交互式任务。此外，它还可以防止意外依赖不会退出的任务。</li>
+</ul>
+<p>一些脚本允许使用 <code>stdin</code> 在其中键入以进行交互式输入。使用<a href="https://turbo.build/repo/docs/reference/configuration#ui">终端 UI</a>，可以选择一个任务，输入它，然后像往常一样使用 <code>stdin</code>。</p>
+<p>需要运行用于设置开发环境或预构建包的脚本。可以使用 <code>dependsOn</code> 确保这些任务在 <code>dev</code> 任务之前运行：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;dev&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;cache&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;persistent&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;dependsOn&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;//#dev:setup&quot;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;//#dev:setup&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;outputs&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;.codegen/**&quot;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里用的是 <a href="https://turbo.build/repo/docs/crafting-your-repository/configuring-tasks#registering-root-tasks">Root Task</a>，但可以对 <a href="https://turbo.build/repo/docs/crafting-your-repository/configuring-tasks#depending-on-a-specific-task-in-a-specific-package">packages 中的任意任务</a>使用相同的思路。</p>
+<h3 id="Watch-mode"><a href="#Watch-mode" class="headerlink" title="Watch mode"></a>Watch mode</h3><p>许多工具都有一个内置的 watcher，比如 <a href="https://www.typescriptlang.org/docs/handbook/compiler-options.html#compiler-options"><code>tsc --watch</code></a>，它会响应源代码中的更改。有些则没有，<code>Turbo Watch</code> 为任何工具添加了依赖项感知的 Watcher。对源代码的更改将遵循在 <code>turbo.json</code> 中描述的 <a href="https://turbo.build/repo/docs/core-concepts/package-and-task-graph#task-graph">Task Graph （任务图</a>），例如:</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;dev&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;persistent&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;cache&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;lint&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;dependsOn&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;^lint&quot;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>当运行 <code>turbo watch dev lint</code> 时，会看到每当更改源代码时，<code>lint</code> 脚本都会重新运行，尽管 ESLint 没有内置的 watcher。<code>Turbo Watch</code> 还知道内部依赖关系，因此 <code>@repo/UI</code> 中的代码更改将在 <code>@repo/UI</code> 和 <code>Web</code> 中重新运行任务。</p>
+<h2 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h2><p>Turborepo 需要根据环境变量来决定是否改变应用程序的行为。在 <code>turbo.json</code> 文件中使用 <code>env</code> 和 <code>globalEnv</code> 键:</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;globalEnv&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;IMPORTANT_GLOBAL_VARIABLE&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;build&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;env&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;MY_API_URL&quot;</span><span class="punctuation">,</span> <span class="string">&quot;MY_API_KEY&quot;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>globalEnv</code>：更改此列表中任何环境变量的值都将更改所有任务的哈希值。</li>
+<li><code>env</code>：包括对影响任务的环境变量值的更改，从而实现更好的粒度。例如，当 <code>API_KEY</code> 的值发生变化时，<code>lint</code> 任务可以继续用缓存，但<code>build</code>任务应该不用。</li>
+</ul>
+<blockquote>
+<p>Turborepo 会自动将前缀通配符添加到常见框架的 <a href="https://turbo.build/repo/docs/reference/configuration#env"><code>env</code></a> 键中 （### <a href="https://turbo.build/repo/docs/crafting-your-repository/using-environment-variables#framework-inference">Framework Inference</a>）</p>
+</blockquote>
+<h3 id="Environment-mode"><a href="#Environment-mode" class="headerlink" title="Environment mode"></a>Environment mode</h3><p>Turborepo 的 Environment Mode 允许控制哪些环境变量在运行时可用于任务：</p>
+<ul>
+<li><a href="https://turbo.build/repo/docs/crafting-your-repository/using-environment-variables#strict-mode">严格模式</a>（默认）：将环境变量过滤为<strong>仅在</strong> <code>turbo.json</code> 的 <code>env</code> 和 <code>globalEnv</code> 键中指定的环境变量。</li>
+<li><a href="https://turbo.build/repo/docs/crafting-your-repository/using-environment-variables#loose-mode">宽松模式</a>：允许进程的所有环境变量可用。</li>
+</ul>
+<h3 id="其他-2"><a href="#其他-2" class="headerlink" title="其他"></a>其他</h3><ul>
+<li><p><code>.env</code> 文件非常适合在本地处理应用程序。<strong>Turborepo 不会将 .env 文件加载到任务的运行时</strong>中，而是让它们由框架或 <a href="https://www.npmjs.com/package/dotenv"><code>dotenv</code></a> 等工具处理。但是，<code>turbo</code> 必须知道 <code>.env</code> 文件中值的更改，以便它可以将它们用于哈希。如果在两次构建之间更改 <code>.env</code> 文件中的变量，则 <code>build</code> 任务应该不会用上缓存。所以可以将其添加到 <code>input</code> 键中:</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;globalDependencies&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;.env&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span> <span class="comment">// All task hashes</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;build&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;inputs&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;$TURBO_DEFAULT$&quot;</span><span class="punctuation">,</span> <span class="string">&quot;.env&quot;</span><span class="punctuation">,</span> <span class="string">&quot;.env.local&quot;</span><span class="punctuation">]</span> <span class="comment">// Only the `build` task hash</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>不建议在存储库的根目录中使用 <code>.env</code> 文件。相反，建议将 <code>.env</code> 文件放入使用它们的包中。</p>
+</li>
+<li><p><a href="https://turbo.build/repo/docs/reference/eslint-config-turbo"><code>eslint-config-turbo</code> 软件包</a>可帮助查找代码中使用但未在 <code>turbo.json</code>中列出的环境变量。这有助于确保在配置中考虑所有环境变量。</p>
+</li>
+<li><p>Turborepo 在任务开始时对任务的环境变量进行哈希处理。如果在任务期间创建或更改环境变量，Turborepo 将不知道这些更改，也不会在任务哈希中考虑这些更改。</p>
+</li>
+</ul>
+<hr>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><ul>
+<li><a href="https://turbo.build/repo/docs/crafting-your-repository/constructing-ci">配置 CI</a></li>
+<li><a href="https://turbo.build/repo/docs/core-concepts">核心概念</a></li>
+</ul>
+<blockquote>
+<p>本快速入门文档参照 Turborepo 2.x 官方文档: <a href="https://turbo.build/repo/docs">https://turbo.build/repo/docs</a><br>最后一次编辑：二〇二四年九月二十七日下午六点〇七分</p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+        <tag>Web</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>TypeScript With Rust Errors, No Try Catch, Heresy</title>
     <url>/2023/04/30/TypeScript-With-Rust-Errors-No-Try-Catch-Heresy/</url>
     <content><![CDATA[<blockquote>
