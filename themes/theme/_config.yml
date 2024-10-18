@@ -37,11 +37,11 @@ profile:
   image: /profile_cover.jpg
 
   links:
-    归档: /archives/
     计算机科学: /tags/Technique/
     医学: /tags/Medicine/
     生活: /tags/Life/
     日记本: /categories/gallery/
+    网页存档: /tags/Archive
     关于我: /about
 
 # footer
