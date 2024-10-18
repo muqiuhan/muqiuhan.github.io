@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="韩暮秋">
+
+
+    <meta name="subtitle" content="暮秋小屋">
+
+
+    <meta name="description" content="这里是暮秋小屋，思念和灵感的寄存处">
+
+
+    <meta name="keywords" content="韩暮秋,MuqiuHan,'Muqiu Han', 'muqiu han', muqiuhan">
+
+
+
+
+<title>10 Tips for Productive FSharp Scripting | 暮秋小屋</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/frame.js"></script>
+    
+
+
+
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+
+
+  <meta name="generator" content="Hexo 6.3.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+            暮秋小屋
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/">主页</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/gallery/">日记本</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Medicine/">医学</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Technique/">计算机科学</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Life/">生活</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/about">关于</a>
+              </li> 
+                   
+          
+          
+            <li class="menu-item search-btn">
+              <a href="#">Search</a>
+            </li>
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/Technique/">
+                            Technique
+                        </a>
+                    </span>    
+                
+                    <span class="post-tag">
+                        <a href="/tags/F/">
+                            F#
+                        </a>
+                    </span>    
+                
+                    <span class="post-tag">
+                        <a href="/tags/Archive/">
+                            Archive
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                10 Tips for Productive FSharp Scripting
+            
+            
+        </div>
+        <span class="post-date">
+            Oct 18, 2024
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <p>Scott Hanselman recently had a <a target="_blank" rel="noopener" href="http://www.hanselman.com/blog/InteractiveCodingWithCAndFREPLsScriptCSOrTheVisualStudioInteractiveWindow.aspx">nice post on C# and F# REPLs</a>, which reminded me of the time I started using F# scripts. Over time, I found out a couple of small tricks, which helped make the experience productive. I found about them mainly by accident, so I figured, let’s see if I can list them in one place! Some of these are super simple, some probably a bit obscure, but hopefully, one of them at least will make your path towards scripting nirvana an easier one…</p>
+<blockquote>
+<p>Note: these tips are not necessarily ordered by usefulness. For that matter, there might or might not be exactly 10 of them :)</p>
+</blockquote>
+<h2 id="Tip-1-Use-fsx-Files-for-Interactive-Coding"><a href="#Tip-1-Use-fsx-Files-for-Interactive-Coding" class="headerlink" title="Tip 1: Use .fsx Files for Interactive Coding"></a>Tip 1: Use <code>.fsx</code> Files for Interactive Coding</h2><p>You can use the F# Interactive 2 ways: you can directly type code into FSI, the F# Interactive window, or you can write code in an <code>.fsx</code> file, and select pieces of the code you want to execute. I recommend the second approach, for at least two reasons. First, FSI is a very primitive environment, <code>.fsx</code> files provide a much richer experience (IntelliSense). Then this encourages writing clean scripts you can reuse later.</p>
+<blockquote>
+<p>This is not specific to scripts, but… if you are on Visual Studio, do yourself a service and install the <a target="_blank" rel="noopener" href="http://fsprojects.github.io/VisualFSharpPowerTools/">Visual F# Power Tools</a> - you’ll get nice things such as better code highlighting, refactoring, and more.</p>
+</blockquote>
+<p>To execute code interactively, simply type code in an <code>.fsx</code> file, select a block of code, and hit Alt + Enter. The selected code will be evaluated, and the result will show up in the FSI window. In Visual Studio, you can also select code and right-click “Execute in Interactive”, but shortcuts are way faster.</p>
+<blockquote>
+<p>You can also execute a single-line with Alt + ‘. I rarely use this option, but this can save you time because you don’t need to select the entire line of code.</p>
+</blockquote>
+<blockquote>
+<p>In case the keyboard shortcuts to send code to FSI do not work anymore (ReSharper used to over-write them in the past), you can reset them in Visual Studio, by going to Tools &#x2F; Options &#x2F; Environment &#x2F; Keyboard. The 2 commands you need to map are <strong>EditorContextMenus.CodeWindow.ExecuteInInteractive</strong> and <strong>EditorContextMenus.CodeWindow.ExecuteLineInInteractive</strong>.</p>
+</blockquote>
+<p>You can also use these shortcuts from a regular <code>.fs</code> file, which can be handy if you want to validate that a piece of code is behaving the way you want.</p>
+<blockquote>
+<p>Interactive coding is by far my main usage for scripts - I use it extensively to prototype designs, run dumb tasks, or explore data or libraries. I realized recently that a few of my C# friends use LinqPad for the same purpose.</p>
+</blockquote>
+<h2 id="Tip-2-What-is-it"><a href="#Tip-2-What-is-it" class="headerlink" title="Tip 2: What is it?"></a>Tip 2: What is <code>it</code>?</h2><p>While I encourage working primarily from <code>.fsx</code> files, the FSI window is also very helpful. I use it primarily for small verifications. For instance, I might have in my script file code like this:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let add x y =</span><br><span class="line">  x + y</span><br></pre></td></tr></table></figure>
+
+<p>Once I send it for evaluation into FSI, I will see the following show up in FSI:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">val add : x:int -&gt; y:int -&gt; int</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+
+<p>My function <code>add</code> is now in memory, in my FSI session; I can start typing in the FSI window and use it:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; add 1 2;;</span><br><span class="line">val it : int = 3</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Enter does not trigger execution in FSI. The <code>;;</code> indicates to FSI “Please execute everything I just typed, up to that point”. This is useful if you want to type multiple lines of code in FSI, and execute them as a block.</p>
+<blockquote>
+<p><code>it</code>: in our <code>add 1 2</code> example, the result showed up as <code>it</code>. We simply ran add, but didn’t assign the result to anything. <code>it</code> now contains the result, until we run another expression. If you want to re-use that value, you can assign it in FSI, by doing for instance <code>let x = it;;</code>.′</p>
+</blockquote>
+<blockquote>
+<p>Once a value is loaded in your FSI session, it will remain there, available to you until you shadow it (in the example above, <code>x</code> will remain available, until I run for instance <code>let x = 42;;</code>). This is extremely convenient: for instance, you can load a data file once <code>let data = File.ReadAllLines path</code>, and keep using <code>data</code> for as long as you want, without having to reload it between code changes.</p>
+</blockquote>
+<blockquote>
+<p>FSI often shows an abbreviated version of values for large items. For instance, <code>[1..999]</code> will show up as <code>val it : int list = [1; 2; 3; 4; 5; 6; 7; 8; 9; 10; 11; 12; 13; 14; 15; 16; 17; 18; 19; 20; 21; 22; 23; 24; 25; 26; 27; 28; 29; 30; 31; 32; 33; 34; 35; 36; 37; 38; 39; 40; 41; 42; 43; 44; 45; 46; 47; 48; 49; 50; 51; 52; 53; 54; 55; 56; 57; 58; 59; 60; 61; 62; 63; 64; 65; 66; 67; 68; 69; 70; 71; 72; 73; 74; 75; 76; 77; 78; 79; 80; 81; 82; 83; 84; 85; 86; 87; 88; 89; 90; 91; 92; 93; 94; 95; 96; 97; 98; 99; 100; ...]</code> - note the … at the end, which indicate that there is more.</p>
+</blockquote>
+<p>What if you inadvertently started a very long computation, or an infinite loop? In Visual Studio, you can either kill the session entirely, by right-clicking over the FSI window and selecting “Reset Interactive Session” or Ctrl + Alt + R, or cancel the latest evaluation you requested (“Cancel Interactive Evaluation”, or Ctrl + Break.).</p>
+<h2 id="Tip-3-Run-Scripts-from-the-Command-Line"><a href="#Tip-3-Run-Scripts-from-the-Command-Line" class="headerlink" title="Tip 3: Run Scripts from the Command Line"></a>Tip 3: Run Scripts from the Command Line</h2><p>Besides interactive scripting, you can also run a script from the command line, by using <code>FSI.exe</code>:</p>
+<p><code>&gt;fsi.exe &quot;C:\myscript.fsx&quot;</code></p>
+<blockquote>
+<p><code>FSI.exe</code> is typically located at <code>C:\Program Files (x86)\Microsoft SDKs\F#\4.0\Framework\v4.0</code>. You can also install it separately, see <a target="_blank" rel="noopener" href="http://fsharp.org/">fsharp.org&#x2F;use</a> section for instructions for various platforms.</p>
+</blockquote>
+<p>You can define different behaviors in your script, depending on whether it is run interactively or from the command line, like this:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#if INTERACTIVE</span><br><span class="line">let msg = &quot;Interactive&quot;</span><br><span class="line">#else</span><br><span class="line">let msg = &quot;Not Interactive&quot;</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">printfn &quot;%s&quot; msg</span><br></pre></td></tr></table></figure>
+
+<p><em>Updated, Sep 19: thanks Matt Klein for <a target="_blank" rel="noopener" href="http://stackoverflow.com/q/39581342/114519">pointing the issue</a>.</em></p>
+<p>For more information on FSI from the command line, <a target="_blank" rel="noopener" href="https://msdn.microsoft.com/en-us/library/dd233175.aspx">check the reference page here</a>.</p>
+<p><em>Updated, Feb 20: <a target="_blank" rel="noopener" href="https://twitter.com/genTauro42">Ramon Soto Mathiesen</a> points out that <a target="_blank" rel="noopener" href="https://twitter.com/genTauro42/status/696407757835132928">Tip 9 also applies to the command line</a>.</em></p>
+<h2 id="Tip-4-Use-Relative-Paths"><a href="#Tip-4-Use-Relative-Paths" class="headerlink" title="Tip 4: Use Relative Paths"></a>Tip 4: Use Relative Paths</h2><p>Sometimes, your script will reference another resource; for instance, you need to read the contents of a <code>.txt</code> file somewhere. You can use absolute path, as in:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">File.ReadAllLines @&quot;C:/data/myfile.txt&quot;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Pre-pending a string with <code>@</code> makes it a verbatim string, and ignore escape sequences, such as <code>\</code>.</p>
+</blockquote>
+<blockquote>
+<p>Use <code>/</code> rather than <code>\</code>, so that path work both on Windows and Mono.</p>
+</blockquote>
+<p>However, if that resource lives in a location relative to your script, consider using relative path, so that you can move your script folder around without breaking it.</p>
+<p>Relative paths can be a bit tricky; for instance, running the following code interactively…</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.Environment.CurrentDirectory</span><br></pre></td></tr></table></figure>
+
+<p>… produces a potentially unexpected result in FSI:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">val it : string = &quot;C:\Users\Mathias Brandewinder\AppData\Local\Temp&quot;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+
+<p>You can avoid these issues by using built-in constants, which refer respectively to the directory where the script lives, the script file name, and the current line of the script:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">__SOURCE_DIRECTORY__</span><br><span class="line">__SOURCE_FILE__</span><br><span class="line">__LINE__</span><br></pre></td></tr></table></figure>
+
+<p>So if your folder structure was along these lines…</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root</span><br><span class="line">  /src/script.fsx</span><br><span class="line">  /data/data.txt</span><br></pre></td></tr></table></figure>
+
+<p>… you could refer to the data file <code>data.txt</code> from your script like this:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let path = System.IO.Path.Combine(__SOURCE_DIRECTORY__,&quot;..&quot;,&quot;data/data.txt&quot;)</span><br><span class="line">System.IO.File.ReadAllText path</span><br></pre></td></tr></table></figure>
+
+<h2 id="Tip-5-Including-Assemblies"><a href="#Tip-5-Including-Assemblies" class="headerlink" title="Tip 5: Including Assemblies"></a>Tip 5: Including Assemblies</h2><p>By default, FSI loads <code>FSharp.Core</code> and nothing else. If you want to use <code>System.DateTime</code>, you will need to first <code>open System</code> in your script. If you want to use an assembly that is not part of the standard .NET distribution, you will need to reference it first using <code>#r</code>. Imagine for instance that you installed the Nuget package <code>fsharp.data</code>; to use it in your script, you would do something like:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#r @&quot;../packages/FSharp.Data.2.2.5/lib/net40/FSharp.Data.dll&quot;</span><br><span class="line">open FSharp.Data</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>When you execute <code>open System</code> in interactive, don’t worry if nothing seems to happen: the only result is a new <code>&gt;</code> showing up in FSI.</p>
+</blockquote>
+<p>For assemblies that are part of .NET but not referenced by default, you can use a shorter version:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#r @&quot;System.Xaml&quot;</span><br><span class="line">open System.Xaml</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>In Visual Studio, you can right-click a reference from Solution Explorer, and send to F# interactive. You can then directly open it, and start using it in FSI.</p>
+</blockquote>
+<p><em>Updated, Feb 20: <a target="_blank" rel="noopener" href="https://twitter.com/sergey_tihon">Sergey Tihon</a> shared an interesting comment, explaining where Tip 5 can sometimes go wrong. I’d say, try Tip 5 first, but be aware that this might at times not quite work:</em></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://twitter.com/brandewinder">@brandewinder</a> don’t load assemblies like in Tip 5 ) <a target="_blank" rel="noopener" href="https://t.co/Owft1NmPoo">https://t.co/Owft1NmPoo</a></p>
+<p>— Sergey Tihon (@sergey_tihon) <a target="_blank" rel="noopener" href="https://twitter.com/sergey_tihon/status/696395229285523456">February 7, 2016</a></p>
+</blockquote>
+<p><em>Updated, Feb 20: <a target="_blank" rel="noopener" href="https://twitter.com/dsyme">F# open source contributor Don Syme</a> share a related nice trick:</em></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://twitter.com/jeroldhaas">@jeroldhaas</a> <a target="_blank" rel="noopener" href="https://twitter.com/sergey_tihon">@sergey_tihon</a> <a target="_blank" rel="noopener" href="https://twitter.com/brandewinder">@brandewinder</a> Use <a target="_blank" rel="noopener" href="https://twitter.com/hashtag/I?src=hash">#I</a> <strong>SOURCE_DIRECTORY</strong>, it is wondrous, very satisfying. All relative paths then work</p>
+<p>— Don Syme (@dsyme) <a target="_blank" rel="noopener" href="https://twitter.com/dsyme/status/696429115184955393">February 7, 2016</a></p>
+</blockquote>
+<h2 id="Tip-6-Use-Paket"><a href="#Tip-6-Use-Paket" class="headerlink" title="Tip 6: Use Paket"></a>Tip 6: Use <code>Paket</code></h2><p>The Nuget package manager is useful to consume existing packages. However, by default, Nuget stores assemblies in a folder that includes the package version number. This is very impractical for a script. In our example above, if <code>fsharp.data</code> gets an update, our script reference will be broken once we update the Nuget package:</p>
+<p><code>#r @&quot;../packages/FSharp.Data.2.2.5/lib/net40/FSharp.Data.dll&quot;</code></p>
+<p>Fixing the script requires manually editing the version number in the path, which quickly becomes a pain. <a target="_blank" rel="noopener" href="https://fsprojects.github.io/Paket/"><strong>Paket</strong></a> provides a better experience, because it stores packages without the version number, in this case, under:</p>
+<p><code>#r @&quot;../packages/FSharp.Data/lib/net40/FSharp.Data.dll&quot;</code></p>
+<p>Your scripts will now gracefully handle version number changes.</p>
+<p>If you end up consuming numerous packages, you can make your life even easier, by referencing paths where assemblies might be searched for, using <code>#I</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#I @&quot;../packages/</span><br><span class="line">#r @&quot;FSharp.Data/lib/net40/FSharp.Data.dll&quot;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>If your primary goal is to “just script”, consider using <a target="_blank" rel="noopener" href="https://atom.io/">Atom</a> or <a target="_blank" rel="noopener" href="https://code.visualstudio.com/">VSCode</a>, with the <a target="_blank" rel="noopener" href="http://ionide.io/">Ionide plugin</a>. You can create and run free-standing F# scripts, with beautiful <a target="_blank" rel="noopener" href="http://ionide.io/#paket-integration">Paket integration</a>.</p>
+</blockquote>
+<h2 id="Tip-7-Include-Files"><a href="#Tip-7-Include-Files" class="headerlink" title="Tip 7: Include Files"></a>Tip 7: Include Files</h2><p>You might want to use the code from an existing file in your script. Suppose that we have a code file <code>Code.fs</code> somewhere, looking like this:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">namespace Mathias</span><br><span class="line"></span><br><span class="line">module Common =</span><br><span class="line">  let hello name = sprintf &quot;Hello, %s&quot; name</span><br></pre></td></tr></table></figure>
+
+<p>You can use that code from your script, by using the <code>#load</code> directive:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#load &quot;Code.fs&quot;</span><br><span class="line">open Mathias.Common</span><br><span class="line">hello &quot;World&quot;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>You might have to close and re-open the script file if you end up changing the contents of the file.</p>
+</blockquote>
+<blockquote>
+<p>If the file you are attempting to load contains references to other assemblies or files, you might get an error on the <code>#load</code> statement: “One or more errors in loaded files. The namespace or module … is not defined”. Simply reference the missing assemblies above the <code>#load</code> statement, so that your script uses the same dependencies as the file it refers to.</p>
+</blockquote>
+<h2 id="Tip-8-Profile-your-Code-with-time"><a href="#Tip-8-Profile-your-Code-with-time" class="headerlink" title="Tip 8: Profile your Code with #time"></a>Tip 8: Profile your Code with #time</h2><p>Another handy directive, <code>#time</code>, turns on basic profiling. Once it is executed, for every block of code you send for execution you will see timing and garbage collection information. For instance, running this code…</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#time</span><br><span class="line">[| 1 .. 10000000 |] |&gt; Array.map (fun x -&gt; x * x)</span><br></pre></td></tr></table></figure>
+
+<p>… will produce the following in FSI:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">--&gt; Timing now on</span><br><span class="line"></span><br><span class="line">Real: 00:00:00.887, CPU: 00:00:00.828, GC gen0: 2, gen1: 2, gen2: 2</span><br><span class="line">val it : int [] =</span><br><span class="line">  [|1; 4; 9; 16; 25; 36; 49; // snipped for brevity</span><br></pre></td></tr></table></figure>
+
+<p>We get the wall time and CPU time it took, as well as some information about garbage collection in generations 0, 1 and 2. This would not replace a full-blown profiler, but this is an awfully convenient tool to figure out quickly if there are obvious ways to improve a piece of code.</p>
+<p>Note that every time you execute <code>#time</code>, the timer will be switched from on to off, or vice-versa. This is not always convenient; you can also explicitly set it to the desired state, like this:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#time &quot;on&quot;</span><br><span class="line">// everything now is timed</span><br><span class="line">#time &quot;off&quot;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>If you are interested in profiling, you should take a look at <a target="_blank" rel="noopener" href="http://www.privateeye.io/">PrivateEye</a>; check out <a target="_blank" rel="noopener" href="https://twitter.com/gregyoung">Greg Young</a>’s <a target="_blank" rel="noopener" href="https://vimeo.com/131637366">talk at NDC Oslo 2015</a> to get a feel for what it does.</p>
+</blockquote>
+<h2 id="Tip-9-Turn-64-bits-on"><a href="#Tip-9-Turn-64-bits-on" class="headerlink" title="Tip 9: Turn 64-bits on"></a>Tip 9: Turn 64-bits on</h2><p>Hat tip to <a target="_blank" rel="noopener" href="https://twitter.com/rickasaurus">Rick Minerich</a> for that one. I’ll refer you to his blog post to see how to <a target="_blank" rel="noopener" href="http://richardminerich.com/2013/03/setting-up-fsharp-interactive-for-machine-learning-with-large-datasets/">set FSI to 64 bits to handle large datasets</a>.</p>
+<h2 id="Tip-10-Bonus-Material"><a href="#Tip-10-Bonus-Material" class="headerlink" title="Tip 10: Bonus Material"></a>Tip 10: Bonus Material</h2><p>Did you know that you could…</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://channel9.msdn.com/Events/Visual-Studio/Visual-Studio-2015-Final-Release-Event/Six-Quick-Picks-from-Visual-F-40">debug an F# script? (around 0:12:35 in)</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.swensensoftware.com/fseye">inspect the objects in your FSI session with <strong>FsEye</strong>?</a></li>
+<li>change the FSI font size in Tools&#x2F;Options&#x2F;Environment&#x2F;Fonts and Colors&#x2F;Show Settings for&#x2F;F# Interactive?</li>
+<li>add your own pretty-printer to FSI, <a target="_blank" rel="noopener" href="https://github.com/mathnet/mathnet-numerics/blob/master/src/FSharp/MathNet.Numerics.fsx">like this</a>?</li>
+<li>mess with your coworkers’ mental sanity, by executing <code>(*</code> (opening a multiline comment) in FSI? (credit: <a target="_blank" rel="noopener" href="https://twitter.com/tomaspetricek">Tomas</a>)</li>
+<li>simplify loading references with Visual Studio and Power Tools? (credit: <a target="_blank" rel="noopener" href="https://twitter.com/kitlovesfsharp">Kit Eason</a>, see details in comments section).</li>
+</ul>
+<p>And again… if you are not using the <a target="_blank" rel="noopener" href="http://fsprojects.github.io/VisualFSharpPowerTools/">Visual F# Power Tools</a>, you are missing out:</p>
+<blockquote>
+<p>“Don’t let your friends try <a target="_blank" rel="noopener" href="https://twitter.com/hashtag/fsharp?src=hash">#fsharp</a> without installing <a target="_blank" rel="noopener" href="https://twitter.com/FSPowerTools">@FSPowerTools</a>.” <a target="_blank" rel="noopener" href="https://twitter.com/dsyme">@dsyme</a> at <a target="_blank" rel="noopener" href="https://twitter.com/hashtag/ndclondon?src=hash">#ndclondon</a></p>
+<p>— Tomas Petricek (@tomaspetricek) <a target="_blank" rel="noopener" href="https://twitter.com/tomaspetricek/status/687934127627186176">January 15, 2016</a></p>
+</blockquote>
+<p>That’s what I got! I am sure I forgot some - do you have a useful or favorite trick to share?</p>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+                <div class="icon arrow-left"></div>
+                <div class="post-link">
+                    <a href="/2024/10/18/Generalised-signature/">Prev</a>
+                </div>
+            
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2024/10/18/Building-custom-fibers-library-in-FSharp/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+                 | 
+            
+            
+                希望路过的人可以添点柴火让这里暖和点
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    
+      <div class="search-popup">
+    <div class="search-popup-overlay">  
+    </div>
+    <div class="search-popup-window" >
+        <div class="search-header">
+            <div class="search-input-container">
+              <input autocomplete="off" autocapitalize="off" maxlength="80"
+                     placeholder="Search Anything" spellcheck="false"
+                     type="search" class="search-input">
+            </div>
+            <div class="search-close-btn">
+                <div class="icon close-btn"></div>
+            </div>
+        </div>
+        <div class="search-result-container">
+        </div>
+    </div>
+</div>
+
+<script>
+    const searchConfig = {
+        path             : "/search.xml",
+        top_n_per_article: "1",
+        unescape         : "false",
+        trigger: "auto",
+        preload: "false"
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js"></script>
+<script src="/js/search.js"></script>
+    
+    
+
+  </body>
+</html>

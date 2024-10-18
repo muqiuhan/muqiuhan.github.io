@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="韩暮秋">
+
+
+    <meta name="subtitle" content="暮秋小屋">
+
+
+    <meta name="description" content="这里是暮秋小屋，思念和灵感的寄存处">
+
+
+    <meta name="keywords" content="韩暮秋,MuqiuHan,'Muqiu Han', 'muqiu han', muqiuhan">
+
+
+
+
+<title>Dealing with complex dependency injection in FSharp | 暮秋小屋</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/frame.js"></script>
+    
+
+
+
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+
+
+  <meta name="generator" content="Hexo 6.3.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+            暮秋小屋
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/">主页</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/gallery/">日记本</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Medicine/">医学</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Technique/">计算机科学</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Life/">生活</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/about">关于</a>
+              </li> 
+                   
+          
+          
+            <li class="menu-item search-btn">
+              <a href="#">Search</a>
+            </li>
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/Technique/">
+                            Technique
+                        </a>
+                    </span>    
+                
+                    <span class="post-tag">
+                        <a href="/tags/F/">
+                            F#
+                        </a>
+                    </span>    
+                
+                    <span class="post-tag">
+                        <a href="/tags/Archive/">
+                            Archive
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                Dealing with complex dependency injection in FSharp
+            
+            
+        </div>
+        <span class="post-date">
+            Oct 18, 2024
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <p>Today, we’re going to cover different ways of encapsulating capabilities and supplying them between functions using functional programming techniques which can be realized in F#.</p>
+<p>Managing code dependencies in object oriented languages in 2020 is pretty much one sided problem: dependency injection has won, people use dedicated frameworks to handle that for them, which 99.9% of the time operate using runtime reflection. Of course now you need to learn them as well, potentially misconfigure them and fail at runtime or maybe even discover that not every problem is a stateless web service, but it still better (?) than what we had in the past, and what more can we possibly do anyway?</p>
+<p>On the other side in functional space, there’s no one opinionated solution or approach - various things have been proposed, usually depending on features that languages and compiler have to offer. And since pretty much all functional languages offer this thing known as partial application, for many years it was the most common answer for the problem of managing dependencies.</p>
+<p>In short we’re talking about dependency injection by function parameter, like:</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// foo requires 2 dependencies to serve the incoming request</span></span><br><span class="line"><span class="keyword">let</span> foo bar baz request <span class="operator">=</span> <span class="operator">???</span></span><br><span class="line"><span class="comment">// we&#x27;re providing dependencies by partial application</span></span><br><span class="line"><span class="keyword">let</span> wired <span class="operator">=</span> foo dependency1 dependency2</span><br><span class="line"><span class="comment">// now wired can serve request directly without calling </span></span><br><span class="line"><span class="comment">// dependencies every time</span></span><br><span class="line"><span class="keyword">let</span> response <span class="operator">=</span> wired request</span><br></pre></td></tr></table></figure>
+
+<p>It’s very simple, doesn’t require reflection or dedicated library. However there are several pain points coming with this approach - visible especially as our code base grows and become more complex. However latest approaches popularized by libraries like Scala <a target="_blank" rel="noopener" href="https://zio.dev/?ref=bartoszsypytkowski.com">ZIO</a> or Haskell’s <a target="_blank" rel="noopener" href="https://youtu.be/idU7GdlfP9Q?t=1394&ref=bartoszsypytkowski.com">Polysemy</a> challenge this approach.</p>
+<h2 id="Partial-application"><a href="#Partial-application" class="headerlink" title="Partial application"></a>Partial application</h2><p>There are some design decisions, when partial application doesn’t always give a clear answer. Example:</p>
+<blockquote>
+<p>Imagine using a set of methods, that are closely related and - in object oriented world - encapsulated within  a single object, like database query&#x2F;execute or different logging methods (debug&#x2F;info&#x2F;warning&#x2F;error).</p>
+</blockquote>
+<p>Now, given that our function needs to use potentially more than one of these, how should we pass our arguments?:</p>
+<ol>
+<li>Functional purist path - pass every dependency as a separate function parameter: <code>let doSmth logError logInfo = ??</code>. While it allows us to precisely describe what this function uses, it would of course lead to explosion of function parameters. Additionally every time you need new function in your existing code, you need to partially apply it at all call sites.</li>
+<li>Describe operations using ADT (algebraic data types) and inject a function that will work as an interpreter for them: <code>let doSmth (log: LogEvent -&gt; unit) = ??</code>. While it’s easy to mock (you don’t need to implement everything, only pattern match on cases that matter for a particular test) and reduces params affinity, it also comes with a lot of indirection, that may lead to harder to grasp, especially during debugging. Sometimes a performance penalty is also to be expected.</li>
+<li>Fallback to objects&#x2F;interfaces and pass them as methods: <code>let doSmth (logger: ILogger) = ??</code>. While interfaces may simplify dependency tree, it’s not always obvious when to use it. Mocking story is also more painful + interfaces are not inferred by F# compiler.</li>
+</ol>
+<p>These are quite common options I’ve seen in the wild - each having their own advantages and disadvantages. Which one to use? Good question, as in practice with codebases that are old enough, you usually see 2 or even all 3 of them mixed together. This can lead to some confusion and obscurity over time.</p>
+<p>What’s worse, none of these cases really solves problem of dependency management - all they do is just try to reduce it to a manageable scope. Eventually you’ll end up manually wiring - by partial application - dozens of functions and managing all of the dependencies between them by hand.</p>
+<h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><p>In order to get better understanding, we’ll use a fairly simple example - changing user password:</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> fetchUser (db<span class="operator">:</span> IDbConnection) userId <span class="operator">=</span> </span><br><span class="line">    db.QueryFirstAsync(Sql.FetchUser, &#123;<span class="operator">|</span> userId <span class="operator">=</span> userid<span class="operator">|</span> &#125;)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">let</span> updateUser (db<span class="operator">:</span> IDbConnection) user <span class="operator">=</span> db.ExecuteAsync(Sql.UpdateUser, user)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> changePass (logger<span class="operator">:</span> ILogger) fetch update <span class="operator">=</span> <span class="keyword">fun</span> req <span class="operator">-&gt;</span> <span class="keyword">task</span> &#123;</span><br><span class="line">    <span class="keyword">let!</span> user <span class="operator">=</span> fetch req.UserId</span><br><span class="line">    <span class="keyword">if</span> user.Hash <span class="operator">=</span> bcrypt user.Salt req.OldPass <span class="keyword">then</span></span><br><span class="line">        <span class="keyword">let</span> salt <span class="operator">=</span> generateSalt ()</span><br><span class="line">        <span class="keyword">let</span> user&#x27; <span class="operator">=</span> &#123; user <span class="keyword">with</span> Salt <span class="operator">=</span> salt; Hash <span class="operator">=</span> bcrypt salt req.NewPass &#125;</span><br><span class="line">        <span class="keyword">do!</span> update user&#x27;</span><br><span class="line">        logger.LogInformation <span class="string">&quot;Password change: user %i&quot;</span> user.Id</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">Ok</span> ()</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">        logger.LogError <span class="string">&quot;Password change unauthorized: user %i&quot;</span> user.Id</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">Error</span> <span class="string">&quot;Old password is invalid&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>Here we have a fairly short snippet with some dependencies? But how many in practice?:</p>
+<ul>
+<li>Number of parameters suggest 3, but depending on our choices it could be 4 (if we decide to pass log error and info separately) or 2 (if we conflate fetch&#x2F;update into dedicated interface).</li>
+<li>It’s not hard to imagine that in the future our <code>bcrypt</code> hashing function may turn out to be configurable - maybe even per each user. That may need a configurable parameter.</li>
+<li>Maybe aside of the logger we may be needing a separate telemetry mechanism to count number of incoming request or password validation failures? That means another parameter.</li>
+<li>Salt generation is pseudo-random process - it we want our function to be deterministic, we should probably parametrize it over explicitly passed <code>Random</code> as well.</li>
+</ul>
+<p>As you see, what seemed to be simple task at the beginning can quickly blow up out of proportion. As the number of arguments grows, the more nasty our wiring code eventually becomes. Quite common pattern is to hide all of that nastiness under the carpet a.k.a. <strong>composition root</strong>. However this doesn’t have to be the case.</p>
+<p>Below we’ll cover another approach for dealing with dependencies - inspired by Scala <a target="_blank" rel="noopener" href="https://medium.com/@pascal.mengelt/what-are-the-benefits-of-the-zio-modules-with-zlayers-3bf6cc064a9b?ref=bartoszsypytkowski.com">ZIO</a> library - using incremental steps, from first principles to monadic bindings.</p>
+<h2 id="Managing-dependencies-beyond-partial-application"><a href="#Managing-dependencies-beyond-partial-application" class="headerlink" title="Managing dependencies beyond partial application"></a>Managing dependencies beyond partial application</h2><p>Let’s start from how our code from above will eventually look like at the end of this step:</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> changePass env <span class="operator">=</span> <span class="keyword">fun</span> req <span class="operator">-&gt;</span> <span class="keyword">task</span> &#123;</span><br><span class="line">    <span class="keyword">let!</span> user <span class="operator">=</span> Db.fetchUser env req.UserId</span><br><span class="line">    <span class="keyword">if</span> user.Hash <span class="operator">=</span> bcrypt user.Salt req.OldPass <span class="keyword">then</span></span><br><span class="line">        <span class="keyword">let</span> salt <span class="operator">=</span> Random.bytes env <span class="number">32</span></span><br><span class="line">        <span class="keyword">do!</span> Db.updateUser <span class="keyword">env</span> &#123; user <span class="keyword">with</span> Salt <span class="operator">=</span> salt; Hash <span class="operator">=</span> bcrypt salt req.NewPass &#125;</span><br><span class="line">        Log.info env <span class="string">&quot;Changed password for user %i&quot;</span> user.Id</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">Ok</span> ()</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">        Log.error env <span class="string">&quot;Password change unauthorized: user %i&quot;</span> user.Id</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">Error</span> <span class="string">&quot;Old password is invalid&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>As you may notice, all of our partially applied parameters disappeared, replaced by some single cryptic <code>env</code> parameter. We’ll get there soon. We also packed similar capabilities into corresponding modules (<code>Db</code>&#x2F;<code>Log</code>&#x2F;<code>Random</code>). Lets start from defining them:</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">[&lt;Interface&gt;]</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">ILogger</span> <span class="operator">=</span></span><br><span class="line">    <span class="keyword">abstract</span> Debug<span class="operator">:</span> <span class="type">string</span> <span class="operator">-&gt;</span> <span class="type">unit</span></span><br><span class="line">    <span class="keyword">abstract</span> <span class="literal">Error</span><span class="operator">:</span> <span class="type">string</span> <span class="operator">-&gt;</span> <span class="type">unit</span> </span><br><span class="line"></span><br><span class="line"><span class="meta">[&lt;Interface&gt;]</span> <span class="keyword">type</span> <span class="title class_">ILog</span> <span class="operator">=</span> <span class="keyword">abstract</span> Logger<span class="operator">:</span> ILogger</span><br><span class="line"></span><br><span class="line"><span class="keyword">module</span> Log <span class="operator">=</span></span><br><span class="line">    <span class="keyword">let</span> debug (env<span class="operator">:</span> #ILog) fmt <span class="operator">=</span> Printf.kprintf env.Logger.Debug fmt</span><br><span class="line">    <span class="keyword">let</span> error (env<span class="operator">:</span> #ILog) fmt <span class="operator">=</span> Printf.kprintf env.Logger.<span class="literal">Error</span> fmt</span><br></pre></td></tr></table></figure>
+
+<p>Now we can say something more about <code>env</code>. The secret is in <code>#ILog</code> signature, which means that our environment can be any generic type implementing <code>ILog</code> interface. As soon you’ll see, this approach is highly composable, but before that we’ll need another module:</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">[&lt;Interface&gt;]</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">IDatabase</span> <span class="operator">=</span></span><br><span class="line">    <span class="keyword">abstract</span> Query<span class="operator">:</span> <span class="type">string</span> <span class="operator">*</span> <span class="symbol">&#x27;i</span> <span class="operator">-&gt;</span> Task<span class="operator">&lt;</span><span class="symbol">&#x27;o</span><span class="operator">&gt;</span></span><br><span class="line">    <span class="keyword">abstract</span> Execute<span class="operator">:</span> <span class="type">string</span> <span class="operator">*</span> <span class="symbol">&#x27;i</span> <span class="operator">-&gt;</span> Task</span><br><span class="line">	</span><br><span class="line"><span class="meta">[&lt;Interface&gt;]</span> <span class="keyword">type</span> <span class="title class_">IDb</span> <span class="operator">=</span> <span class="keyword">abstract</span> Database<span class="operator">:</span> IDatabase</span><br><span class="line"></span><br><span class="line"><span class="keyword">module</span> Db <span class="operator">=</span> </span><br><span class="line">    <span class="keyword">let</span> fetchUser (env<span class="operator">:</span> #IDb) userId <span class="operator">=</span> </span><br><span class="line">        env.Database.Query(Sql.FetchUser, &#123;<span class="operator">|</span> userId <span class="operator">=</span> userId <span class="operator">|</span>&#125;)</span><br><span class="line">    <span class="keyword">let</span> updateUser (env<span class="operator">:</span> #IDb) user <span class="operator">=</span> env.Database.Execute(Sql.UpdateUser, user)</span><br></pre></td></tr></table></figure>
+
+<p>Now what will happen if we use functions from both <code>Log</code> and <code>Db</code> modules? As it turns out, F# compiler can properly infer generic constraints over these interfaces. The result <code>env</code> type constraint is inferred to be an union - just like set union, which also means that it handles duplicates for us - of all constraints of other functions using <code>env</code> in its scope:</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> foo env <span class="operator">=</span> <span class="comment">// env :&gt; IDb and env :&gt; ILog</span></span><br><span class="line">    <span class="keyword">let</span> user <span class="operator">=</span> Db.fetchUser env <span class="number">123</span>	<span class="comment">// env :&gt; IDb</span></span><br><span class="line">    Log.debug env <span class="string">&quot;User: %A&quot;</span> user	<span class="comment">// env :&gt; ILog</span></span><br></pre></td></tr></table></figure>
+
+<p>Now why did we use two separate interfaces (<code>ILog</code>&#x2F;<code>ILogger</code>) instead of making environment implement <code>ILogger</code> directly? This is more practical approach that will let us isolate capabilities of particular modules rather than putting them flat into our environment. Example:</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> Log <span class="operator">=</span></span><br><span class="line">    <span class="keyword">let</span> live <span class="operator">:</span> ILogger <span class="operator">=</span> <span class="operator">??</span> <span class="comment">// create logger interface</span></span><br><span class="line"></span><br><span class="line"><span class="meta">[&lt;Struct&gt;]</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">AppEnv</span> <span class="operator">=</span> </span><br><span class="line">    <span class="keyword">interface</span> ILog <span class="keyword">with</span> <span class="keyword">member</span> _.Logger <span class="operator">=</span> Log.live</span><br><span class="line">    <span class="keyword">interface</span> IDb <span class="keyword">with</span> <span class="keyword">member</span> _.Database <span class="operator">=</span> Db.live connectionString</span><br><span class="line">	</span><br><span class="line">foo (AppEnv())</span><br></pre></td></tr></table></figure>
+
+<p>We cannot eagerly provide a specific implementation of <code>ILog</code>&#x2F;<code>IDb</code>, because they’re yet to be defined as part of by our environment type (which may need to implement many interfaces). To maintain module encapsulation <code>Log</code> module shouldn’t be aware of existence or implementation of <code>IDb</code> interface and vice versa for <code>Db</code> module. What we can do however is to provide <code>live</code> implementation of <code>ILogger</code>, which encapsulates capabilities required by the <code>Log</code> module. This way we don’t need to know details of <code>ILogger</code> when defining our environment type.</p>
+<p>Strong sides of this approach?:</p>
+<ul>
+<li>We only need to provide a single environment object instead of (potentially) unbounded list of parameters. Since it’s always one, it’s easier to generalize and compose other functions over it.</li>
+<li>Unlike in reflection-based dependency injection frameworks - everything is still safe and checked by the compiler. If our environment type will not implement an interface required somewhere in the call chain, our code will simply not compile.</li>
+<li>It’s still fairly easy to unit test - each function defines only the generic type constraints that it uses in its own call tree, NOT all of the constraints required by the application.</li>
+<li>New dependencies are added implicitly - if your code uses module that requires additional capability, it will be automatically inferred by the compiler and bubble up to our environment type definition. No need to add new function parameters or to pass new argument. Also - unlike the object oriented IoC containers - there’s no need to add new dependency as a field or constructor argument.</li>
+<li>It gives some opinionated approach on what should be a dependency - less thinking of <em>“should that be a function or interface?”</em> or <em>“if these two functions correspond to the same capability, should they be passed separately?”</em>, which arguably may be a good thing.</li>
+<li>It doesn’t impose specific restrictions on libraries and frameworks.</li>
+</ul>
+<p>Now we could as well stop here - IMHO this approach is already good and useful for most cases. We can also try to push it further. As you’ve seen, our code now requires quite a lot of <code>env</code> passing around. Could we do something about this? It turns out that yes, we could.</p>
+<h2 id="Reader-monad"><a href="#Reader-monad" class="headerlink" title="Reader monad"></a>Reader monad</h2><p>Before we continue: <strong>what we’re going to cover now is less useful in terms of current state of F# ecosystem for the reasons I’ll mention later</strong>.</p>
+<p>The pattern we’ll use here is known as a <strong><a target="_blank" rel="noopener" href="https://fsharpforfunandprofit.com/posts/elevated-world-6/?ref=bartoszsypytkowski.com">Reader Monad</a></strong>. While it’s useful in certain situations, it’s not widely used - IMO it’s fault lies in the name itself, which somehow managed to sound both borderline meaningless and scary in ears of many developers.</p>
+<p>The rest of this blog post will be introduction to this style in F#, however focused solely around problem of dependency management - we’ll ignore other aspects of monads.</p>
+<p>We’ll going to reuse our environment type from above, but now encode it directly into another type we’ll call <code>Effect</code>. Since I’ve mentioned that our pattern has M-word in it, you can safely assume that our handler’s logic will be defined as a lazy sequence of steps to be executed (sounds almost like async&#x2F;await). In F# we’ll sugar them by using custom computation expression (I’m going to call it <code>effect &#123; ... &#125;</code>) returning our effect type, which we’ll define as:</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">[&lt;Struct&gt;]</span> <span class="keyword">type</span> <span class="title class_">Effect</span><span class="operator">&lt;</span><span class="symbol">&#x27;env</span>, <span class="symbol">&#x27;out</span><span class="operator">&gt;</span> <span class="operator">=</span> Effect <span class="keyword">of</span> (<span class="symbol">&#x27;env</span> <span class="operator">-&gt;</span> <span class="symbol">&#x27;out</span>)</span><br></pre></td></tr></table></figure>
+
+<p>Where:</p>
+<ul>
+<li><code>env</code> is our environment type we already talked about above.</li>
+<li><code>out</code> defines a returned value type of our effect.</li>
+</ul>
+<p>Eventually, with this type in hand our simple request handler will be looking like that:</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> changePass req <span class="operator">=</span> <span class="keyword">effect</span> &#123;</span><br><span class="line">    <span class="keyword">let!</span> user <span class="operator">=</span> Db.fetchUser req.UserId</span><br><span class="line">    <span class="keyword">if</span> user.Hash <span class="operator">=</span> bcrypt user.Salt req.OldPass <span class="keyword">then</span></span><br><span class="line">        <span class="keyword">let!</span> salt <span class="operator">=</span> Random.bytes <span class="number">32</span></span><br><span class="line">        <span class="keyword">do!</span> Db.<span class="keyword">updateUser</span> &#123; user <span class="keyword">with</span> Salt <span class="operator">=</span> salt; Hash <span class="operator">=</span> bcrypt salt req.NewPass &#125;</span><br><span class="line">        <span class="keyword">do!</span> Log.info <span class="string">&quot;Changed password for user %i&quot;</span> user.Id</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">Ok</span> ()</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">        <span class="keyword">do!</span> Log.error <span class="string">&quot;Password change unauthorized: user %i&quot;</span> user.Id</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">Error</span> <span class="string">&quot;Old password is invalid&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>As you see, there’s no more <code>env</code> parameter being passed around. It’s now an implicit part of our effect expression. However at the moment we didn’t provide enough infrastructure in our code to make that thing work. What we’re going to need is a set of operators, we can use to make our computation expression happen.</p>
+<p>First we’re going to need some <code>Effect&lt;&#39;env,&#39;out&gt;</code> constructors:</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> Effect <span class="operator">=</span></span><br><span class="line">    <span class="comment">/// Create value with no dependency requirements.</span></span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">inline</span> value (x<span class="operator">:</span> <span class="symbol">&#x27;out</span>)<span class="operator">:</span> Effect<span class="operator">&lt;</span><span class="symbol">&#x27;env</span>,<span class="symbol">&#x27;out</span><span class="operator">&gt;</span> <span class="operator">=</span> Effect (<span class="keyword">fun</span> _ <span class="operator">-&gt;</span> x)</span><br><span class="line">    <span class="comment">/// Create value which uses depenendency.</span></span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">inline</span> apply (fn<span class="operator">:</span> <span class="symbol">&#x27;env</span> <span class="operator">-&gt;</span> <span class="symbol">&#x27;out</span>)<span class="operator">:</span> Effect<span class="operator">&lt;</span><span class="symbol">&#x27;env</span>,<span class="symbol">&#x27;out</span><span class="operator">&gt;</span> <span class="operator">=</span> Effect fn</span><br></pre></td></tr></table></figure>
+
+<p>We also need some way to run our effect to be able to make it… well effectful:</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> Effect <span class="operator">=</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">(* ...other functions... *)</span></span><br><span class="line">	</span><br><span class="line">    <span class="keyword">let</span> run (env<span class="operator">:</span> <span class="symbol">&#x27;env</span>) (Effect fn)<span class="operator">:</span> <span class="symbol">&#x27;out</span> <span class="operator">=</span> fn env</span><br></pre></td></tr></table></figure>
+
+<p>And since we already mentioned <code>Effect</code> is monad, we also gonna need a <code>bind</code> function as well if we want to compose our effects together:</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> Effect <span class="operator">=</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">(* ...other functions... *)</span></span><br><span class="line">	</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">inline</span> bind (fn<span class="operator">:</span> <span class="symbol">&#x27;a</span> <span class="operator">-&gt;</span> Effect<span class="operator">&lt;</span><span class="symbol">&#x27;env</span>,<span class="symbol">&#x27;b</span><span class="operator">&gt;</span>) effect <span class="operator">=</span></span><br><span class="line">        Effect (<span class="keyword">fun</span> env <span class="operator">-&gt;</span></span><br><span class="line">            <span class="keyword">let</span> x <span class="operator">=</span> run env effect <span class="comment">// compute result of the first effect</span></span><br><span class="line">            run env (fn x) <span class="comment">// run second effect, based on result of first one</span></span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
+
+<p>This is pretty much it. We’re just going to add compose all of these into builder type to make it usable as F# computation expression:</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">[&lt;Struct&gt;]</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">EffectBuilder</span> <span class="operator">=</span></span><br><span class="line">    <span class="keyword">member</span> <span class="keyword">inline</span> __.Return value <span class="operator">=</span> Effect.value value</span><br><span class="line">    <span class="keyword">member</span> <span class="keyword">inline</span> __.Zero () <span class="operator">=</span> Effect.value (Unchecked.defaultof<span class="operator">&lt;</span>_<span class="operator">&gt;</span>)</span><br><span class="line">    <span class="keyword">member</span> <span class="keyword">inline</span> __.ReturnFrom (effect<span class="operator">:</span> Effect<span class="operator">&lt;</span><span class="symbol">&#x27;env</span>, <span class="symbol">&#x27;out</span><span class="operator">&gt;</span>) <span class="operator">=</span> effect</span><br><span class="line">    <span class="keyword">member</span> <span class="keyword">inline</span> __.Bind(effect, fn) <span class="operator">=</span> Effect.bind fn effect</span><br><span class="line">    </span><br><span class="line"><span class="keyword">let</span> effect <span class="operator">=</span> EffectBuilder()</span><br></pre></td></tr></table></figure>
+
+<p>Of course this, we still need to adapt the modules we prepared earlier to now operate on effects rater than plain functions. We can make this easier by using our <code>Effect.apply</code> function, like:</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> Log <span class="operator">=</span>    </span><br><span class="line">    <span class="keyword">let</span> debug fmt <span class="operator">=</span></span><br><span class="line">        <span class="keyword">let</span> ap s <span class="operator">=</span> Effect.apply (<span class="keyword">fun</span> (x<span class="operator">:</span> #ILog) <span class="operator">-&gt;</span> x.Logger.Debug s)</span><br><span class="line">        Printf.kprintf ap fmt</span><br></pre></td></tr></table></figure>
+
+<p>So - as you may have noticed in final form of our effect-based <code>changePass</code> function - in result we almost fully erased all of the dependency-wiring code from our example. There are several downsides of this approach:</p>
+<ul>
+<li>We do a lot of more bindings (see <code>let!</code>&#x2F;<code>do!</code> expressions), which means more lambda closures, indirection (wait to see call stacks) and more allocations.</li>
+<li>Altogether we also erased <code>task &#123; ... &#125;</code> computation expression and with it an out-of-the-box ability to write asynchronous code. This is one of the downsides of using monads - cross-type composition is painful.</li>
+</ul>
+<p>Of course we could enrich our <code>Effect</code> type to be able to bind it with <code>Task</code>&#x2F;<code>Async</code>. That however means, that our pattern grows in complexity and becomes more of a framework rather than something to be easily applied into existing code. Is that bad? Not necessarily, but for sure comes with a bigger commitment, as now you’re not only writing business logic but eventually maintain new effect library. Maybe in future this concept will grow into its own space in favor of the F# ecosystem.</p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>We came from partial application as tool for dependency injection, over more structured approach promoting single environment type with help of powerful F# type inference, up to encapsulating it into a Reader Monad. That’s a long way. I hope you’ll give it a try and it will help you determine the approach that works for you.</p>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+                <div class="icon arrow-left"></div>
+                <div class="post-link">
+                    <a href="/2024/10/18/Building-custom-fibers-library-in-FSharp/">Prev</a>
+                </div>
+            
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2024/10/06/Obsidian-Vault-%E7%9A%84-obsidian-%E7%9B%AE%E5%BD%95%E4%B8%AD%E7%9A%84%E5%90%84%E6%96%87%E4%BB%B6%E4%BD%9C%E7%94%A8/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+                 | 
+            
+            
+                希望路过的人可以添点柴火让这里暖和点
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    
+      <div class="search-popup">
+    <div class="search-popup-overlay">  
+    </div>
+    <div class="search-popup-window" >
+        <div class="search-header">
+            <div class="search-input-container">
+              <input autocomplete="off" autocapitalize="off" maxlength="80"
+                     placeholder="Search Anything" spellcheck="false"
+                     type="search" class="search-input">
+            </div>
+            <div class="search-close-btn">
+                <div class="icon close-btn"></div>
+            </div>
+        </div>
+        <div class="search-result-container">
+        </div>
+    </div>
+</div>
+
+<script>
+    const searchConfig = {
+        path             : "/search.xml",
+        top_n_per_article: "1",
+        unescape         : "false",
+        trigger: "auto",
+        preload: "false"
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js"></script>
+<script src="/js/search.js"></script>
+    
+    
+
+  </body>
+</html>
