@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="韩暮秋">
+
+
+    <meta name="subtitle" content="暮秋小屋">
+
+
+    <meta name="description" content="这里是暮秋小屋，思念和灵感的寄存处">
+
+
+    <meta name="keywords" content="韩暮秋,MuqiuHan,'Muqiu Han', 'muqiu han', muqiuhan">
+
+
+
+
+<title>如何管理用户界面中的危险操作 | 暮秋小屋</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/frame.js"></script>
+    
+
+
+
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+
+
+  <meta name="generator" content="Hexo 6.3.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+            暮秋小屋
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/">主页</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/gallery/">日记本</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Medicine/">医学</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Technique/">计算机科学</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Life/">生活</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/about">关于</a>
+              </li> 
+                   
+          
+          
+            <li class="menu-item search-btn">
+              <a href="#">Search</a>
+            </li>
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/UI-UX/">
+                            UI/UX
+                        </a>
+                    </span>    
+                
+                    <span class="post-tag">
+                        <a href="/tags/Design/">
+                            Design
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                如何管理用户界面中的危险操作
+            
+            
+        </div>
+        <span class="post-date">
+            Nov 26, 2024
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <blockquote>
+<p>“任何可能出错的事情都会出错。”我们的目标是防止出现问题，并在出现问题时减轻后果。</p>
+</blockquote>
+<p>界面是用户与系统通信的中介层，界面中的交互通常需要用户执行某些操作。不同的操作可能会导致不同的结果，其中可能有一些对于双方来说都非常重要甚至危险的操作。</p>
+<p>所以经常需要提供额外的保护措施来“保护”用户执行一些危险甚至无法恢复的操作。<br>这里的“保护”并不是完全的阻止，否则这个操作也没有存在的必要。</p>
+<blockquote>
+<p>“良好的错误消息很重要，但最好的设计<strong>首先会小心地防止问题发生</strong>。要么消除容易出错的情况，要么检查它们并在用户承诺操作之前向他们提供确认选项。”</p>
+</blockquote>
+<h2 id="什么是危险行为？"><a href="#什么是危险行为？" class="headerlink" title="什么是危险行为？"></a>什么是危险行为？</h2><p>危险行为并不意味着要删除某些内容，具体的危险行为应该由系统的“领域”来定义，例如:</p>
+<ul>
+<li>进行金融交易</li>
+<li>签署法律文件</li>
+<li>拉黑用户</li>
+<li>授予某些用户权限</li>
+<li>…</li>
+</ul>
+<h2 id="确认危险行为的方法"><a href="#确认危险行为的方法" class="headerlink" title="确认危险行为的方法"></a>确认危险行为的方法</h2><p>最常用的一种方法是要求用户明确确认他们的操作，这种方法也有很多实现上的细节，但无论从什么角度实现都有优劣：</p>
+<h3 id="Modal-Dialog"><a href="#Modal-Dialog" class="headerlink" title="Modal Dialog"></a>Modal Dialog</h3><p>首先需要明确 Modal Dialog 和 Non-modal Dialog 的区别。</p>
+<blockquote>
+<p>“Modal 是一种设计技术，它以一个独立的模式呈现内容，阻止用户与父视图交互，并需要明确的操作来退出。”</p>
+</blockquote>
+<p>所以 Modal Dialog 需要用户立即操作它。换句话说，除非以某种方式做出响应，否则用户无法继续使用系统。</p>
+<p>而 Non-modal Dialog 允许用户不间断地继续使用系统。Non-modal Dialog 一个常见用法就是出现在屏幕一角的 Toast 消息。</p>
+<p>所以如果使用得当，Modal Dialog 是防止意外点击危险操作的有效方法。这也是目前最流行的方法，它还可以和其他方法结合使用。</p>
+<p>但首先，需要明确一个保护用户进行危险操作的 Modal Dialog 需要有哪些元素：</p>
+<ol>
+<li>不要含糊其辞, 如果单纯的问用户：“你确定吗？”，用户很有可能不会有任何疑问直接点确定。</li>
+<li>在标题中，指定具体会发生什么或哪个实体将受到影响（例如，项目名称、用户名、金额）。</li>
+<li>提供一个图标来指示该操作是危险的，这既降低了用户盲目确认它的概率，也有利于页面的无障碍性（色盲的人可以通过图标来判断）。</li>
+<li>在描述中，要具体并突出显示必要的信息。</li>
+<li>按钮还应包含反映操作的词语，不要用“是”或“确认”之类的词，应该用更具描述性的“支付 10 元”，“删除用户韩暮秋”之类的词语。</li>
+</ol>
+<p>除此之外，还有更加严格的保护，例如在某些情况下，可以让用户输入某些内容来“解锁”操作，例如 Github 在删除仓库的时候需要输入仓库名称才能删除，这能让用户明确的知道自己在做什么，在删除哪个仓库。</p>
+<p>最后，根据 <a target="_blank" rel="noopener" href="https://lawsofux.com/law-of-proximity/">临近法则</a> ，确认操作的按钮最好放在左侧。</p>
+<h4 id="Danger-Zone"><a href="#Danger-Zone" class="headerlink" title="Danger Zone"></a>Danger Zone</h4><p>对于关键的操作，可以使用 Danger Zone，常见的实现方式是将这一类关键的操作单独放在某一个页面的同一处，例如页面的底部。如果操作比较多，可以考虑使用一个单独的页面存放。</p>
+<p>使用 Danger Zone 存放关键操作组件也有一些基本要素：</p>
+<ol>
+<li>使用红色或其他富含警示性颜色的警告图标或边框，在视觉上将 Danger Zone 与页面的其他部分区分开来。</li>
+<li>Danger Zone 中的每个操作都应该清楚地描述如果用户继续进行将会发生什么，以便用户了解潜在的后果。</li>
+<li>对于一些非常关键且无法恢复的行为，可以要求用户进行额外的操作。例如要求用户重复输入密码或使用 2FA。</li>
+<li>只存放真正关键的操作。避免为了拥有一个 Danger Zone 而搞出一个 Danger Zone。</li>
+</ol>
+<h3 id="Inline-Guard"><a href="#Inline-Guard" class="headerlink" title="Inline Guard"></a>Inline Guard</h3><p>这个方法解释起来挺简单，可以用在一些零碎的页面元素中，例如有一个删除一条消息的按钮，可以在用户单击这个按钮之后将其变为红色背景并修改按钮字体为 “确认删除”，用户再次点击就确认删除了。这用来防止误点击非常有用。</p>
+<p>但是也有一些细节需要注意：</p>
+<ol>
+<li>这种方法对于不那么危险的动作来说很方便，注意是“不那么危险”</li>
+<li>一个“不那么危险”的操作应该可以恢复，所以应该提供一个选项来撤消操作或将已删除的项目放到回收站之类的地方，这是确保用户安全操作的良好组合。</li>
+</ol>
+<p>Inline Guard 不能滥用，当用户非常频繁的遇到时会烦死，得权衡一下。</p>
+<h3 id="其他方案"><a href="#其他方案" class="headerlink" title="其他方案"></a>其他方案</h3><p>还有一些方案这里简单说一下，一是 2FA，基本不用过多解释，二是双人验证甚至多人验证，就是用户发起的一个操作需要两个以上的人来验证才可以执行，例如 Github 的 Merge PR。</p>
+<p>当系统要求用户进行一些额外的操作时，应该明确其最初的目的，因为：</p>
+<ul>
+<li>认知惯性：一个人倾向于近乎惯性地决定，即使这些决定不适合当前情况。例如，绝大多数人不阅读用户协议。他们只是同意冗长的文本，因为从法律角度来看这是必要的。（是的我就是这样）</li>
+<li>人们经常根据他们容易获得或熟悉的信息做出决策，而不是动脑子想。当用户看到相同的弹出窗口时，他们可能会根据之前的经验看都不看一眼直接接受它们。</li>
+<li>人类倾向于以更简单、更省力的方式思考和解决问题，而不是更复杂、更省力的方式，无论智力如何。所以许多用户只是点击“是”或“同意”而没有仔细阅读文本。</li>
+</ul>
+<p>所以在某些情况下，我们可以用一些更加优雅的方法：</p>
+<h3 id="延迟"><a href="#延迟" class="headerlink" title="延迟"></a>延迟</h3><p>上面 Inline Guard 用在删除消息的场景下，也可以点击删除按钮直接删除，但同时显示一个倒计时的 Toast 并附带一个“撤销”的按钮来提醒用户。</p>
+<h2 id="撤销"><a href="#撤销" class="headerlink" title="撤销"></a>撤销</h2><p>允许用户撤消刚刚执行的操作，从而提供一个安全网来减少因犯错误而产生的焦虑。<br>与 Modal Dialog 这种中断系统并要求用户确认的模式不同，撤消允许完成操作后在需要时选择撤消操作，从而提供更流畅的体验。</p>
+<p>它非常适合非破坏性、不可恢复的操作以及不会产生重大和直接后果的操作。</p>
+<p>撤消选项与“软删除”的概念密切相关，“软删除” 的意思是：当用户通过 UI 删除某些内容时，_看起来它已被删除_，但在数据库中，我们保留数据但将其标记为已删除。数据不会丢失，这就是为什么可以使用撤消选项，因为我们实际上并没有删除任何内容，而是将其标记为已删除。</p>
+<p>晚安。</p>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2024/11/17/%E4%BA%8C%E3%80%87%E4%BA%8C%E5%9B%9B%E5%B9%B4%E5%8D%81%E4%B8%80%E6%9C%88%E5%8D%81%E4%B8%83%E6%97%A5/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+                 | 
+            
+            
+                希望路过的人可以添点柴火让这里暖和点
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    
+      <div class="search-popup">
+    <div class="search-popup-overlay">  
+    </div>
+    <div class="search-popup-window" >
+        <div class="search-header">
+            <div class="search-input-container">
+              <input autocomplete="off" autocapitalize="off" maxlength="80"
+                     placeholder="Search Anything" spellcheck="false"
+                     type="search" class="search-input">
+            </div>
+            <div class="search-close-btn">
+                <div class="icon close-btn"></div>
+            </div>
+        </div>
+        <div class="search-result-container">
+        </div>
+    </div>
+</div>
+
+<script>
+    const searchConfig = {
+        path             : "/search.xml",
+        top_n_per_article: "1",
+        unescape         : "false",
+        trigger: "auto",
+        preload: "false"
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js"></script>
+<script src="/js/search.js"></script>
+    
+    
+
+  </body>
+</html>
