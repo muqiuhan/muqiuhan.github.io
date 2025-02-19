@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="韩暮秋">
+
+
+    <meta name="subtitle" content="暮秋小屋">
+
+
+    <meta name="description" content="这里是暮秋小屋，思念和灵感的寄存处">
+
+
+    <meta name="keywords" content="韩暮秋,MuqiuHan,'Muqiu Han', 'muqiu han', muqiuhan">
+
+
+
+
+<title>Prisma 关系型数据库的 Self-relations | 暮秋小屋</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/frame.js"></script>
+    
+
+
+
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+
+
+  <meta name="generator" content="Hexo 6.3.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+            暮秋小屋
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/">主页</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/gallery/">日记本</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Medicine/">医学</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Technique/">计算机科学</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Life/">生活</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/about">关于</a>
+              </li> 
+                   
+          
+          
+            <li class="menu-item search-btn">
+              <a href="#">Search</a>
+            </li>
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/Technique/">
+                            Technique
+                        </a>
+                    </span>    
+                
+                    <span class="post-tag">
+                        <a href="/tags/Web/">
+                            Web
+                        </a>
+                    </span>    
+                
+                    <span class="post-tag">
+                        <a href="/tags/Typescript/">
+                            Typescript
+                        </a>
+                    </span>    
+                
+                    <span class="post-tag">
+                        <a href="/tags/Database/">
+                            Database
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                Prisma 关系型数据库的 Self-relations
+            
+            
+        </div>
+        <span class="post-date">
+            Feb 18, 2025
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <blockquote>
+<p>A relation field can also reference its own model, in this case the relation is called a <em>self-relation</em>. Self-relations can be of any cardinality, 1-1, 1-n and m-n.</p>
+</blockquote>
+<h2 id="一对一"><a href="#一对一" class="headerlink" title="一对一"></a>一对一</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">model User &#123;</span><br><span class="line">  id          Int     @id @default(autoincrement())</span><br><span class="line">  name        String?</span><br><span class="line">  successorId Int?    @unique</span><br><span class="line">  successor   User?   @relation(&quot;BlogOwnerHistory&quot;, fields: [successorId], references: [id])</span><br><span class="line">  predecessor User?   @relation(&quot;BlogOwnerHistory&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>User 展现了这样一个模型：</p>
+<ul>
+<li>User 可以有一个或零个前驱（predecessor）</li>
+<li>User 可以有一个或零个后继（successor）</li>
+</ul>
+<p>注意：不能要求前驱和后继都必须存在，这两个必须有一个是可选的，否则没办法创建第一个 User。</p>
+<p>要创建一对一的 self-relation：</p>
+<ul>
+<li>关系的两端都必须定义一个共享相同名称的 <code>@relation</code> 属性（<code>BlogOwnerHistory</code>）</li>
+<li>关系字段必须是<a target="_blank" rel="noopener" href="https://www.prisma.io/docs/orm/prisma-schema/data-model/relations#relation-fields">完全注释</a>的。例如 <code>successor</code> 字段需要定义 <code>field</code> 和 <code>references</code> 参数。</li>
+<li>关系字段必须由外键支持。<code>successor</code> 字段由 <code>successorId</code> 外键提供支持，该外键引用 <code>id</code> 字段中的值。<code>successorId</code> 还需要 <code>@unique</code> 属性来保证一对一的关系。****</li>
+</ul>
+<blockquote>
+<p>一对一的 self-relation 需要两个端点，即使这两个端点是同一条数据。</p>
+</blockquote>
+<p>而在关系型数据库中，一对一的 self-relation 可以用如下 SQL 描述：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> &quot;User&quot; (</span><br><span class="line">    id SERIAL <span class="keyword">PRIMARY</span> KEY,</span><br><span class="line">    &quot;name&quot; TEXT,</span><br><span class="line">    &quot;successorId&quot; <span class="type">INTEGER</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> &quot;User&quot; <span class="keyword">ADD</span> <span class="keyword">CONSTRAINT</span> fk_successor_user <span class="keyword">FOREIGN</span> KEY (&quot;successorId&quot;) <span class="keyword">REFERENCES</span> &quot;User&quot; (id);</span><br><span class="line"></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> &quot;User&quot; <span class="keyword">ADD</span> <span class="keyword">CONSTRAINT</span> successor_unique <span class="keyword">UNIQUE</span> (&quot;successorId&quot;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="一对多"><a href="#一对多" class="headerlink" title="一对多"></a>一对多</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">model User &#123;</span><br><span class="line">  id        Int     @id @default(autoincrement())</span><br><span class="line">  name      String?</span><br><span class="line">  teacherId Int?</span><br><span class="line">  teacher   User?   @relation(&quot;TeacherStudents&quot;, fields: [teacherId], references: [id])</span><br><span class="line">  students  User[]  @relation(&quot;TeacherStudents&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>User 展现了这样一个模型：</p>
+<ul>
+<li>一个 User 只能有零个或一个 teacher</li>
+<li>一个 User 可以有零个或多个 students</li>
+</ul>
+<blockquote>
+<p>可以通过将 <code>teacher</code> 字段设<a target="_blank" rel="noopener" href="https://www.prisma.io/docs/orm/prisma-schema/data-model/models#optional-and-mandatory-fields">为 required</a> 来要求每个 User 都有一名 teacher。</p>
+</blockquote>
+<p>用 SQL 描述 User model：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> &quot;User&quot; (</span><br><span class="line">    id SERIAL <span class="keyword">PRIMARY</span> KEY,</span><br><span class="line">    &quot;name&quot; TEXT,</span><br><span class="line">    &quot;teacherId&quot; <span class="type">INTEGER</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> &quot;User&quot; <span class="keyword">ADD</span> <span class="keyword">CONSTRAINT</span> fk_teacherid_user <span class="keyword">FOREIGN</span> KEY (&quot;teacherId&quot;) <span class="keyword">REFERENCES</span> &quot;User&quot; (id);</span><br></pre></td></tr></table></figure>
+
+<p><code>teacherId</code> 没有使用 <code>UNIQUE</code> 约束，这代表着多个 students 可以有同一个 teacher</p>
+<h2 id="多对多"><a href="#多对多" class="headerlink" title="多对多"></a>多对多</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">model User &#123;</span><br><span class="line">  id         Int     @id @default(autoincrement())</span><br><span class="line">  name       String?</span><br><span class="line">  followedBy User[]  @relation(&quot;UserFollows&quot;)</span><br><span class="line">  following  User[]  @relation(&quot;UserFollows&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>一个 User 可以被零个或多个 Users 关注</li>
+<li>一个 User 可以关注零个或多个 Users</li>
+</ul>
+<blockquote>
+<p>对于关系型数据库，多对多的关系是隐式的，这意味着 Prisma ORM 会在底层数据库中维护一个 <a target="_blank" rel="noopener" href="https://www.prisma.io/docs/orm/prisma-schema/data-model/relations/many-to-many-relations#relation-tables">relation table</a>:<br>A relation table (also sometimes called a <em>JOIN</em>, <em>link</em> or <em>pivot</em> table) connects two or more other tables and therefore creates a <em>relation</em> between them. Creating relation tables is a common data modelling practice in SQL to represent relationships between different entities. In essence it means that “one m-n relation is modeled as two 1-n relations in the database”.</p>
+<p>We recommend using <a target="_blank" rel="noopener" href="https://www.prisma.io/docs/orm/prisma-schema/data-model/relations/many-to-many-relations#implicit-many-to-many-relations">implicit</a> m-n-relations, where Prisma ORM automatically generates the relation table in the underlying database. <a target="_blank" rel="noopener" href="https://www.prisma.io/docs/orm/prisma-schema/data-model/relations/many-to-many-relations#explicit-many-to-many-relations">Explicit</a> m-n-relations should be used when you need to store additional data in the relations, such as the date the relation was created.</p>
+</blockquote>
+<p>如果需要需要通过多对多的关系来保存其他字段，也可以创建<a target="_blank" rel="noopener" href="https://www.prisma.io/docs/orm/prisma-schema/data-model/relations/many-to-many-relations#explicit-many-to-many-relations">显式</a>的多对多 self 关系：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">model User &#123;</span><br><span class="line">  id         Int       @id @default(autoincrement())</span><br><span class="line">  name       String?</span><br><span class="line">  followedBy Follows[] @relation(&quot;followedBy&quot;)</span><br><span class="line">  following  Follows[] @relation(&quot;following&quot;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">model Follows &#123;</span><br><span class="line">  followedBy   User @relation(&quot;followedBy&quot;, fields: [followedById], references: [id])</span><br><span class="line">  followedById Int</span><br><span class="line">  following    User @relation(&quot;following&quot;, fields: [followingId], references: [id])</span><br><span class="line">  followingId  Int</span><br><span class="line"></span><br><span class="line">  @@id([followingId, followedById])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在关系型数据库中，可以用如下 SQL 描述:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> &quot;User&quot; (</span><br><span class="line">    id <span class="type">integer</span> <span class="keyword">DEFAULT</span> nextval(<span class="string">&#x27;&quot;User_id_seq&quot;&#x27;</span>::regclass) <span class="keyword">PRIMARY</span> KEY,</span><br><span class="line">    name text</span><br><span class="line">);</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> &quot;_UserFollows&quot; (</span><br><span class="line">    &quot;A&quot; <span class="type">integer</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">REFERENCES</span> &quot;User&quot;(id) <span class="keyword">ON</span> <span class="keyword">DELETE</span> CASCADE <span class="keyword">ON</span> <span class="keyword">UPDATE</span> CASCADE,</span><br><span class="line">    &quot;B&quot; <span class="type">integer</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">REFERENCES</span> &quot;User&quot;(id) <span class="keyword">ON</span> <span class="keyword">DELETE</span> CASCADE <span class="keyword">ON</span> <span class="keyword">UPDATE</span> CASCADE</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h2 id="在同一模型上建立多个-self-relations"><a href="#在同一模型上建立多个-self-relations" class="headerlink" title="在同一模型上建立多个 self-relations"></a>在同一模型上建立多个 self-relations</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">model User &#123;</span><br><span class="line">  id         Int     @id @default(autoincrement())</span><br><span class="line">  name       String?</span><br><span class="line">  teacherId  Int?</span><br><span class="line">  teacher    User?   @relation(&quot;TeacherStudents&quot;, fields: [teacherId], references: [id])</span><br><span class="line">  students   User[]  @relation(&quot;TeacherStudents&quot;)</span><br><span class="line">  followedBy User[]  @relation(&quot;UserFollows&quot;)</span><br><span class="line">  following  User[]  @relation(&quot;UserFollows&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="REFS"><a href="#REFS" class="headerlink" title="REFS."></a>REFS.</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.prisma.io/docs/orm/prisma-schema/data-model/relations#relation-fields">fully annotated</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.prisma.io/docs/orm/prisma-schema/data-model/models#optional-and-mandatory-fields">required</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.prisma.io/docs/orm/prisma-schema/data-model/relations/many-to-many-relations#implicit-many-to-many-relations">implicit</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.prisma.io/docs/orm/prisma-schema/data-model/relations/many-to-many-relations#relation-tables">relation table</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.prisma.io/docs/orm/prisma-schema/data-model/relations/many-to-many-relations#explicit-many-to-many-relations">explicit</a></li>
+</ul>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+                <div class="icon arrow-left"></div>
+                <div class="post-link">
+                    <a href="/2025/02/19/Repository-pattern-in-Typescript/">Prev</a>
+                </div>
+            
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2025/01/19/%E8%BA%AB%E4%BD%93%E5%BE%80%E5%89%8D%E5%80%BE%EF%BC%8C%E7%81%B5%E9%AD%82%E5%90%91%E5%90%8E%E6%91%87/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+                 | 
+            
+            
+                希望路过的人可以添点柴火让这里暖和点
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    
+      <div class="search-popup">
+    <div class="search-popup-overlay">  
+    </div>
+    <div class="search-popup-window" >
+        <div class="search-header">
+            <div class="search-input-container">
+              <input autocomplete="off" autocapitalize="off" maxlength="80"
+                     placeholder="Search Anything" spellcheck="false"
+                     type="search" class="search-input">
+            </div>
+            <div class="search-close-btn">
+                <div class="icon close-btn"></div>
+            </div>
+        </div>
+        <div class="search-result-container">
+        </div>
+    </div>
+</div>
+
+<script>
+    const searchConfig = {
+        path             : "/search.xml",
+        top_n_per_article: "1",
+        unescape         : "false",
+        trigger: "auto",
+        preload: "false"
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js"></script>
+<script src="/js/search.js"></script>
+    
+    
+
+  </body>
+</html>

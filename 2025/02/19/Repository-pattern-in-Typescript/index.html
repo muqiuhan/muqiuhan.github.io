@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="韩暮秋">
+
+
+    <meta name="subtitle" content="暮秋小屋">
+
+
+    <meta name="description" content="这里是暮秋小屋，思念和灵感的寄存处">
+
+
+    <meta name="keywords" content="韩暮秋,MuqiuHan,'Muqiu Han', 'muqiu han', muqiuhan">
+
+
+
+
+<title>Repository pattern in Typescript | 暮秋小屋</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/frame.js"></script>
+    
+
+
+
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+
+
+  <meta name="generator" content="Hexo 6.3.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+            暮秋小屋
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/">主页</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/gallery/">日记本</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Medicine/">医学</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Technique/">计算机科学</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Life/">生活</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/about">关于</a>
+              </li> 
+                   
+          
+          
+            <li class="menu-item search-btn">
+              <a href="#">Search</a>
+            </li>
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/Technique/">
+                            Technique
+                        </a>
+                    </span>    
+                
+                    <span class="post-tag">
+                        <a href="/tags/Web/">
+                            Web
+                        </a>
+                    </span>    
+                
+                    <span class="post-tag">
+                        <a href="/tags/Typescript/">
+                            Typescript
+                        </a>
+                    </span>    
+                
+                    <span class="post-tag">
+                        <a href="/tags/Software-Engineering/">
+                            Software-Engineering
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                Repository pattern in Typescript
+            
+            
+        </div>
+        <span class="post-date">
+            Feb 19, 2025
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <blockquote>
+<p>The Repository design pattern is a <a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/structural-design-patterns/">structural pattern</a> that abstracts data access, providing a centralized way to manage data operations. By separating the data layer from business logic, it enhances code maintainability, testability, and flexibility, making it easier to work with various data sources in an application.</p>
+</blockquote>
+<p>抽象化数据访问层的主要作用是将应用的业务逻辑与对数据库的数据访问等实现细节进行解耦。DB 框架的更改不应该影响到应用程序的核心服务，并且它们应该对业务逻辑代码透明。</p>
+<p>业务服务应该只依赖于抽象，而不是实现，数据服务同理。</p>
+<hr>
+<h1 id="Intro"><a href="#Intro" class="headerlink" title="Intro."></a>Intro.</h1><p>例如，此时有一个书籍存储的微服务，并且有一个“添加新书籍”的操作用例，在此用例中可以通过使用 <code>Book</code> 这个 <em>Repository</em> 来添加新书籍，而 <code>Book</code> 具体使用什么数据库，怎么存并不是业务需要关心的事情。</p>
+<h2 id="具体实现方式"><a href="#具体实现方式" class="headerlink" title="具体实现方式"></a>具体实现方式</h2><p>假设有以下实体类型定义：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">Author</span> &#123;</span><br><span class="line">  <span class="attr">firstName</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">lastName</span>: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">Genre</span> &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">Book</span> &#123;</span><br><span class="line">  <span class="attr">title</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">author</span>: <span class="title class_">Author</span>;</span><br><span class="line">  <span class="attr">genre</span>: <span class="title class_">Genre</span>;</span><br><span class="line">  <span class="attr">publishDate</span>: <span class="title class_">Date</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="抽象化"><a href="#抽象化" class="headerlink" title="抽象化"></a>抽象化</h3><p>第一步是抽象化出一个通用的 <em>Repository</em> ，其中包含通用的操作：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">IGenericRepository</span>&lt;T&gt; &#123;</span><br><span class="line">  <span class="keyword">abstract</span> <span class="title function_">getAll</span>(): <span class="title class_">Promise</span>&lt;T[]&gt;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">abstract</span> <span class="title function_">get</span>(<span class="attr">id</span>: <span class="built_in">string</span>): <span class="title class_">Promise</span>&lt;T&gt;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">abstract</span> <span class="title function_">create</span>(<span class="attr">item</span>: T): <span class="title class_">Promise</span>&lt;T&gt;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">abstract</span> <span class="title function_">update</span>(<span class="attr">id</span>: <span class="built_in">string</span>, <span class="attr">item</span>: T);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>这里具体有那些函数可以根据需要（业务）自己定义。</li>
+<li>类型参数 <code>T</code> 表示每个实体。</li>
+</ul>
+<p>接着，定义一个数据服务，其中包含使用 <code>IGenericRepositoiry</code> 定义的具体实例对应的 _Repository_：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Author</span>, <span class="title class_">Book</span>, <span class="title class_">Genre</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;../entities&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">IGenericRepository</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./generic-repository.abstract&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">IDataServices</span> &#123;</span><br><span class="line">  <span class="keyword">abstract</span> <span class="attr">authors</span>: <span class="title class_">IGenericRepository</span>&lt;<span class="title class_">Author</span>&gt;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">abstract</span> <span class="attr">books</span>: <span class="title class_">IGenericRepository</span>&lt;<span class="title class_">Book</span>&gt;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">abstract</span> <span class="attr">genres</span>: <span class="title class_">IGenericRepository</span>&lt;<span class="title class_">Genre</span>&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>这里有三个 <em>Repository</em> 分别对应不同的实体。</li>
+<li><code>IGenericRepository</code> 中定义的函数是每个 <em>Repository</em> 公开的通用存储函数。</li>
+</ul>
+<p>以上这些就是对业务中的实体的 <em>Repository</em> 抽象，这样就隔离开了业务和存储逻辑，例如使用 MongoDB，可以实现一个 <code>MongoGenericRepository</code>：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Model</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;mongoose&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">IGenericRepository</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;../../../core&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">MongoGenericRepository</span>&lt;T&gt; <span class="keyword">implements</span> <span class="title class_">IGenericRepository</span>&lt;T&gt; &#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="attr">_repository</span>: <span class="title class_">Model</span>&lt;T&gt;;</span><br><span class="line">  <span class="keyword">private</span> <span class="attr">_populateOnFind</span>: <span class="built_in">string</span>[];</span><br><span class="line"></span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">repository: Model&lt;T&gt;, populateOnFind: <span class="built_in">string</span>[] = []</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_repository</span> = repository;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_populateOnFind</span> = populateOnFind;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">getAll</span>(): <span class="title class_">Promise</span>&lt;T[]&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">_repository</span>.<span class="title function_">find</span>().<span class="title function_">populate</span>(<span class="variable language_">this</span>.<span class="property">_populateOnFind</span>).<span class="title function_">exec</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">get</span>(<span class="attr">id</span>: <span class="built_in">any</span>): <span class="title class_">Promise</span>&lt;T&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">_repository</span>.<span class="title function_">findById</span>(id).<span class="title function_">populate</span>(<span class="variable language_">this</span>.<span class="property">_populateOnFind</span>).<span class="title function_">exec</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">create</span>(<span class="attr">item</span>: T): <span class="title class_">Promise</span>&lt;T&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">_repository</span>.<span class="title function_">create</span>(item);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">update</span>(<span class="params">id: <span class="built_in">string</span>, item: T</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">_repository</span>.<span class="title function_">findByIdAndUpdate</span>(id, item);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后实现一个 <code>MongoDataServices</code>:</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Injectable</span>, <span class="title class_">OnApplicationBootstrap</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">InjectModel</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/mongoose&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Model</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;mongoose&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">IDataServices</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;../../../core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">MongoGenericRepository</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./mongo-generic-repository&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">  <span class="title class_">Author</span>,</span><br><span class="line">  <span class="title class_">AuthorDocument</span>,</span><br><span class="line">  <span class="title class_">Book</span>,</span><br><span class="line">  <span class="title class_">BookDocument</span>,</span><br><span class="line">  <span class="title class_">Genre</span>,</span><br><span class="line">  <span class="title class_">GenreDocument</span>,</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;./model&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">MongoDataServices</span></span><br><span class="line">  <span class="keyword">implements</span> <span class="title class_">IDataServices</span>, <span class="title class_">OnApplicationBootstrap</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">authors</span>: <span class="title class_">MongoGenericRepository</span>&lt;<span class="title class_">Author</span>&gt;;</span><br><span class="line">  <span class="attr">books</span>: <span class="title class_">MongoGenericRepository</span>&lt;<span class="title class_">Book</span>&gt;;</span><br><span class="line">  <span class="attr">genres</span>: <span class="title class_">MongoGenericRepository</span>&lt;<span class="title class_">Genre</span>&gt;;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"></span></span><br><span class="line"><span class="params">    <span class="meta">@InjectModel</span>(Author.name)</span></span><br><span class="line"><span class="params">    <span class="keyword">private</span> AuthorRepository: Model&lt;AuthorDocument&gt;,</span></span><br><span class="line"><span class="params">    <span class="meta">@InjectModel</span>(Book.name)</span></span><br><span class="line"><span class="params">    <span class="keyword">private</span> BookRepository: Model&lt;BookDocument&gt;,</span></span><br><span class="line"><span class="params">    <span class="meta">@InjectModel</span>(Genre.name)</span></span><br><span class="line"><span class="params">    <span class="keyword">private</span> GenreRepository: Model&lt;GenreDocument&gt;,</span></span><br><span class="line"><span class="params">  </span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">onApplicationBootstrap</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">authors</span> = <span class="keyword">new</span> <span class="title class_">MongoGenericRepository</span>&lt;<span class="title class_">Author</span>&gt;(<span class="variable language_">this</span>.<span class="property">AuthorRepository</span>);</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">books</span> = <span class="keyword">new</span> <span class="title class_">MongoGenericRepository</span>&lt;<span class="title class_">Book</span>&gt;(<span class="variable language_">this</span>.<span class="property">BookRepository</span>, [</span><br><span class="line">      <span class="string">&#x27;author&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;genre&#x27;</span>,</span><br><span class="line">    ]);</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">genres</span> = <span class="keyword">new</span> <span class="title class_">MongoGenericRepository</span>&lt;<span class="title class_">Genre</span>&gt;(<span class="variable language_">this</span>.<span class="property">GenreRepository</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上。</p>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2025/02/18/Prisma-%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84-Self-relations/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+                 | 
+            
+            
+                希望路过的人可以添点柴火让这里暖和点
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    
+      <div class="search-popup">
+    <div class="search-popup-overlay">  
+    </div>
+    <div class="search-popup-window" >
+        <div class="search-header">
+            <div class="search-input-container">
+              <input autocomplete="off" autocapitalize="off" maxlength="80"
+                     placeholder="Search Anything" spellcheck="false"
+                     type="search" class="search-input">
+            </div>
+            <div class="search-close-btn">
+                <div class="icon close-btn"></div>
+            </div>
+        </div>
+        <div class="search-result-container">
+        </div>
+    </div>
+</div>
+
+<script>
+    const searchConfig = {
+        path             : "/search.xml",
+        top_n_per_article: "1",
+        unescape         : "false",
+        trigger: "auto",
+        preload: "false"
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js"></script>
+<script src="/js/search.js"></script>
+    
+    
+
+  </body>
+</html>
