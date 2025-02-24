@@ -1,0 +1,24 @@
+<div id="back-to-top" class="back-to-top">
+  <i class="icon-arrow-up"></i>
+</div>
+
+<script>
+  const backToTop = document.getElementById('back-to-top');
+  
+  // 显示/隐藏回到顶部按钮
+  window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 300) {
+      backToTop.classList.add('show');
+    } else {
+      backToTop.classList.remove('show');
+    }
+  });
+  
+  // 点击回到顶部
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+</script> 

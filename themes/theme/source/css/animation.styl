@@ -1,0 +1,44 @@
+// 页面加载动画
+@keyframes fadeIn
+  from
+    opacity: 0
+  to
+    opacity: 1
+
+.fade-in
+  animation: fadeIn 0.8s ease
+
+// 卡片悬停效果
+@keyframes cardFloat
+  0%
+    transform: translateY(0px)
+  50%
+    transform: translateY(-5px)
+  100%
+    transform: translateY(0px)
+
+// 按钮悬停效果
+.btn
+  display: inline-block
+  padding: 0.5em 1em
+  background: $color-primary
+  color: white
+  border-radius: 4px
+  font-weight: 500
+  transition: all 0.3s ease
+  
+  &:hover
+    background: darken($color-primary, 10%)
+    transform: translateY(-2px)
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)
+  
+  &:active
+    transform: translateY(0)
+
+// 文章卡片动画
+.post-list-item, .post-gallery-item
+  transition: all 0.3s ease
+  
+  &:hover
+    transform: translateY(-5px)
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05) 
