@@ -20,7 +20,7 @@
 
 
 
-<title>C++ vector 的 push_back 和 emplace_back | 暮秋小屋</title>
+<title>从事件风暴看领域驱动设计 | 暮秋小屋</title>
 
 
 
@@ -145,24 +145,18 @@
                             Technique
                         </a>
                     </span>    
-                
-                    <span class="post-tag">
-                        <a href="/tags/C/">
-                            C++
-                        </a>
-                    </span>    
                            
             
         </div>
         <div class="post-title">
             
             
-                C++ vector 的 push_back 和 emplace_back
+                从事件风暴看领域驱动设计
             
             
         </div>
         <span class="post-date">
-            May 11, 2023
+            Feb 11, 2025
         </span>
     </div>
     <div class="post-img">
@@ -172,15 +166,19 @@
     </div>
 </div>
     <div class="post-content">
-    <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// Inserts a new element at the end of the vector, right after its current last element. This new element is constructed in place using args as the arguments for its constructor.</span></span><br><span class="line"><span class="comment">/// This effectively increases the container size by one, which causes an automatic reallocation of the allocated storage space if -and only if- the new vector size surpasses the current vector capacity.</span></span><br><span class="line"><span class="comment">/// The element is constructed in-place by calling allocator_traits::construct with args forwarded.</span></span><br><span class="line"><span class="comment">///A similar member function exists, push_back, which either copies or moves an existing object into the container.</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span>... Args&gt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">emplace_back</span> <span class="params">(Args&amp;&amp;... args)</span></span>;</span><br></pre></td></tr></table></figure>
-
-<p><code>push_back</code> 会构造一个临时对象，这个临时对象会被拷贝或者移入到容器中，然而 <code>emplace_back</code> 会直接根据传入的参数在容器的适当位置进行构造而避免拷贝或者移动。</p>
-<p>传统观点认为 <code>push_back</code> 会构造一个临时对象，这个临时对象会被移入到 v 中，然而 <code>emplace_back</code> 会直接根据传入的参数在适当位置进行构造而避免拷贝或者移动。从标准库代码的实现角度来说这是对的，但是对于提供了优化的编译器来讲，上面示例中最后两行表达式生成的代码其实没有区别。</p>
-<p>真正的区别在于，<code>emplace_back</code> 更加强大，它可以调用任何类型的（只要存在）构造函数。而 push_back 会更加严谨，它只调用隐式构造函数。隐式构造函数被认为是安全的。如果能够通过对象 T 隐式构造对象 U，就认为 U 能够完整包含 T 的所有内容，这样将 T 传递给 U 通常是安全的。正确使用隐式构造的例子是用 <code>std::uint32_t</code> 对象构造 <code>std::uint64_t</code> 对象，错误使用隐式构造的例子是用 <code>double</code> 构造 <code>std::uint8_t</code>。</p>
-<p>如果想要调用显示构造函数，那么就调用 <code>emplace_back</code>。如果只希望调用隐式构造函数，那么请使用更加安全的 <code>push_back</code>:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">std::vector&lt;std::unique_ptr&lt;T&gt;&gt; v;</span><br><span class="line">T a;</span><br><span class="line">v.<span class="built_in">emplace_back</span>(std::<span class="built_in">addressof</span>(a)); <span class="comment">// compiles</span></span><br><span class="line">v.<span class="built_in">push_back</span>(std::<span class="built_in">addressof</span>(a)); <span class="comment">// fails to compile</span></span><br></pre></td></tr></table></figure>
-
-<p><code>std::unique_ptr&lt;T&gt;</code> 包含了显示构造函数通过 <code>T*</code> 进行构造。因为 <code>emplace_back</code> 能够调用显示构造函数，所以传递一个裸指针并不会产生编译错误。然而，当 v 超出了作用域，<code>std::unique_ptr&lt;T&gt;</code> 的析构函数会尝试 delete 类型 <code>T*</code> 的指针，而类型 <code>T*</code> 的指针并不是通过 new 来分配的，因为它保存的是栈对象的地址，因此 delete 行为是未定义的。</p>
+    <p>事件风暴（Event Storming）是一种领域驱动设计（DDD）的实践方法，由 Alberto Brandolini 提出，旨在通过团队协作的方式快速理解和建模业务领域。</p>
+<p>以下是事件风暴及相关领域驱动设计中的一些核心概念和知识点：</p>
+<p>1. 领域（Domain）：指的是业务相关知识的集合，可以进一步划分为子域。<br>2. 子域（Subdomain）：是领域的一部分，可以是核心域、支撑域或通用域。<br>3. 核心域（Core Domain）：指领域中最核心的部分，通常对应企业的核心业务。<br>4. 通用语言（Ubiquitous Language）：团队所有成员使用的一种语言，用于确保业务和软件之间的沟通一致性。<br>5. 限界上下文（Bounded Context）：定义了一组规则和协议，用于明确领域模型的适用范围。<br>6. 实体（Entity）：具有唯一标识和生命周期的领域对象。<br>7. 值对象（Value Object）：描述了某种特性或属性的对象，没有概念标识。<br>8. 聚合（Aggregate）：一组相关对象的集合，由一个聚合根（Aggregate Root）统一管理。<br>9. 领域事件（Domain Event）：领域中发生的重要事件，可以用于通知其他领域对象或跨限界上下文进行解耦和协作。<br>10. 命令（Command）：表示要执行的操作，通常与事件一一对应。<br>11. 读模型（Read Model）：为了优化读取操作而设计的模型，可能与写模型不同。<br>12. 决策命令（Decision Command）：在事件风暴中，直接导致事件发生的命令。<br>13. 战略设计（Strategic Design）：高层次的抽象和归类，包括理清上下文和子域的划分。<br>14. 战术设计（Tactical Design）：对特定上下文下的模型进行详细设计，包括聚合、实体和值对象。<br>15. 贫血模型（Anemic Domain Model）：领域对象只有属性及其getter&#x2F;setter方法的纯数据类，业务逻辑通过服务实现。<br>16. 充血模型（Rich Domain Model）：领域对象包含业务逻辑，每个对象都是活跃的。<br>17. 资源库（Repository）：用于检索和持久化领域对象的机制。<br>18. 服务（Service）：在模型中独立的操作，可以是领域服务或应用服务。<br>19. 固定规则（Invariant）：为设计元素做出的断言，必须一直保持为真。</p>
+<p>事件风暴通常包括以下步骤：</p>
+<ul>
+<li>识别领域事件</li>
+<li>确定事件顺序</li>
+<li>识别命令和触发器</li>
+<li>识别聚合和实体</li>
+<li>划分限界上下文</li>
+<li>识别领域服务和资源库</li>
+<li>通过这些步骤，团队可以共同创建出反映业务领域的领域模型，为软件设计和开发提供指导。</li>
+</ul>
 
 </div> 
 
@@ -194,7 +192,7 @@
            
                 <div class="icon arrow-left"></div>
                 <div class="post-link">
-                    <a href="/2023/05/12/C-20-%E5%AE%9E%E7%8E%B0-string-split/">Prev</a>
+                    <a href="/2025/02/18/Prisma-%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84-Self-relations/">Prev</a>
                 </div>
             
         </div>
@@ -202,7 +200,7 @@
             
                 <div class="icon arrow-right"></div>
                 <div class="post-link">
-                  <a href="/2023/05/04/C-%E7%9A%84-Trait/">Next</a>  
+                  <a href="/2025/02/10/%E5%AE%9E%E6%97%B6%E6%90%9C%E7%B4%A2%E4%B8%AD%E7%9A%84%E9%98%B2%E6%8A%96%E5%87%BD%E6%95%B0/">Next</a>  
                 </div>  
             
         </div>

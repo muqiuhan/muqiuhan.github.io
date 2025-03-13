@@ -505,70 +505,6 @@
       </tags>
   </entry>
   <entry>
-    <title>C++ 20 实现 string split</title>
-    <url>/2023/05/12/C-20-%E5%AE%9E%E7%8E%B0-string-split/</url>
-    <content><![CDATA[<p>C++20引入了范围库ranges，其中提供的两个范围适配器std::split、std::lazy_split可以使我们以一种更为优雅的形式实现split:</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;concept&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;ranges&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;format&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> stdr  std::ranges</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> stdrv std::ranges::views</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">template</span>&lt;<span class="keyword">typename</span>&gt; <span class="keyword">typename</span> Container = std::vector, <span class="keyword">typename</span> Arg = std::string_view&gt;</span><br><span class="line"><span class="keyword">auto</span> <span class="built_in">Split</span>(std::string_view str, std::string_view delimiter)</span><br><span class="line">&#123;</span><br><span class="line">	Container&lt;Arg&gt; myCont;</span><br><span class="line">	<span class="keyword">auto</span> temp = str </span><br><span class="line">		| stdrv::<span class="built_in">split</span>(delimiter)</span><br><span class="line">		| stdrv::<span class="built_in">transform</span>([](<span class="keyword">auto</span>&amp;&amp; r)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="built_in">Arg</span>(std::<span class="built_in">addressof</span>(*r.<span class="built_in">begin</span>()), stdr::<span class="built_in">distance</span>(r));</span><br><span class="line">			&#125;);</span><br><span class="line">	<span class="keyword">auto</span> iter = std::<span class="built_in">inserter</span>(myCont, myCont.<span class="built_in">end</span>());</span><br><span class="line">	stdr::for_each(temp, [&amp;](<span class="keyword">auto</span>&amp;&amp; x) &#123; iter = &#123;x.<span class="built_in">begin</span>(), x.<span class="built_in">end</span>()&#125;; &#125;);</span><br><span class="line">	<span class="keyword">return</span> myCont;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	std::string str = <span class="string">&quot;Hello233C++20233and233New233Spilt&quot;</span>;</span><br><span class="line">	std::string delimiter = <span class="string">&quot;233&quot;</span>;</span><br><span class="line">	<span class="keyword">auto</span>&amp;&amp; strCont = <span class="built_in">Split</span>&lt;std::list, std::string&gt;(str, delimiter);</span><br><span class="line">	stdr::for_each(strCont, [](<span class="keyword">auto</span>&amp;&amp; x) &#123; std::cout &lt;&lt; std::format(<span class="string">&quot;&#123;&#125; &quot;</span>, x); &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//output: Hello C++20 and New Spilt</span></span><br></pre></td></tr></table></figure>
-
-<p>C++20没有提供关键的 <code>ranges::to&lt;container&gt;</code>函数，导致demo中还需要额外封装并手写for_each来写入数据，等到C++23实装了该函数，split的实现会比现在简洁优雅的多，真正做到方便泛用、无需封装：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span>&amp;&amp; strCont = str</span><br><span class="line">	| stdrv::<span class="built_in">lazy_split</span>(delimiter)</span><br><span class="line">	| stdr ::to&lt;std::vector&lt;std::string&gt;&gt;;</span><br></pre></td></tr></table></figure>]]></content>
-      <tags>
-        <tag>Technique</tag>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>C++ vector 的 push_back 和 emplace_back</title>
-    <url>/2023/05/11/C-vector-%E7%9A%84-push-back-%E5%92%8C-emplace-back/</url>
-    <content><![CDATA[<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/// Inserts a new element at the end of the vector, right after its current last element. This new element is constructed in place using args as the arguments for its constructor.</span></span><br><span class="line"><span class="comment">/// This effectively increases the container size by one, which causes an automatic reallocation of the allocated storage space if -and only if- the new vector size surpasses the current vector capacity.</span></span><br><span class="line"><span class="comment">/// The element is constructed in-place by calling allocator_traits::construct with args forwarded.</span></span><br><span class="line"><span class="comment">///A similar member function exists, push_back, which either copies or moves an existing object into the container.</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span>... Args&gt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">emplace_back</span> <span class="params">(Args&amp;&amp;... args)</span></span>;</span><br></pre></td></tr></table></figure>
-
-<p><code>push_back</code> 会构造一个临时对象，这个临时对象会被拷贝或者移入到容器中，然而 <code>emplace_back</code> 会直接根据传入的参数在容器的适当位置进行构造而避免拷贝或者移动。</p>
-<p>传统观点认为 <code>push_back</code> 会构造一个临时对象，这个临时对象会被移入到 v 中，然而 <code>emplace_back</code> 会直接根据传入的参数在适当位置进行构造而避免拷贝或者移动。从标准库代码的实现角度来说这是对的，但是对于提供了优化的编译器来讲，上面示例中最后两行表达式生成的代码其实没有区别。</p>
-<p>真正的区别在于，<code>emplace_back</code> 更加强大，它可以调用任何类型的（只要存在）构造函数。而 push_back 会更加严谨，它只调用隐式构造函数。隐式构造函数被认为是安全的。如果能够通过对象 T 隐式构造对象 U，就认为 U 能够完整包含 T 的所有内容，这样将 T 传递给 U 通常是安全的。正确使用隐式构造的例子是用 <code>std::uint32_t</code> 对象构造 <code>std::uint64_t</code> 对象，错误使用隐式构造的例子是用 <code>double</code> 构造 <code>std::uint8_t</code>。</p>
-<p>如果想要调用显示构造函数，那么就调用 <code>emplace_back</code>。如果只希望调用隐式构造函数，那么请使用更加安全的 <code>push_back</code>:</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">std::vector&lt;std::unique_ptr&lt;T&gt;&gt; v;</span><br><span class="line">T a;</span><br><span class="line">v.<span class="built_in">emplace_back</span>(std::<span class="built_in">addressof</span>(a)); <span class="comment">// compiles</span></span><br><span class="line">v.<span class="built_in">push_back</span>(std::<span class="built_in">addressof</span>(a)); <span class="comment">// fails to compile</span></span><br></pre></td></tr></table></figure>
-
-<p><code>std::unique_ptr&lt;T&gt;</code> 包含了显示构造函数通过 <code>T*</code> 进行构造。因为 <code>emplace_back</code> 能够调用显示构造函数，所以传递一个裸指针并不会产生编译错误。然而，当 v 超出了作用域，<code>std::unique_ptr&lt;T&gt;</code> 的析构函数会尝试 delete 类型 <code>T*</code> 的指针，而类型 <code>T*</code> 的指针并不是通过 new 来分配的，因为它保存的是栈对象的地址，因此 delete 行为是未定义的。</p>
-]]></content>
-      <tags>
-        <tag>Technique</tag>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>C++ 的 Trait</title>
-    <url>/2023/05/04/C-%E7%9A%84-Trait/</url>
-    <content><![CDATA[<blockquote>
-<p>C++ 的 traits 技术，是一种约定俗称的技术方案，用来为同一类数据（包括自定义数据类型和内置数据类型）提供统一的类型名（traits），这样可以统一的操作函数，例如 advance(), swap(), encode()&#x2F;decode() 等。</p>
-</blockquote>
-<p>例如，拥有义类型Foo, Bar，以及编译器自带类型 int, double, string，我们想要为这些不同的类型提供统一的编码函数 decode() 。</p>
-<p>除了使用 trait 技术之外，函数重载和模板函数 + 内置字段也可以实现，前者每增加一种数据类型就需要重新实现一个函数，而同一类数据（int, unsinged int）可以使用同样的编码方法。我们想要的是针对同一种数据类型，只编写一个函数。后者对于系统自定义变量 int, double 而言，是无法在其内部定义 type 的。</p>
-<p>traits 技术的关键在于，使用另外的模板类 type_traits 来保存不同数据类型的 type，这样就可以兼容自定义数据类型和内置数据类型:</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 定义数据 type 类</span></span><br><span class="line"><span class="keyword">enum</span> <span class="title class_">Type</span> &#123;</span><br><span class="line">  TYPE_1,</span><br><span class="line">  TYPE_2,</span><br><span class="line">  TYPE_3</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>对于自定义类型，在类内部定义 type，然后在 traits 类中定义同样的 type:</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 自定义数据类型</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  Type type = TYPE_1;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Bar</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  Type type = TYPE_2;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">type_traits</span> &#123;</span><br><span class="line">  Type type = T::type;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>对于内置数据类型，使用模板类的特化为自定义类型生成独有的 type_traits:</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 内置数据类型</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> <span class="type">int</span>&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">type_traits</span> &#123;</span><br><span class="line">  Type type = Type::TYPE_1;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> <span class="type">double</span>&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">type_traits</span> &#123;</span><br><span class="line">  Type type = Type::TYPE_3;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这样就可以为不同数据类型生成统一的模板函数</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 统一的编码函数</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="type">void</span> decode&lt;<span class="type">const</span> T&amp; data, <span class="type">char</span>* buf) &#123;</span><br><span class="line">  <span class="keyword">if</span>(type_traits&lt;T&gt;::type == Type::TYPE_1) &#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(type_traits&lt;T&gt;::type == Type::TYPE_2) &#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>总结</p>
-<ul>
-<li>traits 技术的关键在于使用第三方模板类 traits，利用模板特化的功能, 实现对自定义数据和编译器内置数据的统一</li>
-<li>这个例子使用了枚举变量来表示数据类型，而实际操作中通常使用不同的类来表示不同的类型，这样可以在编写模板函数时更好的优化。</li>
-<li>tratis 技术常见于标准库的实现中，但对日常开发中降低代码冗余也有很好的借鉴意义</li>
-<li>C++20 提供了Concept 的特性，使用Concept 可以使得实现类似的功能更加方便</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>Technique</tag>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Dealing with complex dependency injection in FSharp</title>
     <url>/2024/10/18/Dealing-with-complex-dependency-injection-in-FSharp/</url>
     <content><![CDATA[<p>Today, we’re going to cover different ways of encapsulating capabilities and supplying them between functions using functional programming techniques which can be realized in F#.</p>
@@ -685,6 +621,32 @@
 ]]></content>
       <tags>
         <tag>Medicine</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>G-Machine</title>
+    <url>/2024/01/23/G-Machine/</url>
+    <content><![CDATA[<ul>
+<li><a href="https://link.springer.com/chapter/10.1007/3-540-15975-4_50">The G-machine: A fast, graph-reduction evaluator</a></li>
+</ul>
+<p>G-Machine 是一种通过图规约来对函数式语言程序求值的抽象架构。<br>与组合子规约不同，组合子规约的control是从表达式图本身动态导出的，而G-Machine是由通过编译Application表达式导出的指令序列指定的。</p>
+<hr>
+<p>FP的程序基本上都可以用一个表达式的图表示，图计算机就是对这个图求值的机器，总的说来对图的求值是一个不停合并图上的节点生产新节点的过程。</p>
+<p>例如：</p>
+<figure class="highlight ocaml"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> x = <span class="number">2</span> + <span class="number">3</span> <span class="keyword">in</span> </span><br><span class="line">  x * x</span><br></pre></td></tr></table></figure>
+
+<p>先计算出5，然后创建一个新的节点 <code>5 * 5</code>，然后再对这个节点求值，于是求值过程中就产生了很多临时的节点，这些中间节点也被叫做是 spine，求值过程是沿着 spine 进行的。</p>
+<p>但是这样就产生了很多额外的开销，lambda lifting 里提到：可以把程序里，很多捕捉了外围绑定的闭包函数中的这些绑定，转换成函数的参数，从而消除闭包，得到的这个函数就可以自由脱离作用域，被静态的编译到机器码里。这些被 float out 的函数也叫 supercombinator.</p>
+<p>在上面的代码中，如果不创建新的节点，顺序计算完了第一个 <code>x</code>，第二个 <code>x</code> 还会再被算一遍。</p>
+<p>Spineless reduction 的概念：只有当面临需要重复计算的情况时，才去创建节点，不然就一路顺序算下去</p>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Graph_reduction">Graph reduction</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Graph_reduction_machine">Graph reduction machine</a></li>
+<li><a href="https://www.zhihu.com/question/54834531/answer/144213668">https://www.zhihu.com/question/54834531/answer/144213668</a></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
       </tags>
   </entry>
   <entry>
@@ -812,32 +774,6 @@
         <tag>Technique</tag>
         <tag>F#</tag>
         <tag>Archive</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>G-Machine</title>
-    <url>/2024/01/23/G-Machine/</url>
-    <content><![CDATA[<ul>
-<li><a href="https://link.springer.com/chapter/10.1007/3-540-15975-4_50">The G-machine: A fast, graph-reduction evaluator</a></li>
-</ul>
-<p>G-Machine 是一种通过图规约来对函数式语言程序求值的抽象架构。<br>与组合子规约不同，组合子规约的control是从表达式图本身动态导出的，而G-Machine是由通过编译Application表达式导出的指令序列指定的。</p>
-<hr>
-<p>FP的程序基本上都可以用一个表达式的图表示，图计算机就是对这个图求值的机器，总的说来对图的求值是一个不停合并图上的节点生产新节点的过程。</p>
-<p>例如：</p>
-<figure class="highlight ocaml"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> x = <span class="number">2</span> + <span class="number">3</span> <span class="keyword">in</span> </span><br><span class="line">  x * x</span><br></pre></td></tr></table></figure>
-
-<p>先计算出5，然后创建一个新的节点 <code>5 * 5</code>，然后再对这个节点求值，于是求值过程中就产生了很多临时的节点，这些中间节点也被叫做是 spine，求值过程是沿着 spine 进行的。</p>
-<p>但是这样就产生了很多额外的开销，lambda lifting 里提到：可以把程序里，很多捕捉了外围绑定的闭包函数中的这些绑定，转换成函数的参数，从而消除闭包，得到的这个函数就可以自由脱离作用域，被静态的编译到机器码里。这些被 float out 的函数也叫 supercombinator.</p>
-<p>在上面的代码中，如果不创建新的节点，顺序计算完了第一个 <code>x</code>，第二个 <code>x</code> 还会再被算一遍。</p>
-<p>Spineless reduction 的概念：只有当面临需要重复计算的情况时，才去创建节点，不然就一路顺序算下去</p>
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/Graph_reduction">Graph reduction</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Graph_reduction_machine">Graph reduction machine</a></li>
-<li><a href="https://www.zhihu.com/question/54834531/answer/144213668">https://www.zhihu.com/question/54834531/answer/144213668</a></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>Technique</tag>
       </tags>
   </entry>
   <entry>
@@ -2595,7 +2531,7 @@
   <entry>
     <title>二〇二四年十一月十七日</title>
     <url>/2024/11/17/%E4%BA%8C%E3%80%87%E4%BA%8C%E5%9B%9B%E5%B9%B4%E5%8D%81%E4%B8%80%E6%9C%88%E5%8D%81%E4%B8%83%E6%97%A5/</url>
-    <content><![CDATA[<p>快乐是正面情绪的原型，许多思想家都说过，人类的所作所为，最终都是为了追求快乐。我们之所以想追求财富、健康或名声，都是为了借此得到快乐。然而，追求快乐也不是因为它可以带给我们其他好处，因为快乐本身就是目的。</p>
+    <content><![CDATA[<p>快乐是正面情绪的原型，人类的所作所为，最终都是为了追求快乐。我们之所以想追求财富、健康或名声，都是为了借此得到快乐。然而，追求快乐也不是因为它可以带给我们其他好处，因为快乐本身就是目的。</p>
 <p>“世人皆以痛楚、孤独、悲伤为大境界，以为这就是深邃的人生，殊不知快乐才是人生的真谛。一个人获取快乐的能力才是真正有用的能力。伤春悲秋、离愁别绪太容易了，读几首诗词即可，但获取欢乐太难了非大丈夫不可为之。”</p>
 ]]></content>
       <categories>
@@ -2792,11 +2728,11 @@
   <entry>
     <title>二零二三年六月十日</title>
     <url>/2023/06/10/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E5%85%AD%E6%9C%88%E5%8D%81%E6%97%A5/</url>
-    <content><![CDATA[<p>我希望与我一样独自生活多年的宝宝们，能绝对理性的面对所有事情，这是一个人工作学习生活的基础，但同时要感同身受的去阅读文学类作品，这是让我们保留一丝感性的方式，感性是不可或缺的，理性可以让人控制感性，但也可以消灭它。</p>
-<p>一个人的世界很容易出现信息茧房，要不断的和人交流，把很多想法说出来，接收一切评论，不然会在长期的不分正确错误的信息堆叠中出现一团巨大的闭塞性的知识，这很不利于我们快乐的活下去。</p>
-<p>接收到的评论不必急于改变，先存起来，让它们陪着你跟着时间走，路上会慢慢的和其他的事情连结起来，这样就能择其善者而从之，其不善者而改之了。</p>
-<p>和我一样处在青少年阶段的宝宝们应当早日从这喧扰的世界冷静下来，让脑子里满是憧憬和情爱的灵魂得到一丝陈酿，理性点抬头看看世界上方的二氧化碳，自己晃晃头打破能回到最初的样子再重来的梦。</p>
-<p>爱你们噢。</p>
+    <content><![CDATA[<p>请绝对理性的面对所有事情，这是一个人工作学习生活的基础，但同时要感同身受的去阅读文学类作品，这是保留一丝感性的方式，感性是不可或缺的，理性可以让人控制感性，但也可以消灭它。</p>
+<p>独处的世界很容易出现信息茧房，要不断的和人交流，把很多想法说出来，接收一切评论，不然会在长期的不分正确错误的信息堆叠中出现一团巨大的闭塞性的知识，这很不利于快乐的活下去。</p>
+<p>接收到的评论不必急于改变，先存起来，让它们陪着自己，跟着时间走，路上会慢慢的和其他的事情连结起来，这样就能择其善者而从之，其不善者而改之了。</p>
+<p>应当早日从这喧扰的世界冷静下来，让脑子里满是憧憬和情爱的灵魂得到一丝陈酿，理性点抬头看看世界上方的二氧化碳，自己晃晃头打破能回到最初的样子再重来的梦。</p>
+<p>爱你们。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
@@ -2939,6 +2875,27 @@
       <categories>
         <category>gallery</category>
       </categories>
+  </entry>
+  <entry>
+    <title>从事件风暴看领域驱动设计</title>
+    <url>/2025/02/11/%E4%BB%8E%E4%BA%8B%E4%BB%B6%E9%A3%8E%E6%9A%B4%E7%9C%8B%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1/</url>
+    <content><![CDATA[<p>事件风暴（Event Storming）是一种领域驱动设计（DDD）的实践方法，由 Alberto Brandolini 提出，旨在通过团队协作的方式快速理解和建模业务领域。</p>
+<p>以下是事件风暴及相关领域驱动设计中的一些核心概念和知识点：</p>
+<p>1. 领域（Domain）：指的是业务相关知识的集合，可以进一步划分为子域。<br>2. 子域（Subdomain）：是领域的一部分，可以是核心域、支撑域或通用域。<br>3. 核心域（Core Domain）：指领域中最核心的部分，通常对应企业的核心业务。<br>4. 通用语言（Ubiquitous Language）：团队所有成员使用的一种语言，用于确保业务和软件之间的沟通一致性。<br>5. 限界上下文（Bounded Context）：定义了一组规则和协议，用于明确领域模型的适用范围。<br>6. 实体（Entity）：具有唯一标识和生命周期的领域对象。<br>7. 值对象（Value Object）：描述了某种特性或属性的对象，没有概念标识。<br>8. 聚合（Aggregate）：一组相关对象的集合，由一个聚合根（Aggregate Root）统一管理。<br>9. 领域事件（Domain Event）：领域中发生的重要事件，可以用于通知其他领域对象或跨限界上下文进行解耦和协作。<br>10. 命令（Command）：表示要执行的操作，通常与事件一一对应。<br>11. 读模型（Read Model）：为了优化读取操作而设计的模型，可能与写模型不同。<br>12. 决策命令（Decision Command）：在事件风暴中，直接导致事件发生的命令。<br>13. 战略设计（Strategic Design）：高层次的抽象和归类，包括理清上下文和子域的划分。<br>14. 战术设计（Tactical Design）：对特定上下文下的模型进行详细设计，包括聚合、实体和值对象。<br>15. 贫血模型（Anemic Domain Model）：领域对象只有属性及其getter&#x2F;setter方法的纯数据类，业务逻辑通过服务实现。<br>16. 充血模型（Rich Domain Model）：领域对象包含业务逻辑，每个对象都是活跃的。<br>17. 资源库（Repository）：用于检索和持久化领域对象的机制。<br>18. 服务（Service）：在模型中独立的操作，可以是领域服务或应用服务。<br>19. 固定规则（Invariant）：为设计元素做出的断言，必须一直保持为真。</p>
+<p>事件风暴通常包括以下步骤：</p>
+<ul>
+<li>识别领域事件</li>
+<li>确定事件顺序</li>
+<li>识别命令和触发器</li>
+<li>识别聚合和实体</li>
+<li>划分限界上下文</li>
+<li>识别领域服务和资源库</li>
+<li>通过这些步骤，团队可以共同创建出反映业务领域的领域模型，为软件设计和开发提供指导。</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
   </entry>
   <entry>
     <title>儿童新型冠状病毒Omicron株和肺炎支原体混合感染重症肺炎1例</title>
@@ -3284,6 +3241,32 @@
       <tags>
         <tag>UI/UX</tag>
         <tag>Design</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>实时搜索中的防抖函数</title>
+    <url>/2025/02/10/%E5%AE%9E%E6%97%B6%E6%90%9C%E7%B4%A2%E4%B8%AD%E7%9A%84%E9%98%B2%E6%8A%96%E5%87%BD%E6%95%B0/</url>
+    <content><![CDATA[<p>在实现实时搜索功能时，通常会使用输入框的事件监听器来捕获用户的输入变化，并在输入变化时发送搜索请求。为了避免过多的请求导致服务器负担过重，通常会使用“防抖”（debounce）技术来控制请求的频率。</p>
+<h3 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h3><ol>
+<li><strong>监听输入框的变化</strong>：使用<code>input</code>事件监听器来捕获用户的输入变化。</li>
+<li><strong>防抖处理</strong>：使用防抖函数来限制请求的频率。防抖函数会在用户停止输入一段时间后才发送请求。</li>
+<li><strong>发送请求</strong>：在防抖函数中调用搜索请求。</li>
+</ol>
+<h3 id="防抖函数示例"><a href="#防抖函数示例" class="headerlink" title="防抖函数示例"></a>防抖函数示例</h3><p>以下是一个简单的防抖函数示例：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">debounce</span>(<span class="params">func, wait</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> timeout;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">...args</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> context = <span class="variable language_">this</span>;</span><br><span class="line">    <span class="built_in">clearTimeout</span>(timeout);</span><br><span class="line">    timeout = <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> func.<span class="title function_">apply</span>(context, args), wait);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="实现实时搜索"><a href="#实现实时搜索" class="headerlink" title="实现实时搜索"></a>实现实时搜索</h3><p>假设你有一个输入框用于搜索患者：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">  import &#123; onMount &#125; from &#x27;svelte&#x27;;</span><br><span class="line">  import &#123; patientsStore &#125; from &#x27;$lib/stores/patients.svelte&#x27;;</span><br><span class="line"></span><br><span class="line">  let searchTerm = &#x27;&#x27;;</span><br><span class="line"></span><br><span class="line">  // 防抖函数</span><br><span class="line">  function debounce(func, wait) &#123;</span><br><span class="line">    let timeout;</span><br><span class="line">    return function(...args) &#123;</span><br><span class="line">      const context = this;</span><br><span class="line">      clearTimeout(timeout);</span><br><span class="line">      timeout = setTimeout(() =&gt; func.apply(context, args), wait);</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 搜索函数</span><br><span class="line">  const searchPatients = debounce(async (term) =&gt; &#123;</span><br><span class="line">    if (term) &#123;</span><br><span class="line">      // 发送搜索请求</span><br><span class="line">      const response = await fetch(`/api/search-patients?query=$&#123;term&#125;`);</span><br><span class="line">      const data = await response.json();</span><br><span class="line">      patientsStore.mbglPatients = data;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      // 清空搜索结果或恢复默认数据</span><br><span class="line">      patientsStore.mbglPatients = [];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;, 300); // 300ms 的防抖时间</span><br><span class="line"></span><br><span class="line">  // 监听输入框变化</span><br><span class="line">  function handleInput(event) &#123;</span><br><span class="line">    searchTerm = event.target.value;</span><br><span class="line">    searchPatients(searchTerm);</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;input type=&quot;text&quot; placeholder=&quot;搜索患者...&quot; on:input=&#123;handleInput&#125; bind:value=&#123;searchTerm&#125; /&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="请求发送间隔"><a href="#请求发送间隔" class="headerlink" title="请求发送间隔"></a>请求发送间隔</h3><ul>
+<li><strong>防抖时间</strong>：通常设置为 300ms 到 500ms 之间。这个时间足够让用户完成输入并减少不必要的请求。</li>
+<li><strong>考虑用户体验</strong>：防抖时间过短可能导致过多请求，过长则可能让用户感到延迟。300ms 是一个常用的折中值。</li>
+</ul>
+<p>通过这种方式，你可以实现一个高效的实时搜索功能，既能保证用户体验，又能减少服务器的负担。</p>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+        <tag>Web</tag>
       </tags>
   </entry>
   <entry>
@@ -5517,6 +5500,32 @@
       <tags>
         <tag>Technique</tag>
         <tag>OCaml</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>领域驱动设计中的“聚合根”</title>
+    <url>/2025/03/13/%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1%E4%B8%AD%E7%9A%84%E2%80%9C%E8%81%9A%E5%90%88%E6%A0%B9%E2%80%9D/</url>
+    <content><![CDATA[<p>在领域驱动设计（Domain-Driven Design，简称DDD）中，聚合根（Aggregate Root）是聚合（Aggregate）中的核心实体，是一个聚合的入口点和控制者，负责维护聚合内部的一致性和不变性条件。聚合是一组紧密相关的领域对象的集合，这些对象通过一定的业务规则绑定在一起，并被视为一个单元。</p>
+<p>主要的作用如下：</p>
+<ul>
+<li><strong>维护不变性</strong>：聚合根确保聚合内所有对象的一致性和不变性条件不被破坏。它负责封装与聚合相关的业务逻辑，保证聚合内的对象符合业务规则。</li>
+<li><strong>管理生命周期</strong>：聚合根负责管理其内部对象的创建、修改和删除。它控制着聚合内部成员的生命周期，包括它们的创建、更新和删除。</li>
+<li><strong>处理业务逻辑</strong>：聚合根负责处理与聚合相关的业务逻辑和操作，外部系统通过调用聚合根的方法来执行这些操作。它不仅是数据的容器，还负责封装与聚合相关的业务逻辑。</li>
+</ul>
+<p>其具有以下特性：</p>
+<ul>
+<li><strong>唯一入口</strong>：聚合根是聚合内部对象的唯一入口，外部系统只能与聚合根交互，而无法直接访问聚合内部的其他对象。这样可以避免外部系统直接修改聚合内的实体，确保聚合的一致性和业务逻辑的完整性。</li>
+<li><strong>标识唯一性</strong>：每个聚合根都有一个全局唯一的标识符（ID），用以区分不同的聚合实例。</li>
+<li><strong>事务边界</strong>：聚合根常常作为事务的边界，确保事务内的所有操作要么全部成功，要么全部失败，以此来维护数据的完整性。</li>
+</ul>
+<p>用 F# 来描述，以订单管理为例，大概写一下：</p>
+<figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">OrderStatus</span> <span class="operator">=</span> </span><br><span class="line">  <span class="operator">|</span> New</span><br><span class="line">  <span class="operator">|</span> Shipped</span><br><span class="line">  <span class="operator">|</span> Delivered</span><br><span class="line">  <span class="operator">|</span> Cancelled</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">OrderItem</span> (productName<span class="operator">:</span> <span class="type">string</span>, price<span class="operator">:</span> <span class="type">float</span>, quantity<span class="operator">:</span> <span class="type">int</span>) <span class="operator">=</span> </span><br><span class="line">  <span class="keyword">do</span></span><br><span class="line">    <span class="keyword">if</span> quantity <span class="operator">&lt;=</span> <span class="number">0</span> <span class="keyword">then</span></span><br><span class="line">      <span class="built_in">failwith</span> <span class="string">&quot;Quantity must be positive&quot;</span></span><br><span class="line">  </span><br><span class="line">  <span class="keyword">member</span> <span class="keyword">public</span> this.ProductName <span class="operator">=</span> productName</span><br><span class="line">  <span class="keyword">member</span> <span class="keyword">public</span> this.Price <span class="operator">=</span> price</span><br><span class="line">  <span class="keyword">member</span> <span class="keyword">public</span> this.Quantity <span class="operator">=</span> quantity</span><br><span class="line">  <span class="keyword">member</span> <span class="keyword">public</span> this.TotalPrice () <span class="operator">=</span> price <span class="operator">*</span> quantity</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Order</span> (<span class="built_in">id</span><span class="operator">:</span> <span class="type">int</span>, customerName<span class="operator">:</span> <span class="type">string</span>) <span class="operator">=</span> </span><br><span class="line">  <span class="keyword">let</span> <span class="keyword">mutable</span> status <span class="operator">=</span> OrderStatus.New</span><br><span class="line">  <span class="keyword">let</span> <span class="keyword">mutable</span> orderItems <span class="operator">=</span> []</span><br><span class="line"></span><br><span class="line">  <span class="keyword">member</span> <span class="keyword">public</span> this.Id <span class="operator">=</span> <span class="built_in">id</span></span><br><span class="line">  <span class="keyword">member</span> <span class="keyword">public</span> this.CustomerName <span class="operator">=</span> customerName</span><br><span class="line">  <span class="keyword">member</span> <span class="keyword">public</span> this.Status <span class="operator">=</span> status</span><br><span class="line">  <span class="keyword">member</span> <span class="keyword">public</span> this.OrderItems <span class="operator">=</span> orderItems</span><br><span class="line"></span><br><span class="line">  <span class="keyword">member</span> <span class="keyword">public</span> this.AddItem (item<span class="operator">:</span> OrderItem, price<span class="operator">:</span> <span class="type">float</span>, quantity<span class="operator">:</span> <span class="type">int</span>) <span class="operator">=</span></span><br><span class="line">    <span class="keyword">if</span> quantity <span class="operator">&lt;=</span> <span class="number">0</span> <span class="keyword">then</span></span><br><span class="line">      <span class="built_in">failwith</span> <span class="string">&quot;Quantity must be positive&quot;</span></span><br><span class="line">    </span><br><span class="line">    orderItems <span class="operator">&lt;-</span> orderItems <span class="operator">@</span> [OrderItem(item.ProductName, price, quantity)]</span><br><span class="line"></span><br><span class="line">  <span class="keyword">member</span> <span class="keyword">public</span> this.ChangeStatus (status<span class="operator">:</span> OrderStatus) <span class="operator">=</span></span><br><span class="line">    this.Status <span class="operator">&lt;-</span> status</span><br><span class="line"></span><br><span class="line">  <span class="keyword">member</span> <span class="keyword">public</span> this.TotalPrice () <span class="operator">=</span></span><br><span class="line">    orderItems <span class="operator">|&gt;</span> List.sumBy (<span class="keyword">fun</span> item <span class="operator">-&gt;</span> item.TotalPrice())</span><br><span class="line"></span><br><span class="line">  <span class="keyword">member</span> <span class="keyword">public</span> this.GetTotalPrice () <span class="operator">=</span></span><br><span class="line">    orderItems <span class="operator">|&gt;</span> List.sumBy (<span class="keyword">fun</span> item <span class="operator">-&gt;</span> item.TotalPrice())</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，<code>Order</code> 是聚合根，它通过 <code>AddItem</code> 方法来添加订单项，保证每个订单项符合业务规则。同时，聚合根 <code>Order</code> 还负责订单状态的管理，例如通过 <code>ChangeStatus</code> 方法来更新订单状态。<code>OrderItem</code> 是聚合内的一个实体，表示订单项，它通过 <code>GetTotalPrice</code> 方法来计算每个订单项的总价。外部系统只能通过 <code>Order</code> 聚合根来访问和操作订单项，而不能直接访问或修改 <code>OrderItem</code></p>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+        <tag>Software Engineering</tag>
       </tags>
   </entry>
   <entry>
