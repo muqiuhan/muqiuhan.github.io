@@ -36,8 +36,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       hexo-renderer-marked:
-        specifier: ^6.0.0
-        version: 6.1.1
+        specifier: ^6.3.0
+        version: 6.3.0
       hexo-renderer-stylus:
         specifier: ^2.1.0
         version: 2.1.0
@@ -467,8 +467,8 @@ packages:
     resolution: {integrity: sha512-qCjE1IdwgDgv65qyb0KMVCwCdSVAkH0vwAe9XihjvaKWkmb9dtt8DgErOdqCXn0HReSyWiEVP2BrLRj3gyHwOQ==}
     engines: {node: '>=12'}
 
-  hexo-renderer-marked@6.1.1:
-    resolution: {integrity: sha512-vllmRFwl9A1NP/llQW2TbDnyvqaQKgktxXw7c+tK7XVQJmfIUnl32dr8M4jRYqYe5m9972eYm09kBXV8rBtA/A==}
+  hexo-renderer-marked@6.3.0:
+    resolution: {integrity: sha512-V/ATcJ+tZHkTJSbScPzzHKmrwVMohU8i9MfuX9jp07Un/NpPtaTP821unP3JPu+O1nNLWMi+3xRbFRdm+8vajw==}
     engines: {node: '>=14'}
 
   hexo-renderer-stylus@2.1.0:
@@ -1413,7 +1413,7 @@ snapshots:
     dependencies:
       ejs: 3.1.9
 
-  hexo-renderer-marked@6.1.1:
+  hexo-renderer-marked@6.3.0:
     dependencies:
       dompurify: 3.0.6
       hexo-util: 3.1.0
