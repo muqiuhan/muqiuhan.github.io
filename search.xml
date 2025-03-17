@@ -624,32 +624,6 @@
       </tags>
   </entry>
   <entry>
-    <title>G-Machine</title>
-    <url>/2024/01/23/G-Machine/</url>
-    <content><![CDATA[<ul>
-<li><a href="https://link.springer.com/chapter/10.1007/3-540-15975-4_50">The G-machine: A fast, graph-reduction evaluator</a></li>
-</ul>
-<p>G-Machine 是一种通过图规约来对函数式语言程序求值的抽象架构。<br>与组合子规约不同，组合子规约的control是从表达式图本身动态导出的，而G-Machine是由通过编译Application表达式导出的指令序列指定的。</p>
-<hr>
-<p>FP的程序基本上都可以用一个表达式的图表示，图计算机就是对这个图求值的机器，总的说来对图的求值是一个不停合并图上的节点生产新节点的过程。</p>
-<p>例如：</p>
-<figure class="highlight ocaml"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> x = <span class="number">2</span> + <span class="number">3</span> <span class="keyword">in</span> </span><br><span class="line">  x * x</span><br></pre></td></tr></table></figure>
-
-<p>先计算出5，然后创建一个新的节点 <code>5 * 5</code>，然后再对这个节点求值，于是求值过程中就产生了很多临时的节点，这些中间节点也被叫做是 spine，求值过程是沿着 spine 进行的。</p>
-<p>但是这样就产生了很多额外的开销，lambda lifting 里提到：可以把程序里，很多捕捉了外围绑定的闭包函数中的这些绑定，转换成函数的参数，从而消除闭包，得到的这个函数就可以自由脱离作用域，被静态的编译到机器码里。这些被 float out 的函数也叫 supercombinator.</p>
-<p>在上面的代码中，如果不创建新的节点，顺序计算完了第一个 <code>x</code>，第二个 <code>x</code> 还会再被算一遍。</p>
-<p>Spineless reduction 的概念：只有当面临需要重复计算的情况时，才去创建节点，不然就一路顺序算下去</p>
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/Graph_reduction">Graph reduction</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Graph_reduction_machine">Graph reduction machine</a></li>
-<li><a href="https://www.zhihu.com/question/54834531/answer/144213668">https://www.zhihu.com/question/54834531/answer/144213668</a></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>Technique</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Functional Reactive Programming in F#</title>
     <url>/2024/09/12/Functional-Reactive-Programming-in-F/</url>
     <content><![CDATA[<blockquote>
@@ -774,6 +748,32 @@
         <tag>Technique</tag>
         <tag>F#</tag>
         <tag>Archive</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>G-Machine</title>
+    <url>/2024/01/23/G-Machine/</url>
+    <content><![CDATA[<ul>
+<li><a href="https://link.springer.com/chapter/10.1007/3-540-15975-4_50">The G-machine: A fast, graph-reduction evaluator</a></li>
+</ul>
+<p>G-Machine 是一种通过图规约来对函数式语言程序求值的抽象架构。<br>与组合子规约不同，组合子规约的control是从表达式图本身动态导出的，而G-Machine是由通过编译Application表达式导出的指令序列指定的。</p>
+<hr>
+<p>FP的程序基本上都可以用一个表达式的图表示，图计算机就是对这个图求值的机器，总的说来对图的求值是一个不停合并图上的节点生产新节点的过程。</p>
+<p>例如：</p>
+<figure class="highlight ocaml"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> x = <span class="number">2</span> + <span class="number">3</span> <span class="keyword">in</span> </span><br><span class="line">  x * x</span><br></pre></td></tr></table></figure>
+
+<p>先计算出5，然后创建一个新的节点 <code>5 * 5</code>，然后再对这个节点求值，于是求值过程中就产生了很多临时的节点，这些中间节点也被叫做是 spine，求值过程是沿着 spine 进行的。</p>
+<p>但是这样就产生了很多额外的开销，lambda lifting 里提到：可以把程序里，很多捕捉了外围绑定的闭包函数中的这些绑定，转换成函数的参数，从而消除闭包，得到的这个函数就可以自由脱离作用域，被静态的编译到机器码里。这些被 float out 的函数也叫 supercombinator.</p>
+<p>在上面的代码中，如果不创建新的节点，顺序计算完了第一个 <code>x</code>，第二个 <code>x</code> 还会再被算一遍。</p>
+<p>Spineless reduction 的概念：只有当面临需要重复计算的情况时，才去创建节点，不然就一路顺序算下去</p>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Graph_reduction">Graph reduction</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Graph_reduction_machine">Graph reduction machine</a></li>
+<li><a href="https://www.zhihu.com/question/54834531/answer/144213668">https://www.zhihu.com/question/54834531/answer/144213668</a></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
       </tags>
   </entry>
   <entry>
@@ -2363,6 +2363,25 @@
 <p>然后我就在山峰浮现出第一缕阳光时，笑着对这个世界说：“我爱你，会永远爱你，永远最爱你。”</p>
 <p>我爱这个因为有我而变得温柔的世界。</p>
 <p>这将是我与周遭的一切，热爱一生，共度一生的地方。</p>
+]]></content>
+      <categories>
+        <category>gallery</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>二〇二五年三月十七日</title>
+    <url>/2025/03/17/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%BA%94%E5%B9%B4%E4%B8%89%E6%9C%88%E5%8D%81%E4%B8%83%E6%97%A5/</url>
+    <content><![CDATA[<p>人类其实根本无法同时拥有对死亡的坦然和对生活的眷恋。</p>
+<p>看见死亡，看见新生，看见朝露凝于叶尖，看见惊雷震碎山月，<br>它们是因缘聚散吗？</p>
+<p>那露珠消散后去了哪里？<br>当晨光加热露珠表面至 $0.1μm$ 深度时，表层水分子动能突破氢键束缚（键能约 $23 kJ&#x2F;mol$）。<br>这种相变并非整齐划一的队列解散，而是呈现量子隧穿效应——单个水分子以 $10^{-12}s$ 量级的涨落，在液态与气态间振荡，直到完全脱离范德华力作用半径（约 $0.3 nm$）。<br>逃逸的 H2O 分子并非直线升空，而是在空气分子碰撞下进行三维随机游走。<br>根据爱因斯坦-斯托克斯方程，其扩散系数 $D \approx 0.282 cm^2&#x2F;s$（25℃标准大气压）。这意味着单个水分子在1秒内将形成半径约 $2.4 mm$ 的概率云，与数十亿同伴共同形成水汽。</p>
+<p>水中捞月，伸手时，涟漪碎了三千世界。</p>
+<p>人类的眉睫处有十方虚空，三藏经书不过指月之指，</p>
+<p>看见儿时门前溪水倒流，看见婴孩啼哭时眼底星河闪烁。</p>
+<p>看见生死之幕薄如蝉翼，和众生颠倒梦想处。</p>
+<p>某些水分子可能抵达对流层顶（约 $12 km$），在那里被极地涡旋捕获。<br>经过 $50-200$ 天的环球旅行后，其中 $0.0003%$ 的分子将逃逸到太空，携带着地球的熵增印记。<br>它们的氧原子核内，八个质子正以 $10^{34}$ 年半衰期等待质子衰变——这恰是 $138$ 亿年前宇宙暴胀时期产生的原初量子涨落的回响。</p>
+<p>那在这之前呢？</p>
+<p>在这之前我刚吃完一碗辣椒炒肉，</p>
+<p>香</p>
 ]]></content>
       <categories>
         <category>gallery</category>
