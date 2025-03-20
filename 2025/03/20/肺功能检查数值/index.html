@@ -20,7 +20,7 @@
 
 
 
-<title>WiscKey: Separating Keys from Values in SSD-conscious Storage | 暮秋小屋</title>
+<title>肺功能检查数值 | 暮秋小屋</title>
 
 
 
@@ -142,8 +142,8 @@
             
                 
                     <span class="post-tag">
-                        <a href="/tags/Technique/">
-                            Technique
+                        <a href="/tags/Medicine/">
+                            Medicine
                         </a>
                     </span>    
                            
@@ -152,12 +152,12 @@
         <div class="post-title">
             
             
-                WiscKey: Separating Keys from Values in SSD-conscious Storage
+                肺功能检查数值
             
             
         </div>
         <span class="post-date">
-            Jul 21, 2023
+            Mar 20, 2025
         </span>
     </div>
     <div class="post-img">
@@ -167,34 +167,45 @@
     </div>
 </div>
     <div class="post-content">
-    <p>We present WiscKey, a persistent LSM-tree-based key-value store with a performance-oriented data layoutthat separates keys from values to minimize I&#x2F;O amplifi-cation. The design of WiscKey is highly SSD optimized, leveraging both the sequential and random performance characteristics of the device.</p>
-<ul>
-<li><a href="/papers/WiscKey:%20Separating%20Keys%20from%20Values%20in%20SSD-conscious%20Storage.pdf">原始论文</a></li>
+    <p>肺功能测试是评估患者呼吸系统健康的重要工具。各个指标的及其异常数值可能指示的潜在生理疾病：</p>
+<h3 id="1-FEV1（第一秒用力呼气量）"><a href="#1-FEV1（第一秒用力呼气量）" class="headerlink" title="1. FEV1（第一秒用力呼气量）"></a>1. FEV1（第一秒用力呼气量）</h3><ul>
+<li><strong>评估</strong>：FEV1用于评估气道的通畅程度。它反映了在用力呼气的第一秒内，患者能够排出的气体量。</li>
+<li><strong>异常</strong>：FEV1降低通常提示气道阻塞，常见于慢性阻塞性肺病（COPD）、哮喘、支气管炎等疾病。</li>
 </ul>
-<p>WiscKey是一种基于LSM-Tree的kv存储，它的实现很简单： 将键和值分开存储， 这么做可以显著的减少I&#x2F;O放大。</p>
-<p>WiscKey的设计是针对SSD优化的，充分利用了SSD的性能并提出了一种轻量的GC方案， 除此之外还分析了现代存储硬件的特性和LSM树的读写放大的问题。</p>
-<p>总的来说，WiscKey是基于SSD硬件特性而重新设计的存储结构。虽然LevelDB也是一种键值存储引擎，但它并没有像WiscKey那样专门为SSD硬件而设计。因此，如果将LevelDB的存储结构按照SSD硬件的特性进行优化，可能会提高一些性能，但是不一定能够达到WiscKey的性能水平。</p>
-<h2 id="笔记"><a href="#笔记" class="headerlink" title="笔记"></a>笔记</h2><ul>
-<li><p>The main data structures in LevelDB are an on-disk log file, two in-memory sorted skiplists (memtableand immutable memtable), and seven levels (L0 to L6) of on-disk Sorted String Table (SSTable) files</p>
-<blockquote>
-<p>LSM-trees的内部的各种组件可以使用任意索引结构来实现。通常内存组件会使用skiplist或B+树等并发数据结构，而磁盘组件会使用B+树或SSTables（SSTable包含一个数据块列表和一个索引块：数据块存储按键排序的键值对，索引块存储所有数据块的键范围）</p>
-</blockquote>
+<h3 id="2-FVC（用力肺活量）"><a href="#2-FVC（用力肺活量）" class="headerlink" title="2. FVC（用力肺活量）"></a>2. FVC（用力肺活量）</h3><ul>
+<li><strong>评估</strong>：FVC测量的是患者在一次用力呼气中能够排出的最大气体量，反映了肺的容量和扩张能力。</li>
+<li><strong>异常</strong>：FVC降低可能指示限制性肺病，如肺纤维化、胸廓畸形或神经肌肉疾病等。</li>
+</ul>
+<h3 id="3-FEV1-FVC比值"><a href="#3-FEV1-FVC比值" class="headerlink" title="3. FEV1&#x2F;FVC比值"></a>3. FEV1&#x2F;FVC比值</h3><ul>
+<li><strong>评估</strong>：FEV1&#x2F;FVC比值用于区分阻塞性和限制性肺病。正常情况下，该比值应大于70%。</li>
+<li><strong>异常</strong>：<ul>
+<li>**低于70%**：提示气道阻塞，常见于COPD和哮喘。</li>
+<li>**正常或高于70%**但FVC降低：可能提示限制性肺病。</li>
+</ul>
 </li>
-<li><p>how LSM-trees maintainsequential I&#x2F;O access by increasing I&#x2F;O amplification.</p>
-<blockquote>
-<p>具体来说，LSM-trees的写放大是指每次写入操作都需要将数据追加到写前日志中，并加入到内存组件C0中。当C0的大小达到一定阈值时，C0会与磁盘上的C1进行归并排序操作，生成新的组件new-C1，并将其顺序写入磁盘，取代旧版本的C1。类似地，当C1的大小达到一定阈值时，C1会与下一层组件Ci+1合并。这种归并排序的过程可以保证数据在磁盘上的存储是有序的，从而保持顺序I&#x2F;O访问</p>
-</blockquote>
+</ul>
+<h3 id="4-PEF（峰值呼气流量）"><a href="#4-PEF（峰值呼气流量）" class="headerlink" title="4. PEF（峰值呼气流量）"></a>4. PEF（峰值呼气流量）</h3><ul>
+<li><strong>评估</strong>：PEF测量患者在用力呼气时达到的最大流速，常用于监测哮喘患者的病情变化。</li>
+<li><strong>异常</strong>：PEF降低可能提示气道狭窄或阻塞，常见于哮喘急性发作或COPD加重。</li>
+</ul>
+<h3 id="5-MVV（最大通气量）"><a href="#5-MVV（最大通气量）" class="headerlink" title="5. MVV（最大通气量）"></a>5. MVV（最大通气量）</h3><ul>
+<li><strong>评估</strong>：MVV测量在一定时间内（通常是12秒）能够进行的最大通气量，反映了肺部的通气能力和呼吸肌的力量。</li>
+<li><strong>异常</strong>：MVV降低可能与呼吸肌无力、气道阻塞或肺部疾病（如COPD）相关。</li>
+</ul>
+<h3 id="6-TLC（总肺容量）"><a href="#6-TLC（总肺容量）" class="headerlink" title="6. TLC（总肺容量）"></a>6. TLC（总肺容量）</h3><ul>
+<li><strong>评估</strong>：TLC测量肺部在最大吸气后所能容纳的气体总量，反映了肺的整体容量。</li>
+<li><strong>异常</strong>：<ul>
+<li><strong>增加</strong>：可能与阻塞性肺病（如COPD）相关，因肺部过度膨胀。</li>
+<li><strong>降低</strong>：可能与限制性肺病（如肺纤维化、胸廓畸形）相关。</li>
+</ul>
 </li>
-<li><p>First, WiscKey separates keys from values, keeping only keys in theLSM-tree and the values in a separate log file. Second,to deal with unsorted values (which necessitate random access during range queries), WiscKey uses the parallel random-read characteristic of SSD devices. Third, WiscKey utilizes unique crash-consistency and garbage-collection techniques to efficiently manage the value log.Finally, WiscKey optimizes performance by removingthe LSM-tree log without sacrificing consistency, thusreducing system-call overhead from small writes.</p>
-<blockquote>
-<p>这是WiscKey的主要优化方式</p>
-</blockquote>
-</li>
-<li><p>For range queries, LevelDB provides the user with an iterator-based interface with Seek(key), Next(), Prev(),Key() and Value() operations. To scan a range of key-value pairs, users can first Seek() to the starting key, then call Next() or Prev() to search keys one by one. To retrieve the key or the value of the current iterator position, users call Key() or Value(), respectively.</p>
-<blockquote>
-<p>如果要查询某个key范围的数据，LevelDB会先找到该范围的起始key在哪个SSTable中，然后按照顺序读取该SSTable中的数据，直到读取到范围之外的key为止。</p>
-<p>而读取SSTable中的数据是通过Binary Search来实现的。为了加速Search，LevelDB为每个SSTable建立了一个稀疏索引，用来记录每个数据块的最大key和最小key。</p>
-</blockquote>
+</ul>
+<h3 id="7-RV（残气量）"><a href="#7-RV（残气量）" class="headerlink" title="7. RV（残气量）"></a>7. RV（残气量）</h3><ul>
+<li><strong>评估</strong>：RV测量在最大呼气后，肺内仍然残留的气体量。</li>
+<li><strong>异常</strong>：<ul>
+<li><strong>增加</strong>：常见于阻塞性肺病，因气道阻塞导致气体无法完全排出。</li>
+<li><strong>降低</strong>：可能与限制性肺病相关。</li>
+</ul>
 </li>
 </ul>
 
@@ -210,7 +221,7 @@
            
                 <div class="icon arrow-left"></div>
                 <div class="post-link">
-                    <a href="/2023/07/30/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E4%B8%83%E6%9C%88%E4%B8%89%E5%8D%81%E6%97%A5/">Prev</a>
+                    <a href="/2025/03/20/TDD-%E5%92%8C-DDD-%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%83%B3%E6%B3%95/">Prev</a>
                 </div>
             
         </div>
@@ -218,7 +229,7 @@
             
                 <div class="icon arrow-right"></div>
                 <div class="post-link">
-                  <a href="/2023/06/29/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%B8%89%E5%B9%B4%E5%85%AD%E6%9C%88%E4%BA%8C%E5%8D%81%E4%B9%9D%E6%97%A5/">Next</a>  
+                  <a href="/2025/03/19/%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1%E4%B8%AD%E8%81%9A%E5%90%88%E6%A0%B9%E6%8C%81%E4%B9%85%E5%8C%96%E5%92%8C%E4%BA%8B%E4%BB%B6%E5%8F%91%E5%B8%83%E5%8F%AF%E8%83%BD%E5%AF%BC%E8%87%B4%E6%95%B0%E6%8D%AE%E4%B8%8D%E4%B8%80%E8%87%B4%E9%97%AE%E9%A2%98/">Next</a>  
                 </div>  
             
         </div>

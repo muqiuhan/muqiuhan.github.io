@@ -155,7 +155,6 @@
 ]]></content>
       <tags>
         <tag>Technique</tag>
-        <tag>F#</tag>
         <tag>Archive</tag>
       </tags>
   </entry>
@@ -189,7 +188,6 @@
 ]]></content>
       <tags>
         <tag>Technique</tag>
-        <tag>Compilation</tag>
       </tags>
   </entry>
   <entry>
@@ -304,7 +302,6 @@
       <tags>
         <tag>Technique</tag>
         <tag>Archive</tag>
-        <tag>OCaml</tag>
       </tags>
   </entry>
   <entry>
@@ -500,8 +497,34 @@
 ]]></content>
       <tags>
         <tag>Technique</tag>
-        <tag>F#</tag>
         <tag>Archive</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>DDD 中的 Ubiquitous Language</title>
+    <url>/2025/03/14/DDD-%E4%B8%AD%E7%9A%84-Ubiquitous-Languages/</url>
+    <content><![CDATA[<p>Ubiquitous Language（通用语言）是 Domain-Driven Design (DDD) 中的一个核心概念。它是一种共享的、统一的语言，用于描述和讨论领域模型中的概念和规则。Ubiquitous Language 的目的是确保开发团队和业务专家之间的沟通更加高效和准确，从而减少误解和错误。</p>
+<p>一般来说，Ubiquitous Language 有以下特点：</p>
+<ol>
+<li><strong>共享</strong>：Ubiquitous Language 是由开发团队和业务专家共同创建和使用的。它不仅用于代码和文档，还用于日常的沟通和讨论。</li>
+<li><strong>统一</strong>：在整个项目中，Ubiquitous Language 应该是一致的。无论是在代码、文档、会议还是白板上，都应该使用相同的术语和概念。</li>
+<li><strong>精确</strong>：Ubiquitous Language 应该尽可能精确，避免模糊和歧义。每个术语都应该有明确的定义和含义。</li>
+<li><strong>演进</strong>：Ubiquitous Language 是动态的，会随着项目的进展和业务需求的变化而演进。团队应该定期审查和更新它。</li>
+</ol>
+<p>基于此，它可以用在这些地方：</p>
+<ol>
+<li><strong>命名</strong>：在代码中使用 Ubiquitous Language 来命名类、方法、变量等。例如，如果业务专家使用“订单”来描述一个概念，那么在代码中也应该使用“Order”而不是“Purchase”或“Transaction”。</li>
+<li><strong>文档</strong>：在文档中使用 Ubiquitous Language 来描述系统的设计、架构和功能。这有助于业务专家更容易理解技术文档。</li>
+<li><strong>沟通</strong>：在团队会议、讨论和白板会议中使用 Ubiquitous Language。这有助于确保所有参与者都在讨论同一个概念。</li>
+<li><strong>测试</strong>：在编写测试用例时，使用 Ubiquitous Language 来描述测试的前提条件、步骤和预期结果。这有助于确保测试覆盖了业务需求。</li>
+</ol>
+<p>假设正在开发一个电子商务系统，业务专家使用“订单”来描述用户购买的商品集合。团队可以在代码中使用“Order”来命名相关的类和方法：</p>
+<figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Order</span> <span class="operator">=</span> &#123;</span><br><span class="line">    items<span class="operator">:</span> OrderItem <span class="type">list</span></span><br><span class="line">    customer<span class="operator">:</span> Customer</span><br><span class="line">    orderDate<span class="operator">:</span> DateTime</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">OrderItem</span> <span class="operator">=</span> &#123;</span><br><span class="line">    product<span class="operator">:</span> Product</span><br><span class="line">    quantity<span class="operator">:</span> <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Customer</span> <span class="operator">=</span> &#123;</span><br><span class="line">    name<span class="operator">:</span> <span class="type">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Product</span> <span class="operator">=</span> &#123;</span><br><span class="line">    name<span class="operator">:</span> <span class="type">string</span></span><br><span class="line">    price<span class="operator">:</span> <span class="type">float</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> addItem (order<span class="operator">:</span> Order) (item<span class="operator">:</span> OrderItem) <span class="operator">=</span></span><br><span class="line">    &#123; order <span class="keyword">with</span> items <span class="operator">=</span> order.items <span class="operator">@</span> [item] &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> getTotalAmount (order<span class="operator">:</span> Order) <span class="operator">=</span></span><br><span class="line">    <span class="keyword">let</span> total <span class="operator">=</span> <span class="number">0.0</span></span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> order.items <span class="keyword">do</span></span><br><span class="line">        total <span class="operator">&lt;-</span> total <span class="operator">+</span> item.price</span><br><span class="line">    total</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> getPrice (item<span class="operator">:</span> OrderItem) <span class="operator">=</span></span><br><span class="line">    item.product.price <span class="operator">*</span> item.quantity</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> getTotalPrice (order<span class="operator">:</span> Order) <span class="operator">=</span></span><br><span class="line">    <span class="keyword">let</span> total <span class="operator">=</span> <span class="number">0.0</span></span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> order.items <span class="keyword">do</span></span><br><span class="line">        total <span class="operator">&lt;-</span> total <span class="operator">+</span> getPrice(item)</span><br><span class="line">    total</span><br></pre></td></tr></table></figure>
+
+<p>在这个示例中使用了“Order”、“OrderItem”、“Customer”和“Product”等术语，这些术语都是 Ubiquitous Language 的一部分，可以提高代码与业务需求的一致性。</p>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
       </tags>
   </entry>
   <entry>
@@ -604,7 +627,6 @@
 ]]></content>
       <tags>
         <tag>Technique</tag>
-        <tag>F#</tag>
         <tag>Archive</tag>
       </tags>
   </entry>
@@ -746,7 +768,6 @@
 ]]></content>
       <tags>
         <tag>Technique</tag>
-        <tag>F#</tag>
         <tag>Archive</tag>
       </tags>
   </entry>
@@ -788,7 +809,6 @@
 ]]></content>
       <tags>
         <tag>Technique</tag>
-        <tag>F#</tag>
       </tags>
   </entry>
   <entry>
@@ -822,7 +842,6 @@
 ]]></content>
       <tags>
         <tag>Technique</tag>
-        <tag>OCaml</tag>
       </tags>
   </entry>
   <entry>
@@ -881,7 +900,6 @@
 ]]></content>
       <tags>
         <tag>Technique</tag>
-        <tag>OCaml</tag>
       </tags>
   </entry>
   <entry>
@@ -950,7 +968,6 @@
 ]]></content>
       <tags>
         <tag>Technique</tag>
-        <tag>OCaml</tag>
       </tags>
   </entry>
   <entry>
@@ -1054,7 +1071,6 @@
 ]]></content>
       <tags>
         <tag>Technique</tag>
-        <tag>OCaml</tag>
       </tags>
   </entry>
   <entry>
@@ -1174,7 +1190,6 @@
 ]]></content>
       <tags>
         <tag>Technique</tag>
-        <tag>OCaml</tag>
       </tags>
   </entry>
   <entry>
@@ -1236,7 +1251,6 @@
 ]]></content>
       <tags>
         <tag>Technique</tag>
-        <tag>OCaml</tag>
       </tags>
   </entry>
   <entry>
@@ -1333,7 +1347,6 @@
 ]]></content>
       <tags>
         <tag>Technique</tag>
-        <tag>OCaml</tag>
       </tags>
   </entry>
   <entry>
@@ -1481,7 +1494,6 @@
 ]]></content>
       <tags>
         <tag>Technique</tag>
-        <tag>OCaml</tag>
       </tags>
   </entry>
   <entry>
@@ -1515,7 +1527,6 @@
 ]]></content>
       <tags>
         <tag>Technique</tag>
-        <tag>Obsidian</tag>
       </tags>
   </entry>
   <entry>
@@ -1586,9 +1597,6 @@
 ]]></content>
       <tags>
         <tag>Technique</tag>
-        <tag>Web</tag>
-        <tag>Typescript</tag>
-        <tag>Database</tag>
       </tags>
   </entry>
   <entry>
@@ -1649,9 +1657,6 @@
 ]]></content>
       <tags>
         <tag>Technique</tag>
-        <tag>Web</tag>
-        <tag>Typescript</tag>
-        <tag>Software-Engineering</tag>
       </tags>
   </entry>
   <entry>
@@ -1682,7 +1687,6 @@
 ]]></content>
       <tags>
         <tag>Technique</tag>
-        <tag>Rescript</tag>
       </tags>
   </entry>
   <entry>
@@ -1710,7 +1714,6 @@
 ]]></content>
       <tags>
         <tag>Technique</tag>
-        <tag>Rescript</tag>
       </tags>
   </entry>
   <entry>
@@ -1732,7 +1735,6 @@
 ]]></content>
       <tags>
         <tag>Technique</tag>
-        <tag>Rust</tag>
       </tags>
   </entry>
   <entry>
@@ -1760,7 +1762,6 @@
 ]]></content>
       <tags>
         <tag>Technique</tag>
-        <tag>Rust</tag>
       </tags>
   </entry>
   <entry>
@@ -1808,7 +1809,6 @@
 ]]></content>
       <tags>
         <tag>Technique</tag>
-        <tag>Rust</tag>
       </tags>
   </entry>
   <entry>
@@ -1826,7 +1826,40 @@
 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">...</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">handlers</span>(<span class="keyword">self</span>) <span class="punctuation">-&gt;</span> crate::server::request::Handlers &#123;</span><br><span class="line">        <span class="keyword">let</span> <span class="variable">tree</span> = json!(<span class="keyword">self</span>.<span class="title function_ invoke__">clone</span>().<span class="title function_ invoke__">tree</span>(<span class="keyword">self</span>.<span class="title function_ invoke__">clone</span>().root));</span><br><span class="line">        <span class="built_in">vec!</span>[(</span><br><span class="line">            <span class="string">&quot;/tree&quot;</span>,</span><br><span class="line">            routing::<span class="title function_ invoke__">get</span>(<span class="keyword">move</span> || <span class="keyword">async</span> &#123; (StatusCode::OK, <span class="title function_ invoke__">Json</span>(tree)) &#125;),</span><br><span class="line">        )]</span><br><span class="line">    &#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>]]></content>
       <tags>
         <tag>Technique</tag>
-        <tag>Rust</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>TDD 和 DDD 的一些小想法</title>
+    <url>/2025/03/20/TDD-%E5%92%8C-DDD-%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%83%B3%E6%B3%95/</url>
+    <content><![CDATA[<p>Test-Driven Development (TDD) 和 Domain-Driven Design (DDD) 是两种不同的软件开发方法论，各自有其独特的优缺点和应用场景。</p>
+<h3 id="Test-Driven-Development-TDD"><a href="#Test-Driven-Development-TDD" class="headerlink" title="Test-Driven Development (TDD)"></a>Test-Driven Development (TDD)</h3><h4 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h4><ol>
+<li><strong>提高代码质量</strong>：通过编写测试来驱动开发，可以确保代码的正确性和可靠性。</li>
+<li><strong>减少缺陷</strong>：早期发现和修复缺陷，减少后期的调试和维护成本。</li>
+<li><strong>促进可维护性</strong>：代码更加模块化和可测试，便于后续的维护和扩展。</li>
+<li><strong>文档化</strong>：测试代码本身就是一种文档，描述了系统的行为和期望。</li>
+<li><strong>提高开发速度</strong>：虽然初期可能会慢一些，但长期来看，由于减少了重构和调试的时间，开发速度会提高。</li>
+</ol>
+<h4 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h4><ol>
+<li><strong>初期投入大</strong>：需要在开发前编写测试，初期投入的时间和精力较大。</li>
+<li><strong>学习曲线陡峭</strong>：对新手开发者来说，学习和掌握TDD需要一定的时间。</li>
+<li><strong>过度依赖测试</strong>：可能导致过度依赖单元测试，忽略了系统的整体性能和用户体验。</li>
+</ol>
+<h3 id="Domain-Driven-Design-DDD"><a href="#Domain-Driven-Design-DDD" class="headerlink" title="Domain-Driven Design (DDD)"></a>Domain-Driven Design (DDD)</h3><h4 id="优点：-1"><a href="#优点：-1" class="headerlink" title="优点："></a>优点：</h4><ol>
+<li><strong>聚焦领域</strong>：通过深入理解业务领域，确保软件系统与业务需求紧密结合。</li>
+<li><strong>模型驱动</strong>：建立一个清晰的领域模型，帮助开发者和业务专家共同理解系统。</li>
+<li><strong>可维护性</strong>：通过明确的领域模型和边界，系统结构更加清晰，便于维护和扩展。</li>
+<li><strong>沟通桥梁</strong>：提供了一种通用的语言（Ubiquitous Language），促进开发团队和业务团队之间的沟通。</li>
+</ol>
+<h4 id="缺点：-1"><a href="#缺点：-1" class="headerlink" title="缺点："></a>缺点：</h4><ol>
+<li><strong>复杂性高</strong>：DDD方法论较为复杂，需要深入理解领域模型和设计模式。</li>
+<li><strong>初期投入大</strong>：需要大量的时间和精力进行领域分析和建模。</li>
+<li><strong>适用范围有限</strong>：对于简单的系统或小型项目，DDD可能显得过于复杂和冗余。</li>
+</ol>
+<hr>
+<p>TDD 和 DDD 并不冲突，实际上它们可以互补。TDD 可以帮助确保代码的正确性和可靠性，而 DDD 可以确保系统与业务需求紧密结合。在进行 TDD 时，可以使用 DDD 的领域模型和 Ubiquitous Language 来编写测试用例，确保测试覆盖了业务需求。在进行 DDD 时，可以使用 TDD 来驱动实现，确保每个领域模型的实现。</p>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
       </tags>
   </entry>
   <entry>
@@ -2046,7 +2079,6 @@
 ]]></content>
       <tags>
         <tag>Technique</tag>
-        <tag>Web</tag>
       </tags>
   </entry>
   <entry>
@@ -2090,7 +2122,6 @@
 ]]></content>
       <tags>
         <tag>Technique</tag>
-        <tag>TypeScript</tag>
       </tags>
   </entry>
   <entry>
@@ -2129,7 +2160,6 @@
 ]]></content>
       <tags>
         <tag>Technique</tag>
-        <tag>Database</tag>
       </tags>
   </entry>
   <entry>
@@ -2154,7 +2184,6 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">starting up ...</span><br><span class="line">hello from OCaml</span><br><span class="line">acquiring ...</span><br><span class="line">acquired</span><br></pre></td></tr></table></figure>]]></content>
       <tags>
         <tag>Technique</tag>
-        <tag>OCaml</tag>
       </tags>
   </entry>
   <entry>
@@ -2170,7 +2199,6 @@
 ]]></content>
       <tags>
         <tag>Technique</tag>
-        <tag>OCaml</tag>
       </tags>
   </entry>
   <entry>
@@ -2181,8 +2209,7 @@
 <p><em>shadow-cljs.edn:</em></p>
 <figure class="highlight clojure"><table><tr><td class="code"><pre><span class="line">&#123;<span class="symbol">:source-paths</span> [<span class="string">&quot;src/main&quot;</span></span><br><span class="line">                <span class="string">&quot;src/test&quot;</span>]</span><br><span class="line"></span><br><span class="line"> <span class="symbol">:dependencies</span> [[reagent <span class="string">&quot;1.2.0&quot;</span>]</span><br><span class="line">                [re-frame <span class="string">&quot;1.3.0&quot;</span>]]</span><br><span class="line"></span><br><span class="line"> <span class="comment">;; Here</span></span><br><span class="line"> <span class="symbol">:proxy</span> &#123;<span class="symbol">:host</span> <span class="string">&quot;localhost&quot;</span></span><br><span class="line">         <span class="symbol">:port</span> <span class="number">20171</span>&#125;</span><br><span class="line"></span><br><span class="line"> <span class="symbol">:builds</span>       &#123;<span class="symbol">:app</span> &#123;<span class="symbol">:target</span>           <span class="symbol">:react-native</span></span><br><span class="line">                      <span class="symbol">:init-fn</span>          example.app/init</span><br><span class="line">                      <span class="symbol">:output-dir</span>       <span class="string">&quot;app&quot;</span></span><br><span class="line">                      <span class="symbol">:compiler-options</span> &#123;<span class="symbol">:infer-externs</span> <span class="symbol">:auto</span>&#125;</span><br><span class="line">                      <span class="symbol">:devtools</span>         &#123;<span class="symbol">:autoload</span> <span class="literal">true</span>&#125;&#125;&#125;&#125;</span><br></pre></td></tr></table></figure>]]></content>
       <tags>
-        <tag>Clojure</tag>
-        <tag>ClojureScript</tag>
+        <tag>Technique</tag>
       </tags>
   </entry>
   <entry>
@@ -2195,7 +2222,6 @@
 ]]></content>
       <tags>
         <tag>Technique</tag>
-        <tag>OCaml</tag>
       </tags>
   </entry>
   <entry>
@@ -2500,26 +2526,6 @@
       </categories>
   </entry>
   <entry>
-    <title>二〇二四年五月十六日</title>
-    <url>/2024/05/16/%E4%BA%8C%E3%80%87%E4%BA%8C%E5%9B%9B%E5%B9%B4%E4%BA%94%E6%9C%88%E5%8D%81%E5%85%AD%E6%97%A5/</url>
-    <content><![CDATA[<p>无眼耳鼻舌身意，无色声香味触法，四下皆空，但万物有实，活在真实世界，而非活在一系列参照物之中。</p>
-<p>不要有所谓自信或自卑的概念。要意识到，心态这玩意本质就是从比较中产生的，镜花水月般的东西，毫无力量可言。</p>
-<p>人若把自己的心态放置在客观事实和规律前面，无可避免就会产生内耗。而现代人这一生绝大多数的痛苦，都是内耗所带来的。</p>
-<p>多尝试点事情吧，试得越多，就能越快判断出自己是不是这块料。如果是，很好；如果不是，过，下一个。在这期间不要有任何心态波澜，行就是行，不行就是不行。反正不是非行不可。</p>
-<p>人自信不是样样精通、事事皆成，凡事都做得比别人更好；自信是一个高级陷阱，仰赖自信的人终有一日会崩塌于自信的毁灭。</p>
-<p>用生命力来取代往日的自信心，用绝对强大的权力意志来取代往日相对成功的小胜小利。</p>
-<p>不放弃的理由不是因为自信，而是因为知道这事必须得干&#x2F;行得通；放弃的理由也不是因为不自信，而是因为知道这事不能去干&#x2F;行不通。</p>
-<p>而一旦在理性和感性层面都认为必须办成某件事，那就不顾一切去办成。哪怕绕再多的路，要办的事就是要办。</p>
-<p>当不再局限于自信或自卑，而是立足于实事求是去布局和行动，一切都会变得更加清晰明了。若想成事，首先要花时间去搞明白自己的长处与短板，然后学会在面对具体事项之际快速判断自己行不行、是不是非做不可、要做的话又有几分把握、失败了要如何应对、要不要改变其中某些变量再多试几次。</p>
-<p>当有了一个目标，需要的不是豪言壮志，不是任何心理建设，而是尽快上手去做。<br>做一件事，无关心态，只要去做就是了。发挥最大的主观能动性，遇到问题就解决，碰到障碍就破开，需要帮助就求助。别因为所谓的自信就盲目冒进，也别因为所谓的自卑就胆小退缩，那俩玩意都不存在。</p>
-<p>尊重事情本身的客观发展规律，什么样的人匹配什么样的事，什么样的条件匹配什么样的理想。别把心态想得太重要，更别花太多时间精力去建设心态，客观规律不会因为心态就发生奇迹般地转变。</p>
-<p>你最好趁早学会尊重客观规律。</p>
-]]></content>
-      <categories>
-        <category>gallery</category>
-      </categories>
-  </entry>
-  <entry>
     <title>二〇二四年八月一日</title>
     <url>/2024/08/02/%E4%BA%8C%E3%80%87%E4%BA%8C%E5%9B%9B%E5%B9%B4%E5%85%AB%E6%9C%88%E4%B8%80%E6%97%A5/</url>
     <content><![CDATA[<p>阿公烧烟成老瘾，<br>阿公饮酒会面红，<br>他说日子要开心，<br>他说人生要尽兴。</p>
@@ -2542,6 +2548,26 @@
 <p>早上七点。</p>
 </blockquote>
 <p>太阳完全绽放的光芒照亮了这个欣欣向荣的世界，有山、有海，有自由。</p>
+]]></content>
+      <categories>
+        <category>gallery</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>二〇二四年五月十六日</title>
+    <url>/2024/05/16/%E4%BA%8C%E3%80%87%E4%BA%8C%E5%9B%9B%E5%B9%B4%E4%BA%94%E6%9C%88%E5%8D%81%E5%85%AD%E6%97%A5/</url>
+    <content><![CDATA[<p>无眼耳鼻舌身意，无色声香味触法，四下皆空，但万物有实，活在真实世界，而非活在一系列参照物之中。</p>
+<p>不要有所谓自信或自卑的概念。要意识到，心态这玩意本质就是从比较中产生的，镜花水月般的东西，毫无力量可言。</p>
+<p>人若把自己的心态放置在客观事实和规律前面，无可避免就会产生内耗。而现代人这一生绝大多数的痛苦，都是内耗所带来的。</p>
+<p>多尝试点事情吧，试得越多，就能越快判断出自己是不是这块料。如果是，很好；如果不是，过，下一个。在这期间不要有任何心态波澜，行就是行，不行就是不行。反正不是非行不可。</p>
+<p>人自信不是样样精通、事事皆成，凡事都做得比别人更好；自信是一个高级陷阱，仰赖自信的人终有一日会崩塌于自信的毁灭。</p>
+<p>用生命力来取代往日的自信心，用绝对强大的权力意志来取代往日相对成功的小胜小利。</p>
+<p>不放弃的理由不是因为自信，而是因为知道这事必须得干&#x2F;行得通；放弃的理由也不是因为不自信，而是因为知道这事不能去干&#x2F;行不通。</p>
+<p>而一旦在理性和感性层面都认为必须办成某件事，那就不顾一切去办成。哪怕绕再多的路，要办的事就是要办。</p>
+<p>当不再局限于自信或自卑，而是立足于实事求是去布局和行动，一切都会变得更加清晰明了。若想成事，首先要花时间去搞明白自己的长处与短板，然后学会在面对具体事项之际快速判断自己行不行、是不是非做不可、要做的话又有几分把握、失败了要如何应对、要不要改变其中某些变量再多试几次。</p>
+<p>当有了一个目标，需要的不是豪言壮志，不是任何心理建设，而是尽快上手去做。<br>做一件事，无关心态，只要去做就是了。发挥最大的主观能动性，遇到问题就解决，碰到障碍就破开，需要帮助就求助。别因为所谓的自信就盲目冒进，也别因为所谓的自卑就胆小退缩，那俩玩意都不存在。</p>
+<p>尊重事情本身的客观发展规律，什么样的人匹配什么样的事，什么样的条件匹配什么样的理想。别把心态想得太重要，更别花太多时间精力去建设心态，客观规律不会因为心态就发生奇迹般地转变。</p>
+<p>你最好趁早学会尊重客观规律。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
@@ -3285,7 +3311,6 @@
 ]]></content>
       <tags>
         <tag>Technique</tag>
-        <tag>Web</tag>
       </tags>
   </entry>
   <entry>
@@ -3933,6 +3958,55 @@
       <tags>
         <tag>Medicine</tag>
         <tag>Life</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>肺功能检查数值</title>
+    <url>/2025/03/20/%E8%82%BA%E5%8A%9F%E8%83%BD%E6%A3%80%E6%9F%A5%E6%95%B0%E5%80%BC/</url>
+    <content><![CDATA[<p>肺功能测试是评估患者呼吸系统健康的重要工具。各个指标的及其异常数值可能指示的潜在生理疾病：</p>
+<h3 id="1-FEV1（第一秒用力呼气量）"><a href="#1-FEV1（第一秒用力呼气量）" class="headerlink" title="1. FEV1（第一秒用力呼气量）"></a>1. FEV1（第一秒用力呼气量）</h3><ul>
+<li><strong>评估</strong>：FEV1用于评估气道的通畅程度。它反映了在用力呼气的第一秒内，患者能够排出的气体量。</li>
+<li><strong>异常</strong>：FEV1降低通常提示气道阻塞，常见于慢性阻塞性肺病（COPD）、哮喘、支气管炎等疾病。</li>
+</ul>
+<h3 id="2-FVC（用力肺活量）"><a href="#2-FVC（用力肺活量）" class="headerlink" title="2. FVC（用力肺活量）"></a>2. FVC（用力肺活量）</h3><ul>
+<li><strong>评估</strong>：FVC测量的是患者在一次用力呼气中能够排出的最大气体量，反映了肺的容量和扩张能力。</li>
+<li><strong>异常</strong>：FVC降低可能指示限制性肺病，如肺纤维化、胸廓畸形或神经肌肉疾病等。</li>
+</ul>
+<h3 id="3-FEV1-FVC比值"><a href="#3-FEV1-FVC比值" class="headerlink" title="3. FEV1&#x2F;FVC比值"></a>3. FEV1&#x2F;FVC比值</h3><ul>
+<li><strong>评估</strong>：FEV1&#x2F;FVC比值用于区分阻塞性和限制性肺病。正常情况下，该比值应大于70%。</li>
+<li><strong>异常</strong>：<ul>
+<li>**低于70%**：提示气道阻塞，常见于COPD和哮喘。</li>
+<li>**正常或高于70%**但FVC降低：可能提示限制性肺病。</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-PEF（峰值呼气流量）"><a href="#4-PEF（峰值呼气流量）" class="headerlink" title="4. PEF（峰值呼气流量）"></a>4. PEF（峰值呼气流量）</h3><ul>
+<li><strong>评估</strong>：PEF测量患者在用力呼气时达到的最大流速，常用于监测哮喘患者的病情变化。</li>
+<li><strong>异常</strong>：PEF降低可能提示气道狭窄或阻塞，常见于哮喘急性发作或COPD加重。</li>
+</ul>
+<h3 id="5-MVV（最大通气量）"><a href="#5-MVV（最大通气量）" class="headerlink" title="5. MVV（最大通气量）"></a>5. MVV（最大通气量）</h3><ul>
+<li><strong>评估</strong>：MVV测量在一定时间内（通常是12秒）能够进行的最大通气量，反映了肺部的通气能力和呼吸肌的力量。</li>
+<li><strong>异常</strong>：MVV降低可能与呼吸肌无力、气道阻塞或肺部疾病（如COPD）相关。</li>
+</ul>
+<h3 id="6-TLC（总肺容量）"><a href="#6-TLC（总肺容量）" class="headerlink" title="6. TLC（总肺容量）"></a>6. TLC（总肺容量）</h3><ul>
+<li><strong>评估</strong>：TLC测量肺部在最大吸气后所能容纳的气体总量，反映了肺的整体容量。</li>
+<li><strong>异常</strong>：<ul>
+<li><strong>增加</strong>：可能与阻塞性肺病（如COPD）相关，因肺部过度膨胀。</li>
+<li><strong>降低</strong>：可能与限制性肺病（如肺纤维化、胸廓畸形）相关。</li>
+</ul>
+</li>
+</ul>
+<h3 id="7-RV（残气量）"><a href="#7-RV（残气量）" class="headerlink" title="7. RV（残气量）"></a>7. RV（残气量）</h3><ul>
+<li><strong>评估</strong>：RV测量在最大呼气后，肺内仍然残留的气体量。</li>
+<li><strong>异常</strong>：<ul>
+<li><strong>增加</strong>：常见于阻塞性肺病，因气道阻塞导致气体无法完全排出。</li>
+<li><strong>降低</strong>：可能与限制性肺病相关。</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Medicine</tag>
       </tags>
   </entry>
   <entry>
@@ -5518,7 +5592,6 @@
 ]]></content>
       <tags>
         <tag>Technique</tag>
-        <tag>OCaml</tag>
       </tags>
   </entry>
   <entry>
@@ -5544,7 +5617,6 @@
 ]]></content>
       <tags>
         <tag>Technique</tag>
-        <tag>Software Engineering</tag>
       </tags>
   </entry>
   <entry>
