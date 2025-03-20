@@ -1,7 +1,7 @@
 ---
 title: caml_release_runtime_system导致的死锁问题
 date: 2023-06-28 21:45:55
-tags: [Technique, OCaml]
+tags: [Technique]
 ---
 
 

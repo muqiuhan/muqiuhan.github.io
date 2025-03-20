@@ -1,7 +1,7 @@
 ---
 title: Prisma 关系型数据库的 Self-relations
 date: 2025-02-18 13:45:35
-tags: [Technique, Web, Typescript, Database]
+tags: [Technique]
 ---
 
 > A relation field can also reference its own model, in this case the relation is called a _self-relation_. Self-relations can be of any cardinality, 1-1, 1-n and m-n.

@@ -1,7 +1,7 @@
 ---
 title: Dealing with complex dependency injection in FSharp
 date: 2024-10-18 23:37:40
-tags: [Technique, F#, Archive]
+tags: [Technique, Archive]
 ---
 
 Today, we're going to cover different ways of encapsulating capabilities and supplying them between functions using functional programming techniques which can be realized in F#.

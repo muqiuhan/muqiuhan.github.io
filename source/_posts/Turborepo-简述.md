@@ -1,7 +1,7 @@
 ---
 title: Turborepo 简述
 date: 2024-09-27 18:07:49
-tags: [Technique,Web]
+tags: [Technique]
 ---
 
 ## Turborepo 简介

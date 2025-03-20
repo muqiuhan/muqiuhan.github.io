@@ -1,7 +1,7 @@
 ---
 title: A Brief History of Just-In-Time
 date: 2023-09-28 04:59:59
-tags: [Technique, Compilation]
+tags: [Technique]
 ---
 
 Software systems have been using “just-in-time” compilation (JIT) techniques since the

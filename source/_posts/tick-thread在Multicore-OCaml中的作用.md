@@ -1,7 +1,7 @@
 ---
 title: tick thread在Multicore OCaml中的作用
 date: 2023-08-15 13:29:21
-tags: [Technique, OCaml]
+tags: [Technique]
 ---
 
 Multicore OCaml的程序在启动时会运行一个 tick thread，其实现如下:

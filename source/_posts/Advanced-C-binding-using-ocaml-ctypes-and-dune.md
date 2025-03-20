@@ -1,7 +1,7 @@
 ---
 title: Advanced C binding using ocaml-ctypes and dune
 date: 2024-09-15 22:26:03
-tags: [OCaml, Technique, Archive]
+tags: [Technique, Archive]
 ---
 
 I was working on a OCaml binding for [libsrt](https://github.com/Haivision/srt) last summer, to add support for SRT real-time input and output to [liquidsoap](https://github.com/savonet/liquidsoap), and came across the need to access the `[sys/socket.h](https://pubs.opengroup.org/onlinepubs/7908799/xns/syssocket.h.html)` C API.

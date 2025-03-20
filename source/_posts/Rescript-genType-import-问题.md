@@ -1,7 +1,7 @@
 ---
 title: Rescript @genType import 问题
 date: 2024-05-20 19:05:27
-tags: [Technique, Rescript]
+tags: [Technique]
 ---
 
 

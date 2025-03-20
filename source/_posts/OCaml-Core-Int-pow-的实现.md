@@ -1,7 +1,7 @@
 ---
 title: OCaml Core.Int.pow 的实现
 date: 2023-10-21 07:52:02
-tags: [Technique, OCaml]
+tags: [Technique]
 ---
 
 Core内部直接引用的Base的实现， Base的实现在 [src/int_math.ml](https://github.com/janestreet/base/blob/494a0876168d24cda695cbb9a3d86ad8d1eb97d8/src/int_math.ml#L11-L18) 中：

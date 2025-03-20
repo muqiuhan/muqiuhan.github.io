@@ -1,7 +1,7 @@
 ---
 title: Rust NewType 模式
 date: 2023-05-03 11:12:57
-tags: [Technique, Rust]
+tags: [Technique]
 ---
 
 New Type模式是一种软件设计模式，用于在已有类型的基础上创建一个新的类型。在Rust中，这通常是通过**定义一个结构体，其中只包含一个单一成员。这个结构体（New Type）对外提供了一个新的、独立的类型，用于对原始类型增加额外的语义或限制。**

@@ -1,7 +1,7 @@
 ---
 title: .NET AOT 下的 F# 命令行参数解析库选择
 date: 2024-06-06 20:50:35
-tags: [F#, Technique]
+tags: [Technique]
 ---
 
 Argu 不支持 AOT，不过用 F# 的话可以看整个 .NET 的生态，我看了一下 C# 的 CommandLineParser：

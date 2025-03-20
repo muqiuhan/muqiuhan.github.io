@@ -1,7 +1,7 @@
 ---
 title: TypeScript With Rust Errors, No Try Catch, Heresy
 date: 2023-04-30 11:13:54
-tags: [Technique, TypeScript]
+tags: [Technique]
 ---
 
 > It’s hard to miss things when you don’t know different things exist

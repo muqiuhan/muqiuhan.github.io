@@ -1,7 +1,7 @@
 ---
 title: Functional Reactive Programming in F#
 date: 2024-09-12 21:02:02
-tags: [Technique, F#, Archive]
+tags: [Technique, Archive]
 ---
 
 > https://fsharpforfunandprofit.com/posts/concurrency-reactive/

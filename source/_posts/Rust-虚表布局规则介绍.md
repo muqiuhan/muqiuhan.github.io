@@ -1,7 +1,7 @@
 ---
 title: Rust 虚表布局规则介绍
 date: 2023-05-01 11:11:40
-tags: [Technique, Rust]
+tags: [Technique]
 ---
 
 在 Rust 中，一个指向未知大小对象（!Sized）的引用或指针被实现为一个由两个 usize 大小的域构成的胖指针。这两个域中，其中一个域保存了被引用或被指向的对象的地址，另一个域保存了一个名为 metadata 的数据。对于 slice 的引用或指针来说，其 metadata 为 slice 的长度。对于 trait object 的引用或指针来说，其 metadata 为虚表（vtable）地址。与 C++ 虚表类似，Rust 虚表的存在使得诸多动态语言特性得以实现，例如动态派发（dynamic dispatch）、向上转换（upcasting）、向下转换（downcast）等。本文将对 Rust 中虚表的布局规则进行简要介绍，并在此过程中对 Rust 中若干动态特性的实现方法进行简要介绍。

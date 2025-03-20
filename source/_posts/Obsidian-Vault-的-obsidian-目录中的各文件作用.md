@@ -1,7 +1,7 @@
 ---
 title: Obsidian Vault 的 .obsidian 目录中的各文件作用
 date: 2024-10-06 09:56:25
-tags: [Technique, Obsidian]
+tags: [Technique]
 ---
 
 一个简单的例子是:

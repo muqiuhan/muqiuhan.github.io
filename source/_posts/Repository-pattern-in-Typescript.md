@@ -1,7 +1,7 @@
 ---
 title: Repository pattern in Typescript
 date: 2025-02-19 13:43:13
-tags: [Technique, Software-Engineering, Typescript, Web ]
+tags: [Technique]
 ---
 
 > The Repository design pattern is a [structural pattern](https://www.geeksforgeeks.org/structural-design-patterns/) that abstracts data access, providing a centralized way to manage data operations. By separating the data layer from business logic, it enhances code maintainability, testability, and flexibility, making it easier to work with various data sources in an application.

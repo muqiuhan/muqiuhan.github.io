@@ -1,7 +1,7 @@
 ---
 title: 10 Tips for Productive FSharp Scripting
 date: 2024-10-18 23:40:21
-tags: [Technique, F#, Archive]
+tags: [Technique, Archive]
 ---
 
 Scott Hanselman recently had a [nice post on C# and F# REPLs](http://www.hanselman.com/blog/InteractiveCodingWithCAndFREPLsScriptCSOrTheVisualStudioInteractiveWindow.aspx), which reminded me of the time I started using F# scripts. Over time, I found out a couple of small tricks, which helped make the experience productive. I found about them mainly by accident, so I figured, let’s see if I can list them in one place! Some of these are super simple, some probably a bit obscure, but hopefully, one of them at least will make your path towards scripting nirvana an easier one…

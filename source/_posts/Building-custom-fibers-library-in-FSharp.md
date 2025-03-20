@@ -1,7 +1,7 @@
 ---
 title: Building custom fibers library in FSharp
 date: 2024-10-18 23:38:56
-tags: [Technique, F#, Archive]
+tags: [Technique, Archive]
 ---
 
 Over the course of last few months on this blog post, I've been sharing about internals and how-to of different concurrency patters. We discussed how to [implement our own actors](https://www.bartoszsypytkowski.com/build-your-own-actor-model/) and specific [affinity-based thread pool](https://www.bartoszsypytkowski.com/thread-safety-with-affine-thread-pools/). Today we'll focus of the most dominant pattern present in modern programming nowadays: fibers, also known as coroutines, futures, tasks, green threads or user-space threads.

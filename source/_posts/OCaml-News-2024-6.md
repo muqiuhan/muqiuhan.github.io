@@ -1,7 +1,7 @@
 ---
 title: OCaml News 2024-6
 date: 2024-7-23 17:27:59
-tags: [Technique, OCaml]
+tags: [Technique]
 ---
 
 ```genshitext

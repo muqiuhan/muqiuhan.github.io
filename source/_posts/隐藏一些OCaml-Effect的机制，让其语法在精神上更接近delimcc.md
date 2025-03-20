@@ -1,7 +1,7 @@
 ---
 title: 隐藏一些OCaml Effect的机制，让其语法在精神上更接近delimcc
 date: 2023-06-28 21:47:16
-tags: [Technique, OCaml]
+tags: [Technique]
 ---
 
 

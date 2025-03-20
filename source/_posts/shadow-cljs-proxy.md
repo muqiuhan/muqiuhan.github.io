@@ -1,7 +1,7 @@
 ---
 title: shadow-cljs 怎么设置代理
 date: 2024-04-03 20:11:54
-tags: [Clojure, ClojureScript]
+tags: [Technique]
 ---
 
 The library pomegranate used for retrieving maven dependencies does not read `.m2/settings.xml`. You can however set the :proxy config either in `shadow-cljs.edn` directly or `~/.shadow-cljs/config.edn`.

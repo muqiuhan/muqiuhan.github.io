@@ -1,7 +1,7 @@
 ---
 title: Rust Partial 语义
 date: 2023-05-02 11:12:26
-tags: [Technique, Rust]
+tags: [Technique]
 ---
 
 > 在Rust中，PartialEq和PartialOrd trait处理了不是所有值都可以相互比较的情况。

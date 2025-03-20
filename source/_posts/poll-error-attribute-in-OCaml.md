@@ -1,7 +1,7 @@
 ---
 title: 使用 [@poll error] 实现线程安全的数据结构
 date: 2023-08-15 11:48:55
-tags: [Technique, OCaml]
+tags: [Technique]
 ---
 
 OCaml的标准库提供了许多mutable的数据结构，比如Hashtbl, Queue, Stack之类的，但是这些数据结构都不是线程安全的。在 OCaml 4 和 OCaml 5 中，单个Domain中一次只能运行一个线程。换句话说，单个Domain中的线程仍然不会并行运行，除非在不同所的Domain中。

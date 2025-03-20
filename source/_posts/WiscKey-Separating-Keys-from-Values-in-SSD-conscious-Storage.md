@@ -1,7 +1,7 @@
 ---
 title: 'WiscKey: Separating Keys from Values in SSD-conscious Storage'
 date: 2023-07-21 14:59:06
-tags: [Technique, Database]
+tags: [Technique]
 ---
 
 We present WiscKey, a persistent LSM-tree-based key-value store with a performance-oriented data layoutthat separates keys from values to minimize I/O amplifi-cation. The design of WiscKey is highly SSD optimized, leveraging both the sequential and random performance characteristics of the device.

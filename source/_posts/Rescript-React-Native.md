@@ -1,7 +1,7 @@
 ---
 title: Rescript and React Native
 date: 2024-01-22 20:24:40
-tags: [Technique, Rescript]
+tags: [Technique]
 ---
 
 Rescript 对 React Native 的支持还算可以，但如今的 RN 已经是 Expo 的 RN 了，所以仍然有些落后，在这个 template 中，我测试了 rescript + rescript-react-native + expo + nativewind 的组合，可以跑起来：

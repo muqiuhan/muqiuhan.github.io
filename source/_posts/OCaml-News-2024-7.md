@@ -1,7 +1,7 @@
 ---
 title: OCaml News 2024-7
 date: 2024-12-15 15:51:07
-tags: [Technique, OCaml]
+tags: [Technique]
 ---
 
 ```text
