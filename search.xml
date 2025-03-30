@@ -631,6 +631,32 @@
       </tags>
   </entry>
   <entry>
+    <title>F# 重载解析问题</title>
+    <url>/2025/03/30/F-%E9%87%8D%E8%BD%BD%E8%A7%A3%E6%9E%90%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>当在 F# 中使用一些 C# 类库的时候，可能会遇到类似如下的问题：</p>
+<figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">open</span> System</span><br><span class="line"><span class="keyword">open</span> System.Numerics</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> someFunction () <span class="operator">=</span></span><br><span class="line">    <span class="keyword">let</span> v<span class="operator">:</span> Vector<span class="operator">&lt;</span><span class="type">byte</span><span class="operator">&gt;</span> <span class="operator">=</span> Vector(<span class="number">0</span>uy)</span><br><span class="line">    <span class="keyword">let</span> array<span class="operator">:</span> <span class="type">byte</span>[] <span class="operator">=</span> [<span class="operator">||</span>]</span><br><span class="line">    <span class="keyword">let</span> span<span class="operator">:</span> Span<span class="operator">&lt;</span><span class="type">byte</span><span class="operator">&gt;</span> <span class="operator">=</span> Span(array)</span><br><span class="line">    v.CopyTo(span)</span><br><span class="line">Compiler error</span><br><span class="line">     v.CopyTo(span)</span><br><span class="line">  <span class="operator">----^^^^^^^^^^^^^^</span></span><br><span class="line"></span><br><span class="line"><span class="operator">/</span>home<span class="operator">/</span>muqiu<span class="operator">/</span>stdin(<span class="number">99</span>,<span class="number">5</span>)<span class="operator">:</span> error FS0041<span class="operator">:</span> A unique overload <span class="keyword">for</span> method <span class="symbol">&#x27;CopyTo</span>&#x27; could <span class="built_in">not</span> be determined based on <span class="keyword">type</span> information prior <span class="keyword">to</span> this program point. A <span class="keyword">type</span> annotation may be needed.</span><br><span class="line"></span><br><span class="line">Known <span class="keyword">type</span> <span class="title class_">of</span> argument<span class="operator">:</span> Span<span class="operator">&lt;</span><span class="type">byte</span><span class="operator">&gt;</span></span><br><span class="line"></span><br><span class="line">Candidates<span class="operator">:</span></span><br><span class="line"> <span class="operator">-</span> Vector.CopyTo(destination<span class="operator">:</span> Span<span class="operator">&lt;</span><span class="type">byte</span><span class="operator">&gt;</span>) <span class="operator">:</span> <span class="type">unit</span></span><br><span class="line"> <span class="operator">-</span> Vector.CopyTo(destination<span class="operator">:</span> Span<span class="operator">&lt;</span><span class="type">byte</span><span class="operator">&gt;</span>) <span class="operator">:</span> <span class="type">unit</span></span><br></pre></td></tr></table></figure>
+
+<p>编译器认为存在两个相同的 <code>CopyTo</code> 重载无法区分。但查阅文档发现，<code>Vector&lt;T&gt;</code> 的 <code>CopyTo</code> 方法实际上只有一个匹配的重载（接受 <code>Span&lt;T&gt;</code>），这似乎矛盾。</p>
+<p>这是因为 F# 编译器处理泛型方法重载的方式：</p>
+<ul>
+<li>泛型接口继承：<code>Vector&lt;T&gt;</code> 可能实现了多个接口，导致编译器看到两个签名相同的 <code>CopyTo</code> 方法（例如通过不同接口继承）。</li>
+<li>语言设计差异：F# 缺乏 C# 的 “most concrete” 重载选择机制。当多个重载来自不同继承路径时，F# 不会自动选择最具体的实现，需要显式指引。</li>
+</ul>
+<p>仅我所知的一种解决方案是通过添加扩展方法显式指引编译器：</p>
+<figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Vector</span><span class="operator">&lt;</span><span class="symbol">&#x27;T</span><span class="operator">&gt;</span> <span class="keyword">with</span></span><br><span class="line">    <span class="keyword">member</span> <span class="keyword">inline</span> this.CopyToByteSpan (span <span class="operator">:</span> Span<span class="operator">&lt;</span><span class="type">byte</span><span class="operator">&gt;</span>) <span class="operator">=</span> </span><br><span class="line">        this.CopyTo(span) <span class="comment">// 显式绑定具体重载</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用时使用新方法</span></span><br><span class="line">v.CopyToByteSpan(span)</span><br></pre></td></tr></table></figure>
+
+<p>这种方法通过创建具体的类型路径，帮助编译器绕过复杂的重载解析逻辑。</p>
+<p>学艺不精，不知道这是不是语言设计的差异，可能 F# 倾向于要求更明确的类型信息以避免意外行为？或许当泛型类型继承多个接口时，有没有可能出现在具体类型中不易察觉的隐式重载冲突？</p>
+<h2 id="Refs"><a href="#Refs" class="headerlink" title="Refs."></a>Refs.</h2><ul>
+<li><a href="https://github.com/fsharp/fslang-suggestions/issues/905">“Most concrete” tiebreaker for generic overloads #905</a></li>
+<li><a href="https://github.com/dotnet/fsharp/issues/1647">Fail to resolve to non generic overload. #1647</a></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Fever of Unknown Origin</title>
     <url>/2023/11/16/Fever-of-Unknown-Origin/</url>
     <content><![CDATA[<p>Fever of unknown origin (FUO) has been recognized as a disease state for over100 years.<br>The first commonly accepted definition of FUO was published in 1961 and included fever greater than 101F (38.3C) on multiple occasions at least 3 week duration of fever without identifiable cause despite at least a 1 week inpatient evaluation.</p>
@@ -2923,17 +2949,6 @@
       </categories>
   </entry>
   <entry>
-    <title>二零二三年八月二十七日</title>
-    <url>/2023/08/27/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E5%85%AB%E6%9C%88%E4%BA%8C%E5%8D%81%E4%B8%83%E6%97%A5/</url>
-    <content><![CDATA[<p>我从失去家人的那一刻就坠入了一个朦胧而美丽的梦，梦境没有主人，我是被梦境所留下的，永远不愿醒来的旅人。<br>我足不出户，一直缩在一方小世界里面，我用了无数的理由和所有人说我的生活态度，其实勇敢的人根本不需要理由就能走出去，只有懦弱的人会用各种理由说服自己退缩</p>
-<p>请以我为戒，大胆往前走，走到灯火通明。</p>
-<p>何须纵酒方能舞翩迁，<br>赤诚相见时便是少年。</p>
-]]></content>
-      <categories>
-        <category>gallery</category>
-      </categories>
-  </entry>
-  <entry>
     <title>二零二三年六月十日</title>
     <url>/2023/06/10/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E5%85%AD%E6%9C%88%E5%8D%81%E6%97%A5/</url>
     <content><![CDATA[<p>请绝对理性的面对所有事情，这是一个人工作学习生活的基础，但同时要感同身受的去阅读文学类作品，这是保留一丝感性的方式，感性是不可或缺的，理性可以让人控制感性，但也可以消灭它。</p>
@@ -2941,6 +2956,17 @@
 <p>接收到的评论不必急于改变，先存起来，让它们陪着自己，跟着时间走，路上会慢慢的和其他的事情连结起来，这样就能择其善者而从之，其不善者而改之了。</p>
 <p>应当早日从这喧扰的世界冷静下来，让脑子里满是憧憬和情爱的灵魂得到一丝陈酿，理性点抬头看看世界上方的二氧化碳，自己晃晃头打破能回到最初的样子再重来的梦。</p>
 <p>爱你们。</p>
+]]></content>
+      <categories>
+        <category>gallery</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>二零二三年八月二十七日</title>
+    <url>/2023/08/27/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E5%85%AB%E6%9C%88%E4%BA%8C%E5%8D%81%E4%B8%83%E6%97%A5/</url>
+    <content><![CDATA[<p>我从失去家人的那一刻就坠入了一个朦胧而美丽的梦，梦境没有主人，我是被梦境所留下的，永远不愿醒来的旅人。<br>我足不出户，一直缩在一方小世界里面，我用了无数的理由和所有人说我的生活态度，其实勇敢的人根本不需要理由就能走出去，只有懦弱的人会用各种理由说服自己退缩</p>
+<p>请以我为戒，大胆往前走，走到灯火通明。</p>
+<p>何须纵酒方能舞翩迁，<br>赤诚相见时便是少年。</p>
 ]]></content>
       <categories>
         <category>gallery</category>

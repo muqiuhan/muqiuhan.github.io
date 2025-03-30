@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="韩暮秋">
+
+
+    <meta name="subtitle" content="暮秋小屋">
+
+
+    <meta name="description" content="这里是暮秋小屋，思念和灵感的寄存处">
+
+
+    <meta name="keywords" content="韩暮秋,MuqiuHan,'Muqiu Han', 'muqiu han', muqiuhan">
+
+
+
+
+<title>F# 重载解析问题 | 暮秋小屋</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/frame.js"></script>
+    
+
+
+
+
+    <script src="https://polyfill.alicdn.com/polyfill.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/mathjax/3.2.0/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+
+
+  <meta name="generator" content="Hexo 6.3.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+            暮秋小屋
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/">主页</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/gallery/">日记本</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Medicine/">医学</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Technique/">计算机科学</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Life/">生活</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/about">关于</a>
+              </li> 
+                   
+          
+          
+            <li class="menu-item search-btn">
+              <a href="#">Search</a>
+            </li>
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+<script src="/js/menu.js"></script>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/Technique/">
+                            Technique
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                F# 重载解析问题
+            
+            
+        </div>
+        <span class="post-date">
+            Mar 30, 2025
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <p>当在 F# 中使用一些 C# 类库的时候，可能会遇到类似如下的问题：</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">open</span> System</span><br><span class="line"><span class="keyword">open</span> System.Numerics</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> someFunction () <span class="operator">=</span></span><br><span class="line">    <span class="keyword">let</span> v<span class="operator">:</span> Vector<span class="operator">&lt;</span><span class="type">byte</span><span class="operator">&gt;</span> <span class="operator">=</span> Vector(<span class="number">0</span>uy)</span><br><span class="line">    <span class="keyword">let</span> array<span class="operator">:</span> <span class="type">byte</span>[] <span class="operator">=</span> [<span class="operator">||</span>]</span><br><span class="line">    <span class="keyword">let</span> span<span class="operator">:</span> Span<span class="operator">&lt;</span><span class="type">byte</span><span class="operator">&gt;</span> <span class="operator">=</span> Span(array)</span><br><span class="line">    v.CopyTo(span)</span><br><span class="line">Compiler error</span><br><span class="line">     v.CopyTo(span)</span><br><span class="line">  <span class="operator">----^^^^^^^^^^^^^^</span></span><br><span class="line"></span><br><span class="line"><span class="operator">/</span>home<span class="operator">/</span>muqiu<span class="operator">/</span>stdin(<span class="number">99</span>,<span class="number">5</span>)<span class="operator">:</span> error FS0041<span class="operator">:</span> A unique overload <span class="keyword">for</span> method <span class="symbol">&#x27;CopyTo</span>&#x27; could <span class="built_in">not</span> be determined based on <span class="keyword">type</span> information prior <span class="keyword">to</span> this program point. A <span class="keyword">type</span> annotation may be needed.</span><br><span class="line"></span><br><span class="line">Known <span class="keyword">type</span> <span class="title class_">of</span> argument<span class="operator">:</span> Span<span class="operator">&lt;</span><span class="type">byte</span><span class="operator">&gt;</span></span><br><span class="line"></span><br><span class="line">Candidates<span class="operator">:</span></span><br><span class="line"> <span class="operator">-</span> Vector.CopyTo(destination<span class="operator">:</span> Span<span class="operator">&lt;</span><span class="type">byte</span><span class="operator">&gt;</span>) <span class="operator">:</span> <span class="type">unit</span></span><br><span class="line"> <span class="operator">-</span> Vector.CopyTo(destination<span class="operator">:</span> Span<span class="operator">&lt;</span><span class="type">byte</span><span class="operator">&gt;</span>) <span class="operator">:</span> <span class="type">unit</span></span><br></pre></td></tr></table></figure>
+
+<p>编译器认为存在两个相同的 <code>CopyTo</code> 重载无法区分。但查阅文档发现，<code>Vector&lt;T&gt;</code> 的 <code>CopyTo</code> 方法实际上只有一个匹配的重载（接受 <code>Span&lt;T&gt;</code>），这似乎矛盾。</p>
+<p>这是因为 F# 编译器处理泛型方法重载的方式：</p>
+<ul>
+<li>泛型接口继承：<code>Vector&lt;T&gt;</code> 可能实现了多个接口，导致编译器看到两个签名相同的 <code>CopyTo</code> 方法（例如通过不同接口继承）。</li>
+<li>语言设计差异：F# 缺乏 C# 的 “most concrete” 重载选择机制。当多个重载来自不同继承路径时，F# 不会自动选择最具体的实现，需要显式指引。</li>
+</ul>
+<p>仅我所知的一种解决方案是通过添加扩展方法显式指引编译器：</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Vector</span><span class="operator">&lt;</span><span class="symbol">&#x27;T</span><span class="operator">&gt;</span> <span class="keyword">with</span></span><br><span class="line">    <span class="keyword">member</span> <span class="keyword">inline</span> this.CopyToByteSpan (span <span class="operator">:</span> Span<span class="operator">&lt;</span><span class="type">byte</span><span class="operator">&gt;</span>) <span class="operator">=</span> </span><br><span class="line">        this.CopyTo(span) <span class="comment">// 显式绑定具体重载</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用时使用新方法</span></span><br><span class="line">v.CopyToByteSpan(span)</span><br></pre></td></tr></table></figure>
+
+<p>这种方法通过创建具体的类型路径，帮助编译器绕过复杂的重载解析逻辑。</p>
+<p>学艺不精，不知道这是不是语言设计的差异，可能 F# 倾向于要求更明确的类型信息以避免意外行为？或许当泛型类型继承多个接口时，有没有可能出现在具体类型中不易察觉的隐式重载冲突？</p>
+<h2 id="Refs"><a href="#Refs" class="headerlink" title="Refs."></a>Refs.</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/fsharp/fslang-suggestions/issues/905">“Most concrete” tiebreaker for generic overloads #905</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/dotnet/fsharp/issues/1647">Fail to resolve to non generic overload. #1647</a></li>
+</ul>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2025/03/25/Scala-3-Capture-Checking/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+                 | 
+            
+            
+                希望路过的人可以添点柴火让这里暖和点
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    
+      <div class="search-popup">
+    <div class="search-popup-overlay">  
+    </div>
+    <div class="search-popup-window" >
+        <div class="search-header">
+            <div class="search-input-container">
+              <input autocomplete="off" autocapitalize="off" maxlength="80"
+                     placeholder="Search Anything" spellcheck="false"
+                     type="search" class="search-input">
+            </div>
+            <div class="search-close-btn">
+                <div class="icon close-btn"></div>
+            </div>
+        </div>
+        <div class="search-result-container">
+        </div>
+    </div>
+</div>
+
+<script>
+    const searchConfig = {
+        path             : "/search.xml",
+        top_n_per_article: "1",
+        unescape         : "false",
+        trigger: "auto",
+        preload: "false"
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js"></script>
+<script src="/js/search.js"></script>
+    
+    
+
+  </body>
+</html>
