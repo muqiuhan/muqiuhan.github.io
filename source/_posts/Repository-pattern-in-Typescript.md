@@ -151,4 +151,8 @@ export class MongoDataServices
 }
 ```
 
-以上。
+---
+
+Sunday, March 30, 2025 7:58 PM:
+
+感觉以上全错，不应该过度抽象 Repository 的，就让它分散在各个模块中，还可以参考 https://github.com/Papooch/nestjs-cls 实现不会抽象泄漏的事务性 Repository 方法。
