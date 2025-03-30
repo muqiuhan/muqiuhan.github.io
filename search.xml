@@ -1679,7 +1679,9 @@
 <p>然后实现一个 <code>MongoDataServices</code>:</p>
 <figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Injectable</span>, <span class="title class_">OnApplicationBootstrap</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">InjectModel</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/mongoose&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Model</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;mongoose&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">IDataServices</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;../../../core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">MongoGenericRepository</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./mongo-generic-repository&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">  <span class="title class_">Author</span>,</span><br><span class="line">  <span class="title class_">AuthorDocument</span>,</span><br><span class="line">  <span class="title class_">Book</span>,</span><br><span class="line">  <span class="title class_">BookDocument</span>,</span><br><span class="line">  <span class="title class_">Genre</span>,</span><br><span class="line">  <span class="title class_">GenreDocument</span>,</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;./model&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">MongoDataServices</span></span><br><span class="line">  <span class="keyword">implements</span> <span class="title class_">IDataServices</span>, <span class="title class_">OnApplicationBootstrap</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">authors</span>: <span class="title class_">MongoGenericRepository</span>&lt;<span class="title class_">Author</span>&gt;;</span><br><span class="line">  <span class="attr">books</span>: <span class="title class_">MongoGenericRepository</span>&lt;<span class="title class_">Book</span>&gt;;</span><br><span class="line">  <span class="attr">genres</span>: <span class="title class_">MongoGenericRepository</span>&lt;<span class="title class_">Genre</span>&gt;;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"></span></span><br><span class="line"><span class="params">    <span class="meta">@InjectModel</span>(Author.name)</span></span><br><span class="line"><span class="params">    <span class="keyword">private</span> AuthorRepository: Model&lt;AuthorDocument&gt;,</span></span><br><span class="line"><span class="params">    <span class="meta">@InjectModel</span>(Book.name)</span></span><br><span class="line"><span class="params">    <span class="keyword">private</span> BookRepository: Model&lt;BookDocument&gt;,</span></span><br><span class="line"><span class="params">    <span class="meta">@InjectModel</span>(Genre.name)</span></span><br><span class="line"><span class="params">    <span class="keyword">private</span> GenreRepository: Model&lt;GenreDocument&gt;,</span></span><br><span class="line"><span class="params">  </span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">onApplicationBootstrap</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">authors</span> = <span class="keyword">new</span> <span class="title class_">MongoGenericRepository</span>&lt;<span class="title class_">Author</span>&gt;(<span class="variable language_">this</span>.<span class="property">AuthorRepository</span>);</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">books</span> = <span class="keyword">new</span> <span class="title class_">MongoGenericRepository</span>&lt;<span class="title class_">Book</span>&gt;(<span class="variable language_">this</span>.<span class="property">BookRepository</span>, [</span><br><span class="line">      <span class="string">&#x27;author&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;genre&#x27;</span>,</span><br><span class="line">    ]);</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">genres</span> = <span class="keyword">new</span> <span class="title class_">MongoGenericRepository</span>&lt;<span class="title class_">Genre</span>&gt;(<span class="variable language_">this</span>.<span class="property">GenreRepository</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>以上。</p>
+<hr>
+<p>Sunday, March 30, 2025 7:58 PM:</p>
+<p>感觉以上全错，不应该过度抽象 Repository 的，就让它分散在各个模块中，还可以参考 <a href="https://github.com/Papooch/nestjs-cls">https://github.com/Papooch/nestjs-cls</a> 实现不会抽象泄漏的事务性 Repository 方法。</p>
 ]]></content>
       <tags>
         <tag>Technique</tag>
@@ -2949,6 +2951,17 @@
       </categories>
   </entry>
   <entry>
+    <title>二零二三年八月二十七日</title>
+    <url>/2023/08/27/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E5%85%AB%E6%9C%88%E4%BA%8C%E5%8D%81%E4%B8%83%E6%97%A5/</url>
+    <content><![CDATA[<p>我从失去家人的那一刻就坠入了一个朦胧而美丽的梦，梦境没有主人，我是被梦境所留下的，永远不愿醒来的旅人。<br>我足不出户，一直缩在一方小世界里面，我用了无数的理由和所有人说我的生活态度，其实勇敢的人根本不需要理由就能走出去，只有懦弱的人会用各种理由说服自己退缩</p>
+<p>请以我为戒，大胆往前走，走到灯火通明。</p>
+<p>何须纵酒方能舞翩迁，<br>赤诚相见时便是少年。</p>
+]]></content>
+      <categories>
+        <category>gallery</category>
+      </categories>
+  </entry>
+  <entry>
     <title>二零二三年六月十日</title>
     <url>/2023/06/10/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E5%85%AD%E6%9C%88%E5%8D%81%E6%97%A5/</url>
     <content><![CDATA[<p>请绝对理性的面对所有事情，这是一个人工作学习生活的基础，但同时要感同身受的去阅读文学类作品，这是保留一丝感性的方式，感性是不可或缺的，理性可以让人控制感性，但也可以消灭它。</p>
@@ -2956,17 +2969,6 @@
 <p>接收到的评论不必急于改变，先存起来，让它们陪着自己，跟着时间走，路上会慢慢的和其他的事情连结起来，这样就能择其善者而从之，其不善者而改之了。</p>
 <p>应当早日从这喧扰的世界冷静下来，让脑子里满是憧憬和情爱的灵魂得到一丝陈酿，理性点抬头看看世界上方的二氧化碳，自己晃晃头打破能回到最初的样子再重来的梦。</p>
 <p>爱你们。</p>
-]]></content>
-      <categories>
-        <category>gallery</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>二零二三年八月二十七日</title>
-    <url>/2023/08/27/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E5%85%AB%E6%9C%88%E4%BA%8C%E5%8D%81%E4%B8%83%E6%97%A5/</url>
-    <content><![CDATA[<p>我从失去家人的那一刻就坠入了一个朦胧而美丽的梦，梦境没有主人，我是被梦境所留下的，永远不愿醒来的旅人。<br>我足不出户，一直缩在一方小世界里面，我用了无数的理由和所有人说我的生活态度，其实勇敢的人根本不需要理由就能走出去，只有懦弱的人会用各种理由说服自己退缩</p>
-<p>请以我为戒，大胆往前走，走到灯火通明。</p>
-<p>何须纵酒方能舞翩迁，<br>赤诚相见时便是少年。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
