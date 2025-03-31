@@ -3086,24 +3086,6 @@
       </categories>
   </entry>
   <entry>
-    <title>二零二零年十二月九日</title>
-    <url>/2020/12/09/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E9%9B%B6%E5%B9%B4%E5%8D%81%E4%BA%8C%E6%9C%88%E4%B9%9D%E6%97%A5/</url>
-    <content><![CDATA[<p>我们走在朝阳的洪流上， 一步一个脚印， 踏散阳光， 向南是北。</p>
-]]></content>
-      <categories>
-        <category>gallery</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>二零二零年十二月二十六日</title>
-    <url>/2020/12/26/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E9%9B%B6%E5%B9%B4%E5%8D%81%E4%BA%8C%E6%9C%88%E4%BA%8C%E5%8D%81%E5%85%AD%E6%97%A5/</url>
-    <content><![CDATA[<p>我被包裹在吊床中，两颗香樟树支撑着它，仲夏的热浪砸在粗壮的香樟树上，叶子一屈，抱住了热浪，可随即而来的是不知从哪浇来的阳光，叶子承受不住这样的力量，被砸的孔洞百出，砸的香气落满树下的人间。</p>
-]]></content>
-      <categories>
-        <category>gallery</category>
-      </categories>
-  </entry>
-  <entry>
     <title>二零二零年十二月八日</title>
     <url>/2020/12/08/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E9%9B%B6%E5%B9%B4%E5%8D%81%E4%BA%8C%E6%9C%88%E5%85%AB%E6%97%A5/</url>
     <content><![CDATA[<p>它们勇敢的站在烈日下， 像人类一样无所畏惧， 却又恐惧的躲在黑暗中， 像当初的它们一样无处可逃。</p>
@@ -3383,11 +3365,7 @@
   <entry>
     <title>在F#中处理复杂依赖注入的实践指南</title>
     <url>/2025/03/31/%E5%9C%A8F-%E4%B8%AD%E5%A4%84%E7%90%86%E5%A4%8D%E6%9D%82%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E7%9A%84%E5%AE%9E%E8%B7%B5%E6%8C%87%E5%8D%97/</url>
-    <content><![CDATA[<p>以下是基于用户提供的文章内容的详细解读博客文章，结合了相关引用资源以增强内容深度：</p>
-<hr>
-<h1 id="在F-中处理复杂依赖注入的实践指南"><a href="#在F-中处理复杂依赖注入的实践指南" class="headerlink" title="在F#中处理复杂依赖注入的实践指南"></a>在F#中处理复杂依赖注入的实践指南</h1><p>依赖注入（DI）是构建松耦合、可维护系统的核心模式。在面向对象语言中，DI框架（如Spring）通过反射和容器管理依赖关系。在 F# 中，则更倾向于利用语言特性（如 Partial Application 和 Type Inference）实现依赖管理。</p>
-<hr>
-<h2 id="一、传统手艺：Partial-Application"><a href="#一、传统手艺：Partial-Application" class="headerlink" title="一、传统手艺：Partial Application"></a>一、传统手艺：Partial Application</h2><p>在函数式编程中，Partial Application 是传递依赖的常用方式。例如：</p>
+    <content><![CDATA[<h2 id="一、传统手艺：Partial-Application"><a href="#一、传统手艺：Partial-Application" class="headerlink" title="一、传统手艺：Partial Application"></a>一、传统手艺：Partial Application</h2><p>在函数式编程中，Partial Application 是传递依赖的常用方式。例如：</p>
 <figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> foo bar baz request <span class="operator">=</span> <span class="operator">...</span></span><br><span class="line"><span class="keyword">let</span> wired <span class="operator">=</span> foo dependency1 dependency2</span><br><span class="line"><span class="keyword">let</span> response <span class="operator">=</span> wired request</span><br></pre></td></tr></table></figure>
 
 <p><strong>优点</strong>：  </p>
@@ -5916,6 +5894,24 @@
       <tags>
         <tag>Technique</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>二零二零年十二月九日</title>
+    <url>/2020/12/09/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E9%9B%B6%E5%B9%B4%E5%8D%81%E4%BA%8C%E6%9C%88%E4%B9%9D%E6%97%A5/</url>
+    <content><![CDATA[<p>我们走在朝阳的洪流上， 一步一个脚印， 踏散阳光， 向南是北。</p>
+]]></content>
+      <categories>
+        <category>gallery</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>二零二零年十二月二十六日</title>
+    <url>/2020/12/26/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E9%9B%B6%E5%B9%B4%E5%8D%81%E4%BA%8C%E6%9C%88%E4%BA%8C%E5%8D%81%E5%85%AD%E6%97%A5/</url>
+    <content><![CDATA[<p>我被包裹在吊床中，两颗香樟树支撑着它，仲夏的热浪砸在粗壮的香樟树上，叶子一屈，抱住了热浪，可随即而来的是不知从哪浇来的阳光，叶子承受不住这样的力量，被砸的孔洞百出，砸的香气落满树下的人间。</p>
+]]></content>
+      <categories>
+        <category>gallery</category>
+      </categories>
   </entry>
   <entry>
     <title>关于</title>

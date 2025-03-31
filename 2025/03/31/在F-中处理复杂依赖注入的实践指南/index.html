@@ -167,11 +167,7 @@
     </div>
 </div>
     <div class="post-content">
-    <p>以下是基于用户提供的文章内容的详细解读博客文章，结合了相关引用资源以增强内容深度：</p>
-<hr>
-<h1 id="在F-中处理复杂依赖注入的实践指南"><a href="#在F-中处理复杂依赖注入的实践指南" class="headerlink" title="在F#中处理复杂依赖注入的实践指南"></a>在F#中处理复杂依赖注入的实践指南</h1><p>依赖注入（DI）是构建松耦合、可维护系统的核心模式。在面向对象语言中，DI框架（如Spring）通过反射和容器管理依赖关系。在 F# 中，则更倾向于利用语言特性（如 Partial Application 和 Type Inference）实现依赖管理。</p>
-<hr>
-<h2 id="一、传统手艺：Partial-Application"><a href="#一、传统手艺：Partial-Application" class="headerlink" title="一、传统手艺：Partial Application"></a>一、传统手艺：Partial Application</h2><p>在函数式编程中，Partial Application 是传递依赖的常用方式。例如：</p>
+    <h2 id="一、传统手艺：Partial-Application"><a href="#一、传统手艺：Partial-Application" class="headerlink" title="一、传统手艺：Partial Application"></a>一、传统手艺：Partial Application</h2><p>在函数式编程中，Partial Application 是传递依赖的常用方式。例如：</p>
 <figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> foo bar baz request <span class="operator">=</span> <span class="operator">...</span></span><br><span class="line"><span class="keyword">let</span> wired <span class="operator">=</span> foo dependency1 dependency2</span><br><span class="line"><span class="keyword">let</span> response <span class="operator">=</span> wired request</span><br></pre></td></tr></table></figure>
 
 <p><strong>优点</strong>：  </p>
