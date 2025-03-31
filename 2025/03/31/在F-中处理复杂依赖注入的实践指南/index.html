@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="韩暮秋">
+
+
+    <meta name="subtitle" content="暮秋小屋">
+
+
+    <meta name="description" content="这里是暮秋小屋，思念和灵感的寄存处">
+
+
+    <meta name="keywords" content="韩暮秋,MuqiuHan,'Muqiu Han', 'muqiu han', muqiuhan">
+
+
+
+
+<title>在F#中处理复杂依赖注入的实践指南 | 暮秋小屋</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/frame.js"></script>
+    
+
+
+
+
+    <script src="https://polyfill.alicdn.com/polyfill.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/mathjax/3.2.0/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+
+
+  <meta name="generator" content="Hexo 6.3.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+            暮秋小屋
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/">主页</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/gallery/">日记本</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Medicine/">医学</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Technique/">计算机科学</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/tags/Life/">生活</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/about">关于</a>
+              </li> 
+                   
+          
+          
+            <li class="menu-item search-btn">
+              <a href="#">Search</a>
+            </li>
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+<script src="/js/menu.js"></script>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/Technique/">
+                            Technique
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                在F#中处理复杂依赖注入的实践指南
+            
+            
+        </div>
+        <span class="post-date">
+            Mar 31, 2025
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <p>以下是基于用户提供的文章内容的详细解读博客文章，结合了相关引用资源以增强内容深度：</p>
+<hr>
+<h1 id="在F-中处理复杂依赖注入的实践指南"><a href="#在F-中处理复杂依赖注入的实践指南" class="headerlink" title="在F#中处理复杂依赖注入的实践指南"></a>在F#中处理复杂依赖注入的实践指南</h1><p>依赖注入（DI）是构建松耦合、可维护系统的核心模式。在面向对象语言中，DI框架（如Spring）通过反射和容器管理依赖关系。在 F# 中，则更倾向于利用语言特性（如 Partial Application 和 Type Inference）实现依赖管理。</p>
+<hr>
+<h2 id="一、传统方法：Partial-Application"><a href="#一、传统方法：Partial-Application" class="headerlink" title="一、传统方法：Partial Application"></a>一、传统方法：Partial Application</h2><p>在函数式编程中，Partial Application 是传递依赖的常用方式。例如：</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> foo bar baz request <span class="operator">=</span> <span class="operator">...</span></span><br><span class="line"><span class="keyword">let</span> wired <span class="operator">=</span> foo dependency1 dependency2</span><br><span class="line"><span class="keyword">let</span> response <span class="operator">=</span> wired request</span><br></pre></td></tr></table></figure>
+
+<p><strong>优点</strong>：  </p>
+<ul>
+<li>无需框架或反射，直接通过函数参数传递依赖。  </li>
+<li>符合函数式编程的纯函数理念。</li>
+</ul>
+<p><strong>缺点</strong>：  </p>
+<ol>
+<li><strong>参数爆炸</strong>：当功能扩展时，参数数量激增（如日志、数据库、加密等）。  </li>
+<li><strong>维护困难</strong>：新增依赖需修改所有调用点的参数传递。  </li>
+<li><strong>隐式依赖</strong>：难以从函数签名直接区分核心参数与辅助依赖。</li>
+</ol>
+<hr>
+<h2 id="二、结构化方法：单一环境参数（env）"><a href="#二、结构化方法：单一环境参数（env）" class="headerlink" title="二、结构化方法：单一环境参数（env）"></a>二、结构化方法：单一环境参数（<code>env</code>）</h2><p>为解决参数爆炸问题，可将依赖封装为单一环境对象<code>env</code>，并通过接口约束访问权限：</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">[&lt;Interface&gt;]</span> <span class="keyword">type</span> <span class="title class_">ILog</span> <span class="operator">=</span> <span class="keyword">abstract</span> Logger<span class="operator">:</span> ILogger</span><br><span class="line"><span class="meta">[&lt;Interface&gt;]</span> <span class="keyword">type</span> <span class="title class_">IDb</span> <span class="operator">=</span> <span class="keyword">abstract</span> Database<span class="operator">:</span> IDatabase</span><br><span class="line"></span><br><span class="line"><span class="keyword">module</span> Log <span class="operator">=</span></span><br><span class="line">    <span class="keyword">let</span> info (env<span class="operator">:</span> #ILog) <span class="operator">=</span> env.Logger.Info(<span class="string">&quot;Message&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">module</span> Db <span class="operator">=</span></span><br><span class="line">    <span class="keyword">let</span> fetchUser (env<span class="operator">:</span> #IDb) <span class="operator">=</span> env.Database.Query(<span class="operator">...</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>优点</strong>：  </p>
+<ul>
+<li><strong>显式依赖声明</strong>：函数签名仅需<code>env</code>参数，编译器验证接口实现。  </li>
+<li><strong>模块化隔离</strong>：各模块仅声明所需接口（如<code>ILog</code>、<code>IDb</code>），避免全局依赖。  </li>
+<li><strong>易于测试</strong>：通过模拟<code>env</code>实现单元测试，无需依赖具体实现。</li>
+</ul>
+<p><strong>应用场景</strong>：  </p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> changePass env req <span class="operator">=</span> <span class="keyword">task</span> &#123;</span><br><span class="line">    <span class="keyword">let!</span> user <span class="operator">=</span> Db.fetchUser env req.UserId</span><br><span class="line">    Log.info env <span class="string">&quot;Processing user: %i&quot;</span> user.Id</span><br><span class="line">    <span class="operator">...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="三、Reader-Monad"><a href="#三、Reader-Monad" class="headerlink" title="三、Reader Monad"></a>三、Reader Monad</h2><p>为消除显式的<code>env</code>传递，可引入 Reader Monad，将环境隐式注入计算流程：</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">[&lt;Struct&gt;]</span> <span class="keyword">type</span> <span class="title class_">Effect</span><span class="operator">&lt;</span><span class="symbol">&#x27;env</span>, <span class="symbol">&#x27;out</span><span class="operator">&gt;</span> <span class="operator">=</span> Effect <span class="keyword">of</span> (<span class="symbol">&#x27;env</span> <span class="operator">-&gt;</span> <span class="symbol">&#x27;out</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">module</span> Effect <span class="operator">=</span></span><br><span class="line">    <span class="keyword">let</span> run env (Effect fn) <span class="operator">=</span> fn env</span><br><span class="line">    <span class="keyword">let</span> bind f effect <span class="operator">=</span> Effect (<span class="keyword">fun</span> env <span class="operator">-&gt;</span> run env (f (run env effect)))</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">EffectBuilder</span>() <span class="operator">=</span></span><br><span class="line">    <span class="keyword">member</span> __.Bind(e, f) <span class="operator">=</span> Effect.bind f e</span><br><span class="line">    <span class="keyword">member</span> __.Return(x) <span class="operator">=</span> Effect (<span class="keyword">fun</span> _ <span class="operator">-&gt;</span> x)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> effect <span class="operator">=</span> EffectBuilder()</span><br></pre></td></tr></table></figure>
+
+<p>然后：</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> changePass req <span class="operator">=</span> <span class="keyword">effect</span> &#123;</span><br><span class="line">    <span class="keyword">let!</span> user <span class="operator">=</span> Db.fetchUser req.UserId</span><br><span class="line">    <span class="keyword">let!</span> salt <span class="operator">=</span> Random.bytes <span class="number">32</span></span><br><span class="line">    <span class="keyword">do!</span> Log.info <span class="string">&quot;Password updated for user %i&quot;</span> user.Id</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">Ok</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>优点</strong>：  </p>
+<ul>
+<li><strong>隐式依赖管理</strong>：通过<code>effect</code>计算表达式自动传递<code>env</code>，减少样板代码。  </li>
+<li><strong>组合性</strong>：支持与其他计算表达式（如<code>async</code>&#x2F;<code>task</code>）结合，处理异步操作。</li>
+</ul>
+<p><strong>缺点</strong>：  </p>
+<ul>
+<li><strong>性能开销</strong>：频繁的闭包创建和间接调用可能导致性能下降。  </li>
+<li><strong>生态兼容性</strong>：需自定义计算表达式，与现有异步框架集成复杂。</li>
+</ul>
+<h2 id="Refs"><a href="#Refs" class="headerlink" title="Refs."></a>Refs.</h2><ul>
+<li>Spring的构造器注入</li>
+<li>Blazor的DI实现</li>
+</ul>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2025/03/30/F-%E9%87%8D%E8%BD%BD%E8%A7%A3%E6%9E%90%E9%97%AE%E9%A2%98/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+                 | 
+            
+            
+                希望路过的人可以添点柴火让这里暖和点
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    
+      <div class="search-popup">
+    <div class="search-popup-overlay">  
+    </div>
+    <div class="search-popup-window" >
+        <div class="search-header">
+            <div class="search-input-container">
+              <input autocomplete="off" autocapitalize="off" maxlength="80"
+                     placeholder="Search Anything" spellcheck="false"
+                     type="search" class="search-input">
+            </div>
+            <div class="search-close-btn">
+                <div class="icon close-btn"></div>
+            </div>
+        </div>
+        <div class="search-result-container">
+        </div>
+    </div>
+</div>
+
+<script>
+    const searchConfig = {
+        path             : "/search.xml",
+        top_n_per_article: "1",
+        unescape         : "false",
+        trigger: "auto",
+        preload: "false"
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js"></script>
+<script src="/js/search.js"></script>
+    
+    
+
+  </body>
+</html>
