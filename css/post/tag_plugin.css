@@ -26,7 +26,7 @@ blockquote>footer a {
   background-image: none !important;
 }
 figcaption {
-  font-family: roboto-mono, menlo, monospace;
+  font-family: monospace;
   font-size: $font-size-blockquote-footer;
   padding: $margin-m-0 0;
   color: $color-text-secondary;

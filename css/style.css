@@ -281,7 +281,7 @@ input {
   border: none;
 }
 body {
-  font-family: 'Inter', 'Noto Sans SC', helvetica, arial;
+  font-family: 'Carrois Song';
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5rem;
@@ -306,6 +306,7 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 .header {
   border: 2px solid #373633;
+  font-family: 'Carrois Song';
   font-size: 0.875rem;
   font-weight: 500;
   line-height: 1.25rem;
@@ -396,6 +397,7 @@ input[type="search"]::-webkit-search-results-decoration {
 .footer {
   margin-top: 3.5rem;
   border: 2px #373633 solid;
+  font-family: 'Carrois Song';
   font-size: 0.75rem;
   font-weight: 400;
   line-height: 1.25rem;
@@ -418,6 +420,7 @@ input[type="search"]::-webkit-search-results-decoration {
 .year-title {
   margin-top: 3.5rem;
   margin-bottom: 0.75rem;
+  font-family: 'Carrois Song';
   font-size: 1.75rem;
   font-weight: 700;
   line-height: 2.25rem;
@@ -431,7 +434,7 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 .post-list-item .post-title {
   flex-grow: 1;
-  font-family: 'Inter', 'Noto Sans SC', helvetica, arial;
+  font-family: 'Carrois Song';
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5rem;
@@ -442,6 +445,7 @@ input[type="search"]::-webkit-search-results-decoration {
   margin-left: 1.5rem;
   min-width: 8rem;
   text-align: right;
+  font-family: 'Carrois Song';
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.25rem;
@@ -481,12 +485,14 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 .post-gallery-item .post-info .post-title {
   margin-bottom: 0.75rem;
+  font-family: 'Carrois Song';
   font-size: 1.75rem;
   font-weight: 700;
   line-height: 2.25rem;
   color: #373633;
 }
 .post-gallery-item .post-info .post-date {
+  font-family: 'Carrois Song';
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.25rem;
@@ -522,6 +528,7 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 .pagination {
   margin-top: 0.75rem;
+  font-family: 'Carrois Song';
   font-size: 0.875rem;
   font-weight: 500;
   line-height: 1.25rem;
@@ -574,13 +581,14 @@ input[type="search"]::-webkit-search-results-decoration {
   margin-bottom: 2rem;
 }
 .profile .profile-content .profile-title {
+  font-family: 'Carrois Song';
   font-size: 1.75rem;
   font-weight: 700;
   line-height: 2.25rem;
   color: #373633;
 }
 .profile .profile-content .profile-body {
-  font-family: 'Inter', 'Noto Sans SC', helvetica, arial;
+  font-family: 'Carrois Song';
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5rem;
@@ -589,6 +597,7 @@ input[type="search"]::-webkit-search-results-decoration {
 .profile .profile-content .profile-link {
   margin-top: 0;
   margin-bottom: 0.75rem;
+  font-family: 'Carrois Song';
   font-size: 0.875rem;
   font-weight: 500;
   line-height: 1.25rem;
@@ -642,7 +651,7 @@ input[type="search"]::-webkit-search-results-decoration {
   padding: 0.75rem 0.75rem;
 }
 .search-result-container .search-result-message {
-  font-family: 'Roboto Mono', menlo, monospace;
+  font-family: monospace;
   font-size: 0.875rem;
   line-height: 1rem;
   color: #e8e8e8;
@@ -650,6 +659,7 @@ input[type="search"]::-webkit-search-results-decoration {
   color: #afaea9;
 }
 .search-result-container .search-result-title {
+  font-family: 'Carrois Song';
   font-size: 1rem;
   font-weight: 700;
   line-height: 1.25rem;
@@ -671,7 +681,7 @@ input[type="search"]::-webkit-search-results-decoration {
   padding-top: 1rem;
 }
 .search-result-container .search-result {
-  font-family: 'Inter', 'Noto Sans SC', helvetica, arial;
+  font-family: 'Carrois Song';
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5rem;
@@ -696,6 +706,7 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 .search-header .search-input-container .search-input {
   width: 100%;
+  font-family: 'Carrois Song';
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.25rem;
@@ -731,55 +742,63 @@ h6 {
   margin-bottom: 0.75rem;
 }
 h1 {
+  font-family: 'Carrois Song';
   font-size: 1.75rem;
   font-weight: 700;
   line-height: 2.25rem;
   color: #373633;
 }
 h2 {
+  font-family: 'Carrois Song';
   font-size: 1.5rem;
   font-weight: 700;
   line-height: 2rem;
   color: #373633;
 }
 h3 {
+  font-family: 'Carrois Song';
   font-size: 1.125rem;
   font-weight: 700;
   line-height: 1.5rem;
   color: #373633;
 }
 h4 {
+  font-family: 'Carrois Song';
   font-size: 1rem;
   font-weight: 700;
   line-height: 1.25rem;
   color: #373633;
 }
 h5 {
+  font-family: 'Carrois Song';
   font-size: 1rem;
   font-weight: 600;
   line-height: 1.25rem;
   color: #373633;
 }
 h6 {
+  font-family: 'Carrois Song';
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.25rem;
   color: #373633;
 }
 p {
-  font-family: 'Inter', 'Noto Sans SC', helvetica, arial;
+  font-family: 'Carrois Song';
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5rem;
   color: #373633;
 }
 strong {
+  font-family: 'Carrois Song';
   font-size: 1rem;
   font-weight: 700;
   line-height: 1.5rem;
   color: #373633;
 }
 em {
+  font-family: 'Carrois Song';
   font-size: 1rem;
   font-weight: 400;
   font-style: italic;
@@ -787,6 +806,7 @@ em {
   color: #373633;
 }
 del {
+  font-family: 'Carrois Song';
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5rem;
@@ -824,7 +844,7 @@ blockquote blockquote {
   margin-bottom: 0;
 }
 .post-content li {
-  font-family: 'Inter', 'Noto Sans SC', helvetica, arial;
+  font-family: 'Carrois Song';
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5rem;
@@ -860,6 +880,7 @@ blockquote blockquote {
 }
 dl dt {
   padding: 0.5rem 0;
+  font-family: 'Carrois Song';
   font-size: 1rem;
   font-weight: 700;
   line-height: 1.5rem;
@@ -881,12 +902,14 @@ dl dd {
 }
 .post-head .post-info .post-title {
   margin-bottom: 0.75rem;
+  font-family: 'Carrois Song';
   font-size: 1.75rem;
   font-weight: 700;
   line-height: 2.25rem;
   color: #373633;
 }
 .post-head .post-info .post-date {
+  font-family: 'Carrois Song';
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.25rem;
@@ -912,6 +935,7 @@ dl dd {
   margin-top: 0.75rem;
   display: flex;
   flex-wrap: wrap;
+  font-family: 'Carrois Song';
   font-size: 0.875rem;
   font-weight: 500;
   line-height: 1.25rem;
@@ -948,13 +972,13 @@ dl dd {
   color: #373633 !important;
 }
 code {
-  font-family: 'Roboto Mono', menlo, monospace;
+  font-family: monospace;
   font-size: 0.875rem;
   line-height: 1rem;
   color: #0177aa;
 }
 .code pre span {
-  font-family: 'Roboto Mono', menlo, monospace;
+  font-family: monospace;
   font-size: 0.875rem;
   line-height: 1rem;
   color: #7d7c78;
@@ -972,7 +996,7 @@ td.gutter {
   left: 0;
 }
 td.gutter span {
-  font-family: 'Roboto Mono', menlo, monospace;
+  font-family: monospace;
   font-size: 0.875rem;
   line-height: 1rem;
   color: #bababa;
@@ -1067,7 +1091,7 @@ blockquote>footer a {
   background-image: none !important;
 }
 figcaption {
-  font-family: roboto-mono, menlo, monospace;
+  font-family: monospace;
   font-size: 0.75rem;
   padding: 0.5rem 0;
   color: #afaea9;
@@ -1178,6 +1202,7 @@ hr {
   color: #afaea9;
 }
 .post-tag {
+  font-family: 'Carrois Song';
   font-size: 0.75rem;
   font-weight: 500;
   line-height: 1rem;
