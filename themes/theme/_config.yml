@@ -13,8 +13,9 @@ menu:
   主页: /
   日记本: /categories/gallery/
   医学: /tags/Medicine/
-  计算机科学: /tags/Technique/
+  计算机/互联网: /tags/Technique/
   生活: /tags/Life/
+  全部: /archives
   关于: /about
 
 # stylesheets loaded in the <head>
@@ -23,7 +24,7 @@ stylesheets:
 
 # scripts loaded in the end of the body
 scripts:
-- /js/frame.js
+- /js/menu.js
 
 # favicon
 favicon: /favicon.ico
@@ -37,18 +38,19 @@ profile:
   image: /profile_cover.jpg
 
   links:
-    计算机科学: /tags/Technique/
+    计算机/互联网: /tags/Technique/
     医学: /tags/Medicine/
     生活: /tags/Life/
     日记本: /categories/gallery/
     网页存档: /tags/Archive
-    关于我: /about
+    全部: /archives
+    关于: /about
 
 # footer
 footer:
   copyright_info:
     enable: true
-    author:
+    author: 韩暮秋
 
   powered_by:
     enable: true
