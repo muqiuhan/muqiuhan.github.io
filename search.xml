@@ -825,7 +825,7 @@
   </entry>
   <entry>
     <title>多人协作系统中的实现策略 (CRDT，锁等实现方案）</title>
-    <url>/2025/04/02/Multiplayer-Collaborative-Systems-tips/</url>
+    <url>/2025/05/08/Multiplayer-Collaborative-Systems-tips/</url>
     <content><![CDATA[<p>最近碰到一块业务：在系统中可以存在多个用户同时对某个项目信息进行编辑，这种多人协作的场景挺有意思的，不过在我们的业务中，并不需要实时协作，只需要保证不会出错就行，话虽如此，但也可以探索一下实时协作的实现方案，防止老年痴呆。</p>
 <p>先来看看第一个方案 —— CRDT（Conflict-free Replicated Data Type，无冲突可复制数据类型）是一类数据结构，它保证了在分布式节点（或多客户端）上进行离线&#x2F;并发更新后，无需中心协调、也无需人工干预，通过“合并策略”就能得到一致的最终状态。  </p>
 <p>核心思想是：所有并发操作都是<strong>幂等</strong>（idempotent）、<strong>可交换</strong>（commutative）的。</p>
