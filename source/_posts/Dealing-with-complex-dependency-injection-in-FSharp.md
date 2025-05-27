@@ -72,7 +72,7 @@ Here we have a fairly short snippet with some dependencies? But how many in prac
 - Maybe aside of the logger we may be needing a separate telemetry mechanism to count number of incoming request or password validation failures? That means another parameter.
 - Salt generation is pseudo-random process - it we want our function to be deterministic, we should probably parametrize it over explicitly passed `Random` as well.
 
-As you see, what seemed to be simple task at the beginning can quickly blow up out of proportion. As the number of arguments grows, the more nasty our wiring code eventually becomes. Quite common pattern is to hide all of that nastiness under the carpet a.k.a. **composition root**. However this doesn't have to be the case.
+As you see, what seemed to be simple task at the beginning can quickly blow up out of proportion. As the number of arguments grows, the more nasty our wiring code eventually becomes. Quite common pattern is to hide all of that nastiness under the carpet a.k.a. composition root. However this doesn't have to be the case.
 
 Below we'll cover another approach for dealing with dependencies - inspired by Scala [ZIO](https://medium.com/@pascal.mengelt/what-are-the-benefits-of-the-zio-modules-with-zlayers-3bf6cc064a9b?ref=bartoszsypytkowski.com) library - using incremental steps, from first principles to monadic bindings.
 
@@ -162,9 +162,9 @@ Now we could as well stop here - IMHO this approach is already good and useful f
 
 ## Reader monad
 
-Before we continue: **what we're going to cover now is less useful in terms of current state of F# ecosystem for the reasons I'll mention later**.
+Before we continue: what we're going to cover now is less useful in terms of current state of F# ecosystem for the reasons I'll mention later.
 
-The pattern we'll use here is known as a **[Reader Monad](https://fsharpforfunandprofit.com/posts/elevated-world-6/?ref=bartoszsypytkowski.com)**. While it's useful in certain situations, it's not widely used - IMO it's fault lies in the name itself, which somehow managed to sound both borderline meaningless and scary in ears of many developers.
+The pattern we'll use here is known as a [Reader Monad](https://fsharpforfunandprofit.com/posts/elevated-world-6/?ref=bartoszsypytkowski.com). While it's useful in certain situations, it's not widely used - IMO it's fault lies in the name itself, which somehow managed to sound both borderline meaningless and scary in ears of many developers.
 
 The rest of this blog post will be introduction to this style in F#, however focused solely around problem of dependency management - we'll ignore other aspects of monads.
 

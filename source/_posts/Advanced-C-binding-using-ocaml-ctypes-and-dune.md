@@ -34,12 +34,12 @@ The catch, though, is that, most likely for historical reasons¹, the [POSIX spe
 
 For instance, here’s how the `sockaddr` structure is specified:
 
-The _<sys/socket.h>_ header defines the **sockaddr** structure that includes at least the following members:sa_family_t   sa_family       address family  
+The _<sys/socket.h>_ header defines the sockaddr structure that includes at least the following members:sa_family_t   sa_family       address family  
 char          sa_data[]       socket address (variable-length data)
 
 Likewise, here’s what is specified about the size of the `socklen_t` data type:
 
-_<sys/socket.h>_ makes available a type, **socklen_t**, which is an unsigned opaque integral type of length of at least 32 bits.
+_<sys/socket.h>_ makes available a type, socklen_t, which is an unsigned opaque integral type of length of at least 32 bits.
 
 Thus, in order to know the exact offset of `sa_family` inside the `sockaddr` structure or the actual size of a `socklen_t` integer, one has to include the OS-specific header, parse its definitions for that specific OS and, only then, is it possible to compute that offset or data size. Let’s see how it’s done in our binding now!
 

@@ -26,7 +26,7 @@ User 展现了这样一个模型：
 要创建一对一的 self-relation：
 - 关系的两端都必须定义一个共享相同名称的 `@relation` 属性（`BlogOwnerHistory`）
 - 关系字段必须是[完全注释](https://www.prisma.io/docs/orm/prisma-schema/data-model/relations#relation-fields)的。例如 `successor` 字段需要定义 `field` 和 `references` 参数。
-- 关系字段必须由外键支持。`successor` 字段由 `successorId` 外键提供支持，该外键引用 `id` 字段中的值。`successorId` 还需要 `@unique` 属性来保证一对一的关系。****
+- 关系字段必须由外键支持。`successor` 字段由 `successorId` 外键提供支持，该外键引用 `id` 字段中的值。`successorId` 还需要 `@unique` 属性来保证一对一的关系。
 
 > 一对一的 self-relation 需要两个端点，即使这两个端点是同一条数据。
 

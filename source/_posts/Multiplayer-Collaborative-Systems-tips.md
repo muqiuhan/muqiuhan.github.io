@@ -8,7 +8,7 @@ tags: [Technique]
 
 先来看看第一个方案 —— CRDT（Conflict-free Replicated Data Type，无冲突可复制数据类型）是一类数据结构，它保证了在分布式节点（或多客户端）上进行离线/并发更新后，无需中心协调、也无需人工干预，通过“合并策略”就能得到一致的最终状态。  
 
-核心思想是：所有并发操作都是**幂等**（idempotent）、**可交换**（commutative）的。
+核心思想是：所有并发操作都是幂等（idempotent）、可交换（commutative）的。
 
 常见类型有：  
 一、G-Counter（只能增计数器）  
@@ -78,7 +78,7 @@ await prisma.project_lock.delete({ where:{ project_id } });
 
 ---
 
-第二个方案是乐观并发控制（Optimistic Concurrency） ：记录资源的**版本号**或**时间戳**；客户端提交更新时带上自己的版本号，后端检查版本是否一致，不一致则认为冲突，返回 409，由客户端告知用户“数据已过期，请刷新后合并”。  
+第二个方案是乐观并发控制（Optimistic Concurrency） ：记录资源的版本号或时间戳；客户端提交更新时带上自己的版本号，后端检查版本是否一致，不一致则认为冲突，返回 409，由客户端告知用户“数据已过期，请刷新后合并”。  
 
 具体实现中，可以尝试在 `project` 表加上 `version INT NOT NULL DEFAULT 1, updated_at TIMESTAMPTZ` ，然后更新项目时：
 ```ts
@@ -104,7 +104,7 @@ async updateProject(parent, { id, version, input }, ctx) {
 
 第三个方案是：操作转化（Operational Transformation，OT）  
 
-也就是记录用户每次的“操作”（insert/delete at position），服务器根据历史操作序列对并发操作做**转化**（transform），确保先到达的操作调整后再应用后到达的。  
+也就是记录用户每次的“操作”（insert/delete at position），服务器根据历史操作序列对并发操作做转化（transform），确保先到达的操作调整后再应用后到达的。  
 
 有一些实现案例：
 一、ShareDB（Node.js）  
@@ -127,7 +127,7 @@ async updateProject(parent, { id, version, input }, ctx) {
 ---
 
 总结来说，
-- CRDT 最擅长 **去中心化**、**离线编辑**、**自动合并**；  
+- CRDT 最擅长 去中心化、离线编辑、自动合并；  
 - 若不引入 CRDT，可根据业务侧重点选用：  
   1) 悲观锁 → 强制串行编辑，简单粗暴；  
   2) 乐观并发 → 适合大多数业务场景，成本低；  

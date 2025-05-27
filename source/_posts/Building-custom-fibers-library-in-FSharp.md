@@ -16,16 +16,16 @@ Before we begin, I think it's good to discuss different designs. We'll cover sev
 
 Scheduler is a subsystem, which direct responsibility is to assign CPU core processing power to a particular fiber. It's also responsible for coordinating fibers execution. The two most common categories of schedulers are preemptive and cooperative.
 
-A **preemptive** scheduler is the one, that's always in control of fiber execution. It's able to decide on its own, when fiber can be started and stopped. The most obvious example of such is a thread scheduler existing on most operating systems.
+A preemptive scheduler is the one, that's always in control of fiber execution. It's able to decide on its own, when fiber can be started and stopped. The most obvious example of such is a thread scheduler existing on most operating systems.
 
 Preemptive scheduler usually works in one of two ways:
 
 - Time based scheduler takes a quant of CPU time and gives it to a given fiber, which ten can execute its logic until it reaches its execution time limit (of course, it can finish earlier). This is how OS thread scheduler, but also how Go goroutine scheduler works.
 - Another variant is step-based scheduler, which splits fiber's function body into series of (more or less equal) steps. Then each fiber is given a number of steps to execute before preemption occurs. Example of such is Erlang's BEAM - it simply allows each process to execute up to 2000 "reductions", where each reduction is basically a function call. _And since in Erlang there are no loops, only tail-recursive functions, this approach works well for long-living iterative processes as well._
 
-One of the problems with preemptive schedulers is that they usually need some kind of involvement from the compiler or hosting virtual machine in order to work. For this reason, most of the fiber libraries use **cooperative** schedulers to perform their work.
+One of the problems with preemptive schedulers is that they usually need some kind of involvement from the compiler or hosting virtual machine in order to work. For this reason, most of the fiber libraries use cooperative schedulers to perform their work.
 
-A **cooperative** scheduler doesn't have a concept of preemption - once started by the scheduler, a fiber will execute until it doesn't give back the control willingly. This is often done with dedicated programming constructs, and often is known as yielding, parking or awaiting.
+A cooperative scheduler doesn't have a concept of preemption - once started by the scheduler, a fiber will execute until it doesn't give back the control willingly. This is often done with dedicated programming constructs, and often is known as yielding, parking or awaiting.
 
 In cooperative variant, a fiber body is usually split into series of discrete steps, between which fiber gives control back to the scheduler.
 
@@ -44,19 +44,19 @@ Stackless coroutines usually construct their logic around one of two concepts:
 1. Finite state machines - this variant is usually faster and can be encoded manually (example of such case is Akka actors), but for a human eye it usually doesn't really read as a sequential step-by-step program execution, unless it has some support from the compiler itself (see: C# and Rust).
 2. Monadic sequencing via bind/flatMap operator, which is very popular in functional languages. While we cover it in more details in the rest of this blog post, for now it's enough to say that it's a way to chain callback-based behaviors together in a way, that resembles standard sequential code.
 
-For sure one of the advantages of stackful coroutines is that they're _mono-colored_: you can yield/continue coroutine execution from within any other function, while in the stackless variant splits your world into _two-colored_ functions - synchronous and **async**hronous - where async one can be only called and yielded safely (without blocking underlying OS thread) from within another async function.
+For sure one of the advantages of stackful coroutines is that they're _mono-colored_: you can yield/continue coroutine execution from within any other function, while in the stackless variant splits your world into _two-colored_ functions - synchronous and asynchronous - where async one can be only called and yielded safely (without blocking underlying OS thread) from within another async function.
 
 ### Eager vs lazy fibers
 
 We already mentioned two important events in fiber execution life cycle - starting and parking. Here I briefly discuss about different design decisions on when to start a fiber execution.
 
-**Eager** execution means, that fiber is started automatically after its creation. An example of such are Scala `Future[A]` and JavaScript `Promise`. Since execution process starts right away, we're willingly resign from a certain degree of control over how or when to execute given fiber. Usually this is solved by wrapping a fiber creation into another function or lambda.
+Eager execution means, that fiber is started automatically after its creation. An example of such are Scala `Future[A]` and JavaScript `Promise`. Since execution process starts right away, we're willingly resign from a certain degree of control over how or when to execute given fiber. Usually this is solved by wrapping a fiber creation into another function or lambda.
 
-**Lazy** execution is much more common and preferred way of work, as it allows us to separate place where we want to define our asynchronous sequence of steps from the place, where the execution details are defined. It's used in C# TPL as well as pretty much in all functional languages implementations (excluding Scala futures mentioned earlier).
+Lazy execution is much more common and preferred way of work, as it allows us to separate place where we want to define our asynchronous sequence of steps from the place, where the execution details are defined. It's used in C# TPL as well as pretty much in all functional languages implementations (excluding Scala futures mentioned earlier).
 
 ### Interruption
 
-There are also few decisions regarding premature escaping the fiber execution, also known as interruption/cancelation: one of them requires passing special object - a **token** - between method calls and explicit checking for its completion. It is how C# Tasks work. However putting such requirement onto the API user can be cumbersome and error-prone option. Therefore pretty much every other coroutine library either allows to direcly interrupt a fiber or (like in case of F# Async) passes cancelation tokens and check if they were triggered under the hood.
+There are also few decisions regarding premature escaping the fiber execution, also known as interruption/cancelation: one of them requires passing special object - a token - between method calls and explicit checking for its completion. It is how C# Tasks work. However putting such requirement onto the API user can be cumbersome and error-prone option. Therefore pretty much every other coroutine library either allows to direcly interrupt a fiber or (like in case of F# Async) passes cancelation tokens and check if they were triggered under the hood.
 
 ## Implementation
 
@@ -136,7 +136,7 @@ This simple scenario is similar to what .NET `Task.WhenAny` is used - with a dif
 Now, since our cancellation is not explicit, we need to deal with few things:
 
 1. Whenever parent fiber is cancelled, all child fibers it spawned are also cancelled.
-2. Whenever we cancel a fiber that loose the race, we **don't want** to accidentally cancel a token of its parent.
+2. Whenever we cancel a fiber that loose the race, we don't want to accidentally cancel a token of its parent.
 
 This behavior implies at least using two separate tokens, however in practice it will be more pragmatic to make our `Cancel` token work as a tree hierarchy - this way we can easily keep track of things and support more complex scenarios.
 
@@ -513,7 +513,7 @@ let rec run () =
 
 We'll try to pick the first entry from the timeline - since here we use F# map, which is sorted in ascending order, we know that first entry is the one with the shortest execution timeout. We update our "current" time to match the expected one we calculated earlier, and finally we execute all functions scheduled at that time and repeat the loop all over until we eventually run out of scheduled actions.
 
-Now here's the trick - we use `List.rev` to execute functions in the same order in which they were scheduled, because we want our tests to be deterministic and our bugs to be reproducible. However this is not the only strategy - **since we know that functions in the same bucket could as well be executing in parallel, we could shuffle them around in different permutations for early discovery of some data races!** I'll won't dive into it, but leave that idea as food for thoughts for you.
+Now here's the trick - we use `List.rev` to execute functions in the same order in which they were scheduled, because we want our tests to be deterministic and our bugs to be reproducible. However this is not the only strategy - since we know that functions in the same bucket could as well be executing in parallel, we could shuffle them around in different permutations for early discovery of some data races! I'll won't dive into it, but leave that idea as food for thoughts for you.
 
 One last note about the test scheduler is that isolating it from the actual physical clock means, we cannot trust our time functions (like `DateTime.UtcNow`) any longer. This shouldn't really be an issue though - because relying on physical time would potentially make our tests indeterministic, we didn't want to use it anyway, right?
 

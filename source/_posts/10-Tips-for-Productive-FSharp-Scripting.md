@@ -18,7 +18,7 @@ To execute code interactively, simply type code in an `.fsx` file, select a bloc
 
 > You can also execute a single-line with Alt + '. I rarely use this option, but this can save you time because you don’t need to select the entire line of code.
 
-> In case the keyboard shortcuts to send code to FSI do not work anymore (ReSharper used to over-write them in the past), you can reset them in Visual Studio, by going to Tools / Options / Environment / Keyboard. The 2 commands you need to map are **EditorContextMenus.CodeWindow.ExecuteInInteractive** and **EditorContextMenus.CodeWindow.ExecuteLineInInteractive**.
+> In case the keyboard shortcuts to send code to FSI do not work anymore (ReSharper used to over-write them in the past), you can reset them in Visual Studio, by going to Tools / Options / Environment / Keyboard. The 2 commands you need to map are EditorContextMenus.CodeWindow.ExecuteInInteractive and EditorContextMenus.CodeWindow.ExecuteLineInInteractive.
 
 You can also use these shortcuts from a regular `.fs` file, which can be handy if you want to validate that a piece of code is behaving the way you want.
 
@@ -172,7 +172,7 @@ The Nuget package manager is useful to consume existing packages. However, by de
 
 `#r @"../packages/FSharp.Data.2.2.5/lib/net40/FSharp.Data.dll"`
 
-Fixing the script requires manually editing the version number in the path, which quickly becomes a pain. [**Paket**](https://fsprojects.github.io/Paket/) provides a better experience, because it stores packages without the version number, in this case, under:
+Fixing the script requires manually editing the version number in the path, which quickly becomes a pain. [Paket](https://fsprojects.github.io/Paket/) provides a better experience, because it stores packages without the version number, in this case, under:
 
 `#r @"../packages/FSharp.Data/lib/net40/FSharp.Data.dll"`
 
@@ -250,7 +250,7 @@ Hat tip to [Rick Minerich](https://twitter.com/rickasaurus) for that one. I’ll
 Did you know that you could…
 
 - [debug an F# script? (around 0:12:35 in)](https://channel9.msdn.com/Events/Visual-Studio/Visual-Studio-2015-Final-Release-Event/Six-Quick-Picks-from-Visual-F-40)
-- [inspect the objects in your FSI session with **FsEye**?](http://www.swensensoftware.com/fseye)
+- [inspect the objects in your FSI session with FsEye?](http://www.swensensoftware.com/fseye)
 - change the FSI font size in Tools/Options/Environment/Fonts and Colors/Show Settings for/F# Interactive?
 - add your own pretty-printer to FSI, [like this](https://github.com/mathnet/mathnet-numerics/blob/master/src/FSharp/MathNet.Numerics.fsx)?
 - mess with your coworkers’ mental sanity, by executing `(*` (opening a multiline comment) in FSI? (credit: [Tomas](https://twitter.com/tomaspetricek))

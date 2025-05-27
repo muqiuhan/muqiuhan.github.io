@@ -33,7 +33,7 @@ Rimon Tawadrous 在其 GitHub repo 中的测试，对比 100 万条逐条插入�
 
 ---
 
-**参考链接**  
+参考链接  
 [1] “为什么 UUID 7 比 UUID 4 更适合作为 RDBMS 的聚集索引？” dbaplus.cn  
     https://dbaplus.cn/news-160-6313-1.html  
 [2] “PostgreSQL and UUID as primary key” maciejwalkowiak
