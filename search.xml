@@ -16,7 +16,7 @@
 <p>You can also execute a single-line with Alt + ‘. I rarely use this option, but this can save you time because you don’t need to select the entire line of code.</p>
 </blockquote>
 <blockquote>
-<p>In case the keyboard shortcuts to send code to FSI do not work anymore (ReSharper used to over-write them in the past), you can reset them in Visual Studio, by going to Tools &#x2F; Options &#x2F; Environment &#x2F; Keyboard. The 2 commands you need to map are <strong>EditorContextMenus.CodeWindow.ExecuteInInteractive</strong> and <strong>EditorContextMenus.CodeWindow.ExecuteLineInInteractive</strong>.</p>
+<p>In case the keyboard shortcuts to send code to FSI do not work anymore (ReSharper used to over-write them in the past), you can reset them in Visual Studio, by going to Tools &#x2F; Options &#x2F; Environment &#x2F; Keyboard. The 2 commands you need to map are EditorContextMenus.CodeWindow.ExecuteInInteractive and EditorContextMenus.CodeWindow.ExecuteLineInInteractive.</p>
 </blockquote>
 <p>You can also use these shortcuts from a regular <code>.fs</code> file, which can be handy if you want to validate that a piece of code is behaving the way you want.</p>
 <blockquote>
@@ -102,7 +102,7 @@
 </blockquote>
 <h2 id="Tip-6-Use-Paket"><a href="#Tip-6-Use-Paket" class="headerlink" title="Tip 6: Use Paket"></a>Tip 6: Use <code>Paket</code></h2><p>The Nuget package manager is useful to consume existing packages. However, by default, Nuget stores assemblies in a folder that includes the package version number. This is very impractical for a script. In our example above, if <code>fsharp.data</code> gets an update, our script reference will be broken once we update the Nuget package:</p>
 <p><code>#r @&quot;../packages/FSharp.Data.2.2.5/lib/net40/FSharp.Data.dll&quot;</code></p>
-<p>Fixing the script requires manually editing the version number in the path, which quickly becomes a pain. <a href="https://fsprojects.github.io/Paket/"><strong>Paket</strong></a> provides a better experience, because it stores packages without the version number, in this case, under:</p>
+<p>Fixing the script requires manually editing the version number in the path, which quickly becomes a pain. <a href="https://fsprojects.github.io/Paket/">Paket</a> provides a better experience, because it stores packages without the version number, in this case, under:</p>
 <p><code>#r @&quot;../packages/FSharp.Data/lib/net40/FSharp.Data.dll&quot;</code></p>
 <p>Your scripts will now gracefully handle version number changes.</p>
 <p>If you end up consuming numerous packages, you can make your life even easier, by referencing paths where assemblies might be searched for, using <code>#I</code>:</p>
@@ -140,7 +140,7 @@
 <h2 id="Tip-10-Bonus-Material"><a href="#Tip-10-Bonus-Material" class="headerlink" title="Tip 10: Bonus Material"></a>Tip 10: Bonus Material</h2><p>Did you know that you could…</p>
 <ul>
 <li><a href="https://channel9.msdn.com/Events/Visual-Studio/Visual-Studio-2015-Final-Release-Event/Six-Quick-Picks-from-Visual-F-40">debug an F# script? (around 0:12:35 in)</a></li>
-<li><a href="http://www.swensensoftware.com/fseye">inspect the objects in your FSI session with <strong>FsEye</strong>?</a></li>
+<li><a href="http://www.swensensoftware.com/fseye">inspect the objects in your FSI session with FsEye?</a></li>
 <li>change the FSI font size in Tools&#x2F;Options&#x2F;Environment&#x2F;Fonts and Colors&#x2F;Show Settings for&#x2F;F# Interactive?</li>
 <li>add your own pretty-printer to FSI, <a href="https://github.com/mathnet/mathnet-numerics/blob/master/src/FSharp/MathNet.Numerics.fsx">like this</a>?</li>
 <li>mess with your coworkers’ mental sanity, by executing <code>(*</code> (opening a multiline comment) in FSI? (credit: <a href="https://twitter.com/tomaspetricek">Tomas</a>)</li>
@@ -219,9 +219,9 @@
 <p>Most network-based C libraries refer to <code>socket.h</code> to describe the type of socket that can be used with their API so it’s an important entry point for a lot of network operations and one that would be nice to support as generically as possible in OCaml.</p>
 <p>The catch, though, is that, most likely for historical reasons¹, the <a href="https://pubs.opengroup.org/onlinepubs/7908799/xns/syssocket.h.html">POSIX specifications</a> only <em>partially</em> defines some of the required data structures and types, which makes it possible to write C code using them but does not give enough information to write C bindings without having to use the compiler to parse the actual system-specific headers of the running host.</p>
 <p>For instance, here’s how the <code>sockaddr</code> structure is specified:</p>
-<p>The <em>&lt;sys&#x2F;socket.h&gt;</em> header defines the <strong>sockaddr</strong> structure that includes at least the following members:sa_family_t   sa_family       address family<br>char          sa_data[]       socket address (variable-length data)</p>
+<p>The <em>&lt;sys&#x2F;socket.h&gt;</em> header defines the sockaddr structure that includes at least the following members:sa_family_t   sa_family       address family<br>char          sa_data[]       socket address (variable-length data)</p>
 <p>Likewise, here’s what is specified about the size of the <code>socklen_t</code> data type:</p>
-<p><em>&lt;sys&#x2F;socket.h&gt;</em> makes available a type, <strong>socklen_t</strong>, which is an unsigned opaque integral type of length of at least 32 bits.</p>
+<p><em>&lt;sys&#x2F;socket.h&gt;</em> makes available a type, socklen_t, which is an unsigned opaque integral type of length of at least 32 bits.</p>
 <p>Thus, in order to know the exact offset of <code>sa_family</code> inside the <code>sockaddr</code> structure or the actual size of a <code>socklen_t</code> integer, one has to include the OS-specific header, parse its definitions for that specific OS and, only then, is it possible to compute that offset or data size. Let’s see how it’s done in our binding now!</p>
 <h1 id="Putting-it-together"><a href="#Putting-it-together" class="headerlink" title="Putting it together"></a>Putting it together</h1><p>The C binding requires 4 separate passes:</p>
 <ul>
@@ -312,14 +312,14 @@
 <p>What we’re after, are more lightweight structures (less than 1kB), that can live fully in a user space, so that we can have even millions of them cooperating frequently with each other without heavy performance penalties.</p>
 <p>Before we begin, I think it’s good to discuss different designs. We’ll cover several different topics to be able to make more informed decisions, that we’re up to apply to our own solution.</p>
 <h3 id="Preemptive-vs-cooperative-scheduler"><a href="#Preemptive-vs-cooperative-scheduler" class="headerlink" title="Preemptive vs cooperative scheduler"></a>Preemptive vs cooperative scheduler</h3><p>Scheduler is a subsystem, which direct responsibility is to assign CPU core processing power to a particular fiber. It’s also responsible for coordinating fibers execution. The two most common categories of schedulers are preemptive and cooperative.</p>
-<p>A <strong>preemptive</strong> scheduler is the one, that’s always in control of fiber execution. It’s able to decide on its own, when fiber can be started and stopped. The most obvious example of such is a thread scheduler existing on most operating systems.</p>
+<p>A preemptive scheduler is the one, that’s always in control of fiber execution. It’s able to decide on its own, when fiber can be started and stopped. The most obvious example of such is a thread scheduler existing on most operating systems.</p>
 <p>Preemptive scheduler usually works in one of two ways:</p>
 <ul>
 <li>Time based scheduler takes a quant of CPU time and gives it to a given fiber, which ten can execute its logic until it reaches its execution time limit (of course, it can finish earlier). This is how OS thread scheduler, but also how Go goroutine scheduler works.</li>
 <li>Another variant is step-based scheduler, which splits fiber’s function body into series of (more or less equal) steps. Then each fiber is given a number of steps to execute before preemption occurs. Example of such is Erlang’s BEAM - it simply allows each process to execute up to 2000 “reductions”, where each reduction is basically a function call. <em>And since in Erlang there are no loops, only tail-recursive functions, this approach works well for long-living iterative processes as well.</em></li>
 </ul>
-<p>One of the problems with preemptive schedulers is that they usually need some kind of involvement from the compiler or hosting virtual machine in order to work. For this reason, most of the fiber libraries use <strong>cooperative</strong> schedulers to perform their work.</p>
-<p>A <strong>cooperative</strong> scheduler doesn’t have a concept of preemption - once started by the scheduler, a fiber will execute until it doesn’t give back the control willingly. This is often done with dedicated programming constructs, and often is known as yielding, parking or awaiting.</p>
+<p>One of the problems with preemptive schedulers is that they usually need some kind of involvement from the compiler or hosting virtual machine in order to work. For this reason, most of the fiber libraries use cooperative schedulers to perform their work.</p>
+<p>A cooperative scheduler doesn’t have a concept of preemption - once started by the scheduler, a fiber will execute until it doesn’t give back the control willingly. This is often done with dedicated programming constructs, and often is known as yielding, parking or awaiting.</p>
 <p>In cooperative variant, a fiber body is usually split into series of discrete steps, between which fiber gives control back to the scheduler.</p>
 <p>Keep in mind that these two are not mutually exclusive - a preemptive scheduler often provides a way for a fiber to return control back to it when it’s known that fiber won’t be executing any longer eg. because it has been put to sleep for a while.</p>
 <h3 id="Stackless-vs-stackful"><a href="#Stackless-vs-stackful" class="headerlink" title="Stackless vs. stackful"></a>Stackless vs. stackful</h3><p>A concept, that’s somewhat related to a topic above is the idea of stackless and stackful coroutines.</p>
@@ -330,11 +330,11 @@
 <li>Finite state machines - this variant is usually faster and can be encoded manually (example of such case is Akka actors), but for a human eye it usually doesn’t really read as a sequential step-by-step program execution, unless it has some support from the compiler itself (see: C# and Rust).</li>
 <li>Monadic sequencing via bind&#x2F;flatMap operator, which is very popular in functional languages. While we cover it in more details in the rest of this blog post, for now it’s enough to say that it’s a way to chain callback-based behaviors together in a way, that resembles standard sequential code.</li>
 </ol>
-<p>For sure one of the advantages of stackful coroutines is that they’re <em>mono-colored</em>: you can yield&#x2F;continue coroutine execution from within any other function, while in the stackless variant splits your world into <em>two-colored</em> functions - synchronous and <strong>async</strong>hronous - where async one can be only called and yielded safely (without blocking underlying OS thread) from within another async function.</p>
+<p>For sure one of the advantages of stackful coroutines is that they’re <em>mono-colored</em>: you can yield&#x2F;continue coroutine execution from within any other function, while in the stackless variant splits your world into <em>two-colored</em> functions - synchronous and asynchronous - where async one can be only called and yielded safely (without blocking underlying OS thread) from within another async function.</p>
 <h3 id="Eager-vs-lazy-fibers"><a href="#Eager-vs-lazy-fibers" class="headerlink" title="Eager vs lazy fibers"></a>Eager vs lazy fibers</h3><p>We already mentioned two important events in fiber execution life cycle - starting and parking. Here I briefly discuss about different design decisions on when to start a fiber execution.</p>
-<p><strong>Eager</strong> execution means, that fiber is started automatically after its creation. An example of such are Scala <code>Future[A]</code> and JavaScript <code>Promise</code>. Since execution process starts right away, we’re willingly resign from a certain degree of control over how or when to execute given fiber. Usually this is solved by wrapping a fiber creation into another function or lambda.</p>
-<p><strong>Lazy</strong> execution is much more common and preferred way of work, as it allows us to separate place where we want to define our asynchronous sequence of steps from the place, where the execution details are defined. It’s used in C# TPL as well as pretty much in all functional languages implementations (excluding Scala futures mentioned earlier).</p>
-<h3 id="Interruption"><a href="#Interruption" class="headerlink" title="Interruption"></a>Interruption</h3><p>There are also few decisions regarding premature escaping the fiber execution, also known as interruption&#x2F;cancelation: one of them requires passing special object - a <strong>token</strong> - between method calls and explicit checking for its completion. It is how C# Tasks work. However putting such requirement onto the API user can be cumbersome and error-prone option. Therefore pretty much every other coroutine library either allows to direcly interrupt a fiber or (like in case of F# Async) passes cancelation tokens and check if they were triggered under the hood.</p>
+<p>Eager execution means, that fiber is started automatically after its creation. An example of such are Scala <code>Future[A]</code> and JavaScript <code>Promise</code>. Since execution process starts right away, we’re willingly resign from a certain degree of control over how or when to execute given fiber. Usually this is solved by wrapping a fiber creation into another function or lambda.</p>
+<p>Lazy execution is much more common and preferred way of work, as it allows us to separate place where we want to define our asynchronous sequence of steps from the place, where the execution details are defined. It’s used in C# TPL as well as pretty much in all functional languages implementations (excluding Scala futures mentioned earlier).</p>
+<h3 id="Interruption"><a href="#Interruption" class="headerlink" title="Interruption"></a>Interruption</h3><p>There are also few decisions regarding premature escaping the fiber execution, also known as interruption&#x2F;cancelation: one of them requires passing special object - a token - between method calls and explicit checking for its completion. It is how C# Tasks work. However putting such requirement onto the API user can be cumbersome and error-prone option. Therefore pretty much every other coroutine library either allows to direcly interrupt a fiber or (like in case of F# Async) passes cancelation tokens and check if they were triggered under the hood.</p>
 <h2 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h2><p>Since we talked a bit about various approaches, let’s get to the meat of this blog post: implementing our own coroutine library in F#. So, what properties will it have?:</p>
 <ol>
 <li>We use cooperative scheduling (we don’t want to tweak the compiler) of stackless fibers with support from F# computation expression for nice syntax.</li>
@@ -377,7 +377,7 @@
 <p>Now, since our cancellation is not explicit, we need to deal with few things:</p>
 <ol>
 <li>Whenever parent fiber is cancelled, all child fibers it spawned are also cancelled.</li>
-<li>Whenever we cancel a fiber that loose the race, we <strong>don’t want</strong> to accidentally cancel a token of its parent.</li>
+<li>Whenever we cancel a fiber that loose the race, we don’t want to accidentally cancel a token of its parent.</li>
 </ol>
 <p>This behavior implies at least using two separate tokens, however in practice it will be more pragmatic to make our <code>Cancel</code> token work as a tree hierarchy - this way we can easily keep track of things and support more complex scenarios.</p>
 <figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="meta">[&lt;Sealed;AllowNullLiteral&gt;]</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Cancel</span>(parent<span class="operator">:</span> Cancel) <span class="operator">=</span></span><br><span class="line">  <span class="keyword">let</span> <span class="keyword">mutable</span> flag<span class="operator">:</span> <span class="type">int</span> <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">  <span class="keyword">let</span> <span class="keyword">mutable</span> children<span class="operator">:</span> Cancel <span class="type">list</span> <span class="operator">=</span> []</span><br><span class="line">  <span class="keyword">new</span>() <span class="operator">=</span> Cancel(<span class="literal">null</span>)</span><br><span class="line">  <span class="comment">/// Check if token was cancelled</span></span><br><span class="line">  <span class="keyword">member</span> __.Cancelled <span class="operator">=</span> flag <span class="operator">=</span> <span class="number">1</span></span><br><span class="line">  <span class="comment">/// Remove child token</span></span><br><span class="line">  <span class="keyword">member</span> <span class="keyword">private</span> __.RemoveChild(child) <span class="operator">=</span> </span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">rec</span> loop child <span class="operator">=</span></span><br><span class="line">      <span class="keyword">let</span> children&#x27; <span class="operator">=</span> children</span><br><span class="line">      <span class="keyword">let</span> nval <span class="operator">=</span> children&#x27; <span class="operator">|&gt;</span> List.filter ((<span class="operator">&lt;&gt;</span>) child)</span><br><span class="line">      <span class="keyword">if</span> <span class="built_in">not</span> (obj.ReferenceEquals(children&#x27;, Interlocked.CompareExchange(<span class="operator">&amp;</span>children, nval, children&#x27;)))</span><br><span class="line">      <span class="keyword">then</span> loop child</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">not</span> (List.isEmpty children) <span class="keyword">then</span> loop child</span><br><span class="line">  <span class="comment">/// Create a new child token and return it.</span></span><br><span class="line">  <span class="keyword">member</span> this.AddChild () <span class="operator">=</span></span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">rec</span> loop child <span class="operator">=</span></span><br><span class="line">      <span class="keyword">let</span> children&#x27; <span class="operator">=</span> children</span><br><span class="line">      <span class="keyword">if</span> (obj.ReferenceEquals(children&#x27;, Interlocked.CompareExchange(<span class="operator">&amp;</span>children, child<span class="operator">::</span>children&#x27;, children&#x27;)))</span><br><span class="line">      <span class="keyword">then</span> child</span><br><span class="line">      <span class="keyword">else</span> loop child</span><br><span class="line">    loop (Cancel this)</span><br><span class="line">  <span class="comment">/// Cancel a token</span></span><br><span class="line">  <span class="keyword">member</span> this.Cancel() <span class="operator">=</span></span><br><span class="line">    <span class="keyword">if</span> Interlocked.Exchange(<span class="operator">&amp;</span>flag, <span class="number">1</span>) <span class="operator">=</span> <span class="number">0</span> <span class="keyword">then</span></span><br><span class="line">      <span class="keyword">for</span> child <span class="keyword">in</span> Interlocked.Exchange(<span class="operator">&amp;</span>children, []) <span class="keyword">do</span> child.Cancel()</span><br><span class="line">      <span class="keyword">if</span> <span class="built_in">not</span> (isNull parent) <span class="keyword">then</span> parent.RemoveChild(this)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -488,7 +488,7 @@
 <figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">rec</span> run () <span class="operator">=</span></span><br><span class="line">  <span class="keyword">match</span> Seq.tryHead timeline <span class="keyword">with</span></span><br><span class="line">  <span class="operator">|</span> <span class="literal">None</span> <span class="operator">-&gt;</span> running <span class="operator">&lt;-</span> <span class="literal">false</span></span><br><span class="line">  <span class="operator">|</span> <span class="literal">Some</span> (KeyValue(time, bucket)) <span class="operator">-&gt;</span></span><br><span class="line">    timeline <span class="operator">&lt;-</span> Map.remove time timeline</span><br><span class="line">    currentTime <span class="operator">&lt;-</span> time</span><br><span class="line">    <span class="keyword">for</span> fn <span class="keyword">in</span> List.rev bucket <span class="keyword">do</span> </span><br><span class="line">      fn ()          </span><br><span class="line">    run ()</span><br></pre></td></tr></table></figure>
 
 <p>We’ll try to pick the first entry from the timeline - since here we use F# map, which is sorted in ascending order, we know that first entry is the one with the shortest execution timeout. We update our “current” time to match the expected one we calculated earlier, and finally we execute all functions scheduled at that time and repeat the loop all over until we eventually run out of scheduled actions.</p>
-<p>Now here’s the trick - we use <code>List.rev</code> to execute functions in the same order in which they were scheduled, because we want our tests to be deterministic and our bugs to be reproducible. However this is not the only strategy - <strong>since we know that functions in the same bucket could as well be executing in parallel, we could shuffle them around in different permutations for early discovery of some data races!</strong> I’ll won’t dive into it, but leave that idea as food for thoughts for you.</p>
+<p>Now here’s the trick - we use <code>List.rev</code> to execute functions in the same order in which they were scheduled, because we want our tests to be deterministic and our bugs to be reproducible. However this is not the only strategy - since we know that functions in the same bucket could as well be executing in parallel, we could shuffle them around in different permutations for early discovery of some data races! I’ll won’t dive into it, but leave that idea as food for thoughts for you.</p>
 <p>One last note about the test scheduler is that isolating it from the actual physical clock means, we cannot trust our time functions (like <code>DateTime.UtcNow</code>) any longer. This shouldn’t really be an issue though - because relying on physical time would potentially make our tests indeterministic, we didn’t want to use it anyway, right?</p>
 <p>However, we need to be able to obtain current time from the scheduler, so we need to extend its API:</p>
 <figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">IScheduler</span> <span class="operator">=</span></span><br><span class="line">  <span class="keyword">abstract</span> UtcNow<span class="operator">:</span> <span class="type">unit</span> <span class="operator">-&gt;</span> <span class="type">unit</span></span><br><span class="line">  <span class="comment">// ... other methods</span></span><br><span class="line">  </span><br><span class="line"><span class="keyword">type</span> <span class="title class_">TestScheduler</span>() <span class="operator">=</span></span><br><span class="line">  <span class="keyword">let</span> <span class="keyword">mutable</span> currentTime <span class="operator">=</span> DateTime.UtcNow.Ticks</span><br><span class="line">  <span class="comment">// ... rest of the implementation</span></span><br><span class="line">  <span class="keyword">interface</span> IScheduler <span class="keyword">with</span></span><br><span class="line">    <span class="keyword">member</span> __.UtcNow() <span class="operator">=</span> DateTime(currentTime)</span><br><span class="line">    <span class="comment">// ... other methods</span></span><br></pre></td></tr></table></figure>
@@ -506,17 +506,17 @@
     <content><![CDATA[<p>Ubiquitous Language（通用语言）是 Domain-Driven Design (DDD) 中的一个核心概念。它是一种共享的、统一的语言，用于描述和讨论领域模型中的概念和规则。Ubiquitous Language 的目的是确保开发团队和业务专家之间的沟通更加高效和准确，从而减少误解和错误。</p>
 <p>一般来说，Ubiquitous Language 有以下特点：</p>
 <ol>
-<li><strong>共享</strong>：Ubiquitous Language 是由开发团队和业务专家共同创建和使用的。它不仅用于代码和文档，还用于日常的沟通和讨论。</li>
-<li><strong>统一</strong>：在整个项目中，Ubiquitous Language 应该是一致的。无论是在代码、文档、会议还是白板上，都应该使用相同的术语和概念。</li>
-<li><strong>精确</strong>：Ubiquitous Language 应该尽可能精确，避免模糊和歧义。每个术语都应该有明确的定义和含义。</li>
-<li><strong>演进</strong>：Ubiquitous Language 是动态的，会随着项目的进展和业务需求的变化而演进。团队应该定期审查和更新它。</li>
+<li>共享：Ubiquitous Language 是由开发团队和业务专家共同创建和使用的。它不仅用于代码和文档，还用于日常的沟通和讨论。</li>
+<li>统一：在整个项目中，Ubiquitous Language 应该是一致的。无论是在代码、文档、会议还是白板上，都应该使用相同的术语和概念。</li>
+<li>精确：Ubiquitous Language 应该尽可能精确，避免模糊和歧义。每个术语都应该有明确的定义和含义。</li>
+<li>演进：Ubiquitous Language 是动态的，会随着项目的进展和业务需求的变化而演进。团队应该定期审查和更新它。</li>
 </ol>
 <p>基于此，它可以用在这些地方：</p>
 <ol>
-<li><strong>命名</strong>：在代码中使用 Ubiquitous Language 来命名类、方法、变量等。例如，如果业务专家使用“订单”来描述一个概念，那么在代码中也应该使用“Order”而不是“Purchase”或“Transaction”。</li>
-<li><strong>文档</strong>：在文档中使用 Ubiquitous Language 来描述系统的设计、架构和功能。这有助于业务专家更容易理解技术文档。</li>
-<li><strong>沟通</strong>：在团队会议、讨论和白板会议中使用 Ubiquitous Language。这有助于确保所有参与者都在讨论同一个概念。</li>
-<li><strong>测试</strong>：在编写测试用例时，使用 Ubiquitous Language 来描述测试的前提条件、步骤和预期结果。这有助于确保测试覆盖了业务需求。</li>
+<li>命名：在代码中使用 Ubiquitous Language 来命名类、方法、变量等。例如，如果业务专家使用“订单”来描述一个概念，那么在代码中也应该使用“Order”而不是“Purchase”或“Transaction”。</li>
+<li>文档：在文档中使用 Ubiquitous Language 来描述系统的设计、架构和功能。这有助于业务专家更容易理解技术文档。</li>
+<li>沟通：在团队会议、讨论和白板会议中使用 Ubiquitous Language。这有助于确保所有参与者都在讨论同一个概念。</li>
+<li>测试：在编写测试用例时，使用 Ubiquitous Language 来描述测试的前提条件、步骤和预期结果。这有助于确保测试覆盖了业务需求。</li>
 </ol>
 <p>假设正在开发一个电子商务系统，业务专家使用“订单”来描述用户购买的商品集合。团队可以在代码中使用“Order”来命名相关的类和方法：</p>
 <figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Order</span> <span class="operator">=</span> &#123;</span><br><span class="line">    items<span class="operator">:</span> OrderItem <span class="type">list</span></span><br><span class="line">    customer<span class="operator">:</span> Customer</span><br><span class="line">    orderDate<span class="operator">:</span> DateTime</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">OrderItem</span> <span class="operator">=</span> &#123;</span><br><span class="line">    product<span class="operator">:</span> Product</span><br><span class="line">    quantity<span class="operator">:</span> <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Customer</span> <span class="operator">=</span> &#123;</span><br><span class="line">    name<span class="operator">:</span> <span class="type">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Product</span> <span class="operator">=</span> &#123;</span><br><span class="line">    name<span class="operator">:</span> <span class="type">string</span></span><br><span class="line">    price<span class="operator">:</span> <span class="type">float</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> addItem (order<span class="operator">:</span> Order) (item<span class="operator">:</span> OrderItem) <span class="operator">=</span></span><br><span class="line">    &#123; order <span class="keyword">with</span> items <span class="operator">=</span> order.items <span class="operator">@</span> [item] &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> getTotalAmount (order<span class="operator">:</span> Order) <span class="operator">=</span></span><br><span class="line">    <span class="keyword">let</span> total <span class="operator">=</span> <span class="number">0.0</span></span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> order.items <span class="keyword">do</span></span><br><span class="line">        total <span class="operator">&lt;-</span> total <span class="operator">+</span> item.price</span><br><span class="line">    total</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> getPrice (item<span class="operator">:</span> OrderItem) <span class="operator">=</span></span><br><span class="line">    item.product.price <span class="operator">*</span> item.quantity</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> getTotalPrice (order<span class="operator">:</span> Order) <span class="operator">=</span></span><br><span class="line">    <span class="keyword">let</span> total <span class="operator">=</span> <span class="number">0.0</span></span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> order.items <span class="keyword">do</span></span><br><span class="line">        total <span class="operator">&lt;-</span> total <span class="operator">+</span> getPrice(item)</span><br><span class="line">    total</span><br></pre></td></tr></table></figure>
@@ -559,7 +559,7 @@
 <li>Maybe aside of the logger we may be needing a separate telemetry mechanism to count number of incoming request or password validation failures? That means another parameter.</li>
 <li>Salt generation is pseudo-random process - it we want our function to be deterministic, we should probably parametrize it over explicitly passed <code>Random</code> as well.</li>
 </ul>
-<p>As you see, what seemed to be simple task at the beginning can quickly blow up out of proportion. As the number of arguments grows, the more nasty our wiring code eventually becomes. Quite common pattern is to hide all of that nastiness under the carpet a.k.a. <strong>composition root</strong>. However this doesn’t have to be the case.</p>
+<p>As you see, what seemed to be simple task at the beginning can quickly blow up out of proportion. As the number of arguments grows, the more nasty our wiring code eventually becomes. Quite common pattern is to hide all of that nastiness under the carpet a.k.a. composition root. However this doesn’t have to be the case.</p>
 <p>Below we’ll cover another approach for dealing with dependencies - inspired by Scala <a href="https://medium.com/@pascal.mengelt/what-are-the-benefits-of-the-zio-modules-with-zlayers-3bf6cc064a9b?ref=bartoszsypytkowski.com">ZIO</a> library - using incremental steps, from first principles to monadic bindings.</p>
 <h2 id="Managing-dependencies-beyond-partial-application"><a href="#Managing-dependencies-beyond-partial-application" class="headerlink" title="Managing dependencies beyond partial application"></a>Managing dependencies beyond partial application</h2><p>Let’s start from how our code from above will eventually look like at the end of this step:</p>
 <figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> changePass env <span class="operator">=</span> <span class="keyword">fun</span> req <span class="operator">-&gt;</span> <span class="keyword">task</span> &#123;</span><br><span class="line">    <span class="keyword">let!</span> user <span class="operator">=</span> Db.fetchUser env req.UserId</span><br><span class="line">    <span class="keyword">if</span> user.Hash <span class="operator">=</span> bcrypt user.Salt req.OldPass <span class="keyword">then</span></span><br><span class="line">        <span class="keyword">let</span> salt <span class="operator">=</span> Random.bytes env <span class="number">32</span></span><br><span class="line">        <span class="keyword">do!</span> Db.updateUser <span class="keyword">env</span> &#123; user <span class="keyword">with</span> Salt <span class="operator">=</span> salt; Hash <span class="operator">=</span> bcrypt salt req.NewPass &#125;</span><br><span class="line">        Log.info env <span class="string">&quot;Changed password for user %i&quot;</span> user.Id</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">Ok</span> ()</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">        Log.error env <span class="string">&quot;Password change unauthorized: user %i&quot;</span> user.Id</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">Error</span> <span class="string">&quot;Old password is invalid&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -587,8 +587,8 @@
 <li>It doesn’t impose specific restrictions on libraries and frameworks.</li>
 </ul>
 <p>Now we could as well stop here - IMHO this approach is already good and useful for most cases. We can also try to push it further. As you’ve seen, our code now requires quite a lot of <code>env</code> passing around. Could we do something about this? It turns out that yes, we could.</p>
-<h2 id="Reader-monad"><a href="#Reader-monad" class="headerlink" title="Reader monad"></a>Reader monad</h2><p>Before we continue: <strong>what we’re going to cover now is less useful in terms of current state of F# ecosystem for the reasons I’ll mention later</strong>.</p>
-<p>The pattern we’ll use here is known as a <strong><a href="https://fsharpforfunandprofit.com/posts/elevated-world-6/?ref=bartoszsypytkowski.com">Reader Monad</a></strong>. While it’s useful in certain situations, it’s not widely used - IMO it’s fault lies in the name itself, which somehow managed to sound both borderline meaningless and scary in ears of many developers.</p>
+<h2 id="Reader-monad"><a href="#Reader-monad" class="headerlink" title="Reader monad"></a>Reader monad</h2><p>Before we continue: what we’re going to cover now is less useful in terms of current state of F# ecosystem for the reasons I’ll mention later.</p>
+<p>The pattern we’ll use here is known as a <a href="https://fsharpforfunandprofit.com/posts/elevated-world-6/?ref=bartoszsypytkowski.com">Reader Monad</a>. While it’s useful in certain situations, it’s not widely used - IMO it’s fault lies in the name itself, which somehow managed to sound both borderline meaningless and scary in ears of many developers.</p>
 <p>The rest of this blog post will be introduction to this style in F#, however focused solely around problem of dependency management - we’ll ignore other aspects of monads.</p>
 <p>We’ll going to reuse our environment type from above, but now encode it directly into another type we’ll call <code>Effect</code>. Since I’ve mentioned that our pattern has M-word in it, you can safely assume that our handler’s logic will be defined as a lazy sequence of steps to be executed (sounds almost like async&#x2F;await). In F# we’ll sugar them by using custom computation expression (I’m going to call it <code>effect &#123; ... &#125;</code>) returning our effect type, which we’ll define as:</p>
 <figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="meta">[&lt;Struct&gt;]</span> <span class="keyword">type</span> <span class="title class_">Effect</span><span class="operator">&lt;</span><span class="symbol">&#x27;env</span>, <span class="symbol">&#x27;out</span><span class="operator">&gt;</span> <span class="operator">=</span> Effect <span class="keyword">of</span> (<span class="symbol">&#x27;env</span> <span class="operator">-&gt;</span> <span class="symbol">&#x27;out</span>)</span><br></pre></td></tr></table></figure>
@@ -828,7 +828,7 @@
     <url>/2025/05/08/Multiplayer-Collaborative-Systems-tips/</url>
     <content><![CDATA[<p>最近碰到一块业务：在系统中可以存在多个用户同时对某个项目信息进行编辑，这种多人协作的场景挺有意思的，不过在我们的业务中，并不需要实时协作，只需要保证不会出错就行，话虽如此，但也可以探索一下实时协作的实现方案，防止老年痴呆。</p>
 <p>先来看看第一个方案 —— CRDT（Conflict-free Replicated Data Type，无冲突可复制数据类型）是一类数据结构，它保证了在分布式节点（或多客户端）上进行离线&#x2F;并发更新后，无需中心协调、也无需人工干预，通过“合并策略”就能得到一致的最终状态。  </p>
-<p>核心思想是：所有并发操作都是<strong>幂等</strong>（idempotent）、<strong>可交换</strong>（commutative）的。</p>
+<p>核心思想是：所有并发操作都是幂等（idempotent）、可交换（commutative）的。</p>
 <p>常见类型有：<br>一、G-Counter（只能增计数器）<br>二、PN-Counter（可增可减计数器）<br>三、LWW-Register（最后写入胜出）<br>四、结合 JSON 的树型 CRDT（如 <a href="https://github.com/automerge/automerge">Automerge</a> &#x2F; <a href="https://yjs.dev/">Yjs</a>）  </p>
 <p>更多原理可参考 Decipad 博客“Collaborative and Offline Editing Using CRDTs”[^1]。</p>
 <blockquote>
@@ -871,7 +871,7 @@ await prisma.$transaction(async tx =&gt; &#123;
 <p>前端的话，大概就是：</p>
 <p>在进入编辑前请求一下 <code>/api/project/:id/lock</code> 之类的 API，失败则提示“被占用”；<br>在 <code>onbeforeunload</code> 时执行 <code>/unlock</code>；<br>超时后后端自动允许新锁。  </p>
 <hr>
-<p>第二个方案是乐观并发控制（Optimistic Concurrency） ：记录资源的<strong>版本号</strong>或<strong>时间戳</strong>；客户端提交更新时带上自己的版本号，后端检查版本是否一致，不一致则认为冲突，返回 409，由客户端告知用户“数据已过期，请刷新后合并”。  </p>
+<p>第二个方案是乐观并发控制（Optimistic Concurrency） ：记录资源的版本号或时间戳；客户端提交更新时带上自己的版本号，后端检查版本是否一致，不一致则认为冲突，返回 409，由客户端告知用户“数据已过期，请刷新后合并”。  </p>
 <p>具体实现中，可以尝试在 <code>project</code> 表加上 <code>version INT NOT NULL DEFAULT 1, updated_at TIMESTAMPTZ</code> ，然后更新项目时：</p>
 <pre><code class="ts">async updateProject(parent, &#123; id, version, input &#125;, ctx) &#123;
     const result = await prisma.$executeRaw`
@@ -891,7 +891,7 @@ await prisma.$transaction(async tx =&gt; &#123;
 <p>前端捕获到冲突错误可以用一个弹窗提示“另有用户已更新此项目，是否合并&#x2F;重新加载？”  之类的玩意儿。</p>
 <hr>
 <p>第三个方案是：操作转化（Operational Transformation，OT）  </p>
-<p>也就是记录用户每次的“操作”（insert&#x2F;delete at position），服务器根据历史操作序列对并发操作做<strong>转化</strong>（transform），确保先到达的操作调整后再应用后到达的。  </p>
+<p>也就是记录用户每次的“操作”（insert&#x2F;delete at position），服务器根据历史操作序列对并发操作做转化（transform），确保先到达的操作调整后再应用后到达的。  </p>
 <p>有一些实现案例：<br>一、ShareDB（Node.js）<br>二、Google Docs 中的同步算法  </p>
 <p>具体实现的话，可能要现在前端逐字符&#x2F;块地包装成操作并 WebSocket 推送，服务器再维护一个“操作历史队列”，每来一个 op 就 transform 并 broadcast，而客户端收到广播后，按顺序 replay 保证视图一致。</p>
 <hr>
@@ -901,7 +901,7 @@ await prisma.$transaction(async tx =&gt; &#123;
 <hr>
 <p>总结来说，</p>
 <ul>
-<li>CRDT 最擅长 <strong>去中心化</strong>、<strong>离线编辑</strong>、<strong>自动合并</strong>；  </li>
+<li>CRDT 最擅长 去中心化、离线编辑、自动合并；  </li>
 <li>若不引入 CRDT，可根据业务侧重点选用：  <ol>
 <li>悲观锁 → 强制串行编辑，简单粗暴；  </li>
 <li>乐观并发 → 适合大多数业务场景，成本低；  </li>
@@ -921,31 +921,31 @@ await prisma.$transaction(async tx =&gt; &#123;
   <entry>
     <title>N+1 selects problem 与 Prisma ORM</title>
     <url>/2025/04/02/N-1-selects-problem-%E4%B8%8E-Prisma-ORM/</url>
-    <content><![CDATA[<p>N+1 查询问题是指在通过 ORM 查询数据时，执行了<strong>一次</strong>初始查询来获取父对象列表（这 <strong>1</strong> 次查询），然后为列表中的<strong>每一个</strong>父对象都单独执行了一次额外的查询来获取其关联的子对象（这 <strong>N</strong> 次查询）。最终导致总共执行了 <strong>1 + N</strong> 次数据库查询，其中 N 是初始查询返回的父对象的数量。</p>
-<p><strong>举个例子：</strong></p>
+    <content><![CDATA[<p>N+1 查询问题是指在通过 ORM 查询数据时，执行了一次初始查询来获取父对象列表（这 1 次查询），然后为列表中的每一个父对象都单独执行了一次额外的查询来获取其关联的子对象（这 N 次查询）。最终导致总共执行了 1 + N 次数据库查询，其中 N 是初始查询返回的父对象的数量。</p>
+<p>举个例子：</p>
 <p>假设有两个数据库模型：<code>User</code>（用户）和 <code>Post</code>（帖子），一个用户可以有多篇帖子（一对多关系）。</p>
 <p>现在，需要获取前 10 个用户以及他们各自的所有帖子。</p>
-<p>一种<strong>有问题</strong>的 ORM 实现（或不当的使用方式）可能会这样执行：</p>
+<p>一种有问题的 ORM 实现（或不当的使用方式）可能会这样执行：</p>
 <ol>
-<li><strong>第一次查询 (The “1”)</strong>: 获取前 10 个用户。<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> <span class="keyword">User</span> LIMIT <span class="number">10</span>;</span><br></pre></td></tr></table></figure></li>
-<li><strong>接下来的 N (&#x3D;10) 次查询 (The “N”)</strong>: 对于上一步获取到的每一个用户，单独执行一次查询来获取该用户的帖子。<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 用户 1</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> Post <span class="keyword">WHERE</span> authorId <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line"><span class="comment">-- 用户 2</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> Post <span class="keyword">WHERE</span> authorId <span class="operator">=</span> <span class="number">2</span>;</span><br><span class="line"><span class="comment">-- 用户 3</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> Post <span class="keyword">WHERE</span> authorId <span class="operator">=</span> <span class="number">3</span>;</span><br><span class="line"><span class="comment">-- ... 直到 用户 10</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> Post <span class="keyword">WHERE</span> authorId <span class="operator">=</span> <span class="number">10</span>;</span><br></pre></td></tr></table></figure></li>
+<li>第一次查询 (The “1”): 获取前 10 个用户。<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> <span class="keyword">User</span> LIMIT <span class="number">10</span>;</span><br></pre></td></tr></table></figure></li>
+<li>接下来的 N (&#x3D;10) 次查询 (The “N”): 对于上一步获取到的每一个用户，单独执行一次查询来获取该用户的帖子。<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 用户 1</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> Post <span class="keyword">WHERE</span> authorId <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line"><span class="comment">-- 用户 2</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> Post <span class="keyword">WHERE</span> authorId <span class="operator">=</span> <span class="number">2</span>;</span><br><span class="line"><span class="comment">-- 用户 3</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> Post <span class="keyword">WHERE</span> authorId <span class="operator">=</span> <span class="number">3</span>;</span><br><span class="line"><span class="comment">-- ... 直到 用户 10</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> Post <span class="keyword">WHERE</span> authorId <span class="operator">=</span> <span class="number">10</span>;</span><br></pre></td></tr></table></figure></li>
 </ol>
-<p>在这个场景下，总共执行了 1 + 10 &#x3D; <strong>11</strong> 次数据库查询。如果 N 的值很大（比如获取 1000 个用户），就会产生 1001 次查询，这对数据库造成巨大的、不必要的压力，并显著增加应用程序的响应时间。每一次数据库交互都有网络延迟和数据库处理的开销，N+1 次查询会将这些开销放大 N 倍。</p>
+<p>在这个场景下，总共执行了 1 + 10 &#x3D; 11 次数据库查询。如果 N 的值很大（比如获取 1000 个用户），就会产生 1001 次查询，这对数据库造成巨大的、不必要的压力，并显著增加应用程序的响应时间。每一次数据库交互都有网络延迟和数据库处理的开销，N+1 次查询会将这些开销放大 N 倍。</p>
 <p>N+1 问题通常源于 ORM 处理关联数据的方式，特别是与“懒加载”（Lazy Loading）相关的策略。懒加载是指只有在显式访问关联属性时，ORM 才会去数据库加载这些数据。虽然这在某些情况下可以避免加载不需要的数据，但如果在循环中访问关联属性，就很容易触发 N+1 问题。</p>
-<p>然而，问题的根源在于<strong>没有有效地预先加载（或批量加载）所需的关联数据</strong>。即使不使用严格意义上的懒加载，如果 ORM 在处理关联查询时不够智能，采用了逐个获取关联对象的策略，同样会产生 N+1 查询。</p>
+<p>然而，问题的根源在于没有有效地预先加载（或批量加载）所需的关联数据。即使不使用严格意义上的懒加载，如果 ORM 在处理关联查询时不够智能，采用了逐个获取关联对象的策略，同样会产生 N+1 查询。</p>
 <p>在 Prisma 出现之前或在其他 ORM 中，解决 N+1 问题常见的方法包括：</p>
 <ol>
-<li><strong>预先加载（Eager Loading）</strong>: 在执行初始查询时，就明确指示 ORM 同时将关联数据也查询出来。这通常通过 SQL 的 <code>JOIN</code> 操作实现。例如，一次性查询出用户和他们的帖子。虽然这减少了查询次数，但复杂的 <code>JOIN</code> 可能会导致查询本身变得庞大和低效，并可能返回冗余数据。</li>
-<li><strong>批量加载（Batch Loading）</strong>: 先执行初始查询获取父对象列表，然后收集所有父对象的 ID，在第二次查询中使用 <code>WHERE IN (...)</code> 子句一次性加载所有相关的子对象。这种方式通常需要两次查询，但避免了 N 次单独的查询。</li>
+<li>预先加载（Eager Loading）: 在执行初始查询时，就明确指示 ORM 同时将关联数据也查询出来。这通常通过 SQL 的 <code>JOIN</code> 操作实现。例如，一次性查询出用户和他们的帖子。虽然这减少了查询次数，但复杂的 <code>JOIN</code> 可能会导致查询本身变得庞大和低效，并可能返回冗余数据。</li>
+<li>批量加载（Batch Loading）: 先执行初始查询获取父对象列表，然后收集所有父对象的 ID，在第二次查询中使用 <code>WHERE IN (...)</code> 子句一次性加载所有相关的子对象。这种方式通常需要两次查询，但避免了 N 次单独的查询。</li>
 </ol>
-<p>Prisma ORM 在设计上就考虑了 N+1 问题，并提供了一种既方便开发者又高效的解决方案。当使用 Prisma Client 查询数据并需要包含关联模型时，Prisma 会自动优化查询，<strong>避免产生 N+1 查询</strong>，主要通过<strong>关系查询（Relation Queries）</strong>中的 <code>include</code> 选项或嵌套读取（nested reads）来实现这一点：</p>
+<p>Prisma ORM 在设计上就考虑了 N+1 问题，并提供了一种既方便开发者又高效的解决方案。当使用 Prisma Client 查询数据并需要包含关联模型时，Prisma 会自动优化查询，避免产生 N+1 查询，主要通过关系查询（Relation Queries）中的 <code>include</code> 选项或嵌套读取（nested reads）来实现这一点：</p>
 <p>假设想获取所有用户及其发布的帖子，使用 Prisma Client，可以这样写：</p>
 <figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">PrismaClient</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@prisma/client&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> prisma = <span class="keyword">new</span> <span class="title class_">PrismaClient</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getUsersWithPosts</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> usersWithPosts = <span class="keyword">await</span> prisma.<span class="property">user</span>.<span class="title function_">findMany</span>(&#123;</span><br><span class="line">    <span class="attr">include</span>: &#123;</span><br><span class="line">      <span class="attr">posts</span>: <span class="literal">true</span>, <span class="comment">// 指示 Prisma 加载关联的 posts</span></span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="comment">// usersWithPosts 包含了用户列表，每个用户对象中都有一个 posts 数组</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(usersWithPosts)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">getUsersWithPosts</span>()</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">throw</span> e</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">finally</span>(<span class="title function_">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">await</span> prisma.$disconnect()</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
 
-<p>当执行上述查询时，Prisma <strong>不会</strong> 生成 N+1 个 SQL 查询。而是首先会分析请求，并将其转化为数量非常有限的高效 SQL 查询。对于上面这个一对多关系的 <code>include</code> 查询，Prisma 通常会执行以下<strong>两步</strong>（类似于批量加载策略）：</p>
+<p>当执行上述查询时，Prisma 不会 生成 N+1 个 SQL 查询。而是首先会分析请求，并将其转化为数量非常有限的高效 SQL 查询。对于上面这个一对多关系的 <code>include</code> 查询，Prisma 通常会执行以下两步（类似于批量加载策略）：</p>
 <ol>
-<li><strong>查询父模型</strong>: 获取所有 <code>User</code> 记录。<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> &quot;public&quot;.&quot;User&quot;.&quot;id&quot;, &quot;public&quot;.&quot;User&quot;.&quot;name&quot;, <span class="comment">/* ... other user fields */</span> <span class="keyword">FROM</span> &quot;public&quot;.&quot;User&quot; <span class="keyword">WHERE</span> <span class="number">1</span><span class="operator">=</span><span class="number">1</span></span><br></pre></td></tr></table></figure></li>
-<li><strong>查询关联的子模型</strong>: 使用上一步获取到的所有用户 <code>id</code>，通过 <code>WHERE IN (...)</code> 子句一次性查询所有相关的 <code>Post</code> 记录。<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> &quot;public&quot;.&quot;Post&quot;.&quot;id&quot;, &quot;public&quot;.&quot;Post&quot;.&quot;title&quot;, &quot;public&quot;.&quot;Post&quot;.&quot;authorId&quot;, <span class="comment">/* ... other post fields */</span> <span class="keyword">FROM</span> &quot;public&quot;.&quot;Post&quot; <span class="keyword">WHERE</span> &quot;public&quot;.&quot;Post&quot;.&quot;authorId&quot; <span class="keyword">IN</span> ($<span class="number">1</span>, $<span class="number">2</span>, $<span class="number">3</span>, ...) <span class="comment">/* 这里的 $1, $2, ... 是第一步查到的用户 ID 列表 */</span></span><br></pre></td></tr></table></figure></li>
+<li>查询父模型: 获取所有 <code>User</code> 记录。<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> &quot;public&quot;.&quot;User&quot;.&quot;id&quot;, &quot;public&quot;.&quot;User&quot;.&quot;name&quot;, <span class="comment">/* ... other user fields */</span> <span class="keyword">FROM</span> &quot;public&quot;.&quot;User&quot; <span class="keyword">WHERE</span> <span class="number">1</span><span class="operator">=</span><span class="number">1</span></span><br></pre></td></tr></table></figure></li>
+<li>查询关联的子模型: 使用上一步获取到的所有用户 <code>id</code>，通过 <code>WHERE IN (...)</code> 子句一次性查询所有相关的 <code>Post</code> 记录。<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> &quot;public&quot;.&quot;Post&quot;.&quot;id&quot;, &quot;public&quot;.&quot;Post&quot;.&quot;title&quot;, &quot;public&quot;.&quot;Post&quot;.&quot;authorId&quot;, <span class="comment">/* ... other post fields */</span> <span class="keyword">FROM</span> &quot;public&quot;.&quot;Post&quot; <span class="keyword">WHERE</span> &quot;public&quot;.&quot;Post&quot;.&quot;authorId&quot; <span class="keyword">IN</span> ($<span class="number">1</span>, $<span class="number">2</span>, $<span class="number">3</span>, ...) <span class="comment">/* 这里的 $1, $2, ... 是第一步查到的用户 ID 列表 */</span></span><br></pre></td></tr></table></figure></li>
 </ol>
 <p>Prisma Client 在内存中将这两次查询的结果高效地组合起来，最终返回嵌套的、符合 TypeScript 类型的数据。</p>
 <h2 id="Refs"><a href="#Refs" class="headerlink" title="Refs."></a>Refs.</h2><ul>
@@ -1707,7 +1707,7 @@ await prisma.$transaction(async tx =&gt; &#123;
 <ul>
 <li>关系的两端都必须定义一个共享相同名称的 <code>@relation</code> 属性（<code>BlogOwnerHistory</code>）</li>
 <li>关系字段必须是<a href="https://www.prisma.io/docs/orm/prisma-schema/data-model/relations#relation-fields">完全注释</a>的。例如 <code>successor</code> 字段需要定义 <code>field</code> 和 <code>references</code> 参数。</li>
-<li>关系字段必须由外键支持。<code>successor</code> 字段由 <code>successorId</code> 外键提供支持，该外键引用 <code>id</code> 字段中的值。<code>successorId</code> 还需要 <code>@unique</code> 属性来保证一对一的关系。****</li>
+<li>关系字段必须由外键支持。<code>successor</code> 字段由 <code>successorId</code> 外键提供支持，该外键引用 <code>id</code> 字段中的值。<code>successorId</code> 还需要 <code>@unique</code> 属性来保证一对一的关系。</li>
 </ul>
 <blockquote>
 <p>一对一的 self-relation 需要两个端点，即使这两个端点是同一条数据。</p>
@@ -1881,7 +1881,7 @@ await prisma.$transaction(async tx =&gt; &#123;
   <entry>
     <title>Rust NewType 模式</title>
     <url>/2023/05/03/Rust-NewType-%E6%A8%A1%E5%BC%8F/</url>
-    <content><![CDATA[<p>New Type模式是一种软件设计模式，用于在已有类型的基础上创建一个新的类型。在Rust中，这通常是通过<strong>定义一个结构体，其中只包含一个单一成员。这个结构体（New Type）对外提供了一个新的、独立的类型，用于对原始类型增加额外的语义或限制。</strong></p>
+    <content><![CDATA[<p>New Type模式是一种软件设计模式，用于在已有类型的基础上创建一个新的类型。在Rust中，这通常是通过定义一个结构体，其中只包含一个单一成员。这个结构体（New Type）对外提供了一个新的、独立的类型，用于对原始类型增加额外的语义或限制。</p>
 <h2 id="加强类型安全"><a href="#加强类型安全" class="headerlink" title="加强类型安全"></a>加强类型安全</h2><figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Meters</span>(<span class="type">f64</span>);</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Feet</span>(<span class="type">f64</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">length_in_meters</span> = <span class="title function_ invoke__">Meters</span>(<span class="number">100.0</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">length_in_feet</span> = <span class="title function_ invoke__">Feet</span>(<span class="number">328.084</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 编译器会防止以下代码执行，因为类型不匹配</span></span><br><span class="line"><span class="comment">// let wrong_length = Meters(length_in_feet); // 编译错误</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 正确的构造</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">add_lengths</span>(length1: Meters, length2: Meters) <span class="punctuation">-&gt;</span> Meters &#123;</span><br><span class="line">    <span class="title function_ invoke__">Meters</span>(length1.<span class="number">0</span> + length2.<span class="number">0</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>这个例子使用 newtype 模式避免将原始类型f64用于不同的量度，从而增强了类型的安全性。</p>
@@ -1915,10 +1915,10 @@ await prisma.$transaction(async tx =&gt; &#123;
 <p>在全部比较可能的场景，我们会使用Ord trait，它要求实现cmp方法，总是返回一个Ordering，表示两个值之间的确切比较关系。Ord是在所有值都能够比较时使用的，例如整数和字符串。</p>
 <h2 id="设计用意和解决的问题"><a href="#设计用意和解决的问题" class="headerlink" title="设计用意和解决的问题"></a>设计用意和解决的问题</h2><p>Rust 设计 PartialEq 和 PartialOrd trait 主要出于以下几个理由：</p>
 <ul>
-<li><strong>非总序理念</strong>：并不是所有类型都有一个全局的排序方法。例如，复数之间就没有一个自然的大小顺序。为了避免为这些类型人为地赋予一个排序方法，Rust 提供了一个只需部分实现序列操作的选择。</li>
-<li><strong>IEEE 浮点数标准</strong>：由于浮点数标准定义了特殊值（NaN, 正负无穷），以及NaN不等于自身的规则，浮点数在一些情况下不能进行相等性或大小比较。</li>
-<li><strong>提升错误处理能力和安全性</strong>：通过返回 <code>Option&lt;Ordering&gt;</code>，<code>partial_cmp</code> 方法明确指出了失败的可能性，从而迫使程序员在使用时考虑并处理这种情况，增加了代码的正确性和稳健性。</li>
-<li><strong>表达性和灵活性</strong>：这些 trait 允许开发者为自定义类型定义适当的相等性和排序行为，从而加强了 Rust 类型系统的表达性和灵活性。</li>
+<li>非总序理念：并不是所有类型都有一个全局的排序方法。例如，复数之间就没有一个自然的大小顺序。为了避免为这些类型人为地赋予一个排序方法，Rust 提供了一个只需部分实现序列操作的选择。</li>
+<li>IEEE 浮点数标准：由于浮点数标准定义了特殊值（NaN, 正负无穷），以及NaN不等于自身的规则，浮点数在一些情况下不能进行相等性或大小比较。</li>
+<li>提升错误处理能力和安全性：通过返回 <code>Option&lt;Ordering&gt;</code>，<code>partial_cmp</code> 方法明确指出了失败的可能性，从而迫使程序员在使用时考虑并处理这种情况，增加了代码的正确性和稳健性。</li>
+<li>表达性和灵活性：这些 trait 允许开发者为自定义类型定义适当的相等性和排序行为，从而加强了 Rust 类型系统的表达性和灵活性。</li>
 </ul>
 <p>PartialEq 和 PartialOrd trait 的设计允许程序员选择精准的相等性和排序语义，同时明确了对于某些类型相等性比较和大小排序并不总是可能的事实。通过引入适度的复杂性，让 Rust 的类型系统更加安全。</p>
 ]]></content>
@@ -1999,19 +1999,19 @@ await prisma.$transaction(async tx =&gt; &#123;
 <p>Scala 3 在其类型系统的演进过程中，引入了诸多实验性特性，旨在提升语言的表达能力和代码的可靠性。Capture Checking 是其中一项引人注目的创新。目前还在试验阶段，其通过增强静态分析的能力，在编译时捕获潜在的错误，从而减少运行时问题的发生。</p>
 <p>Capture Checking引入了一系列核心概念，这些概念共同构成了其类型系统的基础：</p>
 <ul>
-<li><strong>捕获类型 (Capturing Types):</strong> 捕获类型采用 <code>T^&#123;c₁, ..., cᵢ&#125;</code> 的形式，其中 <code>T</code> 是一个普通的 Scala 类型，而 <code>&#123;c₁, ..., cᵢ&#125;</code> 则是一个捕获的 Capabilities 集合。这个捕获集合明确地列出了类型 <code>T</code> 的值所依赖或能够访问的 Capabilities。这种类型表示方式为类型信息增加了一个新的维度，它不仅描述了数据的结构，还包含了数据交互的环境或资源的相关信息。</li>
-<li><strong>Capabilities:</strong> 在 Capture Checking 的语境下，Capabilities 指的是方法或类的参数、局部变量，或者其类型本身就是一个具有非空捕获集合的捕获类型的封闭类的 <code>this</code> 引用。这些实体之所以需要被跟踪，是因为它们通常代表了执行某些操作或访问某些资源的“权限”或“授权”。跟踪这些 Capabilities 意味着可以控制这种影响在程序中的传播方式和范围。</li>
-<li><strong>通用 Capability (<code>cap</code>):</strong> 通用 Capability <code>cap</code> 是一个最基本的 Capability，所有的其他的 Capabilities 都派生自它。类型 <code>T^</code> 是 <code>T^&#123;cap&#125;</code> 的简写形式，表示类型 <code>T</code> 的值可以捕获任意的 Capability。<code>cap</code> 的存在为 Capture Checking 系统提供了一种 <strong>处理精确跟踪并非必需或不可行</strong> 的场景的方式。它充当了一种通配符，表明一个值可能依赖于任何 Capability。</li>
-<li><strong>纯函数 vs. 非纯函数 (Pure vs. Impure Functions):</strong> Capture Checking 显式地区分了纯函数和非纯函数。类型为 <code>A =&gt; B</code> 的函数被认为是非纯函数，它可以捕获任意 Capability，等价于 <code>A -&gt;&#123;cap&#125; B</code> 1。而类型为 <code>A -&gt; B</code> 的函数则是纯函数，它不能捕获任何 Capability。此外，还可以使用 <code>A -&gt;&#123;c, d&#125; B</code> 的形式来显式指定函数只能捕获 Capability <code>c</code> 和 <code>d</code>。这种区分使得类型系统能够强制执行函数式编程的原则，其中纯函数因其可预测性和可测试性而备受推崇。</li>
-<li><strong>子捕获 (Subcapturing):</strong> 子捕获描述了捕获集合之间的关系。如果一个捕获集合 <code>C₁</code> 中的每个元素都包含在另一个捕获集合 <code>C₂</code> 中，那么我们说 <code>C₁</code> 是 <code>C₂</code> 的子捕获，记作 <code>C₁ &lt;: C₂</code> 1。子捕获关系在类型系统中扮演着重要的角色，例如在判断类型兼容性时。它允许具有较小捕获集合的值在需要具有较大捕获集合的地方使用，这基于一种替代原则，即更受限制的 Capability 集合是较少受限制的集合的子类型。</li>
-<li><strong>Capability Classes:</strong> 扩展了 <code>caps.Capability</code> trait 的类被称为 Capability Class。它们的类型捕获集合始终为 <code>&#123;cap&#125;</code>。Capability Class 似乎提供了一种在类型系统中显式定义和管理基本 Capability 的方法。它们与通用 Capability <code>cap</code> 的关联表明，它们具有与环境进行广泛交互的潜力。</li>
+<li>捕获类型 (Capturing Types): 捕获类型采用 <code>T^&#123;c₁, ..., cᵢ&#125;</code> 的形式，其中 <code>T</code> 是一个普通的 Scala 类型，而 <code>&#123;c₁, ..., cᵢ&#125;</code> 则是一个捕获的 Capabilities 集合。这个捕获集合明确地列出了类型 <code>T</code> 的值所依赖或能够访问的 Capabilities。这种类型表示方式为类型信息增加了一个新的维度，它不仅描述了数据的结构，还包含了数据交互的环境或资源的相关信息。</li>
+<li>Capabilities: 在 Capture Checking 的语境下，Capabilities 指的是方法或类的参数、局部变量，或者其类型本身就是一个具有非空捕获集合的捕获类型的封闭类的 <code>this</code> 引用。这些实体之所以需要被跟踪，是因为它们通常代表了执行某些操作或访问某些资源的“权限”或“授权”。跟踪这些 Capabilities 意味着可以控制这种影响在程序中的传播方式和范围。</li>
+<li>通用 Capability (<code>cap</code>): 通用 Capability <code>cap</code> 是一个最基本的 Capability，所有的其他的 Capabilities 都派生自它。类型 <code>T^</code> 是 <code>T^&#123;cap&#125;</code> 的简写形式，表示类型 <code>T</code> 的值可以捕获任意的 Capability。<code>cap</code> 的存在为 Capture Checking 系统提供了一种 <strong>处理精确跟踪并非必需或不可行</strong> 的场景的方式。它充当了一种通配符，表明一个值可能依赖于任何 Capability。</li>
+<li>纯函数 vs. 非纯函数 (Pure vs. Impure Functions): Capture Checking 显式地区分了纯函数和非纯函数。类型为 <code>A =&gt; B</code> 的函数被认为是非纯函数，它可以捕获任意 Capability，等价于 <code>A -&gt;&#123;cap&#125; B</code> 1。而类型为 <code>A -&gt; B</code> 的函数则是纯函数，它不能捕获任何 Capability。此外，还可以使用 <code>A -&gt;&#123;c, d&#125; B</code> 的形式来显式指定函数只能捕获 Capability <code>c</code> 和 <code>d</code>。这种区分使得类型系统能够强制执行函数式编程的原则，其中纯函数因其可预测性和可测试性而备受推崇。</li>
+<li>子捕获 (Subcapturing): 子捕获描述了捕获集合之间的关系。如果一个捕获集合 <code>C₁</code> 中的每个元素都包含在另一个捕获集合 <code>C₂</code> 中，那么我们说 <code>C₁</code> 是 <code>C₂</code> 的子捕获，记作 <code>C₁ &lt;: C₂</code> 1。子捕获关系在类型系统中扮演着重要的角色，例如在判断类型兼容性时。它允许具有较小捕获集合的值在需要具有较大捕获集合的地方使用，这基于一种替代原则，即更受限制的 Capability 集合是较少受限制的集合的子类型。</li>
+<li>Capability Classes: 扩展了 <code>caps.Capability</code> trait 的类被称为 Capability Class。它们的类型捕获集合始终为 <code>&#123;cap&#125;</code>。Capability Class 似乎提供了一种在类型系统中显式定义和管理基本 Capability 的方法。它们与通用 Capability <code>cap</code> 的关联表明，它们具有与环境进行广泛交互的潜力。</li>
 </ul>
 <blockquote>
 <p>Capture Checking 的主要目标是通过静态地跟踪资源或能力的使用情况，从而防止与资源生命周期和可访问性相关的错误。这尤其在涉及资源管理和并发编程的场景中显得至关重要。通过这种静态跟踪，Capture Checking 旨在提高代码的整体安全性，并增强程序的鲁棒性。</p>
 </blockquote>
 <p>Capture Checking 试图解决编程语言中长期存在的一些问题：</p>
 <ul>
-<li><strong>不安全的资源管理:</strong> 例如，传统的 <code>try-with-resources</code> 模式旨在确保资源在使用后被正确关闭。Capture Checking 通过跟踪与资源相关的 Capabilities，可以防止在资源关闭或失效后继续使用它的情况。文档中提到的 <code>usingLogFile</code> 示例就展示了这一点，其中一个闭包尝试写入一个已经关闭的文件，而Capture Checking可以捕获这种不安全的操作:</li>
+<li>不安全的资源管理: 例如，传统的 <code>try-with-resources</code> 模式旨在确保资源在使用后被正确关闭。Capture Checking 通过跟踪与资源相关的 Capabilities，可以防止在资源关闭或失效后继续使用它的情况。文档中提到的 <code>usingLogFile</code> 示例就展示了这一点，其中一个闭包尝试写入一个已经关闭的文件，而Capture Checking可以捕获这种不安全的操作:</li>
 </ul>
 <figure class="highlight scala"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">usingLogFile</span></span>[<span class="type">T</span>](op: <span class="type">FileOutputStream</span> =&gt; <span class="type">T</span>): <span class="type">T</span> =</span><br><span class="line">  <span class="keyword">val</span> logFile = <span class="type">FileOutputStream</span>(<span class="string">&quot;log&quot;</span>)</span><br><span class="line">  <span class="keyword">val</span> result = op(logFile)</span><br><span class="line">  logFile.close()</span><br><span class="line">  result</span><br></pre></td></tr></table></figure>
 
@@ -2020,47 +2020,47 @@ await prisma.$transaction(async tx =&gt; &#123;
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">|  val later = usingLogFile &#123; f =&gt; () =&gt; f.write(0) &#125;</span><br><span class="line">|              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span><br><span class="line">|The expression&#x27;s type () =&gt; Unit is not allowed to capture the root capability `cap`.</span><br><span class="line">|This usually means that a capability persists longer than its allowed lifetime.</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li><strong>Effect Polymorphism:</strong> Capture Checking 提供了一种更灵活和精确地推理和控制副作用的机制。它可以被视为一种 Effect system，允许类型系统跟踪和控制代码可能产生的副作用。</li>
-<li><strong>“函数的颜色”问题:</strong> 在异步编程中，区分同步和异步操作一直是一个挑战。Capture Checking 有可能帮助区分和管理同步与异步计算，这通过跟踪与异步操作相关的 Capabilities 来实现。</li>
-<li><strong>基于区域的内存分配:</strong> Capture Checking 可以通过推理与内存位置相关的Capability，来促进更安全的内存管理。这暗示了 Capture Checking 与内存管理之间可能存在更深层次的集成，从而可能实现更高效和更安全的内存使用。</li>
-<li><strong>CE:</strong> Scala 3 通过使用 <code>CanThrow</code> 跟踪抛出特定异常的Capability，实现了一个干净且完全安全的 CE 系统。这提供了一种类型安全的替代方案，相较于传统的 CE，这种方式可能更加灵活和有原则。</li>
-<li><strong>逃逸分析:</strong> Capture Checking 可以防止局部Capability逃逸其预期的作用域。例如，当一个闭包捕获了一个局部Capability，并且这个闭包被赋值给一个全局变量或者以不安全的方式从函数返回时，Capture Checking 可以检测到这种潜在的风险。</li>
+<li>Effect Polymorphism: Capture Checking 提供了一种更灵活和精确地推理和控制副作用的机制。它可以被视为一种 Effect system，允许类型系统跟踪和控制代码可能产生的副作用。</li>
+<li>“函数的颜色”问题: 在异步编程中，区分同步和异步操作一直是一个挑战。Capture Checking 有可能帮助区分和管理同步与异步计算，这通过跟踪与异步操作相关的 Capabilities 来实现。</li>
+<li>基于区域的内存分配: Capture Checking 可以通过推理与内存位置相关的Capability，来促进更安全的内存管理。这暗示了 Capture Checking 与内存管理之间可能存在更深层次的集成，从而可能实现更高效和更安全的内存使用。</li>
+<li>CE: Scala 3 通过使用 <code>CanThrow</code> 跟踪抛出特定异常的Capability，实现了一个干净且完全安全的 CE 系统。这提供了一种类型安全的替代方案，相较于传统的 CE，这种方式可能更加灵活和有原则。</li>
+<li>逃逸分析: Capture Checking 可以防止局部Capability逃逸其预期的作用域。例如，当一个闭包捕获了一个局部Capability，并且这个闭包被赋值给一个全局变量或者以不安全的方式从函数返回时，Capture Checking 可以检测到这种潜在的风险。</li>
 </ul>
 <hr>
-<p>在 Scala 3 中，函数类型 <code>A =&gt; B</code> 被认为是<strong>不纯的</strong>，它可以捕获任意 Capability。实际上，<code>A =&gt; B</code> 是 <code>A -&gt;&#123;cap&#125; B</code> 的别名，明确地表明了它可能捕获 “通用 Capability”。这种默认行为反映了 Scala 过去函数可以拥有任意副作用的特点。然而，随着 Capture Checking 的引入，开发者被鼓励更明确地表达函数的纯度。</p>
-<p>与不纯函数相对的是<strong>纯函数</strong>，其类型为 <code>A -&gt; B</code>，表示该函数不能捕获任何 Capability。纯函数是函数式编程中的核心概念，Capture Checking 提供了一种在类型层面强制执行纯性的方法。确保函数的纯性可以使代码更具可预测性和可测试性，因为纯函数的输出完全取决于其输入，并且没有副作用。</p>
-<p>开发者还可以<strong>指定函数可以捕获的特定 Capability</strong>，语法为 <code>A -&gt;&#123;c, d&#125; B</code>，表示该函数可以捕获 Capability <code>c</code> 和 <code>d</code>。这种语法允许对函数可以使用的Capability 进行精确控制，从而提高了资源管理的细粒度。通过显式列出捕获的 Capability，编译器可以验证函数是否遵守这些约束，并防止其意外访问其他资源。</p>
-<p><strong>捕获注解</strong> <code>^</code> 的优先级高于 <code>-&gt;</code> 。理解运算符的优先级对于正确解释和编写带有捕获注解的函数类型至关重要。不正确的解析可能导致意想不到的行为或类型错误。例如，<code>A ^ C -&gt; B</code> 表示一个从捕获的 <code>A</code> 到 <code>B</code> 的纯函数。</p>
+<p>在 Scala 3 中，函数类型 <code>A =&gt; B</code> 被认为是不纯的，它可以捕获任意 Capability。实际上，<code>A =&gt; B</code> 是 <code>A -&gt;&#123;cap&#125; B</code> 的别名，明确地表明了它可能捕获 “通用 Capability”。这种默认行为反映了 Scala 过去函数可以拥有任意副作用的特点。然而，随着 Capture Checking 的引入，开发者被鼓励更明确地表达函数的纯度。</p>
+<p>与不纯函数相对的是纯函数，其类型为 <code>A -&gt; B</code>，表示该函数不能捕获任何 Capability。纯函数是函数式编程中的核心概念，Capture Checking 提供了一种在类型层面强制执行纯性的方法。确保函数的纯性可以使代码更具可预测性和可测试性，因为纯函数的输出完全取决于其输入，并且没有副作用。</p>
+<p>开发者还可以指定函数可以捕获的特定 Capability，语法为 <code>A -&gt;&#123;c, d&#125; B</code>，表示该函数可以捕获 Capability <code>c</code> 和 <code>d</code>。这种语法允许对函数可以使用的Capability 进行精确控制，从而提高了资源管理的细粒度。通过显式列出捕获的 Capability，编译器可以验证函数是否遵守这些约束，并防止其意外访问其他资源。</p>
+<p>捕获注解 <code>^</code> 的优先级高于 <code>-&gt;</code> 。理解运算符的优先级对于正确解释和编写带有捕获注解的函数类型至关重要。不正确的解析可能导致意想不到的行为或类型错误。例如，<code>A ^ C -&gt; B</code> 表示一个从捕获的 <code>A</code> 到 <code>B</code> 的纯函数。</p>
 <figure class="highlight scala"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span></span>(x: -&gt;&#123;c&#125; <span class="type">Int</span>): <span class="type">Int</span></span><br></pre></td></tr></table></figure>
 
-<p>Capture Checking 也适用于<strong>上下文函数</strong>。不纯的上下文函数使用 <code>?=&gt;</code>，行为类似于 <code>=&gt;</code>，可以捕获任意Capability。纯的上下文函数使用 <code>?-&gt;</code>，行为类似于 <code>-&gt;</code>，不能捕获任何Capability。这表明，Capture Checking扩展到了上下文函数，允许控制在它们的隐式参数作用域内捕获的 Capability。</p>
-<p>值得注意的是，<strong>方法</strong>本身并不是值，因此它们不直接捕获Capability。相反，它们对 Capability 的引用会被计入封闭对象的捕获集中。这种区分很重要，因为方法的捕获行为与它们所属对象的状态和Capability相关联，这反映了 Scala 的面向对象特性。</p>
-<p>与函数类型类似，Capture Checking的概念也延伸到了<strong>命名参数类型</strong>。<code>=&gt; Int</code> 允许任意Capability引用，类似于不纯函数类型。<code>-&gt; Int</code> 禁止任何Capability引用，类似于纯函数类型。而 <code>-&gt;&#123;c&#125; Int</code> 则只允许引用Capability <code>c</code>。这种一致性确保了即使是延迟求值的表达式也遵循Capability约束。</p>
-<p><strong>子捕获</strong>（<code>C₁ &lt;: C₂</code>）定义了捕获集之间的关系。捕获集 <code>C₁</code> 是 <code>C₂</code> 的子类型，如果 <code>C₂</code> 包含了 <code>C₁</code> 中的每一个元素，并且满足以下条件之一：<code>c ∈ C₂</code>（直接包含）；<code>c</code> 是一个类参数，且 <code>C₂</code> 包含 <code>Cls.this</code>（Capability 来源于封闭的类实例）；<code>c</code> 的类型具有捕获集 <code>C</code>，且 <code>C &lt;: C₂</code>（基于 Capability 类型的递归子捕获）。子捕获定义了 Capability 依赖的层级结构，这对于类型系统判断一个需要特定 Capability 集合的值是否可以在提供不同 Capability 集合的上下文中使用至关重要。</p>
-<p>对于<strong>捕获类型的子类型</strong>，存在以下规则：纯类型是捕获类型的子类型（<code>T &lt;: C T</code>）；较小的捕获集会产生子类型（如果 <code>C₁ &lt;: C₂</code> 且 <code>T₁ &lt;: T₂</code>，则 <code>C₁ T₁ &lt;: C₂ T₂</code>）。这意味着一个依赖较少 Capability 的值通常更通用，可以在更广泛的场景中使用。根 Capability <code>&#123;cap&#125;</code> 覆盖了所有其他捕获集，因此任何特定的捕获集都是 <code>&#123;cap&#125;</code> 的子类型。这允许具有特定捕获要求的类型在允许任何 Capability 的上下文中使用。</p>
-<p><strong>Capability widening</strong>（也称为 _avoidance_）是一种简化局部变量类型的机制。局部变量的类型会被 widening 到不提及该变量本身的最小超类型，这个过程通常会涉及到变量的捕获集。这种加宽有助于改善类型推断和代码清晰度，避免局部变量的类型变得过于复杂。</p>
+<p>Capture Checking 也适用于上下文函数。不纯的上下文函数使用 <code>?=&gt;</code>，行为类似于 <code>=&gt;</code>，可以捕获任意Capability。纯的上下文函数使用 <code>?-&gt;</code>，行为类似于 <code>-&gt;</code>，不能捕获任何Capability。这表明，Capture Checking扩展到了上下文函数，允许控制在它们的隐式参数作用域内捕获的 Capability。</p>
+<p>值得注意的是，方法本身并不是值，因此它们不直接捕获Capability。相反，它们对 Capability 的引用会被计入封闭对象的捕获集中。这种区分很重要，因为方法的捕获行为与它们所属对象的状态和Capability相关联，这反映了 Scala 的面向对象特性。</p>
+<p>与函数类型类似，Capture Checking的概念也延伸到了命名参数类型。<code>=&gt; Int</code> 允许任意Capability引用，类似于不纯函数类型。<code>-&gt; Int</code> 禁止任何Capability引用，类似于纯函数类型。而 <code>-&gt;&#123;c&#125; Int</code> 则只允许引用Capability <code>c</code>。这种一致性确保了即使是延迟求值的表达式也遵循Capability约束。</p>
+<p>子捕获（<code>C₁ &lt;: C₂</code>）定义了捕获集之间的关系。捕获集 <code>C₁</code> 是 <code>C₂</code> 的子类型，如果 <code>C₂</code> 包含了 <code>C₁</code> 中的每一个元素，并且满足以下条件之一：<code>c ∈ C₂</code>（直接包含）；<code>c</code> 是一个类参数，且 <code>C₂</code> 包含 <code>Cls.this</code>（Capability 来源于封闭的类实例）；<code>c</code> 的类型具有捕获集 <code>C</code>，且 <code>C &lt;: C₂</code>（基于 Capability 类型的递归子捕获）。子捕获定义了 Capability 依赖的层级结构，这对于类型系统判断一个需要特定 Capability 集合的值是否可以在提供不同 Capability 集合的上下文中使用至关重要。</p>
+<p>对于捕获类型的子类型，存在以下规则：纯类型是捕获类型的子类型（<code>T &lt;: C T</code>）；较小的捕获集会产生子类型（如果 <code>C₁ &lt;: C₂</code> 且 <code>T₁ &lt;: T₂</code>，则 <code>C₁ T₁ &lt;: C₂ T₂</code>）。这意味着一个依赖较少 Capability 的值通常更通用，可以在更广泛的场景中使用。根 Capability <code>&#123;cap&#125;</code> 覆盖了所有其他捕获集，因此任何特定的捕获集都是 <code>&#123;cap&#125;</code> 的子类型。这允许具有特定捕获要求的类型在允许任何 Capability 的上下文中使用。</p>
+<p>Capability widening（也称为 _avoidance_）是一种简化局部变量类型的机制。局部变量的类型会被 widening 到不提及该变量本身的最小超类型，这个过程通常会涉及到变量的捕获集。这种加宽有助于改善类型推断和代码清晰度，避免局部变量的类型变得过于复杂。</p>
 <figure class="highlight scala"><table><tr><td class="code"><pre><span class="line">fs: <span class="type">FileSystem</span>^</span><br><span class="line">ct: <span class="type">CanThrow</span>[<span class="type">Exception</span>]^</span><br><span class="line">l : <span class="type">Logger</span>^&#123;fs&#125;</span><br><span class="line"></span><br><span class="line">&#123;l&#125;  &lt;: &#123;fs&#125;     &lt;: &#123;cap&#125;</span><br><span class="line">&#123;fs&#125; &lt;: &#123;fs, ct&#125; &lt;: &#123;cap&#125;</span><br><span class="line">&#123;ct&#125; &lt;: &#123;fs, ct&#125; &lt;: &#123;cap&#125;</span><br></pre></td></tr></table></figure>
 
 <p>继承自 <code>caps.Capability</code> 的类具有隐式的 <code>&#123;cap&#125;</code> 捕获集。这表明这些类的实例本质上代表了一种 Capability。Capability 类提供了一种将 Capability 显式定义和管理为类型系统中的一等公民的方式。开发者可以创建具有特定语义和使用模式的自定义 Capability。</p>
-<p>在使用 Capability 类的场景中，通常会结合 using clauses 和<strong>隐式参数</strong>来减少在代码中显式传递 Capability 的需要。这两种方法提供了一种自动将必要的 Capability 提供给函数和方法的方式，从而减少了样板代码并提高了代码的可读性。</p>
-<p><strong>闭包</strong>会捕获在其主体中引用的来自其周围环境的 Capability。这导致闭包的函数类型中包含捕获集。例如，如果一个闭包引用了一个局部变量 <code>fs</code>，而 <code>fs</code> 是一个 Capability，那么该闭包的类型可能就是 <code>String -&gt;&#123;fs&#125; Unit</code>。这意味着闭包继承了其封闭代码的 Capability 要求，确保它们只能在这些 Capability 可用的上下文中被使用。</p>
+<p>在使用 Capability 类的场景中，通常会结合 using clauses 和隐式参数来减少在代码中显式传递 Capability 的需要。这两种方法提供了一种自动将必要的 Capability 提供给函数和方法的方式，从而减少了样板代码并提高了代码的可读性。</p>
+<p>闭包会捕获在其主体中引用的来自其周围环境的 Capability。这导致闭包的函数类型中包含捕获集。例如，如果一个闭包引用了一个局部变量 <code>fs</code>，而 <code>fs</code> 是一个 Capability，那么该闭包的类型可能就是 <code>String -&gt;&#123;fs&#125; Unit</code>。这意味着闭包继承了其封闭代码的 Capability 要求，确保它们只能在这些 Capability 可用的上下文中被使用。</p>
 <p>此外，闭包还会捕获它们调用的函数的 Capability。如果一个闭包调用了一个需要特定 Capability 的函数，那么该闭包的捕获集也会包含该 Capability。这种传递性的捕获机制确保了所有 Capability 依赖，无论是直接的还是间接的，都会被闭包所跟踪。</p>
 <p>类会将其方法中使用的 Capability 保留为（私有）字段。这意味着如果一个方法使用了作为构造函数参数传递的Capability，该类很可能会存储对它的引用。这会导致类的类型中包含捕获集。例如，一个使用文件系统Capability <code>xfs</code> 的 <code>Logger</code> 类可能具有类型 <code>Logger^&#123;xfs&#125;</code>。这表明类封装了它们所依赖的Capability，并将这些依赖作为其类型签名的一部分。</p>
 <p><code>@constructorOnly</code> 注解可以用于标记一个仅在构造函数中使用而不会作为字段保留的类参数。这有助于减少类的捕获集。如果一个参数仅用于初始化，后续不再访问，那么类就没有必要将其保留为一种 Capability。</p>
-<p>类的<strong>捕获引用</strong>包括从类外部使用的局部 Capability 以及具有捕获类型的构造函数参数（参数Capability）。局部Capability会被内部类继承。</p>
+<p>类的捕获引用包括从类外部使用的局部 Capability 以及具有捕获类型的构造函数参数（参数Capability）。局部Capability会被内部类继承。</p>
 <p>类实例的 <code>this</code> 的捕获集是根据捕获的引用、父类以及类内部的使用约束来推断的 1。这种自动推断机制在很多情况下减少了手动指定类捕获集的需要。</p>
 <figure class="highlight scala"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> caps.<span class="type">Capability</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FileSystem</span> <span class="keyword">extends</span> <span class="title">Capability</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Logger</span>(<span class="params">using <span class="type">FileSystem</span></span>)</span>:</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">log</span></span>(s: <span class="type">String</span>): <span class="type">Unit</span> = ???</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span></span>(<span class="keyword">using</span> fs: <span class="type">FileSystem</span>) =</span><br><span class="line">  <span class="keyword">val</span> l: <span class="type">Logger</span>^&#123;fs&#125; = <span class="type">Logger</span>()</span><br><span class="line">  ...</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight scala"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Logger</span>(<span class="params">using <span class="type">FileSystem</span>^&#123;cap&#125;</span>)</span>:</span><br><span class="line">                   ^^^^^^^^^^^^^^</span><br><span class="line">             redundant capture: <span class="type">FileSystem</span> already accounts <span class="keyword">for</span> cap</span><br></pre></td></tr></table></figure>
 
 
-<p><strong>捕获隧道 (Capture Tunnelling)</strong> 是指当一个类型变量被一个捕获类型实例化时，捕获信息不会立即传播到外层的泛型类型。相反，捕获会“穿过隧道”，并在类型变量被访问或其成员被使用时重新出现。这种机制有助于以更简洁和可管理的方式处理泛型代码中的捕获集，避免类型签名过于复杂。</p>
-<p><strong>逃逸检查</strong>施加了一些限制。作为类型变量实例的捕获类型不能携带通用Capability <code>cap</code> 。可变变量也不能拥有通用捕获集 。逃逸检查阻止了在参数化类型的参数中返回或分配带有局部 Capability 的闭包，因为这可能导致 Capability 逃逸其预期的作用域。<strong>单调性规则</strong>指出，在一个带有字段 <code>f</code> 的类中，<code>&#123;this&#125;</code> 覆盖了 <code>&#123;this.f&#125;</code> 以及 <code>this.f</code> 对纯参数的应用。这意味着如果类实例本身被视为一种 Capability，那么其字段所持有的任何 Capability 也会被隐式地覆盖。逃逸检查对于维护 Capability 跟踪的完整性至关重要，它可以防止 Capability 在其预期生命周期或作用域之外被使用，尤其是在泛型和可变状态的上下文中。</p>
-<p><strong>受检异常</strong>可以通过导入 <code>language.experimental.saferExceptions</code> 来启用。方法上的 <code>throws</code> 子句会扩展为一个隐式的 <code>CanThrow</code> Capability参数，表明该方法可能抛出指定类型的异常。<code>throw</code> 表达式需要 <code>CanThrow</code> Capability，而 <code>try</code> 表达式会创建这种Capability。在 <code>language.experimental.captureChecking</code> 下，由于逃逸的 Capability 而导致未处理异常的代码会被拒绝。为了实现这种集成，<code>CanThrow</code> 需要继承 <code>Capability</code>，并且需要将逃逸检查扩展到 <code>try</code> 表达式，以防止捕获 <code>cap</code>。Capture Checking 与受检异常的集成确保了异常的可能性也被作为一种 Capability 需求来跟踪，从而加强了语言的整体资源管理和错误处理 Capability。</p>
+<p>捕获隧道 (Capture Tunnelling) 是指当一个类型变量被一个捕获类型实例化时，捕获信息不会立即传播到外层的泛型类型。相反，捕获会“穿过隧道”，并在类型变量被访问或其成员被使用时重新出现。这种机制有助于以更简洁和可管理的方式处理泛型代码中的捕获集，避免类型签名过于复杂。</p>
+<p>逃逸检查施加了一些限制。作为类型变量实例的捕获类型不能携带通用Capability <code>cap</code> 。可变变量也不能拥有通用捕获集 。逃逸检查阻止了在参数化类型的参数中返回或分配带有局部 Capability 的闭包，因为这可能导致 Capability 逃逸其预期的作用域。单调性规则指出，在一个带有字段 <code>f</code> 的类中，<code>&#123;this&#125;</code> 覆盖了 <code>&#123;this.f&#125;</code> 以及 <code>this.f</code> 对纯参数的应用。这意味着如果类实例本身被视为一种 Capability，那么其字段所持有的任何 Capability 也会被隐式地覆盖。逃逸检查对于维护 Capability 跟踪的完整性至关重要，它可以防止 Capability 在其预期生命周期或作用域之外被使用，尤其是在泛型和可变状态的上下文中。</p>
+<p>受检异常可以通过导入 <code>language.experimental.saferExceptions</code> 来启用。方法上的 <code>throws</code> 子句会扩展为一个隐式的 <code>CanThrow</code> Capability参数，表明该方法可能抛出指定类型的异常。<code>throw</code> 表达式需要 <code>CanThrow</code> Capability，而 <code>try</code> 表达式会创建这种Capability。在 <code>language.experimental.captureChecking</code> 下，由于逃逸的 Capability 而导致未处理异常的代码会被拒绝。为了实现这种集成，<code>CanThrow</code> 需要继承 <code>Capability</code>，并且需要将逃逸检查扩展到 <code>try</code> 表达式，以防止捕获 <code>cap</code>。Capture Checking 与受检异常的集成确保了异常的可能性也被作为一种 Capability 需求来跟踪，从而加强了语言的整体资源管理和错误处理 Capability。</p>
 <hr>
-<p>文档中提供了一个关于<strong>惰性列表</strong>（Lazy Lists）的较大示例，很好地展示了 Capture Checking 如何在更复杂的数据结构中工作。<code>LzyList</code> 的 <code>tail</code> 具有一个捕获注解，表明它可以捕获与列表相同的引用。诸如 <code>map</code>、<code>filter</code> 和 <code>concat</code> 等操作在惰性列表上能够正确地推断出捕获集，这取决于原始列表和所使用的函数。值得注意的是 effect polymorphism的概念，传递给这些操作的纯函数不会出现在结果的捕获集中。这与严格列表形成对比，严格列表通常不需要捕获注解，因为它们的副作用不会被延迟。惰性列表的例子具体说明了Capture Checking 如何应用于非平凡的数据结构，展示了其在涉及延迟求值的复杂场景中跟踪依赖关系的Capability。effect polymorphism 是一个显著的优点，它允许在不影响捕获集的情况下使用纯计算。</p>
+<p>文档中提供了一个关于惰性列表（Lazy Lists）的较大示例，很好地展示了 Capture Checking 如何在更复杂的数据结构中工作。<code>LzyList</code> 的 <code>tail</code> 具有一个捕获注解，表明它可以捕获与列表相同的引用。诸如 <code>map</code>、<code>filter</code> 和 <code>concat</code> 等操作在惰性列表上能够正确地推断出捕获集，这取决于原始列表和所使用的函数。值得注意的是 effect polymorphism的概念，传递给这些操作的纯函数不会出现在结果的捕获集中。这与严格列表形成对比，严格列表通常不需要捕获注解，因为它们的副作用不会被延迟。惰性列表的例子具体说明了Capture Checking 如何应用于非平凡的数据结构，展示了其在涉及延迟求值的复杂场景中跟踪依赖关系的Capability。effect polymorphism 是一个显著的优点，它允许在不影响捕获集的情况下使用纯计算。</p>
 <hr>
-<p><strong>表 1: 代码示例与演示概念</strong></p>
+<p>表 1: 代码示例与演示概念</p>
 <table>
 <thead>
 <tr>
@@ -2070,9 +2070,9 @@ await prisma.$transaction(async tx =&gt; &#123;
 </tr>
 </thead>
 <tbody><tr>
-<td><strong>代码片段</strong></td>
-<td><strong>演示概念</strong></td>
-<td><strong>捕获行为解释</strong></td>
+<td>代码片段</td>
+<td>演示概念</td>
+<td>捕获行为解释</td>
 </tr>
 <tr>
 <td><code>import language.experimental.captureChecking</code></td>
@@ -2141,11 +2141,11 @@ await prisma.$transaction(async tx =&gt; &#123;
 </tr>
 </tbody></table>
 <p>当 <code>cap</code> 出现在函数的结果类型中时，通常表示一个由存在性量词绑定的未知类型（例如，<code>() -&gt; Iterator^</code> 意味着 <code>() -&gt; Exists x. Iterator^x</code>）。这表明返回的迭代器可能捕获了某种 Capability，但具体的哪种 Capability 在静态类型检查时是未知的。在内部，这种存在性 Capability 使用带有 sealed trait <code>Exists</code> 的依赖函数类型来表示 。结果类型中协变的 <code>cap</code> 会被替换为一个新的 existential variable。当应用一个具有 existential result 类型 <code>Exists ex.T</code> 的函数时，结果是 <code>T</code>，其中 <code>ex</code> 被 <code>cap</code> 替换。Existential Capability 允许类型系统表达在编译时具体捕获的 Capability 未知的情况，从而提供了灵活性，同时仍然保持了一定程度的跟踪。</p>
-<p>**Reach Capability **用于表达一个变量引用了通过另一个Capability“Reach”的任何操作。例如，如果 <code>ops</code> 是一个表示一组操作的Capability，那么 <code>ops*</code> 就表示出现在 <code>ops</code> 类型中且通过 <code>ops</code> 访问的任何协变 Capability。Reach Capability 提供了一种间接推理和跟踪 Capability 的方式，这对于建模具有相互连接资源的复杂系统非常有用。</p>
-<p><strong>Capability 多态</strong>允许使用带有上界 <code>CapSet</code> 的类型变量来参数化操作的捕获集。这使得定义诸如 <code>Source[X^]</code> 这样的类型成为可能，其中 <code>X^</code> 表示监听器可以持有的一组 Capability。Capability 多态增强了代码的表达性和可重用性，因为它允许函数和数据结构在它们可能依赖的 Capability 集上进行参数化。</p>
+<p>Reach Capability 用于表达一个变量引用了通过另一个Capability“Reach”的任何操作。例如，如果 <code>ops</code> 是一个表示一组操作的Capability，那么 <code>ops*</code> 就表示出现在 <code>ops</code> 类型中且通过 <code>ops</code> 访问的任何协变 Capability。Reach Capability 提供了一种间接推理和跟踪 Capability 的方式，这对于建模具有相互连接资源的复杂系统非常有用。</p>
+<p>Capability 多态允许使用带有上界 <code>CapSet</code> 的类型变量来参数化操作的捕获集。这使得定义诸如 <code>Source[X^]</code> 这样的类型成为可能，其中 <code>X^</code> 表示监听器可以持有的一组 Capability。Capability 多态增强了代码的表达性和可重用性，因为它允许函数和数据结构在它们可能依赖的 Capability 集上进行参数化。</p>
 <hr>
 <p>Scala 3 提供了几个与 Capture Checking 相关的编译选项，。<code>-Xprint:cc</code> 选项会打印出带有推断捕获类型的程序代码 1。这对于理解编译器是如何推断捕获集的以及调试与类型相关的错误非常有用。另一个选项是 <code>-Ycc-debug</code>，它提供了关于 Capture Checking 过程的详细的、面向实现的的信息。这个选项对于需要深入了解 Capture Checking 器工作原理或者遇到复杂问题的开发者来说很有帮助。这些编译选项是使用 Capture Checking 的开发者的重要工具，它们允许开发者检查编译器的推理并诊断问题。</p>
-<p>Capture Checking被实现为一个传播约束求解器，它在标准的类型检查阶段之后运行，未知的捕获集由约束变量表示。在类型中显式编写的捕获集被求解器视为常量。类型之间的子类型要求会转化为它们各自捕获集上的子捕获测试。求解器根据程序的结构和类型约束，将 Capability 传播给约束变量及其超集。捕获集的映射受到类型参数的变性（协变、逆变、不变）的影响。<strong>装箱</strong>（boxing）和<strong>拆箱</strong>（unboxing）是用于隐藏和恢复捕获集的虚拟操作，特别是在类型参数的上下文中用于管理捕获隧道。<code>-Ycc-debug</code> 的输出提供了关于变量依赖关系和Capture Checking器在编译过程中的状态的深入信息。</p>
+<p>Capture Checking被实现为一个传播约束求解器，它在标准的类型检查阶段之后运行，未知的捕获集由约束变量表示。在类型中显式编写的捕获集被求解器视为常量。类型之间的子类型要求会转化为它们各自捕获集上的子捕获测试。求解器根据程序的结构和类型约束，将 Capability 传播给约束变量及其超集。捕获集的映射受到类型参数的变性（协变、逆变、不变）的影响。装箱（boxing）和拆箱（unboxing）是用于隐藏和恢复捕获集的虚拟操作，特别是在类型参数的上下文中用于管理捕获隧道。<code>-Ycc-debug</code> 的输出提供了关于变量依赖关系和Capture Checking器在编译过程中的状态的深入信息。</p>
 ]]></content>
       <tags>
         <tag>Technique</tag>
@@ -2156,27 +2156,27 @@ await prisma.$transaction(async tx =&gt; &#123;
     <url>/2025/03/20/TDD-%E5%92%8C-DDD-%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%83%B3%E6%B3%95/</url>
     <content><![CDATA[<p>Test-Driven Development (TDD) 和 Domain-Driven Design (DDD) 是两种不同的软件开发方法论，各自有其独特的优缺点和应用场景。</p>
 <h3 id="Test-Driven-Development-TDD"><a href="#Test-Driven-Development-TDD" class="headerlink" title="Test-Driven Development (TDD)"></a>Test-Driven Development (TDD)</h3><h4 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h4><ol>
-<li><strong>提高代码质量</strong>：通过编写测试来驱动开发，可以确保代码的正确性和可靠性。</li>
-<li><strong>减少缺陷</strong>：早期发现和修复缺陷，减少后期的调试和维护成本。</li>
-<li><strong>促进可维护性</strong>：代码更加模块化和可测试，便于后续的维护和扩展。</li>
-<li><strong>文档化</strong>：测试代码本身就是一种文档，描述了系统的行为和期望。</li>
-<li><strong>提高开发速度</strong>：虽然初期可能会慢一些，但长期来看，由于减少了重构和调试的时间，开发速度会提高。</li>
+<li>提高代码质量：通过编写测试来驱动开发，可以确保代码的正确性和可靠性。</li>
+<li>减少缺陷：早期发现和修复缺陷，减少后期的调试和维护成本。</li>
+<li>促进可维护性：代码更加模块化和可测试，便于后续的维护和扩展。</li>
+<li>文档化：测试代码本身就是一种文档，描述了系统的行为和期望。</li>
+<li>提高开发速度：虽然初期可能会慢一些，但长期来看，由于减少了重构和调试的时间，开发速度会提高。</li>
 </ol>
 <h4 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h4><ol>
-<li><strong>初期投入大</strong>：需要在开发前编写测试，初期投入的时间和精力较大。</li>
-<li><strong>学习曲线陡峭</strong>：对新手开发者来说，学习和掌握TDD需要一定的时间。</li>
-<li><strong>过度依赖测试</strong>：可能导致过度依赖单元测试，忽略了系统的整体性能和用户体验。</li>
+<li>初期投入大：需要在开发前编写测试，初期投入的时间和精力较大。</li>
+<li>学习曲线陡峭：对新手开发者来说，学习和掌握TDD需要一定的时间。</li>
+<li>过度依赖测试：可能导致过度依赖单元测试，忽略了系统的整体性能和用户体验。</li>
 </ol>
 <h3 id="Domain-Driven-Design-DDD"><a href="#Domain-Driven-Design-DDD" class="headerlink" title="Domain-Driven Design (DDD)"></a>Domain-Driven Design (DDD)</h3><h4 id="优点：-1"><a href="#优点：-1" class="headerlink" title="优点："></a>优点：</h4><ol>
-<li><strong>聚焦领域</strong>：通过深入理解业务领域，确保软件系统与业务需求紧密结合。</li>
-<li><strong>模型驱动</strong>：建立一个清晰的领域模型，帮助开发者和业务专家共同理解系统。</li>
-<li><strong>可维护性</strong>：通过明确的领域模型和边界，系统结构更加清晰，便于维护和扩展。</li>
-<li><strong>沟通桥梁</strong>：提供了一种通用的语言（Ubiquitous Language），促进开发团队和业务团队之间的沟通。</li>
+<li>聚焦领域：通过深入理解业务领域，确保软件系统与业务需求紧密结合。</li>
+<li>模型驱动：建立一个清晰的领域模型，帮助开发者和业务专家共同理解系统。</li>
+<li>可维护性：通过明确的领域模型和边界，系统结构更加清晰，便于维护和扩展。</li>
+<li>沟通桥梁：提供了一种通用的语言（Ubiquitous Language），促进开发团队和业务团队之间的沟通。</li>
 </ol>
 <h4 id="缺点：-1"><a href="#缺点：-1" class="headerlink" title="缺点："></a>缺点：</h4><ol>
-<li><strong>复杂性高</strong>：DDD方法论较为复杂，需要深入理解领域模型和设计模式。</li>
-<li><strong>初期投入大</strong>：需要大量的时间和精力进行领域分析和建模。</li>
-<li><strong>适用范围有限</strong>：对于简单的系统或小型项目，DDD可能显得过于复杂和冗余。</li>
+<li>复杂性高：DDD方法论较为复杂，需要深入理解领域模型和设计模式。</li>
+<li>初期投入大：需要大量的时间和精力进行领域分析和建模。</li>
+<li>适用范围有限：对于简单的系统或小型项目，DDD可能显得过于复杂和冗余。</li>
 </ol>
 <hr>
 <p>TDD 和 DDD 并不冲突，实际上它们可以互补。TDD 可以帮助确保代码的正确性和可靠性，而 DDD 可以确保系统与业务需求紧密结合。在进行 TDD 时，可以使用 DDD 的领域模型和 Ubiquitous Language 来编写测试用例，确保测试覆盖了业务需求。在进行 DDD 时，可以使用 TDD 来驱动实现，确保每个领域模型的实现。</p>
@@ -2218,8 +2218,8 @@ await prisma.$transaction(async tx =&gt; &#123;
 
 <p>那么 <code>apps</code> 或 <code>packages</code> 目录中有 <code>package.json</code> 的每个目录都将被视为一个包。</p>
 <blockquote>
-<p>注意：Turborepo 不支持嵌套包，例如 <code>apps/**</code> 或 <code>packages/**</code> 这种，将一个包放在<code>apps/a</code> 并将另一个包放在 <code>apps/a/b</code> 的结构将导致错误。</p>
-<p>如果想按目录对包进行分组，可以使用 <code>packages/*</code> 和 <code>packages/group/*</code> 等 glob 来完成此操作，而<strong>不是</strong>创建 <code>packages/group/package.json</code> 文件。</p>
+<p>注意：Turborepo 不支持嵌套包，例如 <code>apps/</code> 或 <code>packages/</code> 这种，将一个包放在<code>apps/a</code> 并将另一个包放在 <code>apps/a/b</code> 的结构将导致错误。</p>
+<p>如果想按目录对包进行分组，可以使用 <code>packages/*</code> 和 <code>packages/group/*</code> 等 glob 来完成此操作，而不是创建 <code>packages/group/package.json</code> 文件。</p>
 </blockquote>
 <p>根目录的 <code>package.json</code> 是 workspace 的基础，常见的配置：</p>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;private&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;build&quot;</span><span class="punctuation">:</span> <span class="string">&quot;turbo run build&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;dev&quot;</span><span class="punctuation">:</span> <span class="string">&quot;turbo run dev&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;lint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;turbo run lint&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;devDependencies&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;turbo&quot;</span><span class="punctuation">:</span> <span class="string">&quot;latest&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;packageManager&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npm@10.0.0&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
@@ -2240,9 +2240,9 @@ await prisma.$transaction(async tx =&gt; &#123;
 
 <p>以这种方式使用导出有三个主要好处：</p>
 <ul>
-<li><strong>避免 barrel 文件</strong>：barrel 文件是重新导出同一包中其他文件的文件，从而为整个包创建一个入口点。虽然它们可能看起来很方便，但编译器<a href="https://vercel.com/blog/how-we-optimized-package-imports-in-next-js#what's-the-problem-with-barrel-files">和捆绑程序很难处理</a>它们，并且可能很快导致性能问题。</li>
-<li><strong>更强大的功能</strong>：与<a href="https://nodejs.org/api/packages.html#main"><code>主</code>字段</a>（如 <a href="https://nodejs.org/api/packages.html#conditional-exports">Conditional Exports</a>）相比，<code>exports</code> 还具有其他强大的功能。一般来说，尽可能使用 <code>exports</code> 而不是 <code>main</code> 就行了。</li>
-<li><strong>IDE 友好</strong>：通过使用 <code>export</code> 指定包的入口点，代码编辑器可以为包的导出提供自动完成。</li>
+<li>避免 barrel 文件：barrel 文件是重新导出同一包中其他文件的文件，从而为整个包创建一个入口点。虽然它们可能看起来很方便，但编译器<a href="https://vercel.com/blog/how-we-optimized-package-imports-in-next-js#what's-the-problem-with-barrel-files">和捆绑程序很难处理</a>它们，并且可能很快导致性能问题。</li>
+<li>更强大的功能：与<a href="https://nodejs.org/api/packages.html#main"><code>主</code>字段</a>（如 <a href="https://nodejs.org/api/packages.html#conditional-exports">Conditional Exports</a>）相比，<code>exports</code> 还具有其他强大的功能。一般来说，尽可能使用 <code>exports</code> 而不是 <code>main</code> 就行了。</li>
+<li>IDE 友好：通过使用 <code>export</code> 指定包的入口点，代码编辑器可以为包的导出提供自动完成。</li>
 </ul>
 <hr>
 <p>除此之外还有 <code>import</code> 字段，也就是一种创建包中其他模块的子路径的方法。可以简单地视为 “快捷方式” ，用于编写更简单的导入路径，这些路径对日后文件被移动后的重构更具弹性。</p>
@@ -2257,13 +2257,13 @@ await prisma.$transaction(async tx =&gt; &#123;
 
 <p>这种做法有几个好处：</p>
 <ul>
-<li><strong>更清晰</strong>：当软件包的依赖项列在其 <code>package.json</code> 中时，更容易理解软件包所依赖的内容。在存储库中工作的开发人员可以一目了然地看到包中使用了哪些依赖项。</li>
-<li><strong>更具灵活性</strong>：在大规模的 monorepo 中，想让每个包都使用相同版本的外部依赖项可能是不现实的。当有许多团队在同一个代码库中工作时，优先级、时间表和需求会有所不同。通过在 “使用它们的包” 中安装依赖项，可以让 <code>UI</code> 团队能够升级到最新版本的 TypeScript，而 <code>Web</code> 团队可以优先发布新功能并在以后使用 TypeScript。</li>
-<li><strong>更好的缓存能力</strong>：如果在存储库的根目录中安装了太多依赖项，则每当添加、更新或删除依赖项时，都会更改工作区根目录，从而导致不必要的缓存未命中。</li>
-<li><strong>修剪未使用的依赖项</strong>：对于 Docker 用户，<a href="https://turbo.build/repo/docs/reference/prune">Turborepo 的修剪功能</a>可以从 Docker 镜像中删除未使用的依赖项，以创建更轻量级的镜像。当依赖项安装在它们所适用的包中时，Turborepo 可以读取锁文件并删除所需的包中未使用的依赖项。</li>
+<li>更清晰：当软件包的依赖项列在其 <code>package.json</code> 中时，更容易理解软件包所依赖的内容。在存储库中工作的开发人员可以一目了然地看到包中使用了哪些依赖项。</li>
+<li>更具灵活性：在大规模的 monorepo 中，想让每个包都使用相同版本的外部依赖项可能是不现实的。当有许多团队在同一个代码库中工作时，优先级、时间表和需求会有所不同。通过在 “使用它们的包” 中安装依赖项，可以让 <code>UI</code> 团队能够升级到最新版本的 TypeScript，而 <code>Web</code> 团队可以优先发布新功能并在以后使用 TypeScript。</li>
+<li>更好的缓存能力：如果在存储库的根目录中安装了太多依赖项，则每当添加、更新或删除依赖项时，都会更改工作区根目录，从而导致不必要的缓存未命中。</li>
+<li>修剪未使用的依赖项：对于 Docker 用户，<a href="https://turbo.build/repo/docs/reference/prune">Turborepo 的修剪功能</a>可以从 Docker 镜像中删除未使用的依赖项，以创建更轻量级的镜像。当依赖项安装在它们所适用的包中时，Turborepo 可以读取锁文件并删除所需的包中未使用的依赖项。</li>
 </ul>
 <blockquote>
-<p>属于工作区根目录的唯一依赖项是<strong>用于管理存储库的工具，</strong>而用于构建应用程序和库的依赖项安装在各自的包中。一些适合安装在根中的依赖项示例包括 <a href="https://www.npmjs.com/package/turbo"><code>turbo</code></a>、<a href="https://www.npmjs.com/package/husky"><code>husky</code></a> 或 <a href="https://www.npmjs.com/package/lint-staged"><code>lint-staged</code></a>。</p>
+<p>属于工作区根目录的唯一依赖项是用于管理存储库的工具，而用于构建应用程序和库的依赖项安装在各自的包中。一些适合安装在根中的依赖项示例包括 <a href="https://www.npmjs.com/package/turbo"><code>turbo</code></a>、<a href="https://www.npmjs.com/package/husky"><code>husky</code></a> 或 <a href="https://www.npmjs.com/package/lint-staged"><code>lint-staged</code></a>。</p>
 </blockquote>
 <h3 id="保持同一版本的依赖"><a href="#保持同一版本的依赖" class="headerlink" title="保持同一版本的依赖"></a>保持同一版本的依赖</h3><p>一些 monorepo 维护者更喜欢按照规则在所有软件包中保持对相同版本的依赖关系。有几种方法可以实现此目的：</p>
 <ul>
@@ -2277,18 +2277,18 @@ await prisma.$transaction(async tx =&gt; &#123;
 <h2 id="内部包"><a href="#内部包" class="headerlink" title="内部包"></a>内部包</h2><p><a href="https://turbo.build/repo/docs/core-concepts/internal-packages">内部包</a>是工作区的构建块（building blocks），是一种在存储库中共享代码的强大方式。Turborepo 读取 <code>package.json</code> 中的依赖项来分析内部包之间的关系，并在后台创建 <a href="https://turbo.build/repo/docs/core-concepts/package-and-task-graph#package-graph">Package Graph</a> 以优化存储库的工作流程。</p>
 <p>在创建内部包时，建议创建具有单一 “用途” 的包。这是最佳实践，具体取决于存储库的规模、组织、团队需求等。此策略具有以下几个优点：</p>
 <ul>
-<li><strong>更易于理解</strong>：随着存储库的扩展，在存储库中工作的开发人员将能够更轻松地找到他们需要的代码。</li>
-<li><strong>减少每个包的依赖项</strong>：每个包使用更少的依赖项，以便 Turborepo 可以更有效地<a href="https://turbo.build/repo/docs/reference/prune">修剪包图的依赖项</a>。</li>
+<li>更易于理解：随着存储库的扩展，在存储库中工作的开发人员将能够更轻松地找到他们需要的代码。</li>
+<li>减少每个包的依赖项：每个包使用更少的依赖项，以便 Turborepo 可以更有效地<a href="https://turbo.build/repo/docs/reference/prune">修剪包图的依赖项</a>。</li>
 </ul>
 <p>在创建<a href="https://turbo.build/repo/docs/core-concepts/package-types#application-packages">应用程序包</a>时，最好避免将共享代码放在这些包中。相反，应该为共享代码创建一个单独的包，并让应用程序包依赖于该包。<br>此外，应用程序包不应安装到其他包中。相反，应将它们视为 <a href="https://turbo.build/repo/docs/core-concepts/package-and-task-graph#package-graph">Package Graph</a> 的入口点。</p>
 <h2 id="配置任务"><a href="#配置任务" class="headerlink" title="配置任务"></a>配置任务</h2><p>Turborepo 将始终按照 <a href="https://turbo.build/repo/docs/reference/configuration"><code>turbo.json</code> 配置</a>和 <a href="https://turbo.build/repo/docs/core-concepts/package-and-task-graph#package-graph">Package Graph</a> 中描述的顺序运行任务，并尽可能并行化工作以确保一切尽可能快地运行。</p>
 <p>根目录的 <code>turbo.json</code> 文件是注册 Turborepo 将运行的任务的位置。定义任务后，将能够使用 <a href="https://turbo.build/repo/docs/reference/run"><code>turbo run</code></a> 运行一个或多个任务。</p>
-<p><code>tasks</code> 对象中的每个 key 都是一个可以通过 <code>turbo run</code> 执行的任务。Turborepo 将在 <code>package.json</code> 中搜索与<strong>任务同名的软件包</strong>:</p>
+<p><code>tasks</code> 对象中的每个 key 都是一个可以通过 <code>turbo run</code> 执行的任务。Turborepo 将在 <code>package.json</code> 中搜索与任务同名的软件包:</p>
 <p><a href="https://turbo.build/repo/docs/reference/configuration#dependson"><code>dependsOn</code> 键</a>用于指定在其他任务开始运行之前必须完成的任务。在大多数情况下，库的<code>build</code>脚本在应用程序的<code>build</code>脚本运行之前完成，所以可以这么写:</p>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;build&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;dependsOn&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;^build&quot;</span><span class="punctuation">]</span> </span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
-<p><code>^</code> 这个语法告诉 Turborepo 从依赖关系图的底部开始运行任务。如果应用程序依赖于名为 <code>ui</code> 的库，并且该库具有<code>build</code>任务，则 <code>ui</code> 中的<code>build</code>脚本将<strong>首先</strong>运行。成功完成后，才会运行应用程序中的<code>build</code>任务。<br>这是一个重要的形式，因为它可以确保应用程序的<code>build</code>任务具有编译所需的所有必要依赖项。当依赖关系图发展到具有多个级别的任务依赖关系的更复杂的结构时，此概念也适用。</p>
+<p><code>^</code> 这个语法告诉 Turborepo 从依赖关系图的底部开始运行任务。如果应用程序依赖于名为 <code>ui</code> 的库，并且该库具有<code>build</code>任务，则 <code>ui</code> 中的<code>build</code>脚本将首先运行。成功完成后，才会运行应用程序中的<code>build</code>任务。<br>这是一个重要的形式，因为它可以确保应用程序的<code>build</code>任务具有编译所需的所有必要依赖项。当依赖关系图发展到具有多个级别的任务依赖关系的更复杂的结构时，此概念也适用。</p>
 </blockquote>
 <p>有时可能需要确保同一包中的两个任务按特定顺序运行。例如需要先在库中运行<code>build</code>任务，然后再在同一库中运行<code>test</code>任务。这种情况删掉 <code>^</code> 就行了:</p>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;test&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;dependsOn&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;build&quot;</span><span class="punctuation">]</span> </span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
@@ -2305,10 +2305,10 @@ await prisma.$transaction(async tx =&gt; &#123;
 
 <h3 id="指定输入输出"><a href="#指定输入输出" class="headerlink" title="指定输入输出"></a>指定输入输出</h3><p><code>outputs</code> 键告诉 Turborepo 文件和目录在任务成功完成时应该缓存在哪。如果未定义此 key，Turborepo 将不会缓存任何文件。</p>
 <p>例如缓存 vite 的输出一般可以这么写:</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;build&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;outputs&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;dist/**&quot;</span><span class="punctuation">]</span> </span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;build&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;outputs&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;dist/&quot;</span><span class="punctuation">]</span> </span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 
 <p><code>inputs</code> 键用于指定要包含在任务哈希中以进行<a href="https://turbo.build/repo/docs/crafting-your-repository/caching">缓存</a>的文件。默认情况下，Turborepo 将包含包中由 Git 跟踪的所有文件。但是也可以使用 <code>inputs</code> 键更具体地说明哈希中包含哪些文件, 例如，在 Markdown 文件中查找拼写错误的任务可以定义如下：:</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;spell-check&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;inputs&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;**/*.md&quot;</span><span class="punctuation">,</span> <span class="string">&quot;**/*.mdx&quot;</span><span class="punctuation">]</span> </span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;spell-check&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;inputs&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;/*.md&quot;</span><span class="punctuation">,</span> <span class="string">&quot;/*.mdx&quot;</span><span class="punctuation">]</span> </span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 
 <p>可以通过微调 <code>input</code> 以忽略对已知不会影响任务输出的文件的更改来提高某些任务的缓存命中率, 可以使用 <code>$TURBO_DEFAULT$</code> 微语法来微调默认 <code>input</code> 行为：</p>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;build&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;inputs&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;$TURBO_DEFAULT$&quot;</span><span class="punctuation">,</span> <span class="string">&quot;!README.md&quot;</span><span class="punctuation">]</span> </span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
@@ -2321,7 +2321,7 @@ await prisma.$transaction(async tx =&gt; &#123;
 <li><p><a href="https://turbo.build/repo/docs/reference/package-configurations">包配置</a>是直接放入包中的<code>turbo.json</code>文件。这允许软件包为其自己的任务定义特定行为，而不会影响存储库的其余部分。</p>
 </li>
 <li><p>有一些始终需要运行的任务，例如缓存生成后的部署脚本。对于这些任务，用 <code>“cache”： false</code> :</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;deploy&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;dependsOn&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;^build&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;cache&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;build&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;outputs&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;dist/**&quot;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;deploy&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;dependsOn&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;^build&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;cache&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;build&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;outputs&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;dist/&quot;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>某些任务可以并行运行，例如 Linter 不需要等待依赖项中的输出成功才能运行：</p>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;transit&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;dependsOn&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;^transit&quot;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;check-types&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;dependsOn&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;transit&quot;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
@@ -2348,7 +2348,7 @@ await prisma.$transaction(async tx =&gt; &#123;
 <h3 id="其他-1"><a href="#其他-1" class="headerlink" title="其他"></a>其他</h3><ul>
 <li><a href="https://turbo.build/repo/docs/reference/run#--dry----dry-run"><code>--dry</code> 标志</a>，可用于查看如果在没有实际运行任务的情况下运行任务会发生什么。当不确定正在运行的任务时，这对于调试缓存问题非常有用。</li>
 <li><a href="https://turbo.build/repo/docs/reference/run#--summarize"><code>--summarize</code> 标志</a>，可用于获取任务的所有输入、输出等的概览。比较两个摘要将揭示两个任务的哈希值不同的原因。</li>
-<li>强制 <code>turbo</code> 重新执行已缓存的任务，请使用 <a href="https://turbo.build/repo/docs/reference/run#--force"><code>--force</code> 标志</a>。请注意，这将禁用<strong>读取</strong>缓存，<strong>而不是写入</strong>。</li>
+<li>强制 <code>turbo</code> 重新执行已缓存的任务，请使用 <a href="https://turbo.build/repo/docs/reference/run#--force"><code>--force</code> 标志</a>。请注意，这将禁用读取缓存，而不是写入。</li>
 </ul>
 <h2 id="开发工作流"><a href="#开发工作流" class="headerlink" title="开发工作流"></a>开发工作流</h2><p>在 <code>turbo.json</code> 中定义开发任务 (development task) 会告诉 Turborepo 将运行一个长期任务。这对于运行开发服务器、运行测试或构建应用程序等操作非常有用:</p>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;dev&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;cache&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;persistent&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
@@ -2359,7 +2359,7 @@ await prisma.$transaction(async tx =&gt; &#123;
 </ul>
 <p>一些脚本允许使用 <code>stdin</code> 在其中键入以进行交互式输入。使用<a href="https://turbo.build/repo/docs/reference/configuration#ui">终端 UI</a>，可以选择一个任务，输入它，然后像往常一样使用 <code>stdin</code>。</p>
 <p>需要运行用于设置开发环境或预构建包的脚本。可以使用 <code>dependsOn</code> 确保这些任务在 <code>dev</code> 任务之前运行：</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;dev&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;cache&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;persistent&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;dependsOn&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;//#dev:setup&quot;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;//#dev:setup&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;outputs&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;.codegen/**&quot;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;dev&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;cache&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;persistent&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;dependsOn&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;//#dev:setup&quot;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;//#dev:setup&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;outputs&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;.codegen/&quot;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 
 <p>这里用的是 <a href="https://turbo.build/repo/docs/crafting-your-repository/configuring-tasks#registering-root-tasks">Root Task</a>，但可以对 <a href="https://turbo.build/repo/docs/crafting-your-repository/configuring-tasks#depending-on-a-specific-task-in-a-specific-package">packages 中的任意任务</a>使用相同的思路。</p>
 <h3 id="Watch-mode"><a href="#Watch-mode" class="headerlink" title="Watch mode"></a>Watch mode</h3><p>许多工具都有一个内置的 watcher，比如 <a href="https://www.typescriptlang.org/docs/handbook/compiler-options.html#compiler-options"><code>tsc --watch</code></a>，它会响应源代码中的更改。有些则没有，<code>Turbo Watch</code> 为任何工具添加了依赖项感知的 Watcher。对源代码的更改将遵循在 <code>turbo.json</code> 中描述的 <a href="https://turbo.build/repo/docs/core-concepts/package-and-task-graph#task-graph">Task Graph （任务图</a>），例如:</p>
@@ -2377,11 +2377,11 @@ await prisma.$transaction(async tx =&gt; &#123;
 </blockquote>
 <h3 id="Environment-mode"><a href="#Environment-mode" class="headerlink" title="Environment mode"></a>Environment mode</h3><p>Turborepo 的 Environment Mode 允许控制哪些环境变量在运行时可用于任务：</p>
 <ul>
-<li><a href="https://turbo.build/repo/docs/crafting-your-repository/using-environment-variables#strict-mode">严格模式</a>（默认）：将环境变量过滤为<strong>仅在</strong> <code>turbo.json</code> 的 <code>env</code> 和 <code>globalEnv</code> 键中指定的环境变量。</li>
+<li><a href="https://turbo.build/repo/docs/crafting-your-repository/using-environment-variables#strict-mode">严格模式</a>（默认）：将环境变量过滤为仅在 <code>turbo.json</code> 的 <code>env</code> 和 <code>globalEnv</code> 键中指定的环境变量。</li>
 <li><a href="https://turbo.build/repo/docs/crafting-your-repository/using-environment-variables#loose-mode">宽松模式</a>：允许进程的所有环境变量可用。</li>
 </ul>
 <h3 id="其他-2"><a href="#其他-2" class="headerlink" title="其他"></a>其他</h3><ul>
-<li><p><code>.env</code> 文件非常适合在本地处理应用程序。<strong>Turborepo 不会将 .env 文件加载到任务的运行时</strong>中，而是让它们由框架或 <a href="https://www.npmjs.com/package/dotenv"><code>dotenv</code></a> 等工具处理。但是，<code>turbo</code> 必须知道 <code>.env</code> 文件中值的更改，以便它可以将它们用于哈希。如果在两次构建之间更改 <code>.env</code> 文件中的变量，则 <code>build</code> 任务应该不会用上缓存。所以可以将其添加到 <code>input</code> 键中:</p>
+<li><p><code>.env</code> 文件非常适合在本地处理应用程序。Turborepo 不会将 .env 文件加载到任务的运行时中，而是让它们由框架或 <a href="https://www.npmjs.com/package/dotenv"><code>dotenv</code></a> 等工具处理。但是，<code>turbo</code> 必须知道 <code>.env</code> 文件中值的更改，以便它可以将它们用于哈希。如果在两次构建之间更改 <code>.env</code> 文件中的变量，则 <code>build</code> 任务应该不会用上缓存。所以可以将其添加到 <code>input</code> 键中:</p>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;globalDependencies&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;.env&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span> <span class="comment">// All task hashes</span></span><br><span class="line">  <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;build&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;inputs&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;$TURBO_DEFAULT$&quot;</span><span class="punctuation">,</span> <span class="string">&quot;.env&quot;</span><span class="punctuation">,</span> <span class="string">&quot;.env.local&quot;</span><span class="punctuation">]</span> <span class="comment">// Only the `build` task hash</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>不建议在存储库的根目录中使用 <code>.env</code> 文件。相反，建议将 <code>.env</code> 文件放入使用它们的包中。</p>
@@ -2529,14 +2529,14 @@ await prisma.$transaction(async tx =&gt; &#123;
 <ol>
 <li>队列（在 NestJS 里由 <code>@Processor</code> 装饰的类）会被一个底层的 <code>Worker</code> 订阅。  </li>
 <li>有新任务（job）进来时，Worker 会调用写在该类里的 <code>async process(job: Job)</code> 方法。  </li>
-<li>如果 <code>process()</code> 正常返回（即没有抛异常），Job 就被标记为 <strong>completed</strong>，然后才会去触发所有注册了 <code>@OnWorkerEvent(&#39;completed&#39;)</code> 的回调。</li>
+<li>如果 <code>process()</code> 正常返回（即没有抛异常），Job 就被标记为 completed，然后才会去触发所有注册了 <code>@OnWorkerEvent(&#39;completed&#39;)</code> 的回调。</li>
 </ol>
 <p>也就是说：</p>
 <ul>
-<li>**<code>process</code>**：是真正“干活”的地方，收到 job 之后立刻被调用，任何主业务逻辑（发邮件／写数据库／第三方请求等）都应该放这里。  </li>
-<li><strong><code>onCompleted</code><strong>：只是一个事件监听器，</strong>在 job 已经成功完成之后</strong> 才会被触发，不会影响 job 的重试逻辑（也就是说，在这里抛错，job 已经算完成了，也不会重试）。</li>
+<li><code>process</code>：是真正“干活”的地方，收到 job 之后立刻被调用，任何主业务逻辑（发邮件／写数据库／第三方请求等）都应该放这里。  </li>
+<li><code>onCompleted</code>：只是一个事件监听器，在 job 已经成功完成之后 才会被触发，不会影响 job 的重试逻辑（也就是说，在这里抛错，job 已经算完成了，也不会重试）。</li>
 </ul>
-<p>而我在此处的业务目的是 “用队列来做可靠的、可重试的邮件发送”，那么<strong>一定要把发送邮件的逻辑写到 <code>process()</code> 里</strong>，这样在 <code>commandBus.execute(new SendMailCommand(...))</code> 抛错时，BullMQ 会根据创建 JOB 时的重试策略（retry、backoff 等）自动重新入队。而把它放到 <code>onCompleted()</code>，只相当于 job 成功完成后的“事后通知”，一旦失败不会再重试，也无法利用 BullMQ 的锁、超时、重试机制。</p>
+<p>而我在此处的业务目的是 “用队列来做可靠的、可重试的邮件发送”，那么一定要把发送邮件的逻辑写到 <code>process()</code> 里，这样在 <code>commandBus.execute(new SendMailCommand(...))</code> 抛错时，BullMQ 会根据创建 JOB 时的重试策略（retry、backoff 等）自动重新入队。而把它放到 <code>onCompleted()</code>，只相当于 job 成功完成后的“事后通知”，一旦失败不会再重试，也无法利用 BullMQ 的锁、超时、重试机制。</p>
 <p>举个最简化的调整示例，删掉 <code>onCompleted</code>，把真正的发信放到 <code>process</code>：  </p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// ... existing imports ...</span><br><span class="line"></span><br><span class="line">@Processor(process.env.MAILER_QUEUE_NAME || &quot;gcpm-mailer&quot;)</span><br><span class="line">export class BullMQMailerProcesser extends WorkerHost &#123;</span><br><span class="line">  constructor(</span><br><span class="line">    private readonly commandBus: CommandBus,</span><br><span class="line">    private readonly logger: LoggingService,</span><br><span class="line">  ) &#123;</span><br><span class="line">    super();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // ① 当有新 job 拉取到时，这个方法会被调用</span><br><span class="line">  public async process(job: Job): Promise&lt;void&gt; &#123;</span><br><span class="line">    const mailAggregate = new Mail(job.data.mail);</span><br><span class="line">    try &#123;</span><br><span class="line">      await this.commandBus.execute(new SendMailCommand(mailAggregate));</span><br><span class="line">    &#125; catch (err) &#123;</span><br><span class="line">      this.logger.error(`邮件发送失败，jobId=$&#123;job.id&#125;`, err);</span><br><span class="line">      // 抛出错误，触发重试或失败</span><br><span class="line">      throw err;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // ② onCompleted 仅在 process() 正常返回后触发，</span><br><span class="line">  //    不建议在这里执行核心业务（也无法触发重试）。</span><br><span class="line">  // @OnWorkerEvent(&quot;completed&quot;)</span><br><span class="line">  // async onCompleted(job: Job) &#123; … &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -2546,9 +2546,9 @@ await prisma.$transaction(async tx =&gt; &#123;
 <li>“Events → OnJobCompleted”：completed 事件只是一个监听钩子，不会参与重试。</li>
 </ul>
 <hr>
-<p>而 <strong>重试次数本身并没有一个硬性上限</strong>，完全由添加 Job 时通过 <code>attempts</code> 这个选项来控制：</p>
+<p>而 重试次数本身并没有一个硬性上限，完全由添加 Job 时通过 <code>attempts</code> 这个选项来控制：</p>
 <ul>
-<li>默认情况下，如果不传 <code>attempts</code>（或不在 <code>defaultJobOptions</code> 里配置），Job <strong>不会自动重试</strong>（相当于 <code>attempts = 0</code>）。  </li>
+<li>默认情况下，如果不传 <code>attempts</code>（或不在 <code>defaultJobOptions</code> 里配置），Job 不会自动重试（相当于 <code>attempts = 0</code>）。  </li>
 <li>如果在 <code>queue.add()</code>（或全局 <code>defaultJobOptions</code>）里设置了 <code>attempts: N</code>，那么 BullMQ 最多会让该 Job 运行 N 次（也就是初始执行 + N−1 次重试，或者根据文档含义最多触发 N 次失败） ，失败后才算真正移入失败集合。  </li>
 <li><code>attempts</code> 可以是任意的正整数（受 JavaScript <code>Number</code> 范围限制），BullMQ 本身不会再做额外的上限检查。</li>
 </ul>
@@ -2557,13 +2557,13 @@ await prisma.$transaction(async tx =&gt; &#123;
 
 <hr>
 <p>还有一个需要注意的地方，在我的业务中，邮件发送的是一种时间区间报告，这个报告包含了过去二十四小时的一些系统中的事件，但如果重试有延迟策略或重试本身就有计算成本的话，这封邮件就不是 “过去二十四小时” 的了，因为重试带来了一个真空期。</p>
-<p>换言之，这个问题本质上是——<strong>重试导致「发送时刻」与「原始 24 小时窗口」错开</strong>，从而让邮件里报出来的数据不再精确。常见的解决思路就是：<strong>把「窗口定义」或者「报表内容」在调度时就固化下来，真正的队列任务只负责发送</strong>，而不再实时去重新计算时间区间。</p>
+<p>换言之，这个问题本质上是——重试导致「发送时刻」与「原始 24 小时窗口」错开，从而让邮件里报出来的数据不再精确。常见的解决思路就是：把「窗口定义」或者「报表内容」在调度时就固化下来，真正的队列任务只负责发送，而不再实时去重新计算时间区间。</p>
 <p>我想到了两种解决方案：</p>
 <p>一、任务参数里带上「时间区间」<br>   在 enqueue 的时候，就算出 windowStart&#x2F;windowEnd，然后把它放到 <code>job.data</code> 里。无论后面 <code>process</code> 什么时候真正跑，都是基于同一个时间区间去查询：</p>
    <figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 调度时</span></span><br><span class="line"><span class="keyword">const</span> now = <span class="keyword">new</span> <span class="title class_">Date</span>();</span><br><span class="line"><span class="keyword">const</span> windowStart = <span class="keyword">new</span> <span class="title class_">Date</span>(now.<span class="title function_">getTime</span>() - <span class="number">24</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">1000</span>);</span><br><span class="line"><span class="keyword">await</span> <span class="variable language_">this</span>.<span class="property">mailerQueue</span>.<span class="title function_">add</span>(</span><br><span class="line">  id,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">mail</span>: <span class="keyword">new</span> <span class="title class_">Mail</span>(&#123;</span><br><span class="line">      ...options,</span><br><span class="line">      id,</span><br><span class="line">      <span class="attr">sentAt</span>: now,</span><br><span class="line">      <span class="attr">status</span>: <span class="title class_">MailStatus</span>.<span class="property">PENDING</span>,</span><br><span class="line">      windowStart,</span><br><span class="line">      <span class="attr">windowEnd</span>: now,</span><br><span class="line">    &#125;),</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">attempts</span>: <span class="number">3</span>,</span><br><span class="line">    <span class="attr">backoff</span>: &#123; <span class="attr">type</span>: <span class="string">&#x27;exponential&#x27;</span>, <span class="attr">delay</span>: <span class="number">1000</span> &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">// process 里</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">async</span> <span class="title function_">process</span>(<span class="params"><span class="attr">job</span>: <span class="title class_">Job</span></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; windowStart, windowEnd &#125; = job.<span class="property">data</span>.<span class="property">mail</span>;</span><br><span class="line">  <span class="comment">// ① 只查询 [windowStart, windowEnd] 的事件</span></span><br><span class="line">  <span class="keyword">const</span> events = <span class="keyword">await</span> <span class="variable language_">this</span>.<span class="property">reportService</span>.<span class="title function_">findEvents</span>(windowStart, windowEnd);</span><br><span class="line">  <span class="keyword">const</span> reportHtml = <span class="keyword">await</span> <span class="variable language_">this</span>.<span class="property">reportService</span>.<span class="title function_">renderReport</span>(events);</span><br><span class="line">  <span class="keyword">await</span> <span class="variable language_">this</span>.<span class="property">commandBus</span>.<span class="title function_">execute</span>(<span class="keyword">new</span> <span class="title class_">SendMailCommand</span>(job.<span class="property">data</span>.<span class="property">mail</span>, reportHtml));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>   ➜ 这样无是马上执行还是几次重试后才执行，数据规则都不会变。</p>
 <p>二、预先生成「静态报表内容」，挂到队列里<br>   如果计算成本很高，或者怕重复查询数据开销大，也可以在调度时就把最终的 HTML&#x2F;Text&#x2F;附件 都先打好，然后作为 <code>job.data</code> 传进去，真正的 <code>process()</code> 只做一次“发送”即可：<br>   <figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 调度时：先生成报告</span></span><br><span class="line"><span class="keyword">const</span> now = <span class="keyword">new</span> <span class="title class_">Date</span>();</span><br><span class="line"><span class="keyword">const</span> windowStart = <span class="keyword">new</span> <span class="title class_">Date</span>(now.<span class="title function_">getTime</span>() - <span class="number">24</span>*<span class="number">3600</span>*<span class="number">1000</span>);</span><br><span class="line"><span class="keyword">const</span> events = <span class="keyword">await</span> <span class="variable language_">this</span>.<span class="property">reportService</span>.<span class="title function_">findEvents</span>(windowStart, now);</span><br><span class="line"><span class="keyword">const</span> reportHtml = <span class="keyword">await</span> <span class="variable language_">this</span>.<span class="property">reportService</span>.<span class="title function_">renderReport</span>(events);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 把静态内容塞到队列</span></span><br><span class="line"><span class="keyword">await</span> <span class="variable language_">this</span>.<span class="property">mailerQueue</span>.<span class="title function_">add</span>(</span><br><span class="line">  id,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">mail</span>: <span class="keyword">new</span> <span class="title class_">Mail</span>(&#123; <span class="comment">/*…*/</span>, windowStart, <span class="attr">windowEnd</span>: now &#125;),</span><br><span class="line">    reportHtml,       <span class="comment">// &lt;- 预渲染好的文本／HTML</span></span><br><span class="line">    <span class="attr">attachments</span>: […], <span class="comment">// &lt;- 如果有附件也一并塞</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123; <span class="attr">attempts</span>: <span class="number">3</span>, <span class="attr">backoff</span>: &#123; <span class="attr">type</span>: <span class="string">&#x27;fixed&#x27;</span>, <span class="attr">delay</span>: <span class="number">5_000</span> &#125; &#125;,</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">// process 里只关注发送</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">async</span> <span class="title function_">process</span>(<span class="params"><span class="attr">job</span>: <span class="title class_">Job</span></span>) &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">await</span> <span class="variable language_">this</span>.<span class="property">mailService</span>.<span class="title function_">send</span>(&#123;</span><br><span class="line">      <span class="attr">to</span>: job.<span class="property">data</span>.<span class="property">mail</span>.<span class="property">to</span>,</span><br><span class="line">      <span class="attr">subject</span>: <span class="string">`系统 24h 报表`</span>,</span><br><span class="line">      <span class="attr">html</span>: job.<span class="property">data</span>.<span class="property">reportHtml</span>,</span><br><span class="line">      <span class="attr">attachments</span>: job.<span class="property">data</span>.<span class="property">attachments</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">    <span class="keyword">throw</span> e; <span class="comment">// 触发重试</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>   ➜ 重试带来的任何延迟，都不影响邮件正文，始终是一份「事先约定好、并且静态化」的报告。</p>
-<p>这两种模式都能保证<strong>最终发送时的数据窗口</strong>或<strong>内容</strong>，与当初调度时的预期完全一致，不会因为重试延迟而出现“数据真空”或“多算&#x2F;少算”问题。</p>
+<p>这两种模式都能保证最终发送时的数据窗口或内容，与当初调度时的预期完全一致，不会因为重试延迟而出现“数据真空”或“多算&#x2F;少算”问题。</p>
 <h2 id="参考文档："><a href="#参考文档：" class="headerlink" title="参考文档："></a>参考文档：</h2><ul>
 <li>“Retrying failing jobs” · BullMQ Guide<br><a href="https://docs.bullmq.io/guide/retrying-failing-jobs">https://docs.bullmq.io/guide/retrying-failing-jobs</a></li>
 <li>BullMQ Guide &amp; Patterns · Process Step Jobs (completed event only fires after process resolves)<br><a href="https://docs.bullmq.io/patterns/process-step-jobs">https://docs.bullmq.io/patterns/process-step-jobs</a></li>
@@ -2631,7 +2631,7 @@ await prisma.$transaction(async tx =&gt; &#123;
 <hr>
 <p>Rimon Tawadrous 在其 GitHub repo 中的测试，对比 100 万条逐条插入实验，UUID v7 相较 UUID v4 在单线程插入上速度快约 3.24%，多线程下更可观【1】。  </p>
 <hr>
-<p><strong>参考链接</strong><br>[1] “为什么 UUID 7 比 UUID 4 更适合作为 RDBMS 的聚集索引？” dbaplus.cn<br>    <a href="https://dbaplus.cn/news-160-6313-1.html">https://dbaplus.cn/news-160-6313-1.html</a><br>[2] “PostgreSQL and UUID as primary key” maciejwalkowiak<br>    <a href="https://maciejwalkowiak.com/blog/postgres-uuid-primary-key/">https://maciejwalkowiak.com/blog/postgres-uuid-primary-key/</a><br>[3] “Optimised UUIDs in mysql” stitcher<br>    <a href="https://stitcher.io/blog/optimised-uuids-in-mysql">https://stitcher.io/blog/optimised-uuids-in-mysql</a><br>[3] “Storing UUID Values in MySQL” percona<br>    <a href="https://www.percona.com/blog/store-uuid-optimized-way/">https://www.percona.com/blog/store-uuid-optimized-way/</a></p>
+<p>参考链接<br>[1] “为什么 UUID 7 比 UUID 4 更适合作为 RDBMS 的聚集索引？” dbaplus.cn<br>    <a href="https://dbaplus.cn/news-160-6313-1.html">https://dbaplus.cn/news-160-6313-1.html</a><br>[2] “PostgreSQL and UUID as primary key” maciejwalkowiak<br>    <a href="https://maciejwalkowiak.com/blog/postgres-uuid-primary-key/">https://maciejwalkowiak.com/blog/postgres-uuid-primary-key/</a><br>[3] “Optimised UUIDs in mysql” stitcher<br>    <a href="https://stitcher.io/blog/optimised-uuids-in-mysql">https://stitcher.io/blog/optimised-uuids-in-mysql</a><br>[3] “Storing UUID Values in MySQL” percona<br>    <a href="https://www.percona.com/blog/store-uuid-optimized-way/">https://www.percona.com/blog/store-uuid-optimized-way/</a></p>
 ]]></content>
       <tags>
         <tag>Technique</tag>
@@ -2674,43 +2674,43 @@ await prisma.$transaction(async tx =&gt; &#123;
   <entry>
     <title>Vertical slicing 在开发中的实践探索</title>
     <url>/2025/05/27/vertical-slicing-practice/</url>
-    <content><![CDATA[<p><strong>垂直切片 (Vertical Slicing)</strong> 是一种在敏捷软件开发中将产品需求（通常是用户故事）拆分为可独立交付的、具有端到端功能的小块的方法。这意味着每个“切片”都包含了从用户界面 (UI) 到底层数据库，以及中间所有业务逻辑层所需的工作。</p>
+    <content><![CDATA[<p>垂直切片 (Vertical Slicing) 是一种在敏捷软件开发中将产品需求（通常是用户故事）拆分为可独立交付的、具有端到端功能的小块的方法。这意味着每个“切片”都包含了从用户界面 (UI) 到底层数据库，以及中间所有业务逻辑层所需的工作。</p>
 <p>与水平切片（即按技术分层，如先完成所有 UI，再完成所有后端逻辑）不同，垂直切片的目标是尽快交付一个虽小但完整可用的功能。</p>
 <hr>
 <p>想象一个蛋糕，垂直切片就像切下一块完整的蛋糕，包含从顶部到底部的每一层。在软件开发中，这意味着一个任务或用户故事的完成会涉及到：</p>
 <ul>
-<li>**用户界面 (UI)**：用户能看到并与之交互的部分。</li>
-<li>**业务逻辑层 (Business Logic Layer)**：处理数据和执行核心功能的部分。</li>
-<li>**数据访问层 (Data Access Layer)**：与数据库或其他数据存储交互的部分。</li>
-<li>**数据库 (Database)**：存储数据的部分。</li>
+<li>用户界面 (UI)：用户能看到并与之交互的部分。</li>
+<li>业务逻辑层 (Business Logic Layer)：处理数据和执行核心功能的部分。</li>
+<li>数据访问层 (Data Access Layer)：与数据库或其他数据存储交互的部分。</li>
+<li>数据库 (Database)：存储数据的部分。</li>
 </ul>
 <p>所以一个垂直切片代表了一个可以独立运行、测试和向用户展示的小功能。</p>
 <hr>
 <p>在实践中，用垂直切片进行任务拆分或许可以按照如下步骤来实现：</p>
-<p>一、**从用户故事开始 (Start with User Stories)**：明确用户需要什么功能以及这个功能为用户带来的价值。例如：“作为一个注册用户，我希望能用我的邮箱和密码登录系统，以便访问我的个人资料。”</p>
-<p>二、<strong>识别涉及的技术层面 (Identify Affected Layers)</strong></p>
+<p>一、从用户故事开始 (Start with User Stories)：明确用户需要什么功能以及这个功能为用户带来的价值。例如：“作为一个注册用户，我希望能用我的邮箱和密码登录系统，以便访问我的个人资料。”</p>
+<p>二、识别涉及的技术层面 (Identify Affected Layers)</p>
 <p>对于登录功能，需要考虑：</p>
 <ul>
-<li><strong>UI 层</strong>：登录表单（输入邮箱、密码的地方）、提交按钮、错误提示信息。</li>
-<li><strong>API&#x2F;服务层</strong>：接收登录请求、验证用户凭证的接口。</li>
-<li><strong>业务逻辑层</strong>：校验输入格式、查询用户信息、验证密码、生成会话（Session）或令牌（Token）。</li>
-<li><strong>数据访问层</strong>：从数据库中读取用户信息。</li>
+<li>UI 层：登录表单（输入邮箱、密码的地方）、提交按钮、错误提示信息。</li>
+<li>API&#x2F;服务层：接收登录请求、验证用户凭证的接口。</li>
+<li>业务逻辑层：校验输入格式、查询用户信息、验证密码、生成会话（Session）或令牌（Token）。</li>
+<li>数据访问层：从数据库中读取用户信息。</li>
 </ul>
-<p>三、<strong>创建可交付的小功能块 (Create Small, Deliverable Chunks)</strong></p>
+<p>三、创建可交付的小功能块 (Create Small, Deliverable Chunks)</p>
 <p>就是将一个大的用户故事拆分成更小的、但仍然是垂直的、可独立交付的故事。例如，可以将“用户登录”进一步细化：</p>
-<p>**切片1 (基础登录)**：用户可以使用正确的邮箱和密码成功登录。这包含了 UI 输入、后端验证和数据库查询。</p>
-<p>**切片2 (错误处理)**：用户输入错误的邮箱或密码时，系统给出明确的错误提示。这可能只涉及 UI 和业务逻辑层的少量修改。</p>
-<p>**切片3 (“记住我” 功能)**：用户可以选择“记住我”，下次访问时自动登录。这可能涉及 UI、业务逻辑和客户端存储。</p>
-<p>四、**确保每个切片都有价值 (Ensure Each Slice Has Value)**：每完成一个切片，都应该为用户或产品带来可感知的价值，并且理想情况下是可以演示给利益相关者看的。</p>
-<p>五、**保持切片足够小 (Keep Slices Small Enough)**：每个切片的工作量应该小到可以在一个迭代周期（例如 Sprint）内完成。这有助于团队保持专注，并快速获得反馈。</p>
+<p>切片1 (基础登录)：用户可以使用正确的邮箱和密码成功登录。这包含了 UI 输入、后端验证和数据库查询。</p>
+<p>切片2 (错误处理)：用户输入错误的邮箱或密码时，系统给出明确的错误提示。这可能只涉及 UI 和业务逻辑层的少量修改。</p>
+<p>切片3 (“记住我” 功能)：用户可以选择“记住我”，下次访问时自动登录。这可能涉及 UI、业务逻辑和客户端存储。</p>
+<p>四、确保每个切片都有价值 (Ensure Each Slice Has Value)：每完成一个切片，都应该为用户或产品带来可感知的价值，并且理想情况下是可以演示给利益相关者看的。</p>
+<p>五、保持切片足够小 (Keep Slices Small Enough)：每个切片的工作量应该小到可以在一个迭代周期（例如 Sprint）内完成。这有助于团队保持专注，并快速获得反馈。</p>
 <hr>
 <p>这里有一些拆分技巧：</p>
 <ul>
-<li><strong>按操作流程拆分</strong>：例如，一个复杂的表单提交可以先实现基本信息的提交，后续再添加高级选项的提交。</li>
-<li><strong>按业务规则拆分</strong>：先实现核心的业务规则，再逐步添加次要的或复杂的规则。</li>
-<li><strong>按数据类型或参数拆分</strong>：先支持一种数据类型或最常用的参数，再扩展到其他类型。</li>
-<li><strong>按用户角色或权限拆分</strong>：先实现某个核心角色的功能，再实现其他角色的特定功能。</li>
-<li><strong>简化错误处理或用户体验</strong>：先实现基本功能，再完善错误处理和用户体验细节。</li>
+<li>按操作流程拆分：例如，一个复杂的表单提交可以先实现基本信息的提交，后续再添加高级选项的提交。</li>
+<li>按业务规则拆分：先实现核心的业务规则，再逐步添加次要的或复杂的规则。</li>
+<li>按数据类型或参数拆分：先支持一种数据类型或最常用的参数，再扩展到其他类型。</li>
+<li>按用户角色或权限拆分：先实现某个核心角色的功能，再实现其他角色的特定功能。</li>
+<li>简化错误处理或用户体验：先实现基本功能，再完善错误处理和用户体验细节。</li>
 </ul>
 ]]></content>
       <tags>
@@ -3702,12 +3702,12 @@ await prisma.$transaction(async tx =&gt; &#123;
     <content><![CDATA[<h2 id="一、传统手艺：Partial-Application"><a href="#一、传统手艺：Partial-Application" class="headerlink" title="一、传统手艺：Partial Application"></a>一、传统手艺：Partial Application</h2><p>在函数式编程中，Partial Application 是传递依赖的常用方式。例如：</p>
 <figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> foo bar baz request <span class="operator">=</span> <span class="operator">...</span></span><br><span class="line"><span class="keyword">let</span> wired <span class="operator">=</span> foo dependency1 dependency2</span><br><span class="line"><span class="keyword">let</span> response <span class="operator">=</span> wired request</span><br></pre></td></tr></table></figure>
 
-<p><strong>优点</strong>：  </p>
+<p>优点：  </p>
 <ul>
 <li>无需框架或反射，直接通过函数参数传递依赖。  </li>
 <li>符合函数式编程的纯函数理念。</li>
 </ul>
-<p><strong>缺点</strong>：  </p>
+<p>缺点：  </p>
 <ul>
 <li>参数爆炸：当功能扩展时，参数数量激增（如日志、数据库、加密等）。  </li>
 <li>维护困难：新增依赖需修改所有调用点的参数传递。  </li>
@@ -3717,13 +3717,13 @@ await prisma.$transaction(async tx =&gt; &#123;
 <h2 id="二、结构化方法：单一环境参数（env）"><a href="#二、结构化方法：单一环境参数（env）" class="headerlink" title="二、结构化方法：单一环境参数（env）"></a>二、结构化方法：单一环境参数（<code>env</code>）</h2><p>为解决参数爆炸问题，可将依赖封装为单一环境对象<code>env</code>，并通过接口约束访问权限：</p>
 <figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="meta">[&lt;Interface&gt;]</span> <span class="keyword">type</span> <span class="title class_">ILog</span> <span class="operator">=</span> <span class="keyword">abstract</span> Logger<span class="operator">:</span> ILogger</span><br><span class="line"><span class="meta">[&lt;Interface&gt;]</span> <span class="keyword">type</span> <span class="title class_">IDb</span> <span class="operator">=</span> <span class="keyword">abstract</span> Database<span class="operator">:</span> IDatabase</span><br><span class="line"></span><br><span class="line"><span class="keyword">module</span> Log <span class="operator">=</span></span><br><span class="line">    <span class="keyword">let</span> info (env<span class="operator">:</span> #ILog) <span class="operator">=</span> env.Logger.Info(<span class="string">&quot;Message&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">module</span> Db <span class="operator">=</span></span><br><span class="line">    <span class="keyword">let</span> fetchUser (env<span class="operator">:</span> #IDb) <span class="operator">=</span> env.Database.Query(<span class="operator">...</span>)</span><br></pre></td></tr></table></figure>
 
-<p><strong>优点</strong>：  </p>
+<p>优点：  </p>
 <ul>
-<li><strong>显式依赖声明</strong>：函数签名仅需<code>env</code>参数，编译器验证接口实现。  </li>
-<li><strong>模块化隔离</strong>：各模块仅声明所需接口（如<code>ILog</code>、<code>IDb</code>），避免全局依赖。  </li>
-<li><strong>易于测试</strong>：通过模拟<code>env</code>实现单元测试，无需依赖具体实现。</li>
+<li>显式依赖声明：函数签名仅需<code>env</code>参数，编译器验证接口实现。  </li>
+<li>模块化隔离：各模块仅声明所需接口（如<code>ILog</code>、<code>IDb</code>），避免全局依赖。  </li>
+<li>易于测试：通过模拟<code>env</code>实现单元测试，无需依赖具体实现。</li>
 </ul>
-<p><strong>应用场景</strong>：  </p>
+<p>应用场景：  </p>
 <figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> changePass env req <span class="operator">=</span> <span class="keyword">task</span> &#123;</span><br><span class="line">    <span class="keyword">let!</span> user <span class="operator">=</span> Db.fetchUser env req.UserId</span><br><span class="line">    Log.info env <span class="string">&quot;Processing user: %i&quot;</span> user.Id</span><br><span class="line">    <span class="operator">...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <hr>
@@ -3733,15 +3733,15 @@ await prisma.$transaction(async tx =&gt; &#123;
 <p>然后：</p>
 <figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> changePass req <span class="operator">=</span> <span class="keyword">effect</span> &#123;</span><br><span class="line">    <span class="keyword">let!</span> user <span class="operator">=</span> Db.fetchUser req.UserId</span><br><span class="line">    <span class="keyword">let!</span> salt <span class="operator">=</span> Random.bytes <span class="number">32</span></span><br><span class="line">    <span class="keyword">do!</span> Log.info <span class="string">&quot;Password updated for user %i&quot;</span> user.Id</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">Ok</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><strong>优点</strong>：  </p>
+<p>优点：  </p>
 <ul>
-<li><strong>隐式依赖管理</strong>：通过<code>effect</code>计算表达式自动传递<code>env</code>，减少样板代码。  </li>
-<li><strong>组合性</strong>：支持与其他计算表达式（如<code>async</code>&#x2F;<code>task</code>）结合，处理异步操作。</li>
+<li>隐式依赖管理：通过<code>effect</code>计算表达式自动传递<code>env</code>，减少样板代码。  </li>
+<li>组合性：支持与其他计算表达式（如<code>async</code>&#x2F;<code>task</code>）结合，处理异步操作。</li>
 </ul>
-<p><strong>缺点</strong>：  </p>
+<p>缺点：  </p>
 <ul>
-<li><strong>性能开销</strong>：频繁的闭包创建和间接调用可能导致性能下降。  </li>
-<li><strong>生态兼容性</strong>：需自定义计算表达式，与现有异步框架集成复杂。</li>
+<li>性能开销：频繁的闭包创建和间接调用可能导致性能下降。  </li>
+<li>生态兼容性：需自定义计算表达式，与现有异步框架集成复杂。</li>
 </ul>
 <h2 id="Refs"><a href="#Refs" class="headerlink" title="Refs."></a>Refs.</h2><ul>
 <li>Spring的构造器注入</li>
@@ -3789,7 +3789,7 @@ await prisma.$transaction(async tx =&gt; &#123;
 <p>界面是用户与系统通信的中介层，界面中的交互通常需要用户执行某些操作。不同的操作可能会导致不同的结果，其中可能有一些对于双方来说都非常重要甚至危险的操作。</p>
 <p>所以经常需要提供额外的保护措施来“保护”用户执行一些危险甚至无法恢复的操作。<br>这里的“保护”并不是完全的阻止，否则这个操作也没有存在的必要。</p>
 <blockquote>
-<p>“良好的错误消息很重要，但最好的设计<strong>首先会小心地防止问题发生</strong>。要么消除容易出错的情况，要么检查它们并在用户承诺操作之前向他们提供确认选项。”</p>
+<p>“良好的错误消息很重要，但最好的设计首先会小心地防止问题发生。要么消除容易出错的情况，要么检查它们并在用户承诺操作之前向他们提供确认选项。”</p>
 </blockquote>
 <h2 id="什么是危险行为？"><a href="#什么是危险行为？" class="headerlink" title="什么是危险行为？"></a>什么是危险行为？</h2><p>危险行为并不意味着要删除某些内容，具体的危险行为应该由系统的“领域”来定义，例如:</p>
 <ul>
@@ -3856,9 +3856,9 @@ await prisma.$transaction(async tx =&gt; &#123;
     <url>/2025/02/10/%E5%AE%9E%E6%97%B6%E6%90%9C%E7%B4%A2%E4%B8%AD%E7%9A%84%E9%98%B2%E6%8A%96%E5%87%BD%E6%95%B0/</url>
     <content><![CDATA[<p>在实现实时搜索功能时，通常会使用输入框的事件监听器来捕获用户的输入变化，并在输入变化时发送搜索请求。为了避免过多的请求导致服务器负担过重，通常会使用“防抖”（debounce）技术来控制请求的频率。</p>
 <h3 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h3><ol>
-<li><strong>监听输入框的变化</strong>：使用<code>input</code>事件监听器来捕获用户的输入变化。</li>
-<li><strong>防抖处理</strong>：使用防抖函数来限制请求的频率。防抖函数会在用户停止输入一段时间后才发送请求。</li>
-<li><strong>发送请求</strong>：在防抖函数中调用搜索请求。</li>
+<li>监听输入框的变化：使用<code>input</code>事件监听器来捕获用户的输入变化。</li>
+<li>防抖处理：使用防抖函数来限制请求的频率。防抖函数会在用户停止输入一段时间后才发送请求。</li>
+<li>发送请求：在防抖函数中调用搜索请求。</li>
 </ol>
 <h3 id="防抖函数示例"><a href="#防抖函数示例" class="headerlink" title="防抖函数示例"></a>防抖函数示例</h3><p>以下是一个简单的防抖函数示例：</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">debounce</span>(<span class="params">func, wait</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> timeout;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">...args</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> context = <span class="variable language_">this</span>;</span><br><span class="line">    <span class="built_in">clearTimeout</span>(timeout);</span><br><span class="line">    timeout = <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> func.<span class="title function_">apply</span>(context, args), wait);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -3867,8 +3867,8 @@ await prisma.$transaction(async tx =&gt; &#123;
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">  import &#123; onMount &#125; from &#x27;svelte&#x27;;</span><br><span class="line">  import &#123; patientsStore &#125; from &#x27;$lib/stores/patients.svelte&#x27;;</span><br><span class="line"></span><br><span class="line">  let searchTerm = &#x27;&#x27;;</span><br><span class="line"></span><br><span class="line">  // 防抖函数</span><br><span class="line">  function debounce(func, wait) &#123;</span><br><span class="line">    let timeout;</span><br><span class="line">    return function(...args) &#123;</span><br><span class="line">      const context = this;</span><br><span class="line">      clearTimeout(timeout);</span><br><span class="line">      timeout = setTimeout(() =&gt; func.apply(context, args), wait);</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 搜索函数</span><br><span class="line">  const searchPatients = debounce(async (term) =&gt; &#123;</span><br><span class="line">    if (term) &#123;</span><br><span class="line">      // 发送搜索请求</span><br><span class="line">      const response = await fetch(`/api/search-patients?query=$&#123;term&#125;`);</span><br><span class="line">      const data = await response.json();</span><br><span class="line">      patientsStore.mbglPatients = data;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      // 清空搜索结果或恢复默认数据</span><br><span class="line">      patientsStore.mbglPatients = [];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;, 300); // 300ms 的防抖时间</span><br><span class="line"></span><br><span class="line">  // 监听输入框变化</span><br><span class="line">  function handleInput(event) &#123;</span><br><span class="line">    searchTerm = event.target.value;</span><br><span class="line">    searchPatients(searchTerm);</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;input type=&quot;text&quot; placeholder=&quot;搜索患者...&quot; on:input=&#123;handleInput&#125; bind:value=&#123;searchTerm&#125; /&gt;</span><br></pre></td></tr></table></figure>
 
 <h3 id="请求发送间隔"><a href="#请求发送间隔" class="headerlink" title="请求发送间隔"></a>请求发送间隔</h3><ul>
-<li><strong>防抖时间</strong>：通常设置为 300ms 到 500ms 之间。这个时间足够让用户完成输入并减少不必要的请求。</li>
-<li><strong>考虑用户体验</strong>：防抖时间过短可能导致过多请求，过长则可能让用户感到延迟。300ms 是一个常用的折中值。</li>
+<li>防抖时间：通常设置为 300ms 到 500ms 之间。这个时间足够让用户完成输入并减少不必要的请求。</li>
+<li>考虑用户体验：防抖时间过短可能导致过多请求，过长则可能让用户感到延迟。300ms 是一个常用的折中值。</li>
 </ul>
 <p>通过这种方式，你可以实现一个高效的实时搜索功能，既能保证用户体验，又能减少服务器的负担。</p>
 ]]></content>
@@ -4528,42 +4528,42 @@ await prisma.$transaction(async tx =&gt; &#123;
     <url>/2025/03/20/%E8%82%BA%E5%8A%9F%E8%83%BD%E6%A3%80%E6%9F%A5%E6%95%B0%E5%80%BC/</url>
     <content><![CDATA[<p>肺功能测试是评估患者呼吸系统健康的重要工具。各个指标的及其异常数值可能指示的潜在生理疾病：</p>
 <h3 id="1-FEV1（第一秒用力呼气量）"><a href="#1-FEV1（第一秒用力呼气量）" class="headerlink" title="1. FEV1（第一秒用力呼气量）"></a>1. FEV1（第一秒用力呼气量）</h3><ul>
-<li><strong>评估</strong>：FEV1用于评估气道的通畅程度。它反映了在用力呼气的第一秒内，患者能够排出的气体量。</li>
-<li><strong>异常</strong>：FEV1降低通常提示气道阻塞，常见于慢性阻塞性肺病（COPD）、哮喘、支气管炎等疾病。</li>
+<li>评估：FEV1用于评估气道的通畅程度。它反映了在用力呼气的第一秒内，患者能够排出的气体量。</li>
+<li>异常：FEV1降低通常提示气道阻塞，常见于慢性阻塞性肺病（COPD）、哮喘、支气管炎等疾病。</li>
 </ul>
 <h3 id="2-FVC（用力肺活量）"><a href="#2-FVC（用力肺活量）" class="headerlink" title="2. FVC（用力肺活量）"></a>2. FVC（用力肺活量）</h3><ul>
-<li><strong>评估</strong>：FVC测量的是患者在一次用力呼气中能够排出的最大气体量，反映了肺的容量和扩张能力。</li>
-<li><strong>异常</strong>：FVC降低可能指示限制性肺病，如肺纤维化、胸廓畸形或神经肌肉疾病等。</li>
+<li>评估：FVC测量的是患者在一次用力呼气中能够排出的最大气体量，反映了肺的容量和扩张能力。</li>
+<li>异常：FVC降低可能指示限制性肺病，如肺纤维化、胸廓畸形或神经肌肉疾病等。</li>
 </ul>
 <h3 id="3-FEV1-FVC比值"><a href="#3-FEV1-FVC比值" class="headerlink" title="3. FEV1&#x2F;FVC比值"></a>3. FEV1&#x2F;FVC比值</h3><ul>
-<li><strong>评估</strong>：FEV1&#x2F;FVC比值用于区分阻塞性和限制性肺病。正常情况下，该比值应大于70%。</li>
-<li><strong>异常</strong>：<ul>
-<li>**低于70%**：提示气道阻塞，常见于COPD和哮喘。</li>
-<li>**正常或高于70%**但FVC降低：可能提示限制性肺病。</li>
+<li>评估：FEV1&#x2F;FVC比值用于区分阻塞性和限制性肺病。正常情况下，该比值应大于70%。</li>
+<li>异常：<ul>
+<li>低于70%：提示气道阻塞，常见于COPD和哮喘。</li>
+<li>正常或高于70%但FVC降低：可能提示限制性肺病。</li>
 </ul>
 </li>
 </ul>
 <h3 id="4-PEF（峰值呼气流量）"><a href="#4-PEF（峰值呼气流量）" class="headerlink" title="4. PEF（峰值呼气流量）"></a>4. PEF（峰值呼气流量）</h3><ul>
-<li><strong>评估</strong>：PEF测量患者在用力呼气时达到的最大流速，常用于监测哮喘患者的病情变化。</li>
-<li><strong>异常</strong>：PEF降低可能提示气道狭窄或阻塞，常见于哮喘急性发作或COPD加重。</li>
+<li>评估：PEF测量患者在用力呼气时达到的最大流速，常用于监测哮喘患者的病情变化。</li>
+<li>异常：PEF降低可能提示气道狭窄或阻塞，常见于哮喘急性发作或COPD加重。</li>
 </ul>
 <h3 id="5-MVV（最大通气量）"><a href="#5-MVV（最大通气量）" class="headerlink" title="5. MVV（最大通气量）"></a>5. MVV（最大通气量）</h3><ul>
-<li><strong>评估</strong>：MVV测量在一定时间内（通常是12秒）能够进行的最大通气量，反映了肺部的通气能力和呼吸肌的力量。</li>
-<li><strong>异常</strong>：MVV降低可能与呼吸肌无力、气道阻塞或肺部疾病（如COPD）相关。</li>
+<li>评估：MVV测量在一定时间内（通常是12秒）能够进行的最大通气量，反映了肺部的通气能力和呼吸肌的力量。</li>
+<li>异常：MVV降低可能与呼吸肌无力、气道阻塞或肺部疾病（如COPD）相关。</li>
 </ul>
 <h3 id="6-TLC（总肺容量）"><a href="#6-TLC（总肺容量）" class="headerlink" title="6. TLC（总肺容量）"></a>6. TLC（总肺容量）</h3><ul>
-<li><strong>评估</strong>：TLC测量肺部在最大吸气后所能容纳的气体总量，反映了肺的整体容量。</li>
-<li><strong>异常</strong>：<ul>
-<li><strong>增加</strong>：可能与阻塞性肺病（如COPD）相关，因肺部过度膨胀。</li>
-<li><strong>降低</strong>：可能与限制性肺病（如肺纤维化、胸廓畸形）相关。</li>
+<li>评估：TLC测量肺部在最大吸气后所能容纳的气体总量，反映了肺的整体容量。</li>
+<li>异常：<ul>
+<li>增加：可能与阻塞性肺病（如COPD）相关，因肺部过度膨胀。</li>
+<li>降低：可能与限制性肺病（如肺纤维化、胸廓畸形）相关。</li>
 </ul>
 </li>
 </ul>
 <h3 id="7-RV（残气量）"><a href="#7-RV（残气量）" class="headerlink" title="7. RV（残气量）"></a>7. RV（残气量）</h3><ul>
-<li><strong>评估</strong>：RV测量在最大呼气后，肺内仍然残留的气体量。</li>
-<li><strong>异常</strong>：<ul>
-<li><strong>增加</strong>：常见于阻塞性肺病，因气道阻塞导致气体无法完全排出。</li>
-<li><strong>降低</strong>：可能与限制性肺病相关。</li>
+<li>评估：RV测量在最大呼气后，肺内仍然残留的气体量。</li>
+<li>异常：<ul>
+<li>增加：常见于阻塞性肺病，因气道阻塞导致气体无法完全排出。</li>
+<li>降低：可能与限制性肺病相关。</li>
 </ul>
 </li>
 </ul>
@@ -6163,15 +6163,15 @@ await prisma.$transaction(async tx =&gt; &#123;
     <content><![CDATA[<p>在领域驱动设计（Domain-Driven Design，简称DDD）中，聚合根（Aggregate Root）是聚合（Aggregate）中的核心实体，是一个聚合的入口点和控制者，负责维护聚合内部的一致性和不变性条件。聚合是一组紧密相关的领域对象的集合，这些对象通过一定的业务规则绑定在一起，并被视为一个单元。</p>
 <p>主要的作用如下：</p>
 <ul>
-<li><strong>维护不变性</strong>：聚合根确保聚合内所有对象的一致性和不变性条件不被破坏。它负责封装与聚合相关的业务逻辑，保证聚合内的对象符合业务规则。</li>
-<li><strong>管理生命周期</strong>：聚合根负责管理其内部对象的创建、修改和删除。它控制着聚合内部成员的生命周期，包括它们的创建、更新和删除。</li>
-<li><strong>处理业务逻辑</strong>：聚合根负责处理与聚合相关的业务逻辑和操作，外部系统通过调用聚合根的方法来执行这些操作。它不仅是数据的容器，还负责封装与聚合相关的业务逻辑。</li>
+<li>维护不变性：聚合根确保聚合内所有对象的一致性和不变性条件不被破坏。它负责封装与聚合相关的业务逻辑，保证聚合内的对象符合业务规则。</li>
+<li>管理生命周期：聚合根负责管理其内部对象的创建、修改和删除。它控制着聚合内部成员的生命周期，包括它们的创建、更新和删除。</li>
+<li>处理业务逻辑：聚合根负责处理与聚合相关的业务逻辑和操作，外部系统通过调用聚合根的方法来执行这些操作。它不仅是数据的容器，还负责封装与聚合相关的业务逻辑。</li>
 </ul>
 <p>其具有以下特性：</p>
 <ul>
-<li><strong>唯一入口</strong>：聚合根是聚合内部对象的唯一入口，外部系统只能与聚合根交互，而无法直接访问聚合内部的其他对象。这样可以避免外部系统直接修改聚合内的实体，确保聚合的一致性和业务逻辑的完整性。</li>
-<li><strong>标识唯一性</strong>：每个聚合根都有一个全局唯一的标识符（ID），用以区分不同的聚合实例。</li>
-<li><strong>事务边界</strong>：聚合根常常作为事务的边界，确保事务内的所有操作要么全部成功，要么全部失败，以此来维护数据的完整性。</li>
+<li>唯一入口：聚合根是聚合内部对象的唯一入口，外部系统只能与聚合根交互，而无法直接访问聚合内部的其他对象。这样可以避免外部系统直接修改聚合内的实体，确保聚合的一致性和业务逻辑的完整性。</li>
+<li>标识唯一性：每个聚合根都有一个全局唯一的标识符（ID），用以区分不同的聚合实例。</li>
+<li>事务边界：聚合根常常作为事务的边界，确保事务内的所有操作要么全部成功，要么全部失败，以此来维护数据的完整性。</li>
 </ul>
 <p>用 F# 来描述，以订单管理为例，大概写一下：</p>
 <figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">OrderStatus</span> <span class="operator">=</span> </span><br><span class="line">  <span class="operator">|</span> New</span><br><span class="line">  <span class="operator">|</span> Shipped</span><br><span class="line">  <span class="operator">|</span> Delivered</span><br><span class="line">  <span class="operator">|</span> Cancelled</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">OrderItem</span> (productName<span class="operator">:</span> <span class="type">string</span>, price<span class="operator">:</span> <span class="type">float</span>, quantity<span class="operator">:</span> <span class="type">int</span>) <span class="operator">=</span> </span><br><span class="line">  <span class="keyword">do</span></span><br><span class="line">    <span class="keyword">if</span> quantity <span class="operator">&lt;=</span> <span class="number">0</span> <span class="keyword">then</span></span><br><span class="line">      <span class="built_in">failwith</span> <span class="string">&quot;Quantity must be positive&quot;</span></span><br><span class="line">  </span><br><span class="line">  <span class="keyword">member</span> <span class="keyword">public</span> this.ProductName <span class="operator">=</span> productName</span><br><span class="line">  <span class="keyword">member</span> <span class="keyword">public</span> this.Price <span class="operator">=</span> price</span><br><span class="line">  <span class="keyword">member</span> <span class="keyword">public</span> this.Quantity <span class="operator">=</span> quantity</span><br><span class="line">  <span class="keyword">member</span> <span class="keyword">public</span> this.TotalPrice () <span class="operator">=</span> price <span class="operator">*</span> quantity</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Order</span> (<span class="built_in">id</span><span class="operator">:</span> <span class="type">int</span>, customerName<span class="operator">:</span> <span class="type">string</span>) <span class="operator">=</span> </span><br><span class="line">  <span class="keyword">let</span> <span class="keyword">mutable</span> status <span class="operator">=</span> OrderStatus.New</span><br><span class="line">  <span class="keyword">let</span> <span class="keyword">mutable</span> orderItems <span class="operator">=</span> []</span><br><span class="line"></span><br><span class="line">  <span class="keyword">member</span> <span class="keyword">public</span> this.Id <span class="operator">=</span> <span class="built_in">id</span></span><br><span class="line">  <span class="keyword">member</span> <span class="keyword">public</span> this.CustomerName <span class="operator">=</span> customerName</span><br><span class="line">  <span class="keyword">member</span> <span class="keyword">public</span> this.Status <span class="operator">=</span> status</span><br><span class="line">  <span class="keyword">member</span> <span class="keyword">public</span> this.OrderItems <span class="operator">=</span> orderItems</span><br><span class="line"></span><br><span class="line">  <span class="keyword">member</span> <span class="keyword">public</span> this.AddItem (item<span class="operator">:</span> OrderItem, price<span class="operator">:</span> <span class="type">float</span>, quantity<span class="operator">:</span> <span class="type">int</span>) <span class="operator">=</span></span><br><span class="line">    <span class="keyword">if</span> quantity <span class="operator">&lt;=</span> <span class="number">0</span> <span class="keyword">then</span></span><br><span class="line">      <span class="built_in">failwith</span> <span class="string">&quot;Quantity must be positive&quot;</span></span><br><span class="line">    </span><br><span class="line">    orderItems <span class="operator">&lt;-</span> orderItems <span class="operator">@</span> [OrderItem(item.ProductName, price, quantity)]</span><br><span class="line"></span><br><span class="line">  <span class="keyword">member</span> <span class="keyword">public</span> this.ChangeStatus (status<span class="operator">:</span> OrderStatus) <span class="operator">=</span></span><br><span class="line">    this.Status <span class="operator">&lt;-</span> status</span><br><span class="line"></span><br><span class="line">  <span class="keyword">member</span> <span class="keyword">public</span> this.TotalPrice () <span class="operator">=</span></span><br><span class="line">    orderItems <span class="operator">|&gt;</span> List.sumBy (<span class="keyword">fun</span> item <span class="operator">-&gt;</span> item.TotalPrice())</span><br><span class="line"></span><br><span class="line">  <span class="keyword">member</span> <span class="keyword">public</span> this.GetTotalPrice () <span class="operator">=</span></span><br><span class="line">    orderItems <span class="operator">|&gt;</span> List.sumBy (<span class="keyword">fun</span> item <span class="operator">-&gt;</span> item.TotalPrice())</span><br></pre></td></tr></table></figure>
@@ -6185,7 +6185,7 @@ await prisma.$transaction(async tx =&gt; &#123;
   <entry>
     <title>领域驱动设计中聚合根持久化和事件发布可能导致数据不一致问题</title>
     <url>/2025/03/19/%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1%E4%B8%AD%E8%81%9A%E5%90%88%E6%A0%B9%E6%8C%81%E4%B9%85%E5%8C%96%E5%92%8C%E4%BA%8B%E4%BB%B6%E5%8F%91%E5%B8%83%E5%8F%AF%E8%83%BD%E5%AF%BC%E8%87%B4%E6%95%B0%E6%8D%AE%E4%B8%8D%E4%B8%80%E8%87%B4%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>使用领域事件的一种直接做法是：在 <strong>应用服务</strong> (Application Service) 中产生事件并发布出去。例如，对于“用户昵称更新”的场景来讲，对应的应用服务 <code>UserCommandService</code> 实现如下：</p>
+    <content><![CDATA[<p>使用领域事件的一种直接做法是：在 应用服务 (Application Service) 中产生事件并发布出去。例如，对于“用户昵称更新”的场景来讲，对应的应用服务 <code>UserCommandService</code> 实现如下：</p>
 <figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">member</span> <span class="keyword">public</span> this.UpdateMyName (command<span class="operator">:</span> UpdateUsernameCommand) (user<span class="operator">:</span> User) <span class="operator">=</span></span><br><span class="line">  <span class="keyword">let</span> user <span class="operator">=</span> userRepository.GetById user.Id</span><br><span class="line">  <span class="keyword">let</span> oldName <span class="operator">=</span> user.Username</span><br><span class="line">  <span class="keyword">let</span> newName <span class="operator">=</span> command.Username</span><br><span class="line"></span><br><span class="line">  user.UpdateUsername newName</span><br><span class="line">  <span class="operator">|&gt;</span> userRepository.Save</span><br><span class="line">  </span><br><span class="line">  UsernameChangeEvent (user.Id, newName, oldName) </span><br><span class="line">  <span class="operator">|&gt;</span> eventPublisher.Publish</span><br></pre></td></tr></table></figure>
 
 <p>这里，在更新了用户姓名之后，即刻调用事件发布器 <code>eventPublisher.Publish</code> 将事件发送到消息队列中。虽然这种方式比较流行，但它至少存在两个问题：</p>

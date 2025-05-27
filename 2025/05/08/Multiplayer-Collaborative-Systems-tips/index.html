@@ -194,7 +194,7 @@
     <div class="post-content">
     <p>最近碰到一块业务：在系统中可以存在多个用户同时对某个项目信息进行编辑，这种多人协作的场景挺有意思的，不过在我们的业务中，并不需要实时协作，只需要保证不会出错就行，话虽如此，但也可以探索一下实时协作的实现方案，防止老年痴呆。</p>
 <p>先来看看第一个方案 —— CRDT（Conflict-free Replicated Data Type，无冲突可复制数据类型）是一类数据结构，它保证了在分布式节点（或多客户端）上进行离线&#x2F;并发更新后，无需中心协调、也无需人工干预，通过“合并策略”就能得到一致的最终状态。  </p>
-<p>核心思想是：所有并发操作都是<strong>幂等</strong>（idempotent）、<strong>可交换</strong>（commutative）的。</p>
+<p>核心思想是：所有并发操作都是幂等（idempotent）、可交换（commutative）的。</p>
 <p>常见类型有：<br>一、G-Counter（只能增计数器）<br>二、PN-Counter（可增可减计数器）<br>三、LWW-Register（最后写入胜出）<br>四、结合 JSON 的树型 CRDT（如 <a target="_blank" rel="noopener" href="https://github.com/automerge/automerge">Automerge</a> &#x2F; <a target="_blank" rel="noopener" href="https://yjs.dev/">Yjs</a>）  </p>
 <p>更多原理可参考 Decipad 博客“Collaborative and Offline Editing Using CRDTs”[^1]。</p>
 <blockquote>
@@ -237,7 +237,7 @@ await prisma.$transaction(async tx =&gt; &#123;
 <p>前端的话，大概就是：</p>
 <p>在进入编辑前请求一下 <code>/api/project/:id/lock</code> 之类的 API，失败则提示“被占用”；<br>在 <code>onbeforeunload</code> 时执行 <code>/unlock</code>；<br>超时后后端自动允许新锁。  </p>
 <hr>
-<p>第二个方案是乐观并发控制（Optimistic Concurrency） ：记录资源的<strong>版本号</strong>或<strong>时间戳</strong>；客户端提交更新时带上自己的版本号，后端检查版本是否一致，不一致则认为冲突，返回 409，由客户端告知用户“数据已过期，请刷新后合并”。  </p>
+<p>第二个方案是乐观并发控制（Optimistic Concurrency） ：记录资源的版本号或时间戳；客户端提交更新时带上自己的版本号，后端检查版本是否一致，不一致则认为冲突，返回 409，由客户端告知用户“数据已过期，请刷新后合并”。  </p>
 <p>具体实现中，可以尝试在 <code>project</code> 表加上 <code>version INT NOT NULL DEFAULT 1, updated_at TIMESTAMPTZ</code> ，然后更新项目时：</p>
 <pre><code class="ts">async updateProject(parent, &#123; id, version, input &#125;, ctx) &#123;
     const result = await prisma.$executeRaw`
@@ -257,7 +257,7 @@ await prisma.$transaction(async tx =&gt; &#123;
 <p>前端捕获到冲突错误可以用一个弹窗提示“另有用户已更新此项目，是否合并&#x2F;重新加载？”  之类的玩意儿。</p>
 <hr>
 <p>第三个方案是：操作转化（Operational Transformation，OT）  </p>
-<p>也就是记录用户每次的“操作”（insert&#x2F;delete at position），服务器根据历史操作序列对并发操作做<strong>转化</strong>（transform），确保先到达的操作调整后再应用后到达的。  </p>
+<p>也就是记录用户每次的“操作”（insert&#x2F;delete at position），服务器根据历史操作序列对并发操作做转化（transform），确保先到达的操作调整后再应用后到达的。  </p>
 <p>有一些实现案例：<br>一、ShareDB（Node.js）<br>二、Google Docs 中的同步算法  </p>
 <p>具体实现的话，可能要现在前端逐字符&#x2F;块地包装成操作并 WebSocket 推送，服务器再维护一个“操作历史队列”，每来一个 op 就 transform 并 broadcast，而客户端收到广播后，按顺序 replay 保证视图一致。</p>
 <hr>
@@ -267,7 +267,7 @@ await prisma.$transaction(async tx =&gt; &#123;
 <hr>
 <p>总结来说，</p>
 <ul>
-<li>CRDT 最擅长 <strong>去中心化</strong>、<strong>离线编辑</strong>、<strong>自动合并</strong>；  </li>
+<li>CRDT 最擅长 去中心化、离线编辑、自动合并；  </li>
 <li>若不引入 CRDT，可根据业务侧重点选用：  <ol>
 <li>悲观锁 → 强制串行编辑，简单粗暴；  </li>
 <li>乐观并发 → 适合大多数业务场景，成本低；  </li>

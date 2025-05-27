@@ -195,12 +195,12 @@
     <h2 id="一、传统手艺：Partial-Application"><a href="#一、传统手艺：Partial-Application" class="headerlink" title="一、传统手艺：Partial Application"></a>一、传统手艺：Partial Application</h2><p>在函数式编程中，Partial Application 是传递依赖的常用方式。例如：</p>
 <figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> foo bar baz request <span class="operator">=</span> <span class="operator">...</span></span><br><span class="line"><span class="keyword">let</span> wired <span class="operator">=</span> foo dependency1 dependency2</span><br><span class="line"><span class="keyword">let</span> response <span class="operator">=</span> wired request</span><br></pre></td></tr></table></figure>
 
-<p><strong>优点</strong>：  </p>
+<p>优点：  </p>
 <ul>
 <li>无需框架或反射，直接通过函数参数传递依赖。  </li>
 <li>符合函数式编程的纯函数理念。</li>
 </ul>
-<p><strong>缺点</strong>：  </p>
+<p>缺点：  </p>
 <ul>
 <li>参数爆炸：当功能扩展时，参数数量激增（如日志、数据库、加密等）。  </li>
 <li>维护困难：新增依赖需修改所有调用点的参数传递。  </li>
@@ -210,13 +210,13 @@
 <h2 id="二、结构化方法：单一环境参数（env）"><a href="#二、结构化方法：单一环境参数（env）" class="headerlink" title="二、结构化方法：单一环境参数（env）"></a>二、结构化方法：单一环境参数（<code>env</code>）</h2><p>为解决参数爆炸问题，可将依赖封装为单一环境对象<code>env</code>，并通过接口约束访问权限：</p>
 <figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">[&lt;Interface&gt;]</span> <span class="keyword">type</span> <span class="title class_">ILog</span> <span class="operator">=</span> <span class="keyword">abstract</span> Logger<span class="operator">:</span> ILogger</span><br><span class="line"><span class="meta">[&lt;Interface&gt;]</span> <span class="keyword">type</span> <span class="title class_">IDb</span> <span class="operator">=</span> <span class="keyword">abstract</span> Database<span class="operator">:</span> IDatabase</span><br><span class="line"></span><br><span class="line"><span class="keyword">module</span> Log <span class="operator">=</span></span><br><span class="line">    <span class="keyword">let</span> info (env<span class="operator">:</span> #ILog) <span class="operator">=</span> env.Logger.Info(<span class="string">&quot;Message&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">module</span> Db <span class="operator">=</span></span><br><span class="line">    <span class="keyword">let</span> fetchUser (env<span class="operator">:</span> #IDb) <span class="operator">=</span> env.Database.Query(<span class="operator">...</span>)</span><br></pre></td></tr></table></figure>
 
-<p><strong>优点</strong>：  </p>
+<p>优点：  </p>
 <ul>
-<li><strong>显式依赖声明</strong>：函数签名仅需<code>env</code>参数，编译器验证接口实现。  </li>
-<li><strong>模块化隔离</strong>：各模块仅声明所需接口（如<code>ILog</code>、<code>IDb</code>），避免全局依赖。  </li>
-<li><strong>易于测试</strong>：通过模拟<code>env</code>实现单元测试，无需依赖具体实现。</li>
+<li>显式依赖声明：函数签名仅需<code>env</code>参数，编译器验证接口实现。  </li>
+<li>模块化隔离：各模块仅声明所需接口（如<code>ILog</code>、<code>IDb</code>），避免全局依赖。  </li>
+<li>易于测试：通过模拟<code>env</code>实现单元测试，无需依赖具体实现。</li>
 </ul>
-<p><strong>应用场景</strong>：  </p>
+<p>应用场景：  </p>
 <figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> changePass env req <span class="operator">=</span> <span class="keyword">task</span> &#123;</span><br><span class="line">    <span class="keyword">let!</span> user <span class="operator">=</span> Db.fetchUser env req.UserId</span><br><span class="line">    Log.info env <span class="string">&quot;Processing user: %i&quot;</span> user.Id</span><br><span class="line">    <span class="operator">...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <hr>
@@ -226,15 +226,15 @@
 <p>然后：</p>
 <figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> changePass req <span class="operator">=</span> <span class="keyword">effect</span> &#123;</span><br><span class="line">    <span class="keyword">let!</span> user <span class="operator">=</span> Db.fetchUser req.UserId</span><br><span class="line">    <span class="keyword">let!</span> salt <span class="operator">=</span> Random.bytes <span class="number">32</span></span><br><span class="line">    <span class="keyword">do!</span> Log.info <span class="string">&quot;Password updated for user %i&quot;</span> user.Id</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">Ok</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><strong>优点</strong>：  </p>
+<p>优点：  </p>
 <ul>
-<li><strong>隐式依赖管理</strong>：通过<code>effect</code>计算表达式自动传递<code>env</code>，减少样板代码。  </li>
-<li><strong>组合性</strong>：支持与其他计算表达式（如<code>async</code>&#x2F;<code>task</code>）结合，处理异步操作。</li>
+<li>隐式依赖管理：通过<code>effect</code>计算表达式自动传递<code>env</code>，减少样板代码。  </li>
+<li>组合性：支持与其他计算表达式（如<code>async</code>&#x2F;<code>task</code>）结合，处理异步操作。</li>
 </ul>
-<p><strong>缺点</strong>：  </p>
+<p>缺点：  </p>
 <ul>
-<li><strong>性能开销</strong>：频繁的闭包创建和间接调用可能导致性能下降。  </li>
-<li><strong>生态兼容性</strong>：需自定义计算表达式，与现有异步框架集成复杂。</li>
+<li>性能开销：频繁的闭包创建和间接调用可能导致性能下降。  </li>
+<li>生态兼容性：需自定义计算表达式，与现有异步框架集成复杂。</li>
 </ul>
 <h2 id="Refs"><a href="#Refs" class="headerlink" title="Refs."></a>Refs.</h2><ul>
 <li>Spring的构造器注入</li>

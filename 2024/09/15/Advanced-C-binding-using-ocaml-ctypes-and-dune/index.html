@@ -210,9 +210,9 @@
 <p>Most network-based C libraries refer to <code>socket.h</code> to describe the type of socket that can be used with their API so it’s an important entry point for a lot of network operations and one that would be nice to support as generically as possible in OCaml.</p>
 <p>The catch, though, is that, most likely for historical reasons¹, the <a target="_blank" rel="noopener" href="https://pubs.opengroup.org/onlinepubs/7908799/xns/syssocket.h.html">POSIX specifications</a> only <em>partially</em> defines some of the required data structures and types, which makes it possible to write C code using them but does not give enough information to write C bindings without having to use the compiler to parse the actual system-specific headers of the running host.</p>
 <p>For instance, here’s how the <code>sockaddr</code> structure is specified:</p>
-<p>The <em>&lt;sys&#x2F;socket.h&gt;</em> header defines the <strong>sockaddr</strong> structure that includes at least the following members:sa_family_t   sa_family       address family<br>char          sa_data[]       socket address (variable-length data)</p>
+<p>The <em>&lt;sys&#x2F;socket.h&gt;</em> header defines the sockaddr structure that includes at least the following members:sa_family_t   sa_family       address family<br>char          sa_data[]       socket address (variable-length data)</p>
 <p>Likewise, here’s what is specified about the size of the <code>socklen_t</code> data type:</p>
-<p><em>&lt;sys&#x2F;socket.h&gt;</em> makes available a type, <strong>socklen_t</strong>, which is an unsigned opaque integral type of length of at least 32 bits.</p>
+<p><em>&lt;sys&#x2F;socket.h&gt;</em> makes available a type, socklen_t, which is an unsigned opaque integral type of length of at least 32 bits.</p>
 <p>Thus, in order to know the exact offset of <code>sa_family</code> inside the <code>sockaddr</code> structure or the actual size of a <code>socklen_t</code> integer, one has to include the OS-specific header, parse its definitions for that specific OS and, only then, is it possible to compute that offset or data size. Let’s see how it’s done in our binding now!</p>
 <h1 id="Putting-it-together"><a href="#Putting-it-together" class="headerlink" title="Putting it together"></a>Putting it together</h1><p>The C binding requires 4 separate passes:</p>
 <ul>

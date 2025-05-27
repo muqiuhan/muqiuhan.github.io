@@ -207,7 +207,7 @@
 <ul>
 <li>关系的两端都必须定义一个共享相同名称的 <code>@relation</code> 属性（<code>BlogOwnerHistory</code>）</li>
 <li>关系字段必须是<a target="_blank" rel="noopener" href="https://www.prisma.io/docs/orm/prisma-schema/data-model/relations#relation-fields">完全注释</a>的。例如 <code>successor</code> 字段需要定义 <code>field</code> 和 <code>references</code> 参数。</li>
-<li>关系字段必须由外键支持。<code>successor</code> 字段由 <code>successorId</code> 外键提供支持，该外键引用 <code>id</code> 字段中的值。<code>successorId</code> 还需要 <code>@unique</code> 属性来保证一对一的关系。****</li>
+<li>关系字段必须由外键支持。<code>successor</code> 字段由 <code>successorId</code> 外键提供支持，该外键引用 <code>id</code> 字段中的值。<code>successorId</code> 还需要 <code>@unique</code> 属性来保证一对一的关系。</li>
 </ul>
 <blockquote>
 <p>一对一的 self-relation 需要两个端点，即使这两个端点是同一条数据。</p>

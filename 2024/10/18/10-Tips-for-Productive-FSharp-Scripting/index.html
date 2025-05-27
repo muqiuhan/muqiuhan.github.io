@@ -211,7 +211,7 @@
 <p>You can also execute a single-line with Alt + ‘. I rarely use this option, but this can save you time because you don’t need to select the entire line of code.</p>
 </blockquote>
 <blockquote>
-<p>In case the keyboard shortcuts to send code to FSI do not work anymore (ReSharper used to over-write them in the past), you can reset them in Visual Studio, by going to Tools &#x2F; Options &#x2F; Environment &#x2F; Keyboard. The 2 commands you need to map are <strong>EditorContextMenus.CodeWindow.ExecuteInInteractive</strong> and <strong>EditorContextMenus.CodeWindow.ExecuteLineInInteractive</strong>.</p>
+<p>In case the keyboard shortcuts to send code to FSI do not work anymore (ReSharper used to over-write them in the past), you can reset them in Visual Studio, by going to Tools &#x2F; Options &#x2F; Environment &#x2F; Keyboard. The 2 commands you need to map are EditorContextMenus.CodeWindow.ExecuteInInteractive and EditorContextMenus.CodeWindow.ExecuteLineInInteractive.</p>
 </blockquote>
 <p>You can also use these shortcuts from a regular <code>.fs</code> file, which can be handy if you want to validate that a piece of code is behaving the way you want.</p>
 <blockquote>
@@ -297,7 +297,7 @@
 </blockquote>
 <h2 id="Tip-6-Use-Paket"><a href="#Tip-6-Use-Paket" class="headerlink" title="Tip 6: Use Paket"></a>Tip 6: Use <code>Paket</code></h2><p>The Nuget package manager is useful to consume existing packages. However, by default, Nuget stores assemblies in a folder that includes the package version number. This is very impractical for a script. In our example above, if <code>fsharp.data</code> gets an update, our script reference will be broken once we update the Nuget package:</p>
 <p><code>#r @&quot;../packages/FSharp.Data.2.2.5/lib/net40/FSharp.Data.dll&quot;</code></p>
-<p>Fixing the script requires manually editing the version number in the path, which quickly becomes a pain. <a target="_blank" rel="noopener" href="https://fsprojects.github.io/Paket/"><strong>Paket</strong></a> provides a better experience, because it stores packages without the version number, in this case, under:</p>
+<p>Fixing the script requires manually editing the version number in the path, which quickly becomes a pain. <a target="_blank" rel="noopener" href="https://fsprojects.github.io/Paket/">Paket</a> provides a better experience, because it stores packages without the version number, in this case, under:</p>
 <p><code>#r @&quot;../packages/FSharp.Data/lib/net40/FSharp.Data.dll&quot;</code></p>
 <p>Your scripts will now gracefully handle version number changes.</p>
 <p>If you end up consuming numerous packages, you can make your life even easier, by referencing paths where assemblies might be searched for, using <code>#I</code>:</p>
@@ -335,7 +335,7 @@
 <h2 id="Tip-10-Bonus-Material"><a href="#Tip-10-Bonus-Material" class="headerlink" title="Tip 10: Bonus Material"></a>Tip 10: Bonus Material</h2><p>Did you know that you could…</p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://channel9.msdn.com/Events/Visual-Studio/Visual-Studio-2015-Final-Release-Event/Six-Quick-Picks-from-Visual-F-40">debug an F# script? (around 0:12:35 in)</a></li>
-<li><a target="_blank" rel="noopener" href="http://www.swensensoftware.com/fseye">inspect the objects in your FSI session with <strong>FsEye</strong>?</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.swensensoftware.com/fseye">inspect the objects in your FSI session with FsEye?</a></li>
 <li>change the FSI font size in Tools&#x2F;Options&#x2F;Environment&#x2F;Fonts and Colors&#x2F;Show Settings for&#x2F;F# Interactive?</li>
 <li>add your own pretty-printer to FSI, <a target="_blank" rel="noopener" href="https://github.com/mathnet/mathnet-numerics/blob/master/src/FSharp/MathNet.Numerics.fsx">like this</a>?</li>
 <li>mess with your coworkers’ mental sanity, by executing <code>(*</code> (opening a multiline comment) in FSI? (credit: <a target="_blank" rel="noopener" href="https://twitter.com/tomaspetricek">Tomas</a>)</li>
