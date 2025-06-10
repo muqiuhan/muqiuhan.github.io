@@ -21,7 +21,7 @@
 
                                     <title>
                                         
-                                            Vertical slicing 在开发中的实践探索 | 
+                                            Category: gallery | 
                                                     暮秋小屋
                                     </title>
 
@@ -158,119 +158,50 @@
 
       <div class="main">
         <div class="flex-container">
-          <article id="post">
-
-  
-    <div class="post-head">
-    <div class="post-info">
-        <div class="tag-list">
-            
-                
-                    <span class="post-tag">
-                        <a href="/tags/Technique/">
-                            Technique
-                        </a>
-                    </span>    
-                           
-            
-        </div>
-        <div class="post-title">
-            
-            
-                Vertical slicing 在开发中的实践探索
-            
-            
-        </div>
-        <span class="post-date">
-            May 27, 2025
-        </span>
-    </div>
-    <div class="post-img">
+          <div id="category">
+  <div class="post-gallery">
+    <div class="post-gallery-list">
         
-            <div class="h-line-primary"></div>
-              
+            <div class="post-gallery-item">
+                <div class="post-info">
+                    <div class="tag-list">
+                        
+                    </div>
+                    <div class="post-title">
+                        <a href="/2020/12/08/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E9%9B%B6%E5%B9%B4%E5%8D%81%E4%BA%8C%E6%9C%88%E5%85%AB%E6%97%A5/"</a>
+                            
+                                二零二零年十二月八日
+                            
+                        </a>
+                    </div>
+                    <span class="post-date">
+                        Dec 8, 2020
+                    </span>
+                </div>
+                <div class="post-img">
+                
+                    <img src="/img/%E6%97%A5%E8%AE%B0/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E9%9B%B6%E5%B9%B4%E5%8D%81%E4%BA%8C%E6%9C%88%E5%85%AB%E6%97%A5.webp" alt="featured_image">
+                  
+                </div>
+            </div>
+            <div class="h-line-secondary"></div>
+        
+    </div>
+    <div id="paginator">
+        
+    <div class=paginator>
+        <div class="h-line-primary"></div>
+        <nav class="pagination">
+            <a class="page-number" href="/categories/gallery/">1</a><span class="space">&hellip;</span><a class="page-number" href="/categories/gallery/page/5/">5</a><span class="page-number current">6</span>
+        </nav>
+    </div>
+
     </div>
 </div>
-    <div class="post-content">
-    <p>垂直切片 (Vertical Slicing) 是一种在敏捷软件开发中将产品需求（通常是用户故事）拆分为可独立交付的、具有端到端功能的小块的方法。这意味着每个“切片”都包含了从用户界面 (UI) 到底层数据库，以及中间所有业务逻辑层所需的工作。</p>
-<p>与水平切片（即按技术分层，如先完成所有 UI，再完成所有后端逻辑）不同，垂直切片的目标是尽快交付一个虽小但完整可用的功能。</p>
-<hr>
-<p>想象一个蛋糕，垂直切片就像切下一块完整的蛋糕，包含从顶部到底部的每一层。在软件开发中，这意味着一个任务或用户故事的完成会涉及到：</p>
-<ul>
-<li>用户界面 (UI)：用户能看到并与之交互的部分。</li>
-<li>业务逻辑层 (Business Logic Layer)：处理数据和执行核心功能的部分。</li>
-<li>数据访问层 (Data Access Layer)：与数据库或其他数据存储交互的部分。</li>
-<li>数据库 (Database)：存储数据的部分。</li>
-</ul>
-<p>所以一个垂直切片代表了一个可以独立运行、测试和向用户展示的小功能。</p>
-<hr>
-<p>在实践中，用垂直切片进行任务拆分或许可以按照如下步骤来实现：</p>
-<p>一、从用户故事开始 (Start with User Stories)：明确用户需要什么功能以及这个功能为用户带来的价值。例如：“作为一个注册用户，我希望能用我的邮箱和密码登录系统，以便访问我的个人资料。”</p>
-<p>二、识别涉及的技术层面 (Identify Affected Layers)</p>
-<p>对于登录功能，需要考虑：</p>
-<ul>
-<li>UI 层：登录表单（输入邮箱、密码的地方）、提交按钮、错误提示信息。</li>
-<li>API&#x2F;服务层：接收登录请求、验证用户凭证的接口。</li>
-<li>业务逻辑层：校验输入格式、查询用户信息、验证密码、生成会话（Session）或令牌（Token）。</li>
-<li>数据访问层：从数据库中读取用户信息。</li>
-</ul>
-<p>三、创建可交付的小功能块 (Create Small, Deliverable Chunks)</p>
-<p>就是将一个大的用户故事拆分成更小的、但仍然是垂直的、可独立交付的故事。例如，可以将“用户登录”进一步细化：</p>
-<p>切片1 (基础登录)：用户可以使用正确的邮箱和密码成功登录。这包含了 UI 输入、后端验证和数据库查询。</p>
-<p>切片2 (错误处理)：用户输入错误的邮箱或密码时，系统给出明确的错误提示。这可能只涉及 UI 和业务逻辑层的少量修改。</p>
-<p>切片3 (“记住我” 功能)：用户可以选择“记住我”，下次访问时自动登录。这可能涉及 UI、业务逻辑和客户端存储。</p>
-<p>四、确保每个切片都有价值 (Ensure Each Slice Has Value)：每完成一个切片，都应该为用户或产品带来可感知的价值，并且理想情况下是可以演示给利益相关者看的。</p>
-<p>五、保持切片足够小 (Keep Slices Small Enough)：每个切片的工作量应该小到可以在一个迭代周期（例如 Sprint）内完成。这有助于团队保持专注，并快速获得反馈。</p>
-<hr>
-<p>这里有一些拆分技巧：</p>
-<ul>
-<li>按操作流程拆分：例如，一个复杂的表单提交可以先实现基本信息的提交，后续再添加高级选项的提交。</li>
-<li>按业务规则拆分：先实现核心的业务规则，再逐步添加次要的或复杂的规则。</li>
-<li>按数据类型或参数拆分：先支持一种数据类型或最常用的参数，再扩展到其他类型。</li>
-<li>按用户角色或权限拆分：先实现某个核心角色的功能，再实现其他角色的特定功能。</li>
-<li>简化错误处理或用户体验：先实现基本功能，再完善错误处理和用户体验细节。</li>
-</ul>
-
-</div> 
-
-<script>
-    window.onload = detectors();
-</script>
-    <div class="post-footer">
-    <div class="h-line-primary"></div>
-    <nav class="post-nav">
-        <div class="prev-item">
-           
-                <div class="icon arrow-left"></div>
-                <div class="post-link">
-                    <a href="/2025/06/10/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%BA%94%E5%B9%B4%E5%85%AD%E6%9C%88%E5%8D%81%E6%97%A5/">Prev</a>
-                </div>
-            
-        </div>
-        <div class="next-item">
-            
-                <div class="icon arrow-right"></div>
-                <div class="post-link">
-                  <a href="/2025/05/12/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%BA%94%E5%B9%B4%E4%BA%94%E6%9C%88%E5%8D%81%E4%BA%8C%E6%97%A5/">Next</a>  
-                </div>  
-            
-        </div>
-    </nav>
-</div>
-
-    
-      <div class="post-comment">
-
-     
-
-     
-    
-    
 
 </div>
-     
-  
-</article>
+
+
         </div>
       </div>
       
