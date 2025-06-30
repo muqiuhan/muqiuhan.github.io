@@ -2667,18 +2667,6 @@ await prisma.$transaction(async tx =&gt; &#123;
       </tags>
   </entry>
   <entry>
-    <title>tick thread在Multicore OCaml中的作用</title>
-    <url>/2023/08/15/tick-thread%E5%9C%A8Multicore-OCaml%E4%B8%AD%E7%9A%84%E4%BD%9C%E7%94%A8/</url>
-    <content><![CDATA[<p>Multicore OCaml的程序在启动时会运行一个 tick thread，其实现如下:</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* The tick thread: posts a SIGPREEMPTION signal periodically */</span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> * <span class="title function_">caml_thread_tick</span><span class="params">(<span class="type">void</span> * arg)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> <span class="title">timeout</span>;</span></span><br><span class="line">  <span class="type">sigset_t</span> mask;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Block all signals so that we don&#x27;t try to execute an OCaml signal handler*/</span></span><br><span class="line">  sigfillset(&amp;mask);</span><br><span class="line">  pthread_sigmask(SIG_BLOCK, &amp;mask, <span class="literal">NULL</span>);</span><br><span class="line">  <span class="keyword">while</span>(! caml_tick_thread_stop) &#123;</span><br><span class="line">    <span class="comment">/* select() seems to be the most efficient way to suspend the</span></span><br><span class="line"><span class="comment">       thread for sub-second intervals */</span></span><br><span class="line">    timeout.tv_sec = <span class="number">0</span>;</span><br><span class="line">    timeout.tv_usec = Thread_timeout * <span class="number">1000</span>;</span><br><span class="line">    select(<span class="number">0</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>, &amp;timeout);</span><br><span class="line">    <span class="comment">/* The preemption signal should never cause a callback, so don&#x27;t</span></span><br><span class="line"><span class="comment">     go through caml_handle_signal(), just record signal delivery via</span></span><br><span class="line"><span class="comment">     caml_record_signal(). */</span></span><br><span class="line">    caml_record_signal(SIGPREEMPTION);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这是因为Multicore OCaml的GC目前需要一个进程（或一个Domain）中的所有线程一起参与以避免并发访问。如果一个线程在system call上被阻塞，那么整个Domain就会被卡住，直到该线程可以参与当前的垃圾收集。为了避免这个问题，tick 线程可以代替被阻塞的线程执行垃圾收集操作。</p>
-]]></content>
-      <tags>
-        <tag>Technique</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>UUID v7 是如何加快 RDBMS 索引速度的</title>
     <url>/2025/04/13/uuidv7-rdbms/</url>
     <content><![CDATA[<p>UUID v7 之所以能显著提升关系型数据库（尤其是采用聚集索引的 MySQL InnoDB）在插入和查询速度，主要归功于它在 ID 中引入了“可排序的时间戳前缀”，从而大幅减少了 B-Tree 索引页分裂（page split）和数据碎片化。这里分几点来说：</p>
@@ -3237,6 +3225,18 @@ await prisma.$transaction(async tx =&gt; &#123;
       </categories>
   </entry>
   <entry>
+    <title>tick thread在Multicore OCaml中的作用</title>
+    <url>/2023/08/15/tick-thread%E5%9C%A8Multicore-OCaml%E4%B8%AD%E7%9A%84%E4%BD%9C%E7%94%A8/</url>
+    <content><![CDATA[<p>Multicore OCaml的程序在启动时会运行一个 tick thread，其实现如下:</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* The tick thread: posts a SIGPREEMPTION signal periodically */</span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> * <span class="title function_">caml_thread_tick</span><span class="params">(<span class="type">void</span> * arg)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> <span class="title">timeout</span>;</span></span><br><span class="line">  <span class="type">sigset_t</span> mask;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Block all signals so that we don&#x27;t try to execute an OCaml signal handler*/</span></span><br><span class="line">  sigfillset(&amp;mask);</span><br><span class="line">  pthread_sigmask(SIG_BLOCK, &amp;mask, <span class="literal">NULL</span>);</span><br><span class="line">  <span class="keyword">while</span>(! caml_tick_thread_stop) &#123;</span><br><span class="line">    <span class="comment">/* select() seems to be the most efficient way to suspend the</span></span><br><span class="line"><span class="comment">       thread for sub-second intervals */</span></span><br><span class="line">    timeout.tv_sec = <span class="number">0</span>;</span><br><span class="line">    timeout.tv_usec = Thread_timeout * <span class="number">1000</span>;</span><br><span class="line">    select(<span class="number">0</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>, &amp;timeout);</span><br><span class="line">    <span class="comment">/* The preemption signal should never cause a callback, so don&#x27;t</span></span><br><span class="line"><span class="comment">     go through caml_handle_signal(), just record signal delivery via</span></span><br><span class="line"><span class="comment">     caml_record_signal(). */</span></span><br><span class="line">    caml_record_signal(SIGPREEMPTION);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这是因为Multicore OCaml的GC目前需要一个进程（或一个Domain）中的所有线程一起参与以避免并发访问。如果一个线程在system call上被阻塞，那么整个Domain就会被卡住，直到该线程可以参与当前的垃圾收集。为了避免这个问题，tick 线程可以代替被阻塞的线程执行垃圾收集操作。</p>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>二〇二四年四月八日</title>
     <url>/2024/04/08/%E4%BA%8C%E3%80%87%E4%BA%8C%E5%9B%9B%E5%B9%B4%E5%9B%9B%E6%9C%88%E5%85%AB%E6%97%A5/</url>
     <content><![CDATA[<p>我不预设和任何人事物共度一生，<br>就自然的生活，<br>命运把我带到哪里就到哪里，<br>有缘的话，我会在世界中看见你，<br>无缘的话，我会看见你在世界中。</p>
@@ -3581,18 +3581,6 @@ await prisma.$transaction(async tx =&gt; &#123;
       </tags>
   </entry>
   <entry>
-    <title>儿童新型冠状病毒Omicron株和肺炎支原体混合感染重症肺炎1例</title>
-    <url>/2023/10/25/%E5%84%BF%E7%AB%A5%E6%96%B0%E5%9E%8B%E5%86%A0%E7%8A%B6%E7%97%85%E6%AF%92Omicron%E6%A0%AA%E5%92%8C%E8%82%BA%E7%82%8E%E6%94%AF%E5%8E%9F%E4%BD%93%E6%B7%B7%E5%90%88%E6%84%9F%E6%9F%93%E9%87%8D%E7%97%87%E8%82%BA%E7%82%8E1%E4%BE%8B/</url>
-    <content><![CDATA[<p>患儿 男, 3 岁 10 月龄,因“间歇发热 2 周伴咳嗽、气促”入上海交通大学医学院附属仁济医院(南部院区)定点医院隔离病房。<br>患儿病初发热,确诊为新型冠状病毒肺炎(简称新冠肺炎),热退 2d 再次持续高热&gt;3d 伴气促、吸气性凹陷,胸部 CT 示右肺下叶片状密度影,诊断“重型新冠肺炎”,行支气管镜肺泡灌洗,宏基因组病原检测确诊为混合肺炎支原体感染,治疗好转出院。<br>提示临床医生诊治重型新冠肺炎时需警惕混合感染</p>
-<ul>
-<li><a href="../papers/%E5%84%BF%E7%AB%A5%E6%96%B0%E5%9E%8B%E5%86%A0%E7%8A%B6%E7%97%85%E6%AF%92Omicron%E6%A0%AA%E5%92%8C%E8%82%BA%E7%82%8E%E6%94%AF%E5%8E%9F%E4%BD%93%E6%B7%B7%E5%90%88%E6%84%9F%E6%9F%93%E9%87%8D%E7%97%87%E8%82%BA%E7%82%8E1%E4%BE%8B.pdf">报告原档</a></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>Medicine</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>冬季咳嗽辨别指南</title>
     <url>/2023/10/22/%E5%86%AC%E5%AD%A3%E5%92%B3%E5%97%BD%E8%BE%A8%E5%88%AB%E6%8C%87%E5%8D%97/</url>
     <content><![CDATA[<p>这里给出一些在冬季，临床上简单诊断咳嗽的例子，仅供参考, 无论结果如何, 立刻就医.</p>
@@ -3656,6 +3644,18 @@ await prisma.$transaction(async tx =&gt; &#123;
       <tags>
         <tag>Medicine</tag>
         <tag>Life</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>儿童新型冠状病毒Omicron株和肺炎支原体混合感染重症肺炎1例</title>
+    <url>/2023/10/25/%E5%84%BF%E7%AB%A5%E6%96%B0%E5%9E%8B%E5%86%A0%E7%8A%B6%E7%97%85%E6%AF%92Omicron%E6%A0%AA%E5%92%8C%E8%82%BA%E7%82%8E%E6%94%AF%E5%8E%9F%E4%BD%93%E6%B7%B7%E5%90%88%E6%84%9F%E6%9F%93%E9%87%8D%E7%97%87%E8%82%BA%E7%82%8E1%E4%BE%8B/</url>
+    <content><![CDATA[<p>患儿 男, 3 岁 10 月龄,因“间歇发热 2 周伴咳嗽、气促”入上海交通大学医学院附属仁济医院(南部院区)定点医院隔离病房。<br>患儿病初发热,确诊为新型冠状病毒肺炎(简称新冠肺炎),热退 2d 再次持续高热&gt;3d 伴气促、吸气性凹陷,胸部 CT 示右肺下叶片状密度影,诊断“重型新冠肺炎”,行支气管镜肺泡灌洗,宏基因组病原检测确诊为混合肺炎支原体感染,治疗好转出院。<br>提示临床医生诊治重型新冠肺炎时需警惕混合感染</p>
+<ul>
+<li><a href="../papers/%E5%84%BF%E7%AB%A5%E6%96%B0%E5%9E%8B%E5%86%A0%E7%8A%B6%E7%97%85%E6%AF%92Omicron%E6%A0%AA%E5%92%8C%E8%82%BA%E7%82%8E%E6%94%AF%E5%8E%9F%E4%BD%93%E6%B7%B7%E5%90%88%E6%84%9F%E6%9F%93%E9%87%8D%E7%97%87%E8%82%BA%E7%82%8E1%E4%BE%8B.pdf">报告原档</a></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Medicine</tag>
       </tags>
   </entry>
   <entry>
@@ -3983,31 +3983,6 @@ await prisma.$transaction(async tx =&gt; &#123;
       </tags>
   </entry>
   <entry>
-    <title>实时搜索中的防抖函数</title>
-    <url>/2025/02/10/%E5%AE%9E%E6%97%B6%E6%90%9C%E7%B4%A2%E4%B8%AD%E7%9A%84%E9%98%B2%E6%8A%96%E5%87%BD%E6%95%B0/</url>
-    <content><![CDATA[<p>在实现实时搜索功能时，通常会使用输入框的事件监听器来捕获用户的输入变化，并在输入变化时发送搜索请求。为了避免过多的请求导致服务器负担过重，通常会使用“防抖”（debounce）技术来控制请求的频率。</p>
-<h3 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h3><ol>
-<li>监听输入框的变化：使用<code>input</code>事件监听器来捕获用户的输入变化。</li>
-<li>防抖处理：使用防抖函数来限制请求的频率。防抖函数会在用户停止输入一段时间后才发送请求。</li>
-<li>发送请求：在防抖函数中调用搜索请求。</li>
-</ol>
-<h3 id="防抖函数示例"><a href="#防抖函数示例" class="headerlink" title="防抖函数示例"></a>防抖函数示例</h3><p>以下是一个简单的防抖函数示例：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">debounce</span>(<span class="params">func, wait</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> timeout;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">...args</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> context = <span class="variable language_">this</span>;</span><br><span class="line">    <span class="built_in">clearTimeout</span>(timeout);</span><br><span class="line">    timeout = <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> func.<span class="title function_">apply</span>(context, args), wait);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="实现实时搜索"><a href="#实现实时搜索" class="headerlink" title="实现实时搜索"></a>实现实时搜索</h3><p>假设你有一个输入框用于搜索患者：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">  import &#123; onMount &#125; from &#x27;svelte&#x27;;</span><br><span class="line">  import &#123; patientsStore &#125; from &#x27;$lib/stores/patients.svelte&#x27;;</span><br><span class="line"></span><br><span class="line">  let searchTerm = &#x27;&#x27;;</span><br><span class="line"></span><br><span class="line">  // 防抖函数</span><br><span class="line">  function debounce(func, wait) &#123;</span><br><span class="line">    let timeout;</span><br><span class="line">    return function(...args) &#123;</span><br><span class="line">      const context = this;</span><br><span class="line">      clearTimeout(timeout);</span><br><span class="line">      timeout = setTimeout(() =&gt; func.apply(context, args), wait);</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 搜索函数</span><br><span class="line">  const searchPatients = debounce(async (term) =&gt; &#123;</span><br><span class="line">    if (term) &#123;</span><br><span class="line">      // 发送搜索请求</span><br><span class="line">      const response = await fetch(`/api/search-patients?query=$&#123;term&#125;`);</span><br><span class="line">      const data = await response.json();</span><br><span class="line">      patientsStore.mbglPatients = data;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      // 清空搜索结果或恢复默认数据</span><br><span class="line">      patientsStore.mbglPatients = [];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;, 300); // 300ms 的防抖时间</span><br><span class="line"></span><br><span class="line">  // 监听输入框变化</span><br><span class="line">  function handleInput(event) &#123;</span><br><span class="line">    searchTerm = event.target.value;</span><br><span class="line">    searchPatients(searchTerm);</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;input type=&quot;text&quot; placeholder=&quot;搜索患者...&quot; on:input=&#123;handleInput&#125; bind:value=&#123;searchTerm&#125; /&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="请求发送间隔"><a href="#请求发送间隔" class="headerlink" title="请求发送间隔"></a>请求发送间隔</h3><ul>
-<li>防抖时间：通常设置为 300ms 到 500ms 之间。这个时间足够让用户完成输入并减少不必要的请求。</li>
-<li>考虑用户体验：防抖时间过短可能导致过多请求，过长则可能让用户感到延迟。300ms 是一个常用的折中值。</li>
-</ul>
-<p>通过这种方式，你可以实现一个高效的实时搜索功能，既能保证用户体验，又能减少服务器的负担。</p>
-]]></content>
-      <tags>
-        <tag>Technique</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>急诊与灾难医学--烧伤</title>
     <url>/2024/01/25/%E6%80%A5%E8%AF%8A%E4%B8%8E%E7%81%BE%E9%9A%BE%E5%8C%BB%E5%AD%A6-%E7%83%A7%E4%BC%A4/</url>
     <content><![CDATA[<p>烧伤，烫伤是一个很常见的急诊意外损伤，这里科普一下相关的知识。</p>
@@ -4139,6 +4114,31 @@ await prisma.$transaction(async tx =&gt; &#123;
 ]]></content>
       <tags>
         <tag>Medicine</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>实时搜索中的防抖函数</title>
+    <url>/2025/02/10/%E5%AE%9E%E6%97%B6%E6%90%9C%E7%B4%A2%E4%B8%AD%E7%9A%84%E9%98%B2%E6%8A%96%E5%87%BD%E6%95%B0/</url>
+    <content><![CDATA[<p>在实现实时搜索功能时，通常会使用输入框的事件监听器来捕获用户的输入变化，并在输入变化时发送搜索请求。为了避免过多的请求导致服务器负担过重，通常会使用“防抖”（debounce）技术来控制请求的频率。</p>
+<h3 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h3><ol>
+<li>监听输入框的变化：使用<code>input</code>事件监听器来捕获用户的输入变化。</li>
+<li>防抖处理：使用防抖函数来限制请求的频率。防抖函数会在用户停止输入一段时间后才发送请求。</li>
+<li>发送请求：在防抖函数中调用搜索请求。</li>
+</ol>
+<h3 id="防抖函数示例"><a href="#防抖函数示例" class="headerlink" title="防抖函数示例"></a>防抖函数示例</h3><p>以下是一个简单的防抖函数示例：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">debounce</span>(<span class="params">func, wait</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> timeout;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">...args</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> context = <span class="variable language_">this</span>;</span><br><span class="line">    <span class="built_in">clearTimeout</span>(timeout);</span><br><span class="line">    timeout = <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> func.<span class="title function_">apply</span>(context, args), wait);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="实现实时搜索"><a href="#实现实时搜索" class="headerlink" title="实现实时搜索"></a>实现实时搜索</h3><p>假设你有一个输入框用于搜索患者：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">  import &#123; onMount &#125; from &#x27;svelte&#x27;;</span><br><span class="line">  import &#123; patientsStore &#125; from &#x27;$lib/stores/patients.svelte&#x27;;</span><br><span class="line"></span><br><span class="line">  let searchTerm = &#x27;&#x27;;</span><br><span class="line"></span><br><span class="line">  // 防抖函数</span><br><span class="line">  function debounce(func, wait) &#123;</span><br><span class="line">    let timeout;</span><br><span class="line">    return function(...args) &#123;</span><br><span class="line">      const context = this;</span><br><span class="line">      clearTimeout(timeout);</span><br><span class="line">      timeout = setTimeout(() =&gt; func.apply(context, args), wait);</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 搜索函数</span><br><span class="line">  const searchPatients = debounce(async (term) =&gt; &#123;</span><br><span class="line">    if (term) &#123;</span><br><span class="line">      // 发送搜索请求</span><br><span class="line">      const response = await fetch(`/api/search-patients?query=$&#123;term&#125;`);</span><br><span class="line">      const data = await response.json();</span><br><span class="line">      patientsStore.mbglPatients = data;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      // 清空搜索结果或恢复默认数据</span><br><span class="line">      patientsStore.mbglPatients = [];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;, 300); // 300ms 的防抖时间</span><br><span class="line"></span><br><span class="line">  // 监听输入框变化</span><br><span class="line">  function handleInput(event) &#123;</span><br><span class="line">    searchTerm = event.target.value;</span><br><span class="line">    searchPatients(searchTerm);</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;input type=&quot;text&quot; placeholder=&quot;搜索患者...&quot; on:input=&#123;handleInput&#125; bind:value=&#123;searchTerm&#125; /&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="请求发送间隔"><a href="#请求发送间隔" class="headerlink" title="请求发送间隔"></a>请求发送间隔</h3><ul>
+<li>防抖时间：通常设置为 300ms 到 500ms 之间。这个时间足够让用户完成输入并减少不必要的请求。</li>
+<li>考虑用户体验：防抖时间过短可能导致过多请求，过长则可能让用户感到延迟。300ms 是一个常用的折中值。</li>
+</ul>
+<p>通过这种方式，你可以实现一个高效的实时搜索功能，既能保证用户体验，又能减少服务器的负担。</p>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
       </tags>
   </entry>
   <entry>
@@ -4825,17 +4825,6 @@ await prisma.$transaction(async tx =&gt; &#123;
       </tags>
   </entry>
   <entry>
-    <title>藿香正气水和藿香正气口服液的区别</title>
-    <url>/2024/09/01/%E8%97%BF%E9%A6%99%E6%AD%A3%E6%B0%94%E6%B0%B4%E5%92%8C%E8%97%BF%E9%A6%99%E6%AD%A3%E6%B0%94%E5%8F%A3%E6%9C%8D%E6%B6%B2%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
-    <content><![CDATA[<p>虽然都是口服液体制剂，且看起来单支容量都一样，但是藿香正气水里含有 40%-50% 的乙醇，而藿香正气口服液不含有乙醇。同时藿香正气水不能和头孢一起服用（因为含有酒精），而藿香正气口服液可以和头孢一起服用。在选用之前，还希望大家能仔细看药品名称。</p>
-<p>正气水是酊剂，用的是生半夏，口服液用的是法半夏，比正气水多了炒的白术，生姜和大枣，两者的功效都是解表化湿，理气和中。藿香正气水由水煮及酒浸制而成，疗效最明显，但口感较差。由于霍香正气水药效比较峻猛，小儿和年老体虚者服用时应有医生指导。藿香正气口服液是藿香正气的换代产品。</p>
-]]></content>
-      <tags>
-        <tag>Medicine</tag>
-        <tag>Life</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>螺内酯片</title>
     <url>/2023/03/14/%E8%9E%BA%E5%86%85%E9%85%AF%E7%89%87/</url>
     <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>螺内酯是保钾利尿药，用于治疗心衰、低钾血症和高血压等。但是，它也会阻断雄激素受体，从而具有抗雄激素特性（我想你应该联想到了什么）；不过其效力较弱，需服用较大剂量方可充分起效（尿频等副作用也更明显）。</p>
@@ -4894,6 +4883,17 @@ await prisma.$transaction(async tx =&gt; &#123;
 ]]></content>
       <tags>
         <tag>Medicine</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>藿香正气水和藿香正气口服液的区别</title>
+    <url>/2024/09/01/%E8%97%BF%E9%A6%99%E6%AD%A3%E6%B0%94%E6%B0%B4%E5%92%8C%E8%97%BF%E9%A6%99%E6%AD%A3%E6%B0%94%E5%8F%A3%E6%9C%8D%E6%B6%B2%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<p>虽然都是口服液体制剂，且看起来单支容量都一样，但是藿香正气水里含有 40%-50% 的乙醇，而藿香正气口服液不含有乙醇。同时藿香正气水不能和头孢一起服用（因为含有酒精），而藿香正气口服液可以和头孢一起服用。在选用之前，还希望大家能仔细看药品名称。</p>
+<p>正气水是酊剂，用的是生半夏，口服液用的是法半夏，比正气水多了炒的白术，生姜和大枣，两者的功效都是解表化湿，理气和中。藿香正气水由水煮及酒浸制而成，疗效最明显，但口感较差。由于霍香正气水药效比较峻猛，小儿和年老体虚者服用时应有医生指导。藿香正气口服液是藿香正气的换代产品。</p>
+]]></content>
+      <tags>
+        <tag>Medicine</tag>
+        <tag>Life</tag>
       </tags>
   </entry>
   <entry>
