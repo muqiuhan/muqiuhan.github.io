@@ -1,0 +1,177 @@
+// shadcn/ui 风格的按钮组件
+
+// 基础按钮样式
+.btn
+  display inline-flex
+  align-items center
+  justify-content center
+  white-space nowrap
+  border-radius $radius-md
+  font-size $font-size-sm
+  font-weight $font-weight-medium
+  transition $transition-default
+  cursor pointer
+  border none
+  text-decoration none
+  user-select none
+  outline none
+  position relative
+  
+  &:focus-visible
+    outline 2px solid $color-ring
+    outline-offset 2px
+    
+  &:disabled
+    pointer-events none
+    opacity 0.5
+
+// 按钮尺寸
+.btn-sm
+  height 36px
+  padding 0 $spacing-3
+  font-size $font-size-xs
+  
+.btn-md
+  height 40px
+  padding 0 $spacing-4
+  font-size $font-size-sm
+  
+.btn-lg
+  height 44px
+  padding 0 $spacing-6
+  font-size $font-size-base
+
+.btn-icon
+  width 40px
+  height 40px
+  padding 0
+  
+  &.btn-sm
+    width 36px
+    height 36px
+    
+  &.btn-lg
+    width 44px
+    height 44px
+
+// 按钮变体
+.btn-default
+  background-color $color-primary
+  color $color-primary-foreground
+  
+  &:hover
+    background-color oklch(from $color-primary l c h / 0.9)
+    
+  &:active
+    background-color oklch(from $color-primary l c h / 0.95)
+
+.btn-destructive
+  background-color $color-destructive
+  color $color-destructive-foreground
+  
+  &:hover
+    background-color oklch(from $color-destructive l c h / 0.9)
+    
+  &:active
+    background-color oklch(from $color-destructive l c h / 0.95)
+
+.btn-outline
+  border 1px solid $color-input
+  background-color transparent
+  color $color-foreground
+  
+  &:hover
+    background-color $color-accent
+    color $color-accent-foreground
+    
+  &:active
+    background-color oklch(from $color-accent l c h / 0.9)
+
+.btn-secondary
+  background-color $color-secondary
+  color $color-secondary-foreground
+  
+  &:hover
+    background-color oklch(from $color-secondary l c h / 0.8)
+    
+  &:active
+    background-color oklch(from $color-secondary l c h / 0.9)
+
+.btn-ghost
+  background-color transparent
+  color $color-foreground
+  
+  &:hover
+    background-color $color-accent
+    color $color-accent-foreground
+    
+  &:active
+    background-color oklch(from $color-accent l c h / 0.9)
+
+.btn-link
+  background-color transparent
+  color $color-primary
+  text-decoration underline
+  text-underline-offset 4px
+  
+  &:hover
+    text-decoration none
+    
+  &:active
+    color oklch(from $color-primary l c h / 0.9)
+
+// 按钮组
+.btn-group
+  display inline-flex
+  
+  .btn
+    border-radius 0
+    
+    &:first-child
+      border-radius $radius-md 0 0 $radius-md
+      
+    &:last-child
+      border-radius 0 $radius-md $radius-md 0
+      
+    &:only-child
+      border-radius $radius-md
+      
+  &.btn-group-vertical
+    flex-direction column
+    
+    .btn
+      border-radius 0
+      
+      &:first-child
+        border-radius $radius-md $radius-md 0 0
+        
+      &:last-child
+        border-radius 0 0 $radius-md $radius-md
+        
+      &:only-child
+        border-radius $radius-md
+
+// 加载状态
+.btn-loading
+  position relative
+  color transparent !important
+  
+  &::after
+    content ''
+    position absolute
+    top 50%
+    left 50%
+    margin-left -8px
+    margin-top -8px
+    width 16px
+    height 16px
+    border 2px solid transparent
+    border-top-color currentColor
+    border-radius 50%
+    animation spin 1s linear infinite
+
+@keyframes spin
+  0%
+    transform rotate(0deg)
+  100%
+    transform rotate(360deg) 
