@@ -657,21 +657,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Fever of Unknown Origin</title>
-    <url>/2023/11/16/Fever-of-Unknown-Origin/</url>
-    <content><![CDATA[<p>Fever of unknown origin (FUO) has been recognized as a disease state for over100 years.<br>The first commonly accepted definition of FUO was published in 1961 and included fever greater than 101F (38.3C) on multiple occasions at least 3 week duration of fever without identifiable cause despite at least a 1 week inpatient evaluation.</p>
-<p>Overtime, this definition was considered both too rigid and too ill defined.<br>Given the impracticality of prolonged hospitalizations and advancing technology for diagnosis, the duration of work up was shortened to 3 days inpatient evaluation and&#x2F;or 3 outpatient clinic visits.</p>
-<ul>
-<li><a href="/papers/Fever%20of%20Unknown%20Origin.pdf">Original Document</a></li>
-</ul>
-<p>这是FUO(不明原因发烧)的综合指南，第一个普遍接受的 FUO 定义是1961 年发布的，包括多次发烧超过三十八度三，发烧持续时间至少 3 周，并且就算住院至少 1 周但仍无明确原因。后面这个定义被认为过于僵化且过于模糊。又改成了三天住院评估和&#x2F;或三次门。除了有关评估持续时间的所有时间要求，还应该将 FUO 定义为完成最低限度检查后缺乏已知病因的发烧。</p>
-<p>常见原因就感染性，自身免疫和结缔组织疾病，其他炎症过程和恶性肿瘤。结缔组织疾病和自身免疫性疾病是青少年 FUO 比儿童更常见的原因。<br>总体上有超过两百种病因可导致 FUO</p>
-]]></content>
-      <tags>
-        <tag>Medicine</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Functional Reactive Programming in F#</title>
     <url>/2024/09/12/Functional-Reactive-Programming-in-F/</url>
     <content><![CDATA[<blockquote>
@@ -795,6 +780,21 @@
       <tags>
         <tag>Technique</tag>
         <tag>Archive</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Fever of Unknown Origin</title>
+    <url>/2023/11/16/Fever-of-Unknown-Origin/</url>
+    <content><![CDATA[<p>Fever of unknown origin (FUO) has been recognized as a disease state for over100 years.<br>The first commonly accepted definition of FUO was published in 1961 and included fever greater than 101F (38.3C) on multiple occasions at least 3 week duration of fever without identifiable cause despite at least a 1 week inpatient evaluation.</p>
+<p>Overtime, this definition was considered both too rigid and too ill defined.<br>Given the impracticality of prolonged hospitalizations and advancing technology for diagnosis, the duration of work up was shortened to 3 days inpatient evaluation and&#x2F;or 3 outpatient clinic visits.</p>
+<ul>
+<li><a href="/papers/Fever%20of%20Unknown%20Origin.pdf">Original Document</a></li>
+</ul>
+<p>这是FUO(不明原因发烧)的综合指南，第一个普遍接受的 FUO 定义是1961 年发布的，包括多次发烧超过三十八度三，发烧持续时间至少 3 周，并且就算住院至少 1 周但仍无明确原因。后面这个定义被认为过于僵化且过于模糊。又改成了三天住院评估和&#x2F;或三次门。除了有关评估持续时间的所有时间要求，还应该将 FUO 定义为完成最低限度检查后缺乏已知病因的发烧。</p>
+<p>常见原因就感染性，自身免疫和结缔组织疾病，其他炎症过程和恶性肿瘤。结缔组织疾病和自身免疫性疾病是青少年 FUO 比儿童更常见的原因。<br>总体上有超过两百种病因可导致 FUO</p>
+]]></content>
+      <tags>
+        <tag>Medicine</tag>
       </tags>
   </entry>
   <entry>
@@ -1414,102 +1414,6 @@ await prisma.$transaction(async tx =&gt; &#123;
       </tags>
   </entry>
   <entry>
-    <title>OCaml News 2024-6</title>
-    <url>/2024/07/23/OCaml-News-2024-6/</url>
-    <content><![CDATA[<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">       ^o3</span><br><span class="line">~/\_/\_|)</span><br><span class="line">|/=_=\|</span><br><span class="line">&quot;     &quot;</span><br></pre></td></tr></table></figure>
-
-<h2 id="语言的发展"><a href="#语言的发展" class="headerlink" title="语言的发展"></a>语言的发展</h2><ul>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13275">Modular explicits #13275</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/12828">Add short syntax for dependent functor types #12828</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13310">Add Pair module to standard library #13310</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13272">Allow maximum number of domains to be specified as a OCAMLRUNPARAM parameter #13272</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13097">Immutable arrays #13097</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13161">Restore native armv7 support for NetBSD 10.0 #13161</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/12309">Add effect syntax #12309</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/12114">Add ThreadSanitizer support #12114</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13195">A new abstract data type of enumerations in Set.Make(Ord).Enum #13195</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/12871">Stdlib priority queues #12871</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/9080">Aliasing &#x3D;&#x3D; and !&#x3D; with explicit names #9080</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/12964">Memory cleanup at exit #12964</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13169">A document type for error messages #13169</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13318">Fix GC alarm regression #13318</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13326">Implement O_APPEND on windows #13326</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13296">Add missing functions from Array to Dynarray #13296</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/12182%23discussion_r1678134261">Improve the type clash error message #12182</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/12298">Emphasize that Bigarray.int refers to the OCaml int type, and not the C int type #12298</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/effects-with-lwt-a-dead-end-for-now/15002">Effects with Lwt, a dead end for now?</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/changes-in-handling-of-gc-parameters-and-alarms-in-5-2-0/14986">Changes in handling of Gc parameters and alarms in 5.2.0</a></p>
-</li>
-</ul>
-<h2 id="新消息"><a href="#新消息" class="headerlink" title="新消息"></a>新消息</h2><ul>
-<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/ann-mopsa-1-0-modular-open-platform-for-static-analysis/15013">[ANN] Mopsa 1.0 – Modular Open Platform for Static Analysis</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/ann-a-small-extension-of-bigarray-genarray-adding-iteration-mapping-and-folding/15005">[ANN] A small extension of Bigarray.Genarray adding iteration, mapping and folding</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/ann-cudajit-bindings-to-the-cuda-and-nvrtc-libraries/15010">[ANN] cudajit: Bindings to the <code>cuda</code> and <code>nvrtc</code> libraries</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/ann-ocaml-lsp-1-18-0/14952">[ANN] OCaml LSP 1.18.0</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/ann-ortac-0-3-0-dynamic-formal-verification-made-easy/14936">[ANN] Ortac 0.3.0 Dynamic formal verification made easy</a></p>
-</li>
-</ul>
-<h2 id="有价值的文章"><a href="#有价值的文章" class="headerlink" title="有价值的文章"></a>有价值的文章</h2><ul>
-<li><p><a href="https://link.zhihu.com/?target=https://hal.sorbonne-universite.fr/hal-02890500v1/document">Combinations of Reusable Abstract Domains for a Multilingual Static Analyzer</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://fizzixnerd.com/blog/2024-07-21-fixing-living/">Fighting Mutation with Mutation in Living</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/type-system-and-polymorphic-lets/14990">Type system and polymorphic let’s</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/using-docusaurus-to-document-an-ocaml-project/13359">Using Docusaurus to document an OCaml project</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/exploring-the-docusaurus-odoc-combo/15012">Exploring the Docusaurus+Odoc combo</a><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/type-system-and-polymorphic-lets/14990">Type system and polymorphic let’s</a><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/exploring-the-docusaurus-odoc-combo/15012">Exploring the Docusaurus+Odoc combo</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://fizzixnerd.com/blog/2024-07-11-a-possibly-safer-interface-to-the-ctypes-ffi/">A (Possibly) Safer Interface to the Ctypes FFI</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://fizzixnerd.com/blog/2024-07-09-ocaml-ffi-sharp-edges-and-how-to-avoid-them/">OCaml FFI Sharp Edges – and How to Avoid them!</a></p>
-</li>
-</ul>
-<h2 id="有趣的项目"><a href="#有趣的项目" class="headerlink" title="有趣的项目"></a>有趣的项目</h2><ul>
-<li><p><a href="https://link.zhihu.com/?target=https://ocaml.libvirt.org/">ocaml-libvirt OCaml bindings for libvirt</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://gitlab.com/mopsa/mopsa-analyzer/">Gitlab - MOPSA&#x2F;MOPSA analyzer: stands for Modular and Open Platform for Static Analysis.</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/Heyji2/GenArrayIter">GitHub - Heyji2&#x2F;GenArrayIter: Adding iteration, mapping and folding to the ocaml BigArray.Genarrays module which provides arrays of arbitrary dimensions</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/mbarbin/bopkit">GitHub - mbarbin&#x2F;bopkit: An educational project for digital circuits programming</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/dx3mod/rpmfile">GitHub - dx3mod&#x2F;rpmfile: A library for reading metadata from RPM packages.</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/gildor478/ocaml-fileutils">Github - gildor478&#x2F;ocaml-fileutils: OCaml API to manipulate real files (POSIX like) and filenames</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/NathanReb/ocaml-api-watch">Github - NathanReb&#x2F;ocaml-api-watch: Libraries and tools to keep watch on you OCaml lib’s API changes</a></p>
-</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>Technique</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>OCaml News 2024-7</title>
     <url>/2024/12/15/OCaml-News-2024-7/</url>
     <content><![CDATA[<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">       ^o3</span><br><span class="line">~/\_/\_|)</span><br><span class="line">|/=_=\|</span><br><span class="line">&quot;     &quot;</span><br><span class="line"></span><br><span class="line">^~~~~~~~~~~~这其实是用 ASCII 画的一个骆驼。</span><br></pre></td></tr></table></figure>
@@ -1650,6 +1554,102 @@ await prisma.$transaction(async tx =&gt; &#123;
 <li><a href="https://link.zhihu.com/?target=https://github.com/LexiFi/ocaml-vdom">GitHub - LexiFi&#x2F;ocaml-vdom: Elm architecture and (V)DOM for OCaml</a></li>
 <li><a href="https://link.zhihu.com/?target=https://github.com/ocaml-community/ocaml-mariadb">GitHub - ocaml-community&#x2F;ocaml-mariadb: OCaml bindings to MariaDB, supporting the nonblocking API</a></li>
 <li><a href="https://link.zhihu.com/?target=https://cambium.inria.fr/~fpottier/monolith/doc/monolith/Monolith/">Monolith (monolith.Monolith)</a>: Monolith offers facilities for testing an OCaml library by comparing its implementation (known as the candidate implementation) against a reference implementation.</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>OCaml News 2024-6</title>
+    <url>/2024/07/23/OCaml-News-2024-6/</url>
+    <content><![CDATA[<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">       ^o3</span><br><span class="line">~/\_/\_|)</span><br><span class="line">|/=_=\|</span><br><span class="line">&quot;     &quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="语言的发展"><a href="#语言的发展" class="headerlink" title="语言的发展"></a>语言的发展</h2><ul>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13275">Modular explicits #13275</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/12828">Add short syntax for dependent functor types #12828</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13310">Add Pair module to standard library #13310</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13272">Allow maximum number of domains to be specified as a OCAMLRUNPARAM parameter #13272</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13097">Immutable arrays #13097</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13161">Restore native armv7 support for NetBSD 10.0 #13161</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/12309">Add effect syntax #12309</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/12114">Add ThreadSanitizer support #12114</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13195">A new abstract data type of enumerations in Set.Make(Ord).Enum #13195</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/12871">Stdlib priority queues #12871</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/9080">Aliasing &#x3D;&#x3D; and !&#x3D; with explicit names #9080</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/12964">Memory cleanup at exit #12964</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13169">A document type for error messages #13169</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13318">Fix GC alarm regression #13318</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13326">Implement O_APPEND on windows #13326</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13296">Add missing functions from Array to Dynarray #13296</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/12182%23discussion_r1678134261">Improve the type clash error message #12182</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/12298">Emphasize that Bigarray.int refers to the OCaml int type, and not the C int type #12298</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/effects-with-lwt-a-dead-end-for-now/15002">Effects with Lwt, a dead end for now?</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/changes-in-handling-of-gc-parameters-and-alarms-in-5-2-0/14986">Changes in handling of Gc parameters and alarms in 5.2.0</a></p>
+</li>
+</ul>
+<h2 id="新消息"><a href="#新消息" class="headerlink" title="新消息"></a>新消息</h2><ul>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/ann-mopsa-1-0-modular-open-platform-for-static-analysis/15013">[ANN] Mopsa 1.0 – Modular Open Platform for Static Analysis</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/ann-a-small-extension-of-bigarray-genarray-adding-iteration-mapping-and-folding/15005">[ANN] A small extension of Bigarray.Genarray adding iteration, mapping and folding</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/ann-cudajit-bindings-to-the-cuda-and-nvrtc-libraries/15010">[ANN] cudajit: Bindings to the <code>cuda</code> and <code>nvrtc</code> libraries</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/ann-ocaml-lsp-1-18-0/14952">[ANN] OCaml LSP 1.18.0</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/ann-ortac-0-3-0-dynamic-formal-verification-made-easy/14936">[ANN] Ortac 0.3.0 Dynamic formal verification made easy</a></p>
+</li>
+</ul>
+<h2 id="有价值的文章"><a href="#有价值的文章" class="headerlink" title="有价值的文章"></a>有价值的文章</h2><ul>
+<li><p><a href="https://link.zhihu.com/?target=https://hal.sorbonne-universite.fr/hal-02890500v1/document">Combinations of Reusable Abstract Domains for a Multilingual Static Analyzer</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://fizzixnerd.com/blog/2024-07-21-fixing-living/">Fighting Mutation with Mutation in Living</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/type-system-and-polymorphic-lets/14990">Type system and polymorphic let’s</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/using-docusaurus-to-document-an-ocaml-project/13359">Using Docusaurus to document an OCaml project</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/exploring-the-docusaurus-odoc-combo/15012">Exploring the Docusaurus+Odoc combo</a><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/type-system-and-polymorphic-lets/14990">Type system and polymorphic let’s</a><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/exploring-the-docusaurus-odoc-combo/15012">Exploring the Docusaurus+Odoc combo</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://fizzixnerd.com/blog/2024-07-11-a-possibly-safer-interface-to-the-ctypes-ffi/">A (Possibly) Safer Interface to the Ctypes FFI</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://fizzixnerd.com/blog/2024-07-09-ocaml-ffi-sharp-edges-and-how-to-avoid-them/">OCaml FFI Sharp Edges – and How to Avoid them!</a></p>
+</li>
+</ul>
+<h2 id="有趣的项目"><a href="#有趣的项目" class="headerlink" title="有趣的项目"></a>有趣的项目</h2><ul>
+<li><p><a href="https://link.zhihu.com/?target=https://ocaml.libvirt.org/">ocaml-libvirt OCaml bindings for libvirt</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://gitlab.com/mopsa/mopsa-analyzer/">Gitlab - MOPSA&#x2F;MOPSA analyzer: stands for Modular and Open Platform for Static Analysis.</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/Heyji2/GenArrayIter">GitHub - Heyji2&#x2F;GenArrayIter: Adding iteration, mapping and folding to the ocaml BigArray.Genarrays module which provides arrays of arbitrary dimensions</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/mbarbin/bopkit">GitHub - mbarbin&#x2F;bopkit: An educational project for digital circuits programming</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/dx3mod/rpmfile">GitHub - dx3mod&#x2F;rpmfile: A library for reading metadata from RPM packages.</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/gildor478/ocaml-fileutils">Github - gildor478&#x2F;ocaml-fileutils: OCaml API to manipulate real files (POSIX like) and filenames</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/NathanReb/ocaml-api-watch">Github - NathanReb&#x2F;ocaml-api-watch: Libraries and tools to keep watch on you OCaml lib’s API changes</a></p>
+</li>
 </ul>
 ]]></content>
       <tags>
@@ -1852,6 +1852,27 @@ await prisma.$transaction(async tx =&gt; &#123;
       </tags>
   </entry>
   <entry>
+    <title>Rust NewType 模式</title>
+    <url>/2023/05/03/Rust-NewType-%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<p>New Type模式是一种软件设计模式，用于在已有类型的基础上创建一个新的类型。在Rust中，这通常是通过定义一个结构体，其中只包含一个单一成员。这个结构体（New Type）对外提供了一个新的、独立的类型，用于对原始类型增加额外的语义或限制。</p>
+<h2 id="加强类型安全"><a href="#加强类型安全" class="headerlink" title="加强类型安全"></a>加强类型安全</h2><figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Meters</span>(<span class="type">f64</span>);</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Feet</span>(<span class="type">f64</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">length_in_meters</span> = <span class="title function_ invoke__">Meters</span>(<span class="number">100.0</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">length_in_feet</span> = <span class="title function_ invoke__">Feet</span>(<span class="number">328.084</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 编译器会防止以下代码执行，因为类型不匹配</span></span><br><span class="line"><span class="comment">// let wrong_length = Meters(length_in_feet); // 编译错误</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 正确的构造</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">add_lengths</span>(length1: Meters, length2: Meters) <span class="punctuation">-&gt;</span> Meters &#123;</span><br><span class="line">    <span class="title function_ invoke__">Meters</span>(length1.<span class="number">0</span> + length2.<span class="number">0</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个例子使用 newtype 模式避免将原始类型f64用于不同的量度，从而增强了类型的安全性。</p>
+<h2 id="实现特定-trait"><a href="#实现特定-trait" class="headerlink" title="实现特定 trait"></a>实现特定 trait</h2><figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Kilometers</span>(<span class="type">f64</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> <span class="title class_">Kilometers</span> &#123;</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">to_miles</span>(&amp;<span class="keyword">self</span>) <span class="punctuation">-&gt;</span> <span class="type">f64</span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.<span class="number">0</span> * <span class="number">0.621371</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">distance</span> = <span class="title function_ invoke__">Kilometers</span>(<span class="number">10.0</span>);</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;The distance in miles is &#123;&#125;&quot;</span>, distance.<span class="title function_ invoke__">to_miles</span>());</span><br></pre></td></tr></table></figure>
+
+<p>这里，Kilometers有一个方法to_miles，该方法是不会影响其他f64数据的。如果我们有另一个表示温度的f64类型，就不会意外调用到与距离相关的方法。</p>
+<p>New Type模式同样适用于对<code>Box&lt;dyn SomeTrait&gt;</code>类型的包装，这可以在需要动态分派（动态调用实现了某个接口的不同类型的对象的方法）的时候提供便利。通过创建一个New Type来包装这样的<code>Box&lt;dyn SomeTrait&gt;</code>类型，可以提供自定义的方法或实现更多的trait，同时也可以让API更加清晰和易于使用。</p>
+<h2 id="零成本抽象"><a href="#零成本抽象" class="headerlink" title="零成本抽象"></a>零成本抽象</h2><p>在Rust中，New Type模式不仅是类型安全的，还是一种零成本抽象。这是因为Rust编译器在编译时期会进行足够的优化，以确保New Type的使用没有运行时开销。 Rust的零成本抽象原则确保了抽象不会引入额外的运行时成本。例如，当你使用Meters这样的New Type时，Rust确保：</p>
+<ol>
+<li>无额外内存开销：Meters只包含一个f64，在内存中的表现和单独的f64是一样的。</li>
+<li>无额外运行时开销：使用Meters时，性能和直接使用f64完全相同。编译器会移除任何关于New Type的包装和解包的代码。</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Rescript @genType import 问题</title>
     <url>/2024/05/20/Rescript-genType-import-%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<p>Rescript 11 之后，<code>@genType</code> 被合并进编译器，无需任何依赖就能使用，当在 Rescript 中 <code>@genType</code> 了使用某些 Rescript built-in 的基本类型时，可能会生成有问题的 <code>import</code> 相关代码，例如：</p>
@@ -1873,27 +1894,6 @@ await prisma.$transaction(async tx =&gt; &#123;
 </ul>
 <p>现在生成的 TypeScript 文件将会从 <code>Js.shim.ts</code> import 类型:</p>
 <figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="keyword">type</span> &#123;<span class="title class_">Json</span>_t <span class="keyword">as</span> <span class="title class_">Js</span>_Json_t&#125; <span class="keyword">from</span> <span class="string">&#x27;../../src/model/Js.shim.ts&#x27;</span>;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>Technique</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Rust NewType 模式</title>
-    <url>/2023/05/03/Rust-NewType-%E6%A8%A1%E5%BC%8F/</url>
-    <content><![CDATA[<p>New Type模式是一种软件设计模式，用于在已有类型的基础上创建一个新的类型。在Rust中，这通常是通过定义一个结构体，其中只包含一个单一成员。这个结构体（New Type）对外提供了一个新的、独立的类型，用于对原始类型增加额外的语义或限制。</p>
-<h2 id="加强类型安全"><a href="#加强类型安全" class="headerlink" title="加强类型安全"></a>加强类型安全</h2><figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Meters</span>(<span class="type">f64</span>);</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Feet</span>(<span class="type">f64</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">length_in_meters</span> = <span class="title function_ invoke__">Meters</span>(<span class="number">100.0</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">length_in_feet</span> = <span class="title function_ invoke__">Feet</span>(<span class="number">328.084</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 编译器会防止以下代码执行，因为类型不匹配</span></span><br><span class="line"><span class="comment">// let wrong_length = Meters(length_in_feet); // 编译错误</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 正确的构造</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">add_lengths</span>(length1: Meters, length2: Meters) <span class="punctuation">-&gt;</span> Meters &#123;</span><br><span class="line">    <span class="title function_ invoke__">Meters</span>(length1.<span class="number">0</span> + length2.<span class="number">0</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这个例子使用 newtype 模式避免将原始类型f64用于不同的量度，从而增强了类型的安全性。</p>
-<h2 id="实现特定-trait"><a href="#实现特定-trait" class="headerlink" title="实现特定 trait"></a>实现特定 trait</h2><figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Kilometers</span>(<span class="type">f64</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> <span class="title class_">Kilometers</span> &#123;</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">to_miles</span>(&amp;<span class="keyword">self</span>) <span class="punctuation">-&gt;</span> <span class="type">f64</span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.<span class="number">0</span> * <span class="number">0.621371</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">distance</span> = <span class="title function_ invoke__">Kilometers</span>(<span class="number">10.0</span>);</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;The distance in miles is &#123;&#125;&quot;</span>, distance.<span class="title function_ invoke__">to_miles</span>());</span><br></pre></td></tr></table></figure>
-
-<p>这里，Kilometers有一个方法to_miles，该方法是不会影响其他f64数据的。如果我们有另一个表示温度的f64类型，就不会意外调用到与距离相关的方法。</p>
-<p>New Type模式同样适用于对<code>Box&lt;dyn SomeTrait&gt;</code>类型的包装，这可以在需要动态分派（动态调用实现了某个接口的不同类型的对象的方法）的时候提供便利。通过创建一个New Type来包装这样的<code>Box&lt;dyn SomeTrait&gt;</code>类型，可以提供自定义的方法或实现更多的trait，同时也可以让API更加清晰和易于使用。</p>
-<h2 id="零成本抽象"><a href="#零成本抽象" class="headerlink" title="零成本抽象"></a>零成本抽象</h2><p>在Rust中，New Type模式不仅是类型安全的，还是一种零成本抽象。这是因为Rust编译器在编译时期会进行足够的优化，以确保New Type的使用没有运行时开销。 Rust的零成本抽象原则确保了抽象不会引入额外的运行时成本。例如，当你使用Meters这样的New Type时，Rust确保：</p>
-<ol>
-<li>无额外内存开销：Meters只包含一个f64，在内存中的表现和单独的f64是一样的。</li>
-<li>无额外运行时开销：使用Meters时，性能和直接使用f64完全相同。编译器会移除任何关于New Type的包装和解包的代码。</li>
-</ol>
 ]]></content>
       <tags>
         <tag>Technique</tag>
@@ -2448,6 +2448,30 @@ await prisma.$transaction(async tx =&gt; &#123;
       </tags>
   </entry>
   <entry>
+    <title>caml_release_runtime_system导致的死锁问题</title>
+    <url>/2023/06/28/caml-release-runtime-system%E5%AF%BC%E8%87%B4%E7%9A%84%E6%AD%BB%E9%94%81%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>给出一个<code>test.ml</code>:</p>
+<figure class="highlight ocaml"><table><tr><td class="code"><pre><span class="line"><span class="type">Printf</span>.eprintf <span class="string">&quot;hello from OCaml\n%!&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>和<code>test-ocaml-5.c</code>:</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;caml/misc.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;caml/callback.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;caml/threads.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span></span><br><span class="line"><span class="title function_">main</span> <span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">fprintf</span> (<span class="built_in">stderr</span>, <span class="string">&quot;starting up ...\n&quot;</span>);</span><br><span class="line">    caml_startup (argv);</span><br><span class="line">    <span class="built_in">fprintf</span> (<span class="built_in">stderr</span>, <span class="string">&quot;acquiring ...\n&quot;</span>);</span><br><span class="line">    caml_acquire_runtime_system ();</span><br><span class="line">    <span class="built_in">fprintf</span> (<span class="built_in">stderr</span>, <span class="string">&quot;acquired\n&quot;</span>);</span><br><span class="line">    <span class="comment">// here is where I would be calling an OCaml callback</span></span><br><span class="line">    <span class="comment">// omitted for simplicity</span></span><br><span class="line">    caml_release_runtime_system ();</span><br><span class="line">    <span class="built_in">exit</span> (<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后用OCaml5的ocaml native compiler编译一下（这里我用的是<code>ocaml-variants.5.0.0+options</code>）：<br><code>ocamlopt -g test-ocaml-5.c test.ml -o test-ocaml-5</code></p>
+<p>运行<code>test-ocaml-5</code> 会出现:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">starting up ...</span><br><span class="line">hello from OCaml</span><br><span class="line">acquiring ...</span><br><span class="line">Fatal error: Fatal error during lock: Resource deadlock avoided</span><br><span class="line"></span><br><span class="line">[1]    8998 IOT instruction (core dumped)  ./test-ocaml-5</span><br></pre></td></tr></table></figure>
+
+<p>这里我尝试了一下 4.14.0 和 4.14.1 ， 都没有出现这个情况，而如果用<code>threads</code>编译的话:<br><code>ocamlopt -g -I +unix unix.cmxa -I +threads threads.cmxa test-ocaml-5.c test.ml -o test-ocaml-5</code></p>
+<p>无论在5.0还是4.14.x，都会挂起。</p>
+<p>出现这个问题的一个可能原因是，在<code>test-ocaml-5.c</code>中，我在开头调用了<code>caml_startup()</code>，这会让当前线程获取锁，而<code>caml_acquire_runtime_system()</code>会再次获取它，<code>caml_acquire_runtime_system()</code> 应该在<code>caml_release_runtime_system（）</code>之后调用：</p>
+<figure class="highlight ocaml"><table><tr><td class="code"><pre><span class="line"><span class="built_in">int</span></span><br><span class="line">main (<span class="built_in">int</span> argc, <span class="built_in">char</span> *argv<span class="literal">[]</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    fprintf (stderr, <span class="string">&quot;starting up ...\n&quot;</span>);</span><br><span class="line">    caml_startup (argv);</span><br><span class="line">    fprintf (stderr, <span class="string">&quot;acquiring ...\n&quot;</span>);</span><br><span class="line">    caml_release_runtime_system <span class="literal">()</span>;</span><br><span class="line">    caml_acquire_runtime_system <span class="literal">()</span>;</span><br><span class="line">    fprintf (stderr, <span class="string">&quot;acquired\n&quot;</span>);</span><br><span class="line">    exit (<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果为:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">starting up ...</span><br><span class="line">hello from OCaml</span><br><span class="line">acquiring ...</span><br><span class="line">acquired</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>WiscKey: Separating Keys from Values in SSD-conscious Storage</title>
     <url>/2023/07/21/WiscKey-Separating-Keys-from-Values-in-SSD-conscious-Storage/</url>
     <content><![CDATA[<p>We present WiscKey, a persistent LSM-tree-based key-value store with a performance-oriented data layoutthat separates keys from values to minimize I&#x2F;O amplifi-cation. The design of WiscKey is highly SSD optimized, leveraging both the sequential and random performance characteristics of the device.</p>
@@ -2486,30 +2510,6 @@ await prisma.$transaction(async tx =&gt; &#123;
       </tags>
   </entry>
   <entry>
-    <title>caml_release_runtime_system导致的死锁问题</title>
-    <url>/2023/06/28/caml-release-runtime-system%E5%AF%BC%E8%87%B4%E7%9A%84%E6%AD%BB%E9%94%81%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>给出一个<code>test.ml</code>:</p>
-<figure class="highlight ocaml"><table><tr><td class="code"><pre><span class="line"><span class="type">Printf</span>.eprintf <span class="string">&quot;hello from OCaml\n%!&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>和<code>test-ocaml-5.c</code>:</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;caml/misc.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;caml/callback.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;caml/threads.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span></span><br><span class="line"><span class="title function_">main</span> <span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">fprintf</span> (<span class="built_in">stderr</span>, <span class="string">&quot;starting up ...\n&quot;</span>);</span><br><span class="line">    caml_startup (argv);</span><br><span class="line">    <span class="built_in">fprintf</span> (<span class="built_in">stderr</span>, <span class="string">&quot;acquiring ...\n&quot;</span>);</span><br><span class="line">    caml_acquire_runtime_system ();</span><br><span class="line">    <span class="built_in">fprintf</span> (<span class="built_in">stderr</span>, <span class="string">&quot;acquired\n&quot;</span>);</span><br><span class="line">    <span class="comment">// here is where I would be calling an OCaml callback</span></span><br><span class="line">    <span class="comment">// omitted for simplicity</span></span><br><span class="line">    caml_release_runtime_system ();</span><br><span class="line">    <span class="built_in">exit</span> (<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-<p>然后用OCaml5的ocaml native compiler编译一下（这里我用的是<code>ocaml-variants.5.0.0+options</code>）：<br><code>ocamlopt -g test-ocaml-5.c test.ml -o test-ocaml-5</code></p>
-<p>运行<code>test-ocaml-5</code> 会出现:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">starting up ...</span><br><span class="line">hello from OCaml</span><br><span class="line">acquiring ...</span><br><span class="line">Fatal error: Fatal error during lock: Resource deadlock avoided</span><br><span class="line"></span><br><span class="line">[1]    8998 IOT instruction (core dumped)  ./test-ocaml-5</span><br></pre></td></tr></table></figure>
-
-<p>这里我尝试了一下 4.14.0 和 4.14.1 ， 都没有出现这个情况，而如果用<code>threads</code>编译的话:<br><code>ocamlopt -g -I +unix unix.cmxa -I +threads threads.cmxa test-ocaml-5.c test.ml -o test-ocaml-5</code></p>
-<p>无论在5.0还是4.14.x，都会挂起。</p>
-<p>出现这个问题的一个可能原因是，在<code>test-ocaml-5.c</code>中，我在开头调用了<code>caml_startup()</code>，这会让当前线程获取锁，而<code>caml_acquire_runtime_system()</code>会再次获取它，<code>caml_acquire_runtime_system()</code> 应该在<code>caml_release_runtime_system（）</code>之后调用：</p>
-<figure class="highlight ocaml"><table><tr><td class="code"><pre><span class="line"><span class="built_in">int</span></span><br><span class="line">main (<span class="built_in">int</span> argc, <span class="built_in">char</span> *argv<span class="literal">[]</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    fprintf (stderr, <span class="string">&quot;starting up ...\n&quot;</span>);</span><br><span class="line">    caml_startup (argv);</span><br><span class="line">    fprintf (stderr, <span class="string">&quot;acquiring ...\n&quot;</span>);</span><br><span class="line">    caml_release_runtime_system <span class="literal">()</span>;</span><br><span class="line">    caml_acquire_runtime_system <span class="literal">()</span>;</span><br><span class="line">    fprintf (stderr, <span class="string">&quot;acquired\n&quot;</span>);</span><br><span class="line">    exit (<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-<p>运行结果为:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">starting up ...</span><br><span class="line">hello from OCaml</span><br><span class="line">acquiring ...</span><br><span class="line">acquired</span><br></pre></td></tr></table></figure>]]></content>
-      <tags>
-        <tag>Technique</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>DADGAD 定弦</title>
     <url>/2025/07/08/dadgad/</url>
     <content><![CDATA[<p>模态定弦的空弦音不直接构成传统意义上的大调或小调和弦，而是形成一种听感上更为空灵、悬浮的“挂留和弦”（Suspended Chord）效果。</p>
@@ -2525,6 +2525,88 @@ await prisma.$transaction(async tx =&gt; &#123;
 ]]></content>
       <tags>
         <tag>Life</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>由甲醛开始的碎碎念</title>
+    <url>/2025/07/11/fuck-hcho/</url>
+    <content><![CDATA[<p>前几天和群友聊到甲醛相关的东东，有点好奇甲醛进入人体之后的一系列反应，于逝，<del>我去吸了两口</del> ，先来看看一些无聊的总结：</p>
+<p>吸入甲醛后，人体之所以会产生眼部灼痛、喉咙刺痒、呼吸困难等一系列强烈的不适感，是因为甲醛作为一种高活性、强刺激性的化学物质，对我们的身体构成了从宏观到微观的多层次、多途径的直接攻击。其影响方式主要可以归结为两大方面：<strong>直接的刺激与腐蚀作用</strong>和<strong>深层的细胞毒性与遗传毒性</strong>。</p>
+<p>当甲醛气体通过呼吸进入人体，首当其冲的是我们的眼睛和呼吸道黏膜。这些部位的细胞直接暴露在甲醛的攻击下，引发一系列即时且强烈的不适症状：</p>
+<ul>
+<li><strong>对黏膜的强烈刺激：</strong> 甲醛具有极强的亲水性和反应活性，能迅速与眼睛结膜、鼻腔、咽喉和气管等部位黏膜表面的蛋白质和水分发生反应。这种反应会直接损伤黏膜组织，导致神经末梢受到强烈刺激。<ul>
+<li><strong>眼部症状：</strong> 眼睛会感到灼烧、刺痛、发痒和不自主流泪。</li>
+<li><strong>呼吸道症状：</strong> 喉咙会感到干燥、刺痛、咳嗽，高浓度下更会引发胸闷、气喘，甚至喉头水肿和肺水肿，导致呼吸极度困难。</li>
+</ul>
+</li>
+<li><strong>引发急性炎症：</strong> 甲醛的刺激作用会激活人体的免疫系统，将甲醛识别为有害入侵物。这会引发局部的急性炎症反应，表现为相关组织充血、水肿和分泌物增多（如流鼻涕）。这也是为什么在甲醛超标的环境里，人们会感觉“乌烟瘴气”，并出现类似重感冒的症状。</li>
+</ul>
+<p>除了表层的直接刺激，甲醛还能穿透细胞膜，对身体造成更深层次的损害。这解释了为何长期低剂量接触甲醛同样会带来严重的健康问题：</p>
+<ul>
+<li><strong>蛋白质变性：</strong> 甲醛能够与构成生命基础的蛋白质中的氨基（-NH2）发生反应，形成“亚甲基桥”，破坏蛋白质原有的三维结构，使其失去正常的生理功能。细胞的功能依赖于各种蛋白质（酶、结构蛋白等）的正常工作，蛋白质变性意味着细胞代谢紊乱、功能障碍，甚至死亡。这在本质上是一种“腐蚀”作用，也是福尔马林（甲醛水溶液）能用作防腐剂的根本原因。</li>
+<li><strong>诱导细胞凋亡与氧化应激：</strong> 研究表明，甲醛会损伤细胞内的能量工厂——线粒体，诱导细胞产生大量的活性氧（ROS）。过量的活性氧会破坏细胞膜、蛋白质和DNA，引发“氧化应激”反应，并最终启动细胞的程序性死亡（凋亡）机制。</li>
+<li><strong>遗传毒性与致癌性：</strong> 甲醛最具危害性的影响在于其遗传毒性。它可以穿过细胞核，与遗传物质DNA和组蛋白（包裹DNA的蛋白质）形成“加合物”，这会干扰DNA的正常复制和修复过程，导致基因突变。<ul>
+<li><strong>致癌风险：</strong> 当这种基因损伤发生在关键的癌基因或抑癌基因上，并且人体的修复机制无法有效清除时，就可能导致细胞的异常增殖，最终引发癌症。世界卫生组织（WHO）下属的国际癌症研究机构（IARC）已将甲醛列为<strong>一类致癌物</strong>，有充分证据表明其与鼻咽癌、白血病等恶性肿瘤的发生密切相关。</li>
+</ul>
+</li>
+<li><strong>神经与免疫毒性：</strong> 甲醛还能对中枢神经系统产生毒性作用，导致头晕、头痛、记忆力减退、失眠等症状。同时，它也可能干扰免疫系统的正常功能，使人更容易过敏（如引发过敏性皮炎、哮喘）或抵抗力下降。</li>
+</ul>
+<hr>
+<h2 id="甲醛与粘膜表面的蛋白质和水分发生反应？"><a href="#甲醛与粘膜表面的蛋白质和水分发生反应？" class="headerlink" title="甲醛与粘膜表面的蛋白质和水分发生反应？"></a>甲醛与粘膜表面的蛋白质和水分发生反应？</h2><p>当甲醛（HCHO）这个小而活泼的分子，遇到我们湿润的眼睛、鼻腔和喉咙黏膜时，它首先会迅速溶于黏膜表面的水分，形成甲二醇 (CH₂(OH)₂) 。这个形态的甲醛会将目标转向 <strong>蛋白质</strong>。</p>
+<p>这个反应并非简单的接触，而是一种被称为“交联反应”（Cross-linking）的化学过程。具体来说：甲醛分子会精准地找到蛋白质分子链上的氨基（-NH₂），这是许多氨基酸的共同特征。接着与蛋白质的氨基发生反应，形成一个不稳定的中间体。这个中间体可以进一步与邻近的另一个蛋白质的氨基反应，从而在两个原本独立的蛋白质（或同一个蛋白质的不同部分）之间，强行架起一座“亚甲基桥”（-CH₂-）。</p>
+<p>蛋白质就像一团经过精确折叠、有着特定三维结构的精密机器，它的功能完全依赖于这个构型。而甲醛的“交联”反应，就像是往这台精密机器的各个活动关节之间，甚至和旁边的机器之间倒 502，给它们粘死了。</p>
+<h3 id="为什么甲醛分子能精准地找到蛋白质分子链上的氨基？"><a href="#为什么甲醛分子能精准地找到蛋白质分子链上的氨基？" class="headerlink" title="为什么甲醛分子能精准地找到蛋白质分子链上的氨基？"></a>为什么甲醛分子能精准地找到蛋白质分子链上的氨基？</h3><p>“精准”这两个字，听起来像是一个有思想、有目标的动作，但实际上是一场由分子结构和电荷分布主导的化学反应。</p>
+<p>甲醛分子（HCHO）的核心是一个<strong>羰基（C&#x3D;O）</strong>。在这个结构中，氧原子（O）是一个电负性非常强的元素，它对电子有着极强的吸引力。它会大力地将碳氧双键中的共用电子云拉向自己。这种电子云的偏移，导致了与它相连的碳原子（C）周围的电子变得非常稀薄，从而带上了部分正电荷（δ+）。</p>
+<p>在化学上，这样一个“缺少电子”、对电子充满渴望的原子或基团，被称为“亲电体”（Electrophile）。</p>
+<p>氨基（-NH₂）在蛋白质中广泛存在，尤其是在赖氨酸、精氨酸等氨基酸的侧链上。氨基的核心是氮原子（N）。根据它的电子排布，氮原子的最外层有一对没有参与形成化学键的电子，这叫做 “孤对电子”（Lone Pair Electrons）。 这对孤对电子，使得氮原子成了一个电子云密度很高的区域，带上了<strong>部分负电荷（δ-）</strong>。</p>
+<p>这样一个拥有“富余”电子、并愿意用它去攻击其他正电中心的原子或基团，在化学上被称为 “亲核体”（Nucleophile）。</p>
+<p>当甲醛分子靠近蛋白质时，甲醛分子上带部分正电荷的碳原子（亲电体），与蛋白质氨基上带部分负电荷的氮原子（亲核体），会因基本的静电引力而相互靠近。一旦距离足够近，氨基上慷慨的“孤对电子”会毫不犹豫地“攻击”甲醛上那个渴望电子的碳原子，并与它形成一个新的化学键。</p>
+<p>这个过程，就是化学中的“亲核加成反应”。</p>
+<h3 id="这个反应为何会损伤黏膜组织？"><a href="#这个反应为何会损伤黏膜组织？" class="headerlink" title="这个反应为何会损伤黏膜组织？"></a>这个反应为何会损伤黏膜组织？</h3><p>蛋白质被甲醛“交联” 这个过程在化学上称为 “蛋白质变性”，它直接导致了组织损伤。</p>
+<p>首先黏膜细胞需要各种酶（本身也是蛋白质）来维持新陈代谢。被交联后，这些酶的结构被破坏，失去了活性，细胞的正常生理活动瞬间停滞。而细胞的骨架、细胞膜上的离子通道等结构蛋白，同样会被交联破坏。这导致细胞失去原有的形态，细胞膜的通透性被改变，甚至直接破裂。当大量的细胞功能瘫痪、结构崩解后，它们会迅速走向死亡。成片的细胞死亡，就意味着我们宏观可见的<strong>组织损伤</strong>。这本质上是一种<strong>微观的化学性灼伤</strong>。</p>
+<p>这也是为什么福尔马林（甲醛水溶液）能用来制作标本——它通过“交联”反应，将生物组织的所有蛋白质“固化”，使其永不腐败，但这对于活体组织而言，就是彻头彻尾的毁灭。</p>
+<h3 id="为何神经末梢会受到强烈刺激？"><a href="#为何神经末梢会受到强烈刺激？" class="headerlink" title="为何神经末梢会受到强烈刺激？"></a>为何神经末梢会受到强烈刺激？</h3><p>我们的黏膜组织下，密布着丰富的神经末梢。</p>
+<p>完好的黏膜上皮细胞是神经末梢的保护层。当这层保护被甲醛破坏，下方的神经末梢就直接暴露了出来。此时，高活性的甲醛分子可以直接攻击这些裸露的神经末梢，就像用化学品直接触碰神经一样，瞬间产生剧烈的刺激信号。</p>
+<p>被损伤和死亡的细胞，在“弥留之际”会释放出大量的化学信号物质，如前列腺素、缓激肽、组胺等。这些物质被称为“炎症介质”。而这些炎症介质本身，就是神经末梢上痛觉感受器的强效激活剂。它们会放大并持续地刺激神经，导致灼痛、瘙痒和刺痛感。</p>
+<h3 id="什么是活性氧？"><a href="#什么是活性氧？" class="headerlink" title="什么是活性氧？"></a>什么是活性氧？</h3><p><strong>活性氧（Reactive Oxygen Species, ROS）</strong> 是一类含氧的、化学性质极其活泼的分子或自由基的总称。常见的活性氧有 超氧阴离子（O₂⁻•）、羟自由基（•OH）、过氧化氢（H₂O₂）等。它们的特点之一是其都带有“未配对的电子”，这使得它们在化学上极不稳定，迫切地想要从其他分子那里“抢夺”电子来让自己稳定下来。</p>
+<p> 在正常情况下，我们身体会产生少量活性氧。它们是重要的信号分子，参与调节细胞生长、分化，并且是免疫细胞（如巨噬细胞）用来消灭入侵病原体（细菌、病毒）的“化学武器”。</p>
+<p> 一旦活性氧的产生<strong>远远超过</strong>了细胞自身的清除能力（细胞内有超氧化物歧化酶SOD等“警察”来控制它们），就会形成“<strong>氧化应激</strong>”（Oxidative Stress）状态。这些失控的“小流氓”就会在细胞内肆意破坏，攻击一切它们遇到的分子。</p>
+<h3 id="甲醛如何诱导线粒体产生大量活性氧？"><a href="#甲醛如何诱导线粒体产生大量活性氧？" class="headerlink" title="甲醛如何诱导线粒体产生大量活性氧？"></a>甲醛如何诱导线粒体产生大量活性氧？</h3><p>线粒体是通过一个叫做“电子传递链”的复杂过程来产生能量（ATP）的。就像一条生产线，电子（e⁻）在这条生产线上被一步步传递，最终与我们吸入的氧气（O₂）结合生成水（H₂O），同时释放出大量能量。</p>
+<p>而甲醛及其代谢产物（如甲酸）会直接损伤电子传递链上的复合体蛋白（特别是复合体I和III）。这就像是破坏了生产线上的关键机器。</p>
+<p>当生产线上的机器受损或堵塞时，本该被有序传递的电子就会从传递链上“泄漏”出来。</p>
+<p>这些泄漏出来的高能电子，会直接传递给旁边无辜的氧气分子（O₂）。正常的氧气分子得到一个额外的电子后，就成为了极不稳定的<strong>超氧阴离子（O₂⁻•）</strong> （活性氧）。</p>
+<h3 id="为什么活性氧能破坏细胞膜、蛋白质和DNA？"><a href="#为什么活性氧能破坏细胞膜、蛋白质和DNA？" class="headerlink" title="为什么活性氧能破坏细胞膜、蛋白质和DNA？"></a>为什么活性氧能破坏细胞膜、蛋白质和DNA？</h3><p>失控的活性氧会疯狂地从周围的生物大分子上抢夺电子，这个过程会导致这些大分子的化学结构被破坏，失去原有功能。</p>
+<p>细胞膜主要由<strong>磷脂双分子层</strong>构成，其中含有大量的<strong>不饱和脂肪酸</strong>。活性氧（特别是羟自由基•OH）会攻击不饱和脂肪酸中的双键，抢走一个电子，引发一个叫做“脂质过氧化”的链式反应。脂质过氧化会破坏细胞膜的流动性和完整性，使其变得僵硬、脆裂，最终导致细胞膜破裂，细胞内容物泄漏。</p>
+<p> 而活性氧会攻击蛋白质侧链上的氨基酸（特别是半胱氨酸、甲硫氨酸等），使其氧化、交联（和甲醛的作用类似但原理不同），导致蛋白质变性，失去作为酶、结构蛋白或信号分子的功能。</p>
+<p> 活性氧还会攻击DNA碱基（特别是鸟嘌呤G）和脱氧核糖骨架，导致<strong>碱基修饰、DNA单链或双链断裂</strong>。这会直接导致基因突变，干扰DNA的复制和转录，是诱发癌症的重要原因。</p>
+<h3 id="什么是细胞的程序性死亡？"><a href="#什么是细胞的程序性死亡？" class="headerlink" title="什么是细胞的程序性死亡？"></a>什么是细胞的程序性死亡？</h3><p><strong>细胞程序性死亡（Programmed Cell Death）</strong>，最主要的形式是<strong>细胞凋亡（Apoptosis）</strong>。这并非细胞因损伤而发生的被动解体（那是“坏死”），而是细胞在接收到特定信号后，主动启动的一套基因编码的“自杀程序”。目的是清除体内不再需要、衰老或受到严重损伤（如无法修复的DNA损伤）的细胞，从而维持组织器官的稳定和健康。这是一个对机体有利的主动行为。</p>
+<p>在这个过程中每，细胞会主动收缩、染色质固缩、细胞核碎裂，最终形成多个被完整细胞膜包裹的“凋亡小体”，等待被免疫细胞吞噬清理。整个过程非常“干净”，不会引发周围的炎症。</p>
+<p>在甲醛诱导的氧化应激中，由活性氧造成的大量、无法修复的DNA损伤和蛋白质损伤，本身就是最强烈的“死亡信号”。这个信号会激活细胞内一类叫做Bax和Bak的“促凋亡蛋白”。被激活的Bax&#x2F;Bak蛋白会聚集到线粒体外膜上，像一个“打孔器”一样，在线粒体外膜上形成孔道。线粒体外膜被打孔后，原本储存在线粒体内部的一种关键蛋白——<strong>细胞色素C（Cytochrome C）</strong>，就会被释放到细胞质中。释放到细胞质中的细胞色素C，会激活一系列被称为 <strong>Caspase</strong> 的蛋白酶。它们一旦被激活，就会形成一个级联反应，像多米诺骨牌一样，一个激活下一个。被激活的Caspase会系统性地降解细胞内的关键蛋白质和DNA，最终导致细胞有序地解体，完成凋亡。</p>
+<p><strong>“激活”在这里指的是一个剧烈的“构象变化”（Conformational Change）</strong>，即蛋白质从一种三维折叠形态，转变为另一种形态。</p>
+<h4 id="什么是Bax-Bak蛋白？"><a href="#什么是Bax-Bak蛋白？" class="headerlink" title="什么是Bax&#x2F;Bak蛋白？"></a>什么是Bax&#x2F;Bak蛋白？</h4><p><strong>Bax和Bak</strong>是细胞内一个庞大家族——<strong>Bcl-2蛋白家族</strong>中的两个关键成员。Bax和Bak是在这里具有代表性的促凋亡派（Pro-apoptotic），Bcl-2、Bcl-xL 是 <strong>抗凋亡派（Anti-apoptotic）：</strong> </p>
+<p>在正常健康的细胞中，它们处于一种<strong>无害的、折叠起来的休眠状态</strong>。<strong>Bax</strong>大部分时间游荡在细胞质中。<strong>Bak</strong> 则停靠在线粒体的外膜上，但同样处于被抑制的休眠状态。</p>
+<p>当细胞遭受了大量、无法修复的DNA或蛋白质损伤时，这个信号会被细胞内的 <strong>p53蛋白</strong> 感知到。被激活的p53蛋白，会生产大量的一类被称为 “仅含BH3结构域蛋白”（BH3-only proteins）的小蛋白，例如 PUMA 和 Noxa。</p>
+<h4 id="Bax-Bak-蛋白如何打孔？"><a href="#Bax-Bak-蛋白如何打孔？" class="headerlink" title="Bax&#x2F;Bak 蛋白如何打孔？"></a>Bax&#x2F;Bak 蛋白如何打孔？</h4><p>当Bax被激活后，它会暴露内部的<strong>疏水结构域</strong>。这个结构域极度“讨厌”水（细胞质的主要成分是水），而非常“喜欢”油性的环境。线粒体外膜正是一个由磷脂双分子层构成的“油性”环境。 因此，被激活的Bax会像一滴油会自动融入另一滴油一样，<strong>自发地从细胞质中转移并插入到线粒体外膜上</strong>。而已在膜上的Bak，被激活后则会更深、更稳定地嵌入膜中。</p>
+<p>这是一个寡聚化（Oligomerization）过程。多个被激活的Bax&#x2F;Bak分子在膜上相遇，会像乐高积木一样，通过彼此暴露出来的结构域互相识别并拼接在一起，形成大小不一的聚合体（Oligomer），有的像线形，有的像弧形，有的像不完整的环。这些Bax&#x2F;Bak聚合体并<strong>不是</strong>贯穿膜形成一个隧道。相反，它们像楔子一样，大量地、浅浅地插入到线粒体外膜的<strong>外层</strong>。当越来越多的蛋白质“楔子”挤进这一层薄薄的膜时，会产生巨大的<strong>物理张力和弯曲应力</strong>。</p>
+<p> 最终，线粒体外膜因为无法承受这种内部应力，就像一个被过度拉伸的气球一样被撕裂，形成的“孔道”或“裂口”，其边缘是由蛋白质和脂质分子共同构成的，被称为 “蛋白-脂质孔道”（Proteolipidic Pore）。</p>
+<h4 id="为什么“严重损伤”会激活p53蛋白？"><a href="#为什么“严重损伤”会激活p53蛋白？" class="headerlink" title="为什么“严重损伤”会激活p53蛋白？"></a>为什么“严重损伤”会激活p53蛋白？</h4><p>在正常、安逸的细胞中，p53蛋白一被生产出来，就会被一个叫做 <strong>MDM2</strong> 的蛋白“盯上”。MDM2会给p53贴上一个叫做 “泛素”（Ubiquitin）的标签，被贴上标签的p53会被送到细胞的“垃圾处理厂”——<strong>蛋白酶体</strong>中迅速降解。因此，正常细胞里的p53蛋白水平极低。</p>
+<p>当 “严重损伤”<strong>，尤其是</strong>DNA双链断裂（这被视为细胞最危急的损伤之一）发生时，DNA断裂处会立刻吸引并激活一批蛋白，其中最关键的是一类激酶（Kinase），比如<strong>ATM</strong>和<strong>ATR</strong>。激酶是一种能给其他蛋白质“安装”上磷酸基团（-PO₃²⁻）的工具酶。</p>
+<p>被激活的ATM&#x2F;ATR激酶，会立刻找到 MDM2，并给它装上好几个磷酸基团。被磷酸化后的MDM2结构发生改变，无法再识别和结合p53。 与此同时，ATM&#x2F;ATR 等激酶也会给 p53 蛋白本身装上磷酸基团。这个过程不仅让p53无法被MDM2识别，更重要的是，它改变了p53的构象。</p>
+<p>对于p53来说，最基础的激活，就是摆脱 MDM2 的控制，不再被降解。这使得 p53 蛋白可以在细胞核内大量、稳定地积累起来，被磷酸化等一系列化学修饰后，p53蛋白的三维结构会发生精妙的变化。这种变化会暴露p53内部一个关键的功能区——<strong>“DNA结合域”</strong>。同时，它会促使四个p53蛋白分子结合在一起，形成一个<strong>四聚体（Tetramer）</strong>。 </p>
+<h5 id="为什么-MDM2-会盯上-p53？"><a href="#为什么-MDM2-会盯上-p53？" class="headerlink" title="为什么 MDM2 会盯上 p53？"></a>为什么 MDM2 会盯上 p53？</h5><p>在MDM2蛋白的N端（头部），有一个精心构造的、深邃的<strong>疏水性口袋（hydrophobic pocket）</strong>，就像手套一样。而在p53蛋白的N端（反式激活域），有一段α-螺旋区域。这段螺旋上有三个关键的氨基酸残基——<strong>苯丙氨酸（Phe19）、色氨酸（Trp23）和亮氨酸（Leu26）</strong>。这三个氨基酸像三根关键的“手指”，完美地伸入并契合MDM2的那个手套中。</p>
+<h5 id="p53被激活后如何“下令”生产PUMA等蛋白？"><a href="#p53被激活后如何“下令”生产PUMA等蛋白？" class="headerlink" title="p53被激活后如何“下令”生产PUMA等蛋白？"></a>p53被激活后如何“下令”生产PUMA等蛋白？</h5><p> PUMA这个蛋白，它的“设计图纸”编码在一段叫做 _PUMA_（也称 _BBC3_）的基因里。在这段基因的上游，有一段特殊的DNA序列，叫做 “启动子”（Promoter）。而PUMA基因的启动子上，有 p53 蛋白能够识别并结合的特定“停泊位点”，称为 “p53响应元件”（p53 Response Element）。</p>
+<p>被激活的p53四聚体，凭借其暴露出来的DNA结合域，会精准地找到并牢牢地结合在PUMA基因的这个“停泊位点”上。一旦结合，p53 自身就会像一块磁铁，吸引来细胞核内负责“抄写”基因的庞大机器——<strong>RNA聚合酶II</strong>以及其他大量的辅助蛋白。这个庞大的蛋白质复合体，就是负责执行命令的“抄写员”。</p>
+<p>“抄写员”以DNA为模板，“抄写”出一段信使RNA（mRNA）。这段mRNA会离开细胞核进入细胞质，并被核糖体（蛋白质的“生产工厂”）读取，最终翻译、生产出我们需要的<strong>PUMA蛋白</strong>。</p>
+<p>这就是基因转录。</p>
+<h4 id="为什么-DNA-的断裂会吸引激酶？"><a href="#为什么-DNA-的断裂会吸引激酶？" class="headerlink" title="为什么 DNA 的断裂会吸引激酶？"></a>为什么 DNA 的断裂会吸引激酶？</h4><p>在正常细胞中，ATM是以无活性的二聚体（两个ATM蛋白抱在一起）形式存在的。这个“拥抱”的姿态，恰好就掩盖了彼此的“催化核心区”。 激活，就是让这俩分开。</p>
+<p>当DNA发生双链断裂时，会暴露出两个<strong>DNA断端</strong>。这在正常的、连续的DNA双螺旋结构中是绝对不会出现的。这个裸露的、不连续的断端，就是一个<strong>强烈的物理异常信号</strong>。</p>
+<p>细胞内有一组蛋白质，叫做<strong>MRN复合体</strong>（由Mre11、Rad50、Nbs1三个蛋白组成）。</p>
+<p><strong>Mre11和Rad50</strong> 能特异性地识别并抓住DNA的断端，像桥梁一样将两个断端物理性地拉近，防止它们飘远。MRN复合体一旦抓住了DNA断端，它自身的构象就会发生改变。这种改变使得它能够吸引在细胞核内游走的、处于休眠二聚体状态的ATM。MRN复合体（特别是其中的Nbs1蛋白）上会暴露出一个能与ATM二聚体结合的“接口”。这种分子间的特异性亲和力，使得ATM被“吸引”并<strong>物理性地富集</strong>到DNA断裂的地方。</p>
+<p>当大量的ATM二聚体被招募到MRN复合体标记的DNA断端附近时，DNA断端的物理存在，加上MRN复合体的“撬动”作用，会诱导ATM二聚体的构象发生变化，促使这俩解离，变成两个独立的单体。</p>
+<p> 解离后的ATM单体，其被隐藏的“催化核心区”立刻暴露了出来。一个ATM单体会立刻给另一个（或自己）的特定位点（如丝氨酸1981位点）“安装”上一个磷酸基团。这是个 “自我磷酸化” 的过程，会使其构象进一步稳定在完全激活的状态。</p>
+<h1 id="先到这儿吧，我要吃炒粉了"><a href="#先到这儿吧，我要吃炒粉了" class="headerlink" title="先到这儿吧，我要吃炒粉了"></a>先到这儿吧，我要吃炒粉了</h1>]]></content>
+      <tags>
+        <tag>Medicine</tag>
       </tags>
   </entry>
   <entry>
@@ -2608,6 +2690,21 @@ await prisma.$transaction(async tx =&gt; &#123;
       </tags>
   </entry>
   <entry>
+    <title>使用 [@poll error] 实现线程安全的数据结构</title>
+    <url>/2023/08/15/poll-error-attribute-in-OCaml/</url>
+    <content><![CDATA[<p>OCaml的标准库提供了许多mutable的数据结构，比如Hashtbl, Queue, Stack之类的，但是这些数据结构都不是线程安全的。在 OCaml 4 和 OCaml 5 中，单个Domain中一次只能运行一个线程。换句话说，单个Domain中的线程仍然不会并行运行，除非在不同所的Domain中。</p>
+<p>而在单个Domain中 OCaml 的 runtime 是通过在safe point期间半抢占式的切换线程。也就是说，线程切换只会发生在safe point期间。例如内存分配就是是safe point。这意味着在没有safe point的代码块内，可以在Domain内原子性地进行多次读写或访问操作，因为线程没被切换。</p>
+<p>OCaml 编译器提供了一个名为 <a href="https://github.com/ocaml/ocaml/pull/10462"><code>[@poll error]</code></a> 的annotation，可以在函数中使用它来确保该函数不包含safe point。</p>
+<p>所以通过使用 <code>[@poll error]</code> 就可以创建在Domain内原子性执行的函数，也就是说，基于此特性可以实现单个Domain内线程安全的数据结构，例如 thread-table 便是使用这个特性实现的 Hash Table。可以看看它的 add 函数的实现:</p>
+<figure class="highlight ocaml"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span>[@poll error] add_atomically t buckets n i before after =</span><br><span class="line">  t.rehash = <span class="number">0</span> &amp;&amp; buckets == t.buckets</span><br><span class="line">  &amp;&amp; before == <span class="type">Array</span>.unsafe_get buckets i</span><br><span class="line">  &amp;&amp; <span class="keyword">begin</span></span><br><span class="line">       <span class="type">Array</span>.unsafe_set buckets i after;</span><br><span class="line">       <span class="keyword">let</span> length = t.length + <span class="number">1</span> <span class="keyword">in</span></span><br><span class="line">       t.length &lt;- length;</span><br><span class="line">       <span class="keyword">if</span> n &lt; length &amp;&amp; n &lt; max_buckets_div_2 <span class="keyword">then</span> t.rehash &lt;- n * <span class="number">2</span>;</span><br><span class="line">       <span class="literal">true</span></span><br><span class="line">     <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">rec</span> add t k&#x27; v&#x27; =</span><br><span class="line">  <span class="keyword">let</span> h = <span class="type">Mix</span>.<span class="built_in">int</span> k&#x27; <span class="keyword">in</span></span><br><span class="line">  maybe_rehash t;</span><br><span class="line">  <span class="keyword">let</span> buckets = t.buckets <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> n = <span class="type">Array</span>.length buckets <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> i = h <span class="keyword">land</span> (n - <span class="number">1</span>) <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> before = <span class="type">Array</span>.unsafe_get buckets i <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> after = <span class="type">Cons</span> (k&#x27;, v&#x27;, before) <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">if</span> not (add_atomically t buckets n i before after) <span class="keyword">then</span> add t k&#x27; v&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>相比使用 Stdlib.Mutex，这种无锁实现会有更好的性能（特别是对于只读操作），并且还允许例如信号处理之类的上下文操作。</p>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>NestJS bullmq 邮件发送业务中的小 tips</title>
     <url>/2025/05/07/nestjs-bullmq-mail-business/</url>
     <content><![CDATA[<p>在 BullMQ（以及它在 NestJS 里包装的 <code>@Processor</code>&#x2F;<code>WorkerHost</code>）里，整个生命周期大致是这样的：</p>
@@ -2653,21 +2750,6 @@ await prisma.$transaction(async tx =&gt; &#123;
 <li>“Retrying failing jobs” · BullMQ Guide<br><a href="https://docs.bullmq.io/guide/retrying-failing-jobs">https://docs.bullmq.io/guide/retrying-failing-jobs</a></li>
 <li>BullMQ Guide &amp; Patterns · Process Step Jobs (completed event only fires after process resolves)<br><a href="https://docs.bullmq.io/patterns/process-step-jobs">https://docs.bullmq.io/patterns/process-step-jobs</a></li>
 </ul>
-]]></content>
-      <tags>
-        <tag>Technique</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用 [@poll error] 实现线程安全的数据结构</title>
-    <url>/2023/08/15/poll-error-attribute-in-OCaml/</url>
-    <content><![CDATA[<p>OCaml的标准库提供了许多mutable的数据结构，比如Hashtbl, Queue, Stack之类的，但是这些数据结构都不是线程安全的。在 OCaml 4 和 OCaml 5 中，单个Domain中一次只能运行一个线程。换句话说，单个Domain中的线程仍然不会并行运行，除非在不同所的Domain中。</p>
-<p>而在单个Domain中 OCaml 的 runtime 是通过在safe point期间半抢占式的切换线程。也就是说，线程切换只会发生在safe point期间。例如内存分配就是是safe point。这意味着在没有safe point的代码块内，可以在Domain内原子性地进行多次读写或访问操作，因为线程没被切换。</p>
-<p>OCaml 编译器提供了一个名为 <a href="https://github.com/ocaml/ocaml/pull/10462"><code>[@poll error]</code></a> 的annotation，可以在函数中使用它来确保该函数不包含safe point。</p>
-<p>所以通过使用 <code>[@poll error]</code> 就可以创建在Domain内原子性执行的函数，也就是说，基于此特性可以实现单个Domain内线程安全的数据结构，例如 thread-table 便是使用这个特性实现的 Hash Table。可以看看它的 add 函数的实现:</p>
-<figure class="highlight ocaml"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span>[@poll error] add_atomically t buckets n i before after =</span><br><span class="line">  t.rehash = <span class="number">0</span> &amp;&amp; buckets == t.buckets</span><br><span class="line">  &amp;&amp; before == <span class="type">Array</span>.unsafe_get buckets i</span><br><span class="line">  &amp;&amp; <span class="keyword">begin</span></span><br><span class="line">       <span class="type">Array</span>.unsafe_set buckets i after;</span><br><span class="line">       <span class="keyword">let</span> length = t.length + <span class="number">1</span> <span class="keyword">in</span></span><br><span class="line">       t.length &lt;- length;</span><br><span class="line">       <span class="keyword">if</span> n &lt; length &amp;&amp; n &lt; max_buckets_div_2 <span class="keyword">then</span> t.rehash &lt;- n * <span class="number">2</span>;</span><br><span class="line">       <span class="literal">true</span></span><br><span class="line">     <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">rec</span> add t k&#x27; v&#x27; =</span><br><span class="line">  <span class="keyword">let</span> h = <span class="type">Mix</span>.<span class="built_in">int</span> k&#x27; <span class="keyword">in</span></span><br><span class="line">  maybe_rehash t;</span><br><span class="line">  <span class="keyword">let</span> buckets = t.buckets <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> n = <span class="type">Array</span>.length buckets <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> i = h <span class="keyword">land</span> (n - <span class="number">1</span>) <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> before = <span class="type">Array</span>.unsafe_get buckets i <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> after = <span class="type">Cons</span> (k&#x27;, v&#x27;, before) <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">if</span> not (add_atomically t buckets n i before after) <span class="keyword">then</span> add t k&#x27; v&#x27;</span><br></pre></td></tr></table></figure>
-
-<p>相比使用 Stdlib.Mutex，这种无锁实现会有更好的性能（特别是对于只读操作），并且还允许例如信号处理之类的上下文操作。</p>
 ]]></content>
       <tags>
         <tag>Technique</tag>
@@ -2740,32 +2822,6 @@ await prisma.$transaction(async tx =&gt; &#123;
       </tags>
   </entry>
   <entry>
-    <title>UUID v7 是如何加快 RDBMS 索引速度的</title>
-    <url>/2025/04/13/uuidv7-rdbms/</url>
-    <content><![CDATA[<p>UUID v7 之所以能显著提升关系型数据库（尤其是采用聚集索引的 MySQL InnoDB）在插入和查询速度，主要归功于它在 ID 中引入了“可排序的时间戳前缀”，从而大幅减少了 B-Tree 索引页分裂（page split）和数据碎片化。这里分几点来说：</p>
-<p>一、 聚集索引（Clustered Index）的插入机制  </p>
-<p>在 InnoDB 中，聚集索引的叶子节点同时存储了行数据，且按照索引键（主键）顺序物理排序。</p>
-<p>当新记录的主键完全随机（如 UUID v4）时，每次插入都会随机落在 B-Tree 的不同叶子页，导致频繁的页分裂和指针重排，而页分裂和随机 I&#x2F;O 会带来大量的磁盘写放大和缓存抖动（cache churn），削弱吞吐并拉高延迟。</p>
-<p>二、UUID v7 的时间排序特性  </p>
-<p>UUID v7 在高位（前 48 位）嵌入了以毫秒级精度的 Unix 时间戳，剩下的位用于随机数或序列号，这样生成的 ID 保持全局唯一性的同时，随着时间自然递增（即“近似单调递增”），新插入的记录几乎总是追加到 B-Tree 的最右端叶子节点。  </p>
-<p>参见 dbaplus.cn 的分析：  </p>
-<blockquote>
-<p>“UUID v7 的创新之处在于其时间排序特性，它在前 48 位中嵌入了以毫秒为单位的 Unix 时间戳……可能在插入和查询操作上提供更好的性能”【1】。</p>
-</blockquote>
-<p>三、降低页分裂与碎片化  </p>
-<p>顺序或近似顺序的主键能使叶子节点连续增长，极少触发页分裂，并且更少的页分裂意味着更低的写放大（write amplification）和更稳定的插入延迟，同时，减少了空洞和链表重排，提高了磁盘和内存缓存的命中率。</p>
-<p>四、提升查询局部性与缓存命中  </p>
-<p>因为数据物理上是按时间顺序紧凑写入，时间范围查询（如 “最近 1 小时的日志”）可以快速定位连续的叶子页，I&#x2F;O 更聚集，内存缓冲池（buffer pool）或操作系统页缓存能更有效地缓存最近热数据，进一步加速查询。</p>
-<hr>
-<p>Rimon Tawadrous 在其 GitHub repo 中的测试，对比 100 万条逐条插入实验，UUID v7 相较 UUID v4 在单线程插入上速度快约 3.24%，多线程下更可观【1】。  </p>
-<hr>
-<p>参考链接<br>[1] “为什么 UUID 7 比 UUID 4 更适合作为 RDBMS 的聚集索引？” dbaplus.cn<br>    <a href="https://dbaplus.cn/news-160-6313-1.html">https://dbaplus.cn/news-160-6313-1.html</a><br>[2] “PostgreSQL and UUID as primary key” maciejwalkowiak<br>    <a href="https://maciejwalkowiak.com/blog/postgres-uuid-primary-key/">https://maciejwalkowiak.com/blog/postgres-uuid-primary-key/</a><br>[3] “Optimised UUIDs in mysql” stitcher<br>    <a href="https://stitcher.io/blog/optimised-uuids-in-mysql">https://stitcher.io/blog/optimised-uuids-in-mysql</a><br>[3] “Storing UUID Values in MySQL” percona<br>    <a href="https://www.percona.com/blog/store-uuid-optimized-way/">https://www.percona.com/blog/store-uuid-optimized-way/</a></p>
-]]></content>
-      <tags>
-        <tag>Technique</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>v8中的Number.toString()</title>
     <url>/2023/10/05/v8%E4%B8%AD%E7%9A%84Number-toString/</url>
     <content><![CDATA[<p>这里讲一下JavaScript中<code>Number.toString()</code>的实现， 以V8为例。</p>
@@ -2794,6 +2850,32 @@ await prisma.$transaction(async tx =&gt; &#123;
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// The fast double-to-(unsigned-)int conversion routine does not guarantee</span></span><br><span class="line"><span class="comment">// rounding towards zero.</span></span><br><span class="line"><span class="comment">// The result is undefined if x is infinite or NaN, or if the rounded</span></span><br><span class="line"><span class="comment">// integer value is outside the range of type int.</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">int</span> <span class="title">FastD2I</span><span class="params">(<span class="type">double</span> x)</span> </span>&#123;</span><br><span class="line">  <span class="built_in">DCHECK</span>(x &lt;= INT_MAX);</span><br><span class="line">  <span class="built_in">DCHECK</span>(x &gt;= INT_MIN);</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">static_cast</span>&lt;<span class="type">int32_t</span>&gt;(x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>以上</p>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>UUID v7 是如何加快 RDBMS 索引速度的</title>
+    <url>/2025/04/13/uuidv7-rdbms/</url>
+    <content><![CDATA[<p>UUID v7 之所以能显著提升关系型数据库（尤其是采用聚集索引的 MySQL InnoDB）在插入和查询速度，主要归功于它在 ID 中引入了“可排序的时间戳前缀”，从而大幅减少了 B-Tree 索引页分裂（page split）和数据碎片化。这里分几点来说：</p>
+<p>一、 聚集索引（Clustered Index）的插入机制  </p>
+<p>在 InnoDB 中，聚集索引的叶子节点同时存储了行数据，且按照索引键（主键）顺序物理排序。</p>
+<p>当新记录的主键完全随机（如 UUID v4）时，每次插入都会随机落在 B-Tree 的不同叶子页，导致频繁的页分裂和指针重排，而页分裂和随机 I&#x2F;O 会带来大量的磁盘写放大和缓存抖动（cache churn），削弱吞吐并拉高延迟。</p>
+<p>二、UUID v7 的时间排序特性  </p>
+<p>UUID v7 在高位（前 48 位）嵌入了以毫秒级精度的 Unix 时间戳，剩下的位用于随机数或序列号，这样生成的 ID 保持全局唯一性的同时，随着时间自然递增（即“近似单调递增”），新插入的记录几乎总是追加到 B-Tree 的最右端叶子节点。  </p>
+<p>参见 dbaplus.cn 的分析：  </p>
+<blockquote>
+<p>“UUID v7 的创新之处在于其时间排序特性，它在前 48 位中嵌入了以毫秒为单位的 Unix 时间戳……可能在插入和查询操作上提供更好的性能”【1】。</p>
+</blockquote>
+<p>三、降低页分裂与碎片化  </p>
+<p>顺序或近似顺序的主键能使叶子节点连续增长，极少触发页分裂，并且更少的页分裂意味着更低的写放大（write amplification）和更稳定的插入延迟，同时，减少了空洞和链表重排，提高了磁盘和内存缓存的命中率。</p>
+<p>四、提升查询局部性与缓存命中  </p>
+<p>因为数据物理上是按时间顺序紧凑写入，时间范围查询（如 “最近 1 小时的日志”）可以快速定位连续的叶子页，I&#x2F;O 更聚集，内存缓冲池（buffer pool）或操作系统页缓存能更有效地缓存最近热数据，进一步加速查询。</p>
+<hr>
+<p>Rimon Tawadrous 在其 GitHub repo 中的测试，对比 100 万条逐条插入实验，UUID v7 相较 UUID v4 在单线程插入上速度快约 3.24%，多线程下更可观【1】。  </p>
+<hr>
+<p>参考链接<br>[1] “为什么 UUID 7 比 UUID 4 更适合作为 RDBMS 的聚集索引？” dbaplus.cn<br>    <a href="https://dbaplus.cn/news-160-6313-1.html">https://dbaplus.cn/news-160-6313-1.html</a><br>[2] “PostgreSQL and UUID as primary key” maciejwalkowiak<br>    <a href="https://maciejwalkowiak.com/blog/postgres-uuid-primary-key/">https://maciejwalkowiak.com/blog/postgres-uuid-primary-key/</a><br>[3] “Optimised UUIDs in mysql” stitcher<br>    <a href="https://stitcher.io/blog/optimised-uuids-in-mysql">https://stitcher.io/blog/optimised-uuids-in-mysql</a><br>[3] “Storing UUID Values in MySQL” percona<br>    <a href="https://www.percona.com/blog/store-uuid-optimized-way/">https://www.percona.com/blog/store-uuid-optimized-way/</a></p>
 ]]></content>
       <tags>
         <tag>Technique</tag>
@@ -2874,18 +2956,6 @@ await prisma.$transaction(async tx =&gt; &#123;
       </categories>
   </entry>
   <entry>
-    <title>二〇二三年六月二十九日</title>
-    <url>/2023/06/29/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%B8%89%E5%B9%B4%E5%85%AD%E6%9C%88%E4%BA%8C%E5%8D%81%E4%B9%9D%E6%97%A5/</url>
-    <content><![CDATA[<p>我能走遍大街小巷，但我走不出时间，这里有太多东西网住我了，每一个不知所措的老人家，每一个满身泥土的农民，每一只嬉戏打闹的猫狗和每一寸土地下的家人。</p>
-<p>我知道，能明确感受到，远处的风力发电机每转一圈我对这里的牵挂就更深一点，太阳每次升到我头顶都会把我的身体压进泥土里一点。</p>
-<p>夕阳下的街头空无一人，窗户间的缝隙吹来寒风，隔壁回锅肉的香味混在其中，困顿中还有美好的可能，所以别让自己太过消沉。</p>
-<p>所以别让自己太过消沉。</p>
-]]></content>
-      <categories>
-        <category>gallery</category>
-      </categories>
-  </entry>
-  <entry>
     <title>二〇二三年十一月二十九日</title>
     <url>/2023/11/29/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%B8%89%E5%B9%B4%E5%8D%81%E4%B8%80%E6%9C%88%E4%BA%8C%E5%8D%81%E4%B9%9D%E6%97%A5/</url>
     <content><![CDATA[<p>我们的人生，都是某座不知名的山上某片不知名的乱林里的某颗不知名姓的杂草，春带来霉湿，夏带来毒辣，秋带来阴沉，冬带来寒冰。</p>
@@ -2895,6 +2965,18 @@ await prisma.$transaction(async tx =&gt; &#123;
 <p>这世上也不是所有事都算得准的。</p>
 <p>云仰望着太阳，羡慕他的炙热，或许太阳也在仰望着云，渴求他的停留。</p>
 <p>地球距离太阳1.5亿公里，如无意外，两者此生不会相遇，但从此以后，我与世间美好再也不会分离。</p>
+]]></content>
+      <categories>
+        <category>gallery</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>二〇二三年六月二十九日</title>
+    <url>/2023/06/29/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%B8%89%E5%B9%B4%E5%85%AD%E6%9C%88%E4%BA%8C%E5%8D%81%E4%B9%9D%E6%97%A5/</url>
+    <content><![CDATA[<p>我能走遍大街小巷，但我走不出时间，这里有太多东西网住我了，每一个不知所措的老人家，每一个满身泥土的农民，每一只嬉戏打闹的猫狗和每一寸土地下的家人。</p>
+<p>我知道，能明确感受到，远处的风力发电机每转一圈我对这里的牵挂就更深一点，太阳每次升到我头顶都会把我的身体压进泥土里一点。</p>
+<p>夕阳下的街头空无一人，窗户间的缝隙吹来寒风，隔壁回锅肉的香味混在其中，困顿中还有美好的可能，所以别让自己太过消沉。</p>
+<p>所以别让自己太过消沉。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
@@ -3008,18 +3090,6 @@ await prisma.$transaction(async tx =&gt; &#123;
       </categories>
   </entry>
   <entry>
-    <title>二〇二五年二月二十四日</title>
-    <url>/2025/02/24/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%BA%94%E5%B9%B4%E4%BA%8C%E6%9C%88%E4%BA%8C%E5%8D%81%E5%9B%9B%E6%97%A5/</url>
-    <content><![CDATA[<p>街上的人躲进建筑，道路上的车变得缓慢。路边的黑猫坐在屋檐下张望，在雨天，它也有了思考的地方与时间。除了淅淅沥沥的雨声再无其他。</p>
-<p>衣服买大了，他们走路好急，地铁上只有老人没看手机，天怎么黑那么快是我起晚了吗，那个蹦蹦跳跳的女孩耳机里在听什么歌，我还在原地吗，我要再等等吗。</p>
-<p>家就像厚酒之后突然明晰的想象，时间不语，只是沉默，我沉默地走进时间，看着我和你的年龄相差越来越小。</p>
-<p>这雨天，世界都温柔的可以掐出水来。</p>
-]]></content>
-      <categories>
-        <category>gallery</category>
-      </categories>
-  </entry>
-  <entry>
     <title>二〇二五年四月三日</title>
     <url>/2025/04/03/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%BA%94%E5%B9%B4%E4%BA%94%E6%9C%88%E4%B8%89%E6%97%A5/</url>
     <content><![CDATA[<p>日历被一页页撕去，出钞口的暖风比任何毛毯更忠实，数字键盘的荧光就像圣徒光环般笼罩着他，这些废纸似乎可以延长家人存在的时间。</p>
@@ -3028,6 +3098,18 @@ await prisma.$transaction(async tx =&gt; &#123;
 <p>时间带走了一个人，带走了一个由无数粒子组成的，短暂观察了这个宇宙一瞬的意识，它们会在时间中无数次聚散，再无数次见这灿烂的一切。</p>
 <p>梦里明明有六趣，觉后空空无大千，</p>
 <p>又是一个难捱的冬天，为了脚不被冻住，我们只能起舞。</p>
+]]></content>
+      <categories>
+        <category>gallery</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>二〇二五年二月二十四日</title>
+    <url>/2025/02/24/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%BA%94%E5%B9%B4%E4%BA%8C%E6%9C%88%E4%BA%8C%E5%8D%81%E5%9B%9B%E6%97%A5/</url>
+    <content><![CDATA[<p>街上的人躲进建筑，道路上的车变得缓慢。路边的黑猫坐在屋檐下张望，在雨天，它也有了思考的地方与时间。除了淅淅沥沥的雨声再无其他。</p>
+<p>衣服买大了，他们走路好急，地铁上只有老人没看手机，天怎么黑那么快是我起晚了吗，那个蹦蹦跳跳的女孩耳机里在听什么歌，我还在原地吗，我要再等等吗。</p>
+<p>家就像厚酒之后突然明晰的想象，时间不语，只是沉默，我沉默地走进时间，看着我和你的年龄相差越来越小。</p>
+<p>这雨天，世界都温柔的可以掐出水来。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
@@ -3225,6 +3307,15 @@ await prisma.$transaction(async tx =&gt; &#123;
       </categories>
   </entry>
   <entry>
+    <title>二〇二四年八月一日</title>
+    <url>/2024/08/02/%E4%BA%8C%E3%80%87%E4%BA%8C%E5%9B%9B%E5%B9%B4%E5%85%AB%E6%9C%88%E4%B8%80%E6%97%A5/</url>
+    <content><![CDATA[<p>阿公烧烟成老瘾，<br>阿公饮酒会面红，<br>他说日子要开心，<br>他说人生要尽兴。</p>
+]]></content>
+      <categories>
+        <category>gallery</category>
+      </categories>
+  </entry>
+  <entry>
     <title>二〇二四年五月十六日</title>
     <url>/2024/05/16/%E4%BA%8C%E3%80%87%E4%BA%8C%E5%9B%9B%E5%B9%B4%E4%BA%94%E6%9C%88%E5%8D%81%E5%85%AD%E6%97%A5/</url>
     <content><![CDATA[<p>无眼耳鼻舌身意，无色声香味触法，四下皆空，但万物有实，活在真实世界，而非活在一系列参照物之中。</p>
@@ -3239,15 +3330,6 @@ await prisma.$transaction(async tx =&gt; &#123;
 <p>当有了一个目标，需要的不是豪言壮志，不是任何心理建设，而是尽快上手去做。<br>做一件事，无关心态，只要去做就是了。发挥最大的主观能动性，遇到问题就解决，碰到障碍就破开，需要帮助就求助。别因为所谓的自信就盲目冒进，也别因为所谓的自卑就胆小退缩，那俩玩意都不存在。</p>
 <p>尊重事情本身的客观发展规律，什么样的人匹配什么样的事，什么样的条件匹配什么样的理想。别把心态想得太重要，更别花太多时间精力去建设心态，客观规律不会因为心态就发生奇迹般地转变。</p>
 <p>你最好趁早学会尊重客观规律。</p>
-]]></content>
-      <categories>
-        <category>gallery</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>二〇二四年八月一日</title>
-    <url>/2024/08/02/%E4%BA%8C%E3%80%87%E4%BA%8C%E5%9B%9B%E5%B9%B4%E5%85%AB%E6%9C%88%E4%B8%80%E6%97%A5/</url>
-    <content><![CDATA[<p>阿公烧烟成老瘾，<br>阿公饮酒会面红，<br>他说日子要开心，<br>他说人生要尽兴。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
@@ -3353,6 +3435,19 @@ await prisma.$transaction(async tx =&gt; &#123;
       </categories>
   </entry>
   <entry>
+    <title>二零二三年九月十三日</title>
+    <url>/2023/09/13/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E4%B9%9D%E6%9C%88%E5%8D%81%E4%B8%89%E6%97%A5/</url>
+    <content><![CDATA[<p>“站好! 要拍了啊，倒数三秒，都不要眨眼。” 婚礼结束后, 门口路过的陌生男人拿着相机，充当起了临时的摄影师。</p>
+<p>镜头里，她和抱着雪狮的希文站在中间，她手边是依次排开的五个哥哥，希文手边是暮秋, 培元, 世琪, 婧灵五人。<br>在他们后排，其他人也各自找好位置挺直脊背站着。</p>
+<p>“拍了啊，倒数，三、二、一……茄子!”</p>
+<p>咔擦，画面定格，幸福定格，大家终于从苦难里彻底毕业了。</p>
+<p>萤火虫的微光与星空交相辉映，黑夜中潜滋暗长的花香沁人心脾，晚风挠过波光粼粼的海面，彼此相爱的人相拥而眠。</p>
+]]></content>
+      <categories>
+        <category>gallery</category>
+      </categories>
+  </entry>
+  <entry>
     <title>二零二三年七月三十日</title>
     <url>/2023/07/30/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E4%B8%83%E6%9C%88%E4%B8%89%E5%8D%81%E6%97%A5/</url>
     <content><![CDATA[<p>那天阳光很好，她想离开病房, 离开躺了快一辈子的病床，她说想晒晒太阳，我带着她去楼下的草坪。她摸摸花，摸摸草，摸摸树。她给自己编了个很好看很好看的辫子，把她摘的花插在上面。可是还没绑好她就垂下了头。</p>
@@ -3365,19 +3460,6 @@ await prisma.$transaction(async tx =&gt; &#123;
 <blockquote>
 <p>韩暮秋，息止安所。</p>
 </blockquote>
-]]></content>
-      <categories>
-        <category>gallery</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>二零二三年九月十三日</title>
-    <url>/2023/09/13/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E4%B9%9D%E6%9C%88%E5%8D%81%E4%B8%89%E6%97%A5/</url>
-    <content><![CDATA[<p>“站好! 要拍了啊，倒数三秒，都不要眨眼。” 婚礼结束后, 门口路过的陌生男人拿着相机，充当起了临时的摄影师。</p>
-<p>镜头里，她和抱着雪狮的希文站在中间，她手边是依次排开的五个哥哥，希文手边是暮秋, 培元, 世琪, 婧灵五人。<br>在他们后排，其他人也各自找好位置挺直脊背站着。</p>
-<p>“拍了啊，倒数，三、二、一……茄子!”</p>
-<p>咔擦，画面定格，幸福定格，大家终于从苦难里彻底毕业了。</p>
-<p>萤火虫的微光与星空交相辉映，黑夜中潜滋暗长的花香沁人心脾，晚风挠过波光粼粼的海面，彼此相爱的人相拥而眠。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
@@ -3483,19 +3565,6 @@ await prisma.$transaction(async tx =&gt; &#123;
       </categories>
   </entry>
   <entry>
-    <title>二零二三年十一月六日</title>
-    <url>/2023/11/06/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E5%8D%81%E4%B8%80%E6%9C%88%E5%85%AD%E6%97%A5/</url>
-    <content><![CDATA[<p>寒风打得他踉跄地摔进田野中，他颤抖着，疑惑的抬起头，云层捂住了月亮，摇曳着露出一角烛火般的月光，烛火同他的身体一般颤抖，那是落日的余晖，也是等待朝阳的希望。</p>
-<p>世界同可怜的孩子一起闭上了眼睛，世界不那么开心，但是</p>
-<blockquote>
-<p>这个世界，我真的爱你</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>gallery</category>
-      </categories>
-  </entry>
-  <entry>
     <title>二零二三年四月二十二日</title>
     <url>/2023/04/22/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E5%9B%9B%E6%9C%88%E4%BA%8C%E5%8D%81%E4%BA%8C%E6%97%A5/</url>
     <content><![CDATA[<p>  二零二三年四月二十二日， 风沙把阳光的气息卷入帐篷， 现在是凌晨四点二十七，快天亮了， 仍有些微凉， 我即将踏入看不到边的大漠。</p>
@@ -3508,6 +3577,19 @@ await prisma.$transaction(async tx =&gt; &#123;
 <p>  岁月中的某个文明中的某个人，曾经也骑着骆驼向远方，又是哪个人，吟着佛门心语站在我身旁，我听见大漠的念经声。</p>
 <p>  我不是个有耐心的人， 抄经书对我来说是种折磨， 我只能选择把经文抄在大地上， 黄沙上， 用自己的双腿一点点写， 用耳去倾听狂风卷积的声音。</p>
 <p>  我生来就是为了把这个世界的消息和秘密带到下一个世界去。</p>
+]]></content>
+      <categories>
+        <category>gallery</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>二零二三年十一月六日</title>
+    <url>/2023/11/06/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E5%8D%81%E4%B8%80%E6%9C%88%E5%85%AD%E6%97%A5/</url>
+    <content><![CDATA[<p>寒风打得他踉跄地摔进田野中，他颤抖着，疑惑的抬起头，云层捂住了月亮，摇曳着露出一角烛火般的月光，烛火同他的身体一般颤抖，那是落日的余晖，也是等待朝阳的希望。</p>
+<p>世界同可怜的孩子一起闭上了眼睛，世界不那么开心，但是</p>
+<blockquote>
+<p>这个世界，我真的爱你</p>
+</blockquote>
 ]]></content>
       <categories>
         <category>gallery</category>
@@ -3585,18 +3667,18 @@ await prisma.$transaction(async tx =&gt; &#123;
       </categories>
   </entry>
   <entry>
-    <title>二零二二年十月一日</title>
-    <url>/2022/10/01/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%BA%8C%E5%B9%B4%E5%8D%81%E6%9C%88%E4%B8%80%E6%97%A5/</url>
-    <content><![CDATA[<p>巨大而又空洞的表达欲，失语后渴望把自己潦草在这个时代里。</p>
+    <title>二零二零年十二月九日</title>
+    <url>/2020/12/09/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E9%9B%B6%E5%B9%B4%E5%8D%81%E4%BA%8C%E6%9C%88%E4%B9%9D%E6%97%A5/</url>
+    <content><![CDATA[<p>我们走在朝阳的洪流上， 一步一个脚印， 踏散阳光， 向南是北。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
       </categories>
   </entry>
   <entry>
-    <title>二零二零年十二月九日</title>
-    <url>/2020/12/09/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E9%9B%B6%E5%B9%B4%E5%8D%81%E4%BA%8C%E6%9C%88%E4%B9%9D%E6%97%A5/</url>
-    <content><![CDATA[<p>我们走在朝阳的洪流上， 一步一个脚印， 踏散阳光， 向南是北。</p>
+    <title>二零二二年十月一日</title>
+    <url>/2022/10/01/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%BA%8C%E5%B9%B4%E5%8D%81%E6%9C%88%E4%B8%80%E6%97%A5/</url>
+    <content><![CDATA[<p>巨大而又空洞的表达欲，失语后渴望把自己潦草在这个时代里。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
@@ -3889,6 +3971,34 @@ await prisma.$transaction(async tx =&gt; &#123;
       </tags>
   </entry>
   <entry>
+    <title>奥司他韦</title>
+    <url>/2023/03/05/%E5%A5%A5%E5%8F%B8%E4%BB%96%E9%9F%A6/</url>
+    <content><![CDATA[<p><img src="/img/%E5%8C%BB%E5%AD%A6/%E5%A5%A5%E5%8F%B8%E4%BB%96%E9%9F%A6.jpg" alt="奥司他韦.jpg"></p>
+<p>目前市场上销售的达菲为罗氏制药独家生产的抗流感药物，其通用名称为磷酸奥司他韦（Oseltamivirphosphate）。奥司他韦（Oseltamivir）于1999年在瑞士上市，2001年10月在我国上市。达菲是一种非常有效的流感治疗用药，并且可以大大减少并发症（主要是气管与支气管炎、肺炎、咽炎等）的发生和抗生素的使用，因而是目前治疗流感的最常用药物之一，也是公认的抗禽流感、甲型H1N1病毒最有效的药物之一。 </p>
+<h2 id="主要原理"><a href="#主要原理" class="headerlink" title="主要原理"></a>主要原理</h2><p>奥司他韦口服后经肝脏和肠道酯酶迅速催化转化为其活性代谢物奥司他韦羧酸，奥司他韦羧酸的构型与神经氨酸的过渡态相似，能够竞争性地与流感病毒神经氨酸酶（NA，neu－raminidase，也有称作神经氨酸苷酶）的活动位点结合，因而是一种强效的高选择性的流感病毒NA抑制剂（NAIs），它主要通过干扰病毒从被感染的宿主细胞中释放，从而减少甲型或乙型流感病毒的传播。 </p>
+<h2 id="特殊人群"><a href="#特殊人群" class="headerlink" title="特殊人群"></a>特殊人群</h2><ol>
+<li><p>对不同程度的肾功能不全患者给予100mg磷酸奥司他韦，每日两次，服用五天，显示活性代谢产物水平与降低肾功能成反比。对肌酐清除率小于30ml&#x2F;min的患者建议做剂量调整。目前没有研究数据指导肾功能衰竭患者的用药（肌酐清除小于10ml&#x2F;nin），所以对该人群用药时要慎重。</p>
+</li>
+<li><p>口服磷酸奥司他韦后。肝功能不全患者并没有象预期那样体内奥司他韦水平增高或其活性代谢产物水平降低。</p>
+</li>
+<li><p>给予相同剂量的磷酸奥司他韦，同年轻人相比，老年人（年龄在65—78岁间）的稳态代谢物水平比年轻人高25~35%，而两个人群药物半衰期很相似。考虑到药物暴露量和耐受力，老年人不必调整剂量。</p>
+</li>
+<li><p>对一小组5~18岁儿童给予单剂2mg&#x2F;kg的粉末剂，口服建立药代曲线，数据显示儿童年龄越小，对药物前体和其活性代谢产物的清除越快，人体对每mg&#x2F;kg计量单位的承受越少。比如给予5-8岁儿童2mg&#x2F;kg的剂量，若要达到可比性。即相当于要给予成年人单剂75mg奥司他韦（大约为1mg&#x2F;kg）。年龄相差越小，儿童与成年人对每一单位mg&#x2F;kg剂量的代谢差别越小。比如大于12岁的儿童与成年人在药代动力学方面就已经很相似了。</p>
+</li>
+</ol>
+<h2 id="不良反应"><a href="#不良反应" class="headerlink" title="不良反应"></a>不良反应</h2><p>在罗氏提交美国联邦食品和药品管理局的申报材料中指出，奥司他韦（达菲）主要的不良反应显示为消化道的不适，包括恶心、呕吐、腹泻、腹痛等，其次是呼吸系统的不良反应，包括支气管炎、咳嗽等，此外还有中枢神经系统的不良反应，如眩晕、头痛、失眠、疲劳等。</p>
+<p>在2004年1月，FDA还发出对于奥司他韦的消费警讯，声称由于1岁以内幼儿血脑屏障发育不完全，奥司他韦应用于幼儿可能造成脑内药物浓度过高，形成潜在的安全问题。</p>
+<p>2005年有日本媒体报道日本青少年服用奥斯他韦后自杀并有精神异常反应，此后日本先后报道数十例此类不良反应，此后世界各地媒体纷纷转载报道，引起公众关注。2005年11月FDA就这一反应作出报告，认为没有证据证明奥斯他韦可以导致精神异常，日本的不良反应病例系大众媒体报道后经心理暗示作用引起的群体性臆症。</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>需要注意的是，奥司他韦是通过抑制病毒的复制而起到治疗流感作用的，如果人体没有感染病毒，吃了“达菲”也是没有任何作用的。也就是说，“达菲”是在体内存在病毒的前提下起到杀灭病毒的作用，它不可能抵抗病毒侵入人体。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://www.yixue.com/%e8%be%be%e8%8f%b2">https://www.yixue.com/%e8%be%be%e8%8f%b2</a></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Medicine</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>在F#中处理复杂依赖注入的实践指南</title>
     <url>/2025/03/31/%E5%9C%A8F-%E4%B8%AD%E5%A4%84%E7%90%86%E5%A4%8D%E6%9D%82%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E7%9A%84%E5%AE%9E%E8%B7%B5%E6%8C%87%E5%8D%97/</url>
     <content><![CDATA[<h2 id="一、传统手艺：Partial-Application"><a href="#一、传统手艺：Partial-Application" class="headerlink" title="一、传统手艺：Partial Application"></a>一、传统手艺：Partial Application</h2><p>在函数式编程中，Partial Application 是传递依赖的常用方式。例如：</p>
@@ -3942,34 +4052,6 @@ await prisma.$transaction(async tx =&gt; &#123;
 ]]></content>
       <tags>
         <tag>Technique</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>奥司他韦</title>
-    <url>/2023/03/05/%E5%A5%A5%E5%8F%B8%E4%BB%96%E9%9F%A6/</url>
-    <content><![CDATA[<p><img src="/img/%E5%8C%BB%E5%AD%A6/%E5%A5%A5%E5%8F%B8%E4%BB%96%E9%9F%A6.jpg" alt="奥司他韦.jpg"></p>
-<p>目前市场上销售的达菲为罗氏制药独家生产的抗流感药物，其通用名称为磷酸奥司他韦（Oseltamivirphosphate）。奥司他韦（Oseltamivir）于1999年在瑞士上市，2001年10月在我国上市。达菲是一种非常有效的流感治疗用药，并且可以大大减少并发症（主要是气管与支气管炎、肺炎、咽炎等）的发生和抗生素的使用，因而是目前治疗流感的最常用药物之一，也是公认的抗禽流感、甲型H1N1病毒最有效的药物之一。 </p>
-<h2 id="主要原理"><a href="#主要原理" class="headerlink" title="主要原理"></a>主要原理</h2><p>奥司他韦口服后经肝脏和肠道酯酶迅速催化转化为其活性代谢物奥司他韦羧酸，奥司他韦羧酸的构型与神经氨酸的过渡态相似，能够竞争性地与流感病毒神经氨酸酶（NA，neu－raminidase，也有称作神经氨酸苷酶）的活动位点结合，因而是一种强效的高选择性的流感病毒NA抑制剂（NAIs），它主要通过干扰病毒从被感染的宿主细胞中释放，从而减少甲型或乙型流感病毒的传播。 </p>
-<h2 id="特殊人群"><a href="#特殊人群" class="headerlink" title="特殊人群"></a>特殊人群</h2><ol>
-<li><p>对不同程度的肾功能不全患者给予100mg磷酸奥司他韦，每日两次，服用五天，显示活性代谢产物水平与降低肾功能成反比。对肌酐清除率小于30ml&#x2F;min的患者建议做剂量调整。目前没有研究数据指导肾功能衰竭患者的用药（肌酐清除小于10ml&#x2F;nin），所以对该人群用药时要慎重。</p>
-</li>
-<li><p>口服磷酸奥司他韦后。肝功能不全患者并没有象预期那样体内奥司他韦水平增高或其活性代谢产物水平降低。</p>
-</li>
-<li><p>给予相同剂量的磷酸奥司他韦，同年轻人相比，老年人（年龄在65—78岁间）的稳态代谢物水平比年轻人高25~35%，而两个人群药物半衰期很相似。考虑到药物暴露量和耐受力，老年人不必调整剂量。</p>
-</li>
-<li><p>对一小组5~18岁儿童给予单剂2mg&#x2F;kg的粉末剂，口服建立药代曲线，数据显示儿童年龄越小，对药物前体和其活性代谢产物的清除越快，人体对每mg&#x2F;kg计量单位的承受越少。比如给予5-8岁儿童2mg&#x2F;kg的剂量，若要达到可比性。即相当于要给予成年人单剂75mg奥司他韦（大约为1mg&#x2F;kg）。年龄相差越小，儿童与成年人对每一单位mg&#x2F;kg剂量的代谢差别越小。比如大于12岁的儿童与成年人在药代动力学方面就已经很相似了。</p>
-</li>
-</ol>
-<h2 id="不良反应"><a href="#不良反应" class="headerlink" title="不良反应"></a>不良反应</h2><p>在罗氏提交美国联邦食品和药品管理局的申报材料中指出，奥司他韦（达菲）主要的不良反应显示为消化道的不适，包括恶心、呕吐、腹泻、腹痛等，其次是呼吸系统的不良反应，包括支气管炎、咳嗽等，此外还有中枢神经系统的不良反应，如眩晕、头痛、失眠、疲劳等。</p>
-<p>在2004年1月，FDA还发出对于奥司他韦的消费警讯，声称由于1岁以内幼儿血脑屏障发育不完全，奥司他韦应用于幼儿可能造成脑内药物浓度过高，形成潜在的安全问题。</p>
-<p>2005年有日本媒体报道日本青少年服用奥斯他韦后自杀并有精神异常反应，此后日本先后报道数十例此类不良反应，此后世界各地媒体纷纷转载报道，引起公众关注。2005年11月FDA就这一反应作出报告，认为没有证据证明奥斯他韦可以导致精神异常，日本的不良反应病例系大众媒体报道后经心理暗示作用引起的群体性臆症。</p>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>需要注意的是，奥司他韦是通过抑制病毒的复制而起到治疗流感作用的，如果人体没有感染病毒，吃了“达菲”也是没有任何作用的。也就是说，“达菲”是在体内存在病毒的前提下起到杀灭病毒的作用，它不可能抵抗病毒侵入人体。</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li><a href="https://www.yixue.com/%e8%be%be%e8%8f%b2">https://www.yixue.com/%e8%be%be%e8%8f%b2</a></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>Medicine</tag>
       </tags>
   </entry>
   <entry>
@@ -4308,6 +4390,55 @@ await prisma.$transaction(async tx =&gt; &#123;
       </tags>
   </entry>
   <entry>
+    <title>灯笼草</title>
+    <url>/2023/06/22/%E7%81%AF%E7%AC%BC%E8%8D%89/</url>
+    <content><![CDATA[<p>今天在菜园子里看到了野生的灯笼草，都结果了：</p>
+<p><img src="/img/%E7%94%9F%E6%B4%BB/%E7%81%AF%E7%AC%BC%E8%8D%89.jpg"></p>
+<p>灯笼果别名为小果酸浆、秘鲁苦蘵、打头泡、灯笼草等，茄科酸浆属多年生草本植物。<br>灯笼果茎直立，叶较厚，阔卵形或心脏形，两面密生柔毛；花单独腋生，花萼阔钟状，花冠阔钟状，黄色而喉部有紫色斑纹，花丝及花药蓝紫色，花药长约3毫米。果萼薄纸质，淡绿色或淡黄色，浆果成熟时黄色，种子黄色，圆盘状，夏季开花结果。生于田间、路旁、村边。我国南北各地均有分市。</p>
+<p><strong>不要与<a href="https://en.wikipedia.org/wiki/Gooseberry">醋栗</a>混淆</strong></p>
+<p>醋栗长这样：</p>
+<p><img src="/img/%E7%94%9F%E6%B4%BB/%E9%86%8B%E6%A0%97.jpg"></p>
+<hr>
+<h2 id="性味"><a href="#性味" class="headerlink" title="性味"></a>性味</h2><ul>
+<li><p>《陆川本草》：”甘淡，微寒。”</p>
+</li>
+<li><p>《南宁市药物志》：”苦，寒，微甘。”</p>
+</li>
+</ul>
+<h2 id="功能主治"><a href="#功能主治" class="headerlink" title="功能主治"></a>功能主治</h2><blockquote>
+<p>清热，行气，止痛，消肿。治感冒，痄腮，喉痛，咳嗽，腹胀，疝气，天疱疮。</p>
+</blockquote>
+<ul>
+<li><p>《陆川本草》：”行气，消胀，利尿。治腹胀，睾丸炎，疝气。”</p>
+</li>
+<li><p>《南宁市药物志》：”清热杀虫，止痛消肿。治热眼，喉痛，咳嗽；外敷毒疮，并熏洗阴囊肿大。”</p>
+</li>
+<li><p>《生草药手册》：”内服治伤寒或小肠疝气。外洗治天疱疮。”</p>
+</li>
+<li><p>《中国药植图鉴》：”功同酸浆。”</p>
+</li>
+<li><p>广州空军《常用中草药手册》：”治感冒发热，腮腺炎，支气管炎，疱疹，疖疮，疝气痛。”</p>
+</li>
+</ul>
+<h2 id="用法用量"><a href="#用法用量" class="headerlink" title="用法用量"></a>用法用量</h2><ul>
+<li>内服：煎汤，3 ~ 5钱。</li>
+<li>外用：捣敷或煎水洗。</li>
+</ul>
+<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><ul>
+<li><p>《本草纲目》旧版草部第十六卷，草之五：燕京野果名红姑娘，外垂降囊，中含赤子如珠，酸甘可食盈盈绕砌，与翠草同芳，亦自可爱。捣计服治黄病（即黄胆性肝炎）多效，治上气咳嗽风热，明目，付小儿内辟等多种疾病。东北地区种植较广泛，其他地区种植较少，仍属稀特蔬菜。</p>
+</li>
+<li><p>《别录》：“酸浆，生荆、楚川泽及人家田园中。五月采，阴干。”陶弘景：“酸浆，处处人家多有。叶亦可食。子作房，房中有子，如梅李大，皆黄赤色。”《唐本草》：“灯笼草，所在有之。八月采。枝干高三、四尺，有花，红色，状若灯笼，内有子，红色可爱。根、茎、花、叶并入药用。”</p>
+</li>
+<li><p>《梦溪笔谈》：“苦耽，即本草酸浆也。河西番界中酸浆有盈丈者。”《本草衍义》：“酸浆，今天下皆有之。苗如天茄子，开小白花，结青壳，熟则深红，壳中子大如樱，亦红色，樱中复有细子，如落苏之子，食之有青草气。此即苦耽也。”</p>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Medicine</tag>
+        <tag>Life</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>气胸</title>
     <url>/2023/03/01/%E6%B0%94%E8%83%B8/</url>
     <content><![CDATA[<p><img src="/img/%E5%8C%BB%E5%AD%A6/%E6%B0%94%E8%83%B8/%E6%B0%94%E8%83%B8.jpg" alt="气胸.jpg"></p>
@@ -4358,55 +4489,6 @@ await prisma.$transaction(async tx =&gt; &#123;
 ]]></content>
       <tags>
         <tag>Medicine</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>灯笼草</title>
-    <url>/2023/06/22/%E7%81%AF%E7%AC%BC%E8%8D%89/</url>
-    <content><![CDATA[<p>今天在菜园子里看到了野生的灯笼草，都结果了：</p>
-<p><img src="/img/%E7%94%9F%E6%B4%BB/%E7%81%AF%E7%AC%BC%E8%8D%89.jpg"></p>
-<p>灯笼果别名为小果酸浆、秘鲁苦蘵、打头泡、灯笼草等，茄科酸浆属多年生草本植物。<br>灯笼果茎直立，叶较厚，阔卵形或心脏形，两面密生柔毛；花单独腋生，花萼阔钟状，花冠阔钟状，黄色而喉部有紫色斑纹，花丝及花药蓝紫色，花药长约3毫米。果萼薄纸质，淡绿色或淡黄色，浆果成熟时黄色，种子黄色，圆盘状，夏季开花结果。生于田间、路旁、村边。我国南北各地均有分市。</p>
-<p><strong>不要与<a href="https://en.wikipedia.org/wiki/Gooseberry">醋栗</a>混淆</strong></p>
-<p>醋栗长这样：</p>
-<p><img src="/img/%E7%94%9F%E6%B4%BB/%E9%86%8B%E6%A0%97.jpg"></p>
-<hr>
-<h2 id="性味"><a href="#性味" class="headerlink" title="性味"></a>性味</h2><ul>
-<li><p>《陆川本草》：”甘淡，微寒。”</p>
-</li>
-<li><p>《南宁市药物志》：”苦，寒，微甘。”</p>
-</li>
-</ul>
-<h2 id="功能主治"><a href="#功能主治" class="headerlink" title="功能主治"></a>功能主治</h2><blockquote>
-<p>清热，行气，止痛，消肿。治感冒，痄腮，喉痛，咳嗽，腹胀，疝气，天疱疮。</p>
-</blockquote>
-<ul>
-<li><p>《陆川本草》：”行气，消胀，利尿。治腹胀，睾丸炎，疝气。”</p>
-</li>
-<li><p>《南宁市药物志》：”清热杀虫，止痛消肿。治热眼，喉痛，咳嗽；外敷毒疮，并熏洗阴囊肿大。”</p>
-</li>
-<li><p>《生草药手册》：”内服治伤寒或小肠疝气。外洗治天疱疮。”</p>
-</li>
-<li><p>《中国药植图鉴》：”功同酸浆。”</p>
-</li>
-<li><p>广州空军《常用中草药手册》：”治感冒发热，腮腺炎，支气管炎，疱疹，疖疮，疝气痛。”</p>
-</li>
-</ul>
-<h2 id="用法用量"><a href="#用法用量" class="headerlink" title="用法用量"></a>用法用量</h2><ul>
-<li>内服：煎汤，3 ~ 5钱。</li>
-<li>外用：捣敷或煎水洗。</li>
-</ul>
-<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><ul>
-<li><p>《本草纲目》旧版草部第十六卷，草之五：燕京野果名红姑娘，外垂降囊，中含赤子如珠，酸甘可食盈盈绕砌，与翠草同芳，亦自可爱。捣计服治黄病（即黄胆性肝炎）多效，治上气咳嗽风热，明目，付小儿内辟等多种疾病。东北地区种植较广泛，其他地区种植较少，仍属稀特蔬菜。</p>
-</li>
-<li><p>《别录》：“酸浆，生荆、楚川泽及人家田园中。五月采，阴干。”陶弘景：“酸浆，处处人家多有。叶亦可食。子作房，房中有子，如梅李大，皆黄赤色。”《唐本草》：“灯笼草，所在有之。八月采。枝干高三、四尺，有花，红色，状若灯笼，内有子，红色可爱。根、茎、花、叶并入药用。”</p>
-</li>
-<li><p>《梦溪笔谈》：“苦耽，即本草酸浆也。河西番界中酸浆有盈丈者。”《本草衍义》：“酸浆，今天下皆有之。苗如天茄子，开小白花，结青壳，熟则深红，壳中子大如樱，亦红色，樱中复有细子，如落苏之子，食之有青草气。此即苦耽也。”</p>
-</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>Medicine</tag>
-        <tag>Life</tag>
       </tags>
   </entry>
   <entry>
@@ -4886,17 +4968,6 @@ await prisma.$transaction(async tx =&gt; &#123;
       </tags>
   </entry>
   <entry>
-    <title>藿香正气水和藿香正气口服液的区别</title>
-    <url>/2024/09/01/%E8%97%BF%E9%A6%99%E6%AD%A3%E6%B0%94%E6%B0%B4%E5%92%8C%E8%97%BF%E9%A6%99%E6%AD%A3%E6%B0%94%E5%8F%A3%E6%9C%8D%E6%B6%B2%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
-    <content><![CDATA[<p>虽然都是口服液体制剂，且看起来单支容量都一样，但是藿香正气水里含有 40%-50% 的乙醇，而藿香正气口服液不含有乙醇。同时藿香正气水不能和头孢一起服用（因为含有酒精），而藿香正气口服液可以和头孢一起服用。在选用之前，还希望大家能仔细看药品名称。</p>
-<p>正气水是酊剂，用的是生半夏，口服液用的是法半夏，比正气水多了炒的白术，生姜和大枣，两者的功效都是解表化湿，理气和中。藿香正气水由水煮及酒浸制而成，疗效最明显，但口感较差。由于霍香正气水药效比较峻猛，小儿和年老体虚者服用时应有医生指导。藿香正气口服液是藿香正气的换代产品。</p>
-]]></content>
-      <tags>
-        <tag>Medicine</tag>
-        <tag>Life</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>螺内酯片</title>
     <url>/2023/03/14/%E8%9E%BA%E5%86%85%E9%85%AF%E7%89%87/</url>
     <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>螺内酯是保钾利尿药，用于治疗心衰、低钾血症和高血压等。但是，它也会阻断雄激素受体，从而具有抗雄激素特性（我想你应该联想到了什么）；不过其效力较弱，需服用较大剂量方可充分起效（尿频等副作用也更明显）。</p>
@@ -4955,6 +5026,17 @@ await prisma.$transaction(async tx =&gt; &#123;
 ]]></content>
       <tags>
         <tag>Medicine</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>藿香正气水和藿香正气口服液的区别</title>
+    <url>/2024/09/01/%E8%97%BF%E9%A6%99%E6%AD%A3%E6%B0%94%E6%B0%B4%E5%92%8C%E8%97%BF%E9%A6%99%E6%AD%A3%E6%B0%94%E5%8F%A3%E6%9C%8D%E6%B6%B2%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<p>虽然都是口服液体制剂，且看起来单支容量都一样，但是藿香正气水里含有 40%-50% 的乙醇，而藿香正气口服液不含有乙醇。同时藿香正气水不能和头孢一起服用（因为含有酒精），而藿香正气口服液可以和头孢一起服用。在选用之前，还希望大家能仔细看药品名称。</p>
+<p>正气水是酊剂，用的是生半夏，口服液用的是法半夏，比正气水多了炒的白术，生姜和大枣，两者的功效都是解表化湿，理气和中。藿香正气水由水煮及酒浸制而成，疗效最明显，但口感较差。由于霍香正气水药效比较峻猛，小儿和年老体虚者服用时应有医生指导。藿香正气口服液是藿香正气的换代产品。</p>
+]]></content>
+      <tags>
+        <tag>Medicine</tag>
+        <tag>Life</tag>
       </tags>
   </entry>
   <entry>
