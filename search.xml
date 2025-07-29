@@ -657,6 +657,21 @@
       </tags>
   </entry>
   <entry>
+    <title>Fever of Unknown Origin</title>
+    <url>/2023/11/16/Fever-of-Unknown-Origin/</url>
+    <content><![CDATA[<p>Fever of unknown origin (FUO) has been recognized as a disease state for over100 years.<br>The first commonly accepted definition of FUO was published in 1961 and included fever greater than 101F (38.3C) on multiple occasions at least 3 week duration of fever without identifiable cause despite at least a 1 week inpatient evaluation.</p>
+<p>Overtime, this definition was considered both too rigid and too ill defined.<br>Given the impracticality of prolonged hospitalizations and advancing technology for diagnosis, the duration of work up was shortened to 3 days inpatient evaluation and&#x2F;or 3 outpatient clinic visits.</p>
+<ul>
+<li><a href="/papers/Fever%20of%20Unknown%20Origin.pdf">Original Document</a></li>
+</ul>
+<p>这是FUO(不明原因发烧)的综合指南，第一个普遍接受的 FUO 定义是1961 年发布的，包括多次发烧超过三十八度三，发烧持续时间至少 3 周，并且就算住院至少 1 周但仍无明确原因。后面这个定义被认为过于僵化且过于模糊。又改成了三天住院评估和&#x2F;或三次门。除了有关评估持续时间的所有时间要求，还应该将 FUO 定义为完成最低限度检查后缺乏已知病因的发烧。</p>
+<p>常见原因就感染性，自身免疫和结缔组织疾病，其他炎症过程和恶性肿瘤。结缔组织疾病和自身免疫性疾病是青少年 FUO 比儿童更常见的原因。<br>总体上有超过两百种病因可导致 FUO</p>
+]]></content>
+      <tags>
+        <tag>Medicine</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Functional Reactive Programming in F#</title>
     <url>/2024/09/12/Functional-Reactive-Programming-in-F/</url>
     <content><![CDATA[<blockquote>
@@ -783,21 +798,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Fever of Unknown Origin</title>
-    <url>/2023/11/16/Fever-of-Unknown-Origin/</url>
-    <content><![CDATA[<p>Fever of unknown origin (FUO) has been recognized as a disease state for over100 years.<br>The first commonly accepted definition of FUO was published in 1961 and included fever greater than 101F (38.3C) on multiple occasions at least 3 week duration of fever without identifiable cause despite at least a 1 week inpatient evaluation.</p>
-<p>Overtime, this definition was considered both too rigid and too ill defined.<br>Given the impracticality of prolonged hospitalizations and advancing technology for diagnosis, the duration of work up was shortened to 3 days inpatient evaluation and&#x2F;or 3 outpatient clinic visits.</p>
-<ul>
-<li><a href="/papers/Fever%20of%20Unknown%20Origin.pdf">Original Document</a></li>
-</ul>
-<p>这是FUO(不明原因发烧)的综合指南，第一个普遍接受的 FUO 定义是1961 年发布的，包括多次发烧超过三十八度三，发烧持续时间至少 3 周，并且就算住院至少 1 周但仍无明确原因。后面这个定义被认为过于僵化且过于模糊。又改成了三天住院评估和&#x2F;或三次门。除了有关评估持续时间的所有时间要求，还应该将 FUO 定义为完成最低限度检查后缺乏已知病因的发烧。</p>
-<p>常见原因就感染性，自身免疫和结缔组织疾病，其他炎症过程和恶性肿瘤。结缔组织疾病和自身免疫性疾病是青少年 FUO 比儿童更常见的原因。<br>总体上有超过两百种病因可导致 FUO</p>
-]]></content>
-      <tags>
-        <tag>Medicine</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>G-Machine</title>
     <url>/2024/01/23/G-Machine/</url>
     <content><![CDATA[<ul>
@@ -919,6 +919,20 @@ await prisma.$transaction(async tx =&gt; &#123;
       </tags>
   </entry>
   <entry>
+    <title>.NET AOT 下的 F# 命令行参数解析库选择</title>
+    <url>/2024/06/06/NET-AOT-%E4%B8%8B%E7%9A%84-F-%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0%E8%A7%A3%E6%9E%90%E5%BA%93%E9%80%89%E6%8B%A9/</url>
+    <content><![CDATA[<p>Argu 不支持 AOT，不过用 F# 的话可以看整个 .NET 的生态，我看了一下 C# 的 CommandLineParser：<br><a href="https://github.com/commandlineparser">https://github.com/commandlineparser</a></p>
+<p>在这个 PR 中支持了 Native AOT<br><a href="https://github.com/commandlineparser/commandline/pull/913">https://github.com/commandlineparser/commandline/pull/913</a></p>
+<p>除此之外，还有一个更加精巧的 F# 库可以用，只有两百多行：<br><a href="https://github.com/B2R2-org/FsOptParse/">https://github.com/B2R2-org/FsOptParse/</a></p>
+<p>AOT 后的大小很可观，并且支持 full trim.</p>
+<p>用例：</p>
+<figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">(** defines a state to pass to the option parser *)</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">opts</span> <span class="operator">=</span></span><br><span class="line">  &#123;</span><br><span class="line">    optX <span class="operator">:</span> <span class="type">int</span>;</span><br><span class="line">    optY <span class="operator">:</span> <span class="type">bool</span>;</span><br><span class="line">    optZ <span class="operator">:</span> <span class="type">string</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">(** default option state *)</span></span><br><span class="line"><span class="keyword">let</span> defaultOpts <span class="operator">=</span></span><br><span class="line">  &#123;</span><br><span class="line">    optX <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    optY <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">    optZ <span class="operator">=</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">(*</span></span><br><span class="line"><span class="comment">  An example command line specification, which is a list of Options.</span></span><br><span class="line"><span class="comment">  Each Option describes a command line option (switch) that is specified with</span></span><br><span class="line"><span class="comment">  either a short (a single-dash option) or long option (a double-dash option).</span></span><br><span class="line"><span class="comment">*)</span></span><br><span class="line"><span class="keyword">let</span> spec <span class="operator">=</span></span><br><span class="line">  [</span><br><span class="line">    <span class="comment">(* This option can be specified with -x &lt;NUM&gt;. There is an extra argument to</span></span><br><span class="line"><span class="comment">       specify a value in integer. *)</span></span><br><span class="line">    Option (<span class="comment">(* description of the option *)</span></span><br><span class="line">            descr<span class="operator">=</span><span class="string">&quot;this is a testing param X&quot;</span>,</span><br><span class="line">            <span class="comment">(* how many extra argument must be provided by a user? *)</span></span><br><span class="line">            extra<span class="operator">=</span><span class="number">1</span>,</span><br><span class="line">            <span class="comment">(* callback sets up the option and returns it *)</span></span><br><span class="line">            callback<span class="operator">=</span>(<span class="keyword">fun</span> opts arg <span class="operator">-&gt;</span> &#123;opts <span class="keyword">with</span> optX<span class="operator">=</span>(int) arg.[<span class="number">0</span>]&#125;),</span><br><span class="line">            <span class="comment">(* use a short option style -x *)</span></span><br><span class="line">            short<span class="operator">=</span><span class="string">&quot;-x&quot;</span></span><br><span class="line">           );</span><br><span class="line"></span><br><span class="line">    <span class="comment">(* This option can be specified with -y. There is no extra argument. This</span></span><br><span class="line"><span class="comment">       option just sets a flag, optY. *)</span></span><br><span class="line">    Option (<span class="comment">(* description of the option *)</span></span><br><span class="line">            descr<span class="operator">=</span><span class="string">&quot;this is a testing param Y&quot;</span>,</span><br><span class="line">            <span class="comment">(* set the option to be true *)</span></span><br><span class="line">            callback<span class="operator">=</span>(<span class="keyword">fun</span> opts _ <span class="operator">-&gt;</span> &#123;opts <span class="keyword">with</span> optY<span class="operator">=</span><span class="literal">true</span>&#125;),</span><br><span class="line">            <span class="comment">(* use a short option style (-y) *)</span></span><br><span class="line">            short<span class="operator">=</span><span class="string">&quot;-y&quot;</span>,</span><br><span class="line">            <span class="comment">(* also use a long option style (--yoohoo) *)</span></span><br><span class="line">            long<span class="operator">=</span><span class="string">&quot;--yoohoo&quot;</span></span><br><span class="line">           );</span><br><span class="line"></span><br><span class="line">    <span class="comment">(* A dummy option to pretty-print the usage *)</span></span><br><span class="line">    Option (<span class="comment">(* description of the option *)</span></span><br><span class="line">            descr<span class="operator">=</span><span class="string">&quot;&quot;</span>,</span><br><span class="line">            dummy<span class="operator">=</span><span class="literal">true</span></span><br><span class="line">           );</span><br><span class="line">    Option (<span class="comment">(* description of the option *)</span></span><br><span class="line">            descr<span class="operator">=</span><span class="string">&quot;[Required Options]&quot;</span>,</span><br><span class="line">            descrColor<span class="operator">=</span>System.ConsoleColor.DarkCyan,</span><br><span class="line">            dummy<span class="operator">=</span><span class="literal">true</span></span><br><span class="line">           );</span><br><span class="line"></span><br><span class="line">    <span class="comment">(* The third option is a required option. In other words, option parsing</span></span><br><span class="line"><span class="comment">       will raise an exception if this option is not given by a user. This</span></span><br><span class="line"><span class="comment">       option takes in an additional integer argument, and set it to the global</span></span><br><span class="line"><span class="comment">       variable z. *)</span></span><br><span class="line">    Option (<span class="comment">(* description of the option *)</span></span><br><span class="line">            descr<span class="operator">=</span><span class="string">&quot;required parameter &lt;STRING&gt; with an integer option&quot;</span>,</span><br><span class="line">            <span class="comment">(* callback to set the optZ value *)</span></span><br><span class="line">            callback<span class="operator">=</span>(<span class="keyword">fun</span> opts arg <span class="operator">-&gt;</span> &#123;opts <span class="keyword">with</span> optZ<span class="operator">=</span>arg.[<span class="number">0</span>]&#125;),</span><br><span class="line">            <span class="comment">(* specifying this is a required option *)</span></span><br><span class="line">            required<span class="operator">=</span><span class="literal">true</span>,</span><br><span class="line">            <span class="comment">(* one additional argument to specify an integer value *)</span></span><br><span class="line">            extra<span class="operator">=</span><span class="number">1</span>,</span><br><span class="line">            <span class="comment">(* use only a long option style *)</span></span><br><span class="line">            long<span class="operator">=</span><span class="string">&quot;--req&quot;</span></span><br><span class="line">           );</span><br><span class="line">  ]</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> _ <span class="operator">=</span></span><br><span class="line">  <span class="keyword">let</span> prog <span class="operator">=</span> <span class="string">&quot;opttest.fsx&quot;</span></span><br><span class="line">  <span class="keyword">let</span> args <span class="operator">=</span> System.Environment.GetCommandLineArgs ()</span><br><span class="line">  <span class="keyword">let</span> usageGetter () <span class="operator">=</span> <span class="string">&quot;[Usage]\n  %p %o&quot;</span></span><br><span class="line">  <span class="keyword">try</span></span><br><span class="line">    <span class="keyword">let</span> left, opts <span class="operator">=</span> optParse spec usageGetter prog args defaultOpts</span><br><span class="line">    <span class="built_in">printfn</span> <span class="string">&quot;Rest args: %A, x: %d, y: %b, z: %s&quot;</span></span><br><span class="line">      left opts.optX opts.optY opts.optZ</span><br><span class="line">    <span class="number">0</span></span><br><span class="line">  <span class="keyword">with</span></span><br><span class="line">    <span class="operator">|</span> SpecErr msg <span class="operator">-&gt;</span></span><br><span class="line">        <span class="built_in">eprintfn</span> <span class="string">&quot;Invalid spec: %s&quot;</span> msg</span><br><span class="line">        exit <span class="number">1</span></span><br><span class="line">    <span class="operator">|</span> RuntimeErr msg <span class="operator">-&gt;</span></span><br><span class="line">        <span class="built_in">eprintfn</span> <span class="string">&quot;Invalid args given by user: %s&quot;</span> msg</span><br><span class="line">        usagePrint spec prog usageGetter (<span class="keyword">fun</span> () <span class="operator">-&gt;</span> exit <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>N+1 selects problem 与 Prisma ORM</title>
     <url>/2025/04/02/N-1-selects-problem-%E4%B8%8E-Prisma-ORM/</url>
     <content><![CDATA[<p>N+1 查询问题是指在通过 ORM 查询数据时，执行了一次初始查询来获取父对象列表（这 1 次查询），然后为列表中的每一个父对象都单独执行了一次额外的查询来获取其关联的子对象（这 N 次查询）。最终导致总共执行了 1 + N 次数据库查询，其中 N 是初始查询返回的父对象的数量。</p>
@@ -952,20 +966,6 @@ await prisma.$transaction(async tx =&gt; &#123;
 <li><a href="https://stackoverflow.com/questions/97197/what-is-the-n1-selects-problem-in-orm-object-relational-mapping">Stack Overflow: What is the N+1 selects problem in ORM?</a></li>
 <li><a href="https://www.prisma.io/docs/orm/prisma-client/queries/query-optimization-performance#solving-the-n1-problem">Prisma Docs: Solving the N+1 problem</a></li>
 </ul>
-]]></content>
-      <tags>
-        <tag>Technique</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>.NET AOT 下的 F# 命令行参数解析库选择</title>
-    <url>/2024/06/06/NET-AOT-%E4%B8%8B%E7%9A%84-F-%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0%E8%A7%A3%E6%9E%90%E5%BA%93%E9%80%89%E6%8B%A9/</url>
-    <content><![CDATA[<p>Argu 不支持 AOT，不过用 F# 的话可以看整个 .NET 的生态，我看了一下 C# 的 CommandLineParser：<br><a href="https://github.com/commandlineparser">https://github.com/commandlineparser</a></p>
-<p>在这个 PR 中支持了 Native AOT<br><a href="https://github.com/commandlineparser/commandline/pull/913">https://github.com/commandlineparser/commandline/pull/913</a></p>
-<p>除此之外，还有一个更加精巧的 F# 库可以用，只有两百多行：<br><a href="https://github.com/B2R2-org/FsOptParse/">https://github.com/B2R2-org/FsOptParse/</a></p>
-<p>AOT 后的大小很可观，并且支持 full trim.</p>
-<p>用例：</p>
-<figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">(** defines a state to pass to the option parser *)</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">opts</span> <span class="operator">=</span></span><br><span class="line">  &#123;</span><br><span class="line">    optX <span class="operator">:</span> <span class="type">int</span>;</span><br><span class="line">    optY <span class="operator">:</span> <span class="type">bool</span>;</span><br><span class="line">    optZ <span class="operator">:</span> <span class="type">string</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">(** default option state *)</span></span><br><span class="line"><span class="keyword">let</span> defaultOpts <span class="operator">=</span></span><br><span class="line">  &#123;</span><br><span class="line">    optX <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    optY <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">    optZ <span class="operator">=</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">(*</span></span><br><span class="line"><span class="comment">  An example command line specification, which is a list of Options.</span></span><br><span class="line"><span class="comment">  Each Option describes a command line option (switch) that is specified with</span></span><br><span class="line"><span class="comment">  either a short (a single-dash option) or long option (a double-dash option).</span></span><br><span class="line"><span class="comment">*)</span></span><br><span class="line"><span class="keyword">let</span> spec <span class="operator">=</span></span><br><span class="line">  [</span><br><span class="line">    <span class="comment">(* This option can be specified with -x &lt;NUM&gt;. There is an extra argument to</span></span><br><span class="line"><span class="comment">       specify a value in integer. *)</span></span><br><span class="line">    Option (<span class="comment">(* description of the option *)</span></span><br><span class="line">            descr<span class="operator">=</span><span class="string">&quot;this is a testing param X&quot;</span>,</span><br><span class="line">            <span class="comment">(* how many extra argument must be provided by a user? *)</span></span><br><span class="line">            extra<span class="operator">=</span><span class="number">1</span>,</span><br><span class="line">            <span class="comment">(* callback sets up the option and returns it *)</span></span><br><span class="line">            callback<span class="operator">=</span>(<span class="keyword">fun</span> opts arg <span class="operator">-&gt;</span> &#123;opts <span class="keyword">with</span> optX<span class="operator">=</span>(int) arg.[<span class="number">0</span>]&#125;),</span><br><span class="line">            <span class="comment">(* use a short option style -x *)</span></span><br><span class="line">            short<span class="operator">=</span><span class="string">&quot;-x&quot;</span></span><br><span class="line">           );</span><br><span class="line"></span><br><span class="line">    <span class="comment">(* This option can be specified with -y. There is no extra argument. This</span></span><br><span class="line"><span class="comment">       option just sets a flag, optY. *)</span></span><br><span class="line">    Option (<span class="comment">(* description of the option *)</span></span><br><span class="line">            descr<span class="operator">=</span><span class="string">&quot;this is a testing param Y&quot;</span>,</span><br><span class="line">            <span class="comment">(* set the option to be true *)</span></span><br><span class="line">            callback<span class="operator">=</span>(<span class="keyword">fun</span> opts _ <span class="operator">-&gt;</span> &#123;opts <span class="keyword">with</span> optY<span class="operator">=</span><span class="literal">true</span>&#125;),</span><br><span class="line">            <span class="comment">(* use a short option style (-y) *)</span></span><br><span class="line">            short<span class="operator">=</span><span class="string">&quot;-y&quot;</span>,</span><br><span class="line">            <span class="comment">(* also use a long option style (--yoohoo) *)</span></span><br><span class="line">            long<span class="operator">=</span><span class="string">&quot;--yoohoo&quot;</span></span><br><span class="line">           );</span><br><span class="line"></span><br><span class="line">    <span class="comment">(* A dummy option to pretty-print the usage *)</span></span><br><span class="line">    Option (<span class="comment">(* description of the option *)</span></span><br><span class="line">            descr<span class="operator">=</span><span class="string">&quot;&quot;</span>,</span><br><span class="line">            dummy<span class="operator">=</span><span class="literal">true</span></span><br><span class="line">           );</span><br><span class="line">    Option (<span class="comment">(* description of the option *)</span></span><br><span class="line">            descr<span class="operator">=</span><span class="string">&quot;[Required Options]&quot;</span>,</span><br><span class="line">            descrColor<span class="operator">=</span>System.ConsoleColor.DarkCyan,</span><br><span class="line">            dummy<span class="operator">=</span><span class="literal">true</span></span><br><span class="line">           );</span><br><span class="line"></span><br><span class="line">    <span class="comment">(* The third option is a required option. In other words, option parsing</span></span><br><span class="line"><span class="comment">       will raise an exception if this option is not given by a user. This</span></span><br><span class="line"><span class="comment">       option takes in an additional integer argument, and set it to the global</span></span><br><span class="line"><span class="comment">       variable z. *)</span></span><br><span class="line">    Option (<span class="comment">(* description of the option *)</span></span><br><span class="line">            descr<span class="operator">=</span><span class="string">&quot;required parameter &lt;STRING&gt; with an integer option&quot;</span>,</span><br><span class="line">            <span class="comment">(* callback to set the optZ value *)</span></span><br><span class="line">            callback<span class="operator">=</span>(<span class="keyword">fun</span> opts arg <span class="operator">-&gt;</span> &#123;opts <span class="keyword">with</span> optZ<span class="operator">=</span>arg.[<span class="number">0</span>]&#125;),</span><br><span class="line">            <span class="comment">(* specifying this is a required option *)</span></span><br><span class="line">            required<span class="operator">=</span><span class="literal">true</span>,</span><br><span class="line">            <span class="comment">(* one additional argument to specify an integer value *)</span></span><br><span class="line">            extra<span class="operator">=</span><span class="number">1</span>,</span><br><span class="line">            <span class="comment">(* use only a long option style *)</span></span><br><span class="line">            long<span class="operator">=</span><span class="string">&quot;--req&quot;</span></span><br><span class="line">           );</span><br><span class="line">  ]</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> _ <span class="operator">=</span></span><br><span class="line">  <span class="keyword">let</span> prog <span class="operator">=</span> <span class="string">&quot;opttest.fsx&quot;</span></span><br><span class="line">  <span class="keyword">let</span> args <span class="operator">=</span> System.Environment.GetCommandLineArgs ()</span><br><span class="line">  <span class="keyword">let</span> usageGetter () <span class="operator">=</span> <span class="string">&quot;[Usage]\n  %p %o&quot;</span></span><br><span class="line">  <span class="keyword">try</span></span><br><span class="line">    <span class="keyword">let</span> left, opts <span class="operator">=</span> optParse spec usageGetter prog args defaultOpts</span><br><span class="line">    <span class="built_in">printfn</span> <span class="string">&quot;Rest args: %A, x: %d, y: %b, z: %s&quot;</span></span><br><span class="line">      left opts.optX opts.optY opts.optZ</span><br><span class="line">    <span class="number">0</span></span><br><span class="line">  <span class="keyword">with</span></span><br><span class="line">    <span class="operator">|</span> SpecErr msg <span class="operator">-&gt;</span></span><br><span class="line">        <span class="built_in">eprintfn</span> <span class="string">&quot;Invalid spec: %s&quot;</span> msg</span><br><span class="line">        exit <span class="number">1</span></span><br><span class="line">    <span class="operator">|</span> RuntimeErr msg <span class="operator">-&gt;</span></span><br><span class="line">        <span class="built_in">eprintfn</span> <span class="string">&quot;Invalid args given by user: %s&quot;</span> msg</span><br><span class="line">        usagePrint spec prog usageGetter (<span class="keyword">fun</span> () <span class="operator">-&gt;</span> exit <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
 ]]></content>
       <tags>
         <tag>Technique</tag>
@@ -1414,6 +1414,102 @@ await prisma.$transaction(async tx =&gt; &#123;
       </tags>
   </entry>
   <entry>
+    <title>OCaml News 2024-6</title>
+    <url>/2024/07/23/OCaml-News-2024-6/</url>
+    <content><![CDATA[<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">       ^o3</span><br><span class="line">~/\_/\_|)</span><br><span class="line">|/=_=\|</span><br><span class="line">&quot;     &quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="语言的发展"><a href="#语言的发展" class="headerlink" title="语言的发展"></a>语言的发展</h2><ul>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13275">Modular explicits #13275</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/12828">Add short syntax for dependent functor types #12828</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13310">Add Pair module to standard library #13310</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13272">Allow maximum number of domains to be specified as a OCAMLRUNPARAM parameter #13272</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13097">Immutable arrays #13097</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13161">Restore native armv7 support for NetBSD 10.0 #13161</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/12309">Add effect syntax #12309</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/12114">Add ThreadSanitizer support #12114</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13195">A new abstract data type of enumerations in Set.Make(Ord).Enum #13195</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/12871">Stdlib priority queues #12871</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/9080">Aliasing &#x3D;&#x3D; and !&#x3D; with explicit names #9080</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/12964">Memory cleanup at exit #12964</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13169">A document type for error messages #13169</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13318">Fix GC alarm regression #13318</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13326">Implement O_APPEND on windows #13326</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13296">Add missing functions from Array to Dynarray #13296</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/12182%23discussion_r1678134261">Improve the type clash error message #12182</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/12298">Emphasize that Bigarray.int refers to the OCaml int type, and not the C int type #12298</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/effects-with-lwt-a-dead-end-for-now/15002">Effects with Lwt, a dead end for now?</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/changes-in-handling-of-gc-parameters-and-alarms-in-5-2-0/14986">Changes in handling of Gc parameters and alarms in 5.2.0</a></p>
+</li>
+</ul>
+<h2 id="新消息"><a href="#新消息" class="headerlink" title="新消息"></a>新消息</h2><ul>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/ann-mopsa-1-0-modular-open-platform-for-static-analysis/15013">[ANN] Mopsa 1.0 – Modular Open Platform for Static Analysis</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/ann-a-small-extension-of-bigarray-genarray-adding-iteration-mapping-and-folding/15005">[ANN] A small extension of Bigarray.Genarray adding iteration, mapping and folding</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/ann-cudajit-bindings-to-the-cuda-and-nvrtc-libraries/15010">[ANN] cudajit: Bindings to the <code>cuda</code> and <code>nvrtc</code> libraries</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/ann-ocaml-lsp-1-18-0/14952">[ANN] OCaml LSP 1.18.0</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/ann-ortac-0-3-0-dynamic-formal-verification-made-easy/14936">[ANN] Ortac 0.3.0 Dynamic formal verification made easy</a></p>
+</li>
+</ul>
+<h2 id="有价值的文章"><a href="#有价值的文章" class="headerlink" title="有价值的文章"></a>有价值的文章</h2><ul>
+<li><p><a href="https://link.zhihu.com/?target=https://hal.sorbonne-universite.fr/hal-02890500v1/document">Combinations of Reusable Abstract Domains for a Multilingual Static Analyzer</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://fizzixnerd.com/blog/2024-07-21-fixing-living/">Fighting Mutation with Mutation in Living</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/type-system-and-polymorphic-lets/14990">Type system and polymorphic let’s</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/using-docusaurus-to-document-an-ocaml-project/13359">Using Docusaurus to document an OCaml project</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/exploring-the-docusaurus-odoc-combo/15012">Exploring the Docusaurus+Odoc combo</a><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/type-system-and-polymorphic-lets/14990">Type system and polymorphic let’s</a><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/exploring-the-docusaurus-odoc-combo/15012">Exploring the Docusaurus+Odoc combo</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://fizzixnerd.com/blog/2024-07-11-a-possibly-safer-interface-to-the-ctypes-ffi/">A (Possibly) Safer Interface to the Ctypes FFI</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://fizzixnerd.com/blog/2024-07-09-ocaml-ffi-sharp-edges-and-how-to-avoid-them/">OCaml FFI Sharp Edges – and How to Avoid them!</a></p>
+</li>
+</ul>
+<h2 id="有趣的项目"><a href="#有趣的项目" class="headerlink" title="有趣的项目"></a>有趣的项目</h2><ul>
+<li><p><a href="https://link.zhihu.com/?target=https://ocaml.libvirt.org/">ocaml-libvirt OCaml bindings for libvirt</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://gitlab.com/mopsa/mopsa-analyzer/">Gitlab - MOPSA&#x2F;MOPSA analyzer: stands for Modular and Open Platform for Static Analysis.</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/Heyji2/GenArrayIter">GitHub - Heyji2&#x2F;GenArrayIter: Adding iteration, mapping and folding to the ocaml BigArray.Genarrays module which provides arrays of arbitrary dimensions</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/mbarbin/bopkit">GitHub - mbarbin&#x2F;bopkit: An educational project for digital circuits programming</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/dx3mod/rpmfile">GitHub - dx3mod&#x2F;rpmfile: A library for reading metadata from RPM packages.</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/gildor478/ocaml-fileutils">Github - gildor478&#x2F;ocaml-fileutils: OCaml API to manipulate real files (POSIX like) and filenames</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/NathanReb/ocaml-api-watch">Github - NathanReb&#x2F;ocaml-api-watch: Libraries and tools to keep watch on you OCaml lib’s API changes</a></p>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>OCaml News 2024-7</title>
     <url>/2024/12/15/OCaml-News-2024-7/</url>
     <content><![CDATA[<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">       ^o3</span><br><span class="line">~/\_/\_|)</span><br><span class="line">|/=_=\|</span><br><span class="line">&quot;     &quot;</span><br><span class="line"></span><br><span class="line">^~~~~~~~~~~~这其实是用 ASCII 画的一个骆驼。</span><br></pre></td></tr></table></figure>
@@ -1554,102 +1650,6 @@ await prisma.$transaction(async tx =&gt; &#123;
 <li><a href="https://link.zhihu.com/?target=https://github.com/LexiFi/ocaml-vdom">GitHub - LexiFi&#x2F;ocaml-vdom: Elm architecture and (V)DOM for OCaml</a></li>
 <li><a href="https://link.zhihu.com/?target=https://github.com/ocaml-community/ocaml-mariadb">GitHub - ocaml-community&#x2F;ocaml-mariadb: OCaml bindings to MariaDB, supporting the nonblocking API</a></li>
 <li><a href="https://link.zhihu.com/?target=https://cambium.inria.fr/~fpottier/monolith/doc/monolith/Monolith/">Monolith (monolith.Monolith)</a>: Monolith offers facilities for testing an OCaml library by comparing its implementation (known as the candidate implementation) against a reference implementation.</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>Technique</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>OCaml News 2024-6</title>
-    <url>/2024/07/23/OCaml-News-2024-6/</url>
-    <content><![CDATA[<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">       ^o3</span><br><span class="line">~/\_/\_|)</span><br><span class="line">|/=_=\|</span><br><span class="line">&quot;     &quot;</span><br></pre></td></tr></table></figure>
-
-<h2 id="语言的发展"><a href="#语言的发展" class="headerlink" title="语言的发展"></a>语言的发展</h2><ul>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13275">Modular explicits #13275</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/12828">Add short syntax for dependent functor types #12828</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13310">Add Pair module to standard library #13310</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13272">Allow maximum number of domains to be specified as a OCAMLRUNPARAM parameter #13272</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13097">Immutable arrays #13097</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13161">Restore native armv7 support for NetBSD 10.0 #13161</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/12309">Add effect syntax #12309</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/12114">Add ThreadSanitizer support #12114</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13195">A new abstract data type of enumerations in Set.Make(Ord).Enum #13195</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/12871">Stdlib priority queues #12871</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/9080">Aliasing &#x3D;&#x3D; and !&#x3D; with explicit names #9080</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/12964">Memory cleanup at exit #12964</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13169">A document type for error messages #13169</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13318">Fix GC alarm regression #13318</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13326">Implement O_APPEND on windows #13326</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/13296">Add missing functions from Array to Dynarray #13296</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/12182%23discussion_r1678134261">Improve the type clash error message #12182</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/ocaml/ocaml/pull/12298">Emphasize that Bigarray.int refers to the OCaml int type, and not the C int type #12298</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/effects-with-lwt-a-dead-end-for-now/15002">Effects with Lwt, a dead end for now?</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/changes-in-handling-of-gc-parameters-and-alarms-in-5-2-0/14986">Changes in handling of Gc parameters and alarms in 5.2.0</a></p>
-</li>
-</ul>
-<h2 id="新消息"><a href="#新消息" class="headerlink" title="新消息"></a>新消息</h2><ul>
-<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/ann-mopsa-1-0-modular-open-platform-for-static-analysis/15013">[ANN] Mopsa 1.0 – Modular Open Platform for Static Analysis</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/ann-a-small-extension-of-bigarray-genarray-adding-iteration-mapping-and-folding/15005">[ANN] A small extension of Bigarray.Genarray adding iteration, mapping and folding</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/ann-cudajit-bindings-to-the-cuda-and-nvrtc-libraries/15010">[ANN] cudajit: Bindings to the <code>cuda</code> and <code>nvrtc</code> libraries</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/ann-ocaml-lsp-1-18-0/14952">[ANN] OCaml LSP 1.18.0</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/ann-ortac-0-3-0-dynamic-formal-verification-made-easy/14936">[ANN] Ortac 0.3.0 Dynamic formal verification made easy</a></p>
-</li>
-</ul>
-<h2 id="有价值的文章"><a href="#有价值的文章" class="headerlink" title="有价值的文章"></a>有价值的文章</h2><ul>
-<li><p><a href="https://link.zhihu.com/?target=https://hal.sorbonne-universite.fr/hal-02890500v1/document">Combinations of Reusable Abstract Domains for a Multilingual Static Analyzer</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://fizzixnerd.com/blog/2024-07-21-fixing-living/">Fighting Mutation with Mutation in Living</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/type-system-and-polymorphic-lets/14990">Type system and polymorphic let’s</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/using-docusaurus-to-document-an-ocaml-project/13359">Using Docusaurus to document an OCaml project</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/exploring-the-docusaurus-odoc-combo/15012">Exploring the Docusaurus+Odoc combo</a><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/type-system-and-polymorphic-lets/14990">Type system and polymorphic let’s</a><a href="https://link.zhihu.com/?target=https://discuss.ocaml.org/t/exploring-the-docusaurus-odoc-combo/15012">Exploring the Docusaurus+Odoc combo</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://fizzixnerd.com/blog/2024-07-11-a-possibly-safer-interface-to-the-ctypes-ffi/">A (Possibly) Safer Interface to the Ctypes FFI</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://fizzixnerd.com/blog/2024-07-09-ocaml-ffi-sharp-edges-and-how-to-avoid-them/">OCaml FFI Sharp Edges – and How to Avoid them!</a></p>
-</li>
-</ul>
-<h2 id="有趣的项目"><a href="#有趣的项目" class="headerlink" title="有趣的项目"></a>有趣的项目</h2><ul>
-<li><p><a href="https://link.zhihu.com/?target=https://ocaml.libvirt.org/">ocaml-libvirt OCaml bindings for libvirt</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://gitlab.com/mopsa/mopsa-analyzer/">Gitlab - MOPSA&#x2F;MOPSA analyzer: stands for Modular and Open Platform for Static Analysis.</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/Heyji2/GenArrayIter">GitHub - Heyji2&#x2F;GenArrayIter: Adding iteration, mapping and folding to the ocaml BigArray.Genarrays module which provides arrays of arbitrary dimensions</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/mbarbin/bopkit">GitHub - mbarbin&#x2F;bopkit: An educational project for digital circuits programming</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/dx3mod/rpmfile">GitHub - dx3mod&#x2F;rpmfile: A library for reading metadata from RPM packages.</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/gildor478/ocaml-fileutils">Github - gildor478&#x2F;ocaml-fileutils: OCaml API to manipulate real files (POSIX like) and filenames</a></p>
-</li>
-<li><p><a href="https://link.zhihu.com/?target=https://github.com/NathanReb/ocaml-api-watch">Github - NathanReb&#x2F;ocaml-api-watch: Libraries and tools to keep watch on you OCaml lib’s API changes</a></p>
-</li>
 </ul>
 ]]></content>
       <tags>
@@ -1852,27 +1852,6 @@ await prisma.$transaction(async tx =&gt; &#123;
       </tags>
   </entry>
   <entry>
-    <title>Rust NewType 模式</title>
-    <url>/2023/05/03/Rust-NewType-%E6%A8%A1%E5%BC%8F/</url>
-    <content><![CDATA[<p>New Type模式是一种软件设计模式，用于在已有类型的基础上创建一个新的类型。在Rust中，这通常是通过定义一个结构体，其中只包含一个单一成员。这个结构体（New Type）对外提供了一个新的、独立的类型，用于对原始类型增加额外的语义或限制。</p>
-<h2 id="加强类型安全"><a href="#加强类型安全" class="headerlink" title="加强类型安全"></a>加强类型安全</h2><figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Meters</span>(<span class="type">f64</span>);</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Feet</span>(<span class="type">f64</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">length_in_meters</span> = <span class="title function_ invoke__">Meters</span>(<span class="number">100.0</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">length_in_feet</span> = <span class="title function_ invoke__">Feet</span>(<span class="number">328.084</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 编译器会防止以下代码执行，因为类型不匹配</span></span><br><span class="line"><span class="comment">// let wrong_length = Meters(length_in_feet); // 编译错误</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 正确的构造</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">add_lengths</span>(length1: Meters, length2: Meters) <span class="punctuation">-&gt;</span> Meters &#123;</span><br><span class="line">    <span class="title function_ invoke__">Meters</span>(length1.<span class="number">0</span> + length2.<span class="number">0</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这个例子使用 newtype 模式避免将原始类型f64用于不同的量度，从而增强了类型的安全性。</p>
-<h2 id="实现特定-trait"><a href="#实现特定-trait" class="headerlink" title="实现特定 trait"></a>实现特定 trait</h2><figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Kilometers</span>(<span class="type">f64</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> <span class="title class_">Kilometers</span> &#123;</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">to_miles</span>(&amp;<span class="keyword">self</span>) <span class="punctuation">-&gt;</span> <span class="type">f64</span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.<span class="number">0</span> * <span class="number">0.621371</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">distance</span> = <span class="title function_ invoke__">Kilometers</span>(<span class="number">10.0</span>);</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;The distance in miles is &#123;&#125;&quot;</span>, distance.<span class="title function_ invoke__">to_miles</span>());</span><br></pre></td></tr></table></figure>
-
-<p>这里，Kilometers有一个方法to_miles，该方法是不会影响其他f64数据的。如果我们有另一个表示温度的f64类型，就不会意外调用到与距离相关的方法。</p>
-<p>New Type模式同样适用于对<code>Box&lt;dyn SomeTrait&gt;</code>类型的包装，这可以在需要动态分派（动态调用实现了某个接口的不同类型的对象的方法）的时候提供便利。通过创建一个New Type来包装这样的<code>Box&lt;dyn SomeTrait&gt;</code>类型，可以提供自定义的方法或实现更多的trait，同时也可以让API更加清晰和易于使用。</p>
-<h2 id="零成本抽象"><a href="#零成本抽象" class="headerlink" title="零成本抽象"></a>零成本抽象</h2><p>在Rust中，New Type模式不仅是类型安全的，还是一种零成本抽象。这是因为Rust编译器在编译时期会进行足够的优化，以确保New Type的使用没有运行时开销。 Rust的零成本抽象原则确保了抽象不会引入额外的运行时成本。例如，当你使用Meters这样的New Type时，Rust确保：</p>
-<ol>
-<li>无额外内存开销：Meters只包含一个f64，在内存中的表现和单独的f64是一样的。</li>
-<li>无额外运行时开销：使用Meters时，性能和直接使用f64完全相同。编译器会移除任何关于New Type的包装和解包的代码。</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>Technique</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Rescript @genType import 问题</title>
     <url>/2024/05/20/Rescript-genType-import-%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<p>Rescript 11 之后，<code>@genType</code> 被合并进编译器，无需任何依赖就能使用，当在 Rescript 中 <code>@genType</code> 了使用某些 Rescript built-in 的基本类型时，可能会生成有问题的 <code>import</code> 相关代码，例如：</p>
@@ -1894,6 +1873,27 @@ await prisma.$transaction(async tx =&gt; &#123;
 </ul>
 <p>现在生成的 TypeScript 文件将会从 <code>Js.shim.ts</code> import 类型:</p>
 <figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="keyword">type</span> &#123;<span class="title class_">Json</span>_t <span class="keyword">as</span> <span class="title class_">Js</span>_Json_t&#125; <span class="keyword">from</span> <span class="string">&#x27;../../src/model/Js.shim.ts&#x27;</span>;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Rust NewType 模式</title>
+    <url>/2023/05/03/Rust-NewType-%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<p>New Type模式是一种软件设计模式，用于在已有类型的基础上创建一个新的类型。在Rust中，这通常是通过定义一个结构体，其中只包含一个单一成员。这个结构体（New Type）对外提供了一个新的、独立的类型，用于对原始类型增加额外的语义或限制。</p>
+<h2 id="加强类型安全"><a href="#加强类型安全" class="headerlink" title="加强类型安全"></a>加强类型安全</h2><figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Meters</span>(<span class="type">f64</span>);</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Feet</span>(<span class="type">f64</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">length_in_meters</span> = <span class="title function_ invoke__">Meters</span>(<span class="number">100.0</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">length_in_feet</span> = <span class="title function_ invoke__">Feet</span>(<span class="number">328.084</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 编译器会防止以下代码执行，因为类型不匹配</span></span><br><span class="line"><span class="comment">// let wrong_length = Meters(length_in_feet); // 编译错误</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 正确的构造</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">add_lengths</span>(length1: Meters, length2: Meters) <span class="punctuation">-&gt;</span> Meters &#123;</span><br><span class="line">    <span class="title function_ invoke__">Meters</span>(length1.<span class="number">0</span> + length2.<span class="number">0</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个例子使用 newtype 模式避免将原始类型f64用于不同的量度，从而增强了类型的安全性。</p>
+<h2 id="实现特定-trait"><a href="#实现特定-trait" class="headerlink" title="实现特定 trait"></a>实现特定 trait</h2><figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Kilometers</span>(<span class="type">f64</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> <span class="title class_">Kilometers</span> &#123;</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">to_miles</span>(&amp;<span class="keyword">self</span>) <span class="punctuation">-&gt;</span> <span class="type">f64</span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.<span class="number">0</span> * <span class="number">0.621371</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">distance</span> = <span class="title function_ invoke__">Kilometers</span>(<span class="number">10.0</span>);</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;The distance in miles is &#123;&#125;&quot;</span>, distance.<span class="title function_ invoke__">to_miles</span>());</span><br></pre></td></tr></table></figure>
+
+<p>这里，Kilometers有一个方法to_miles，该方法是不会影响其他f64数据的。如果我们有另一个表示温度的f64类型，就不会意外调用到与距离相关的方法。</p>
+<p>New Type模式同样适用于对<code>Box&lt;dyn SomeTrait&gt;</code>类型的包装，这可以在需要动态分派（动态调用实现了某个接口的不同类型的对象的方法）的时候提供便利。通过创建一个New Type来包装这样的<code>Box&lt;dyn SomeTrait&gt;</code>类型，可以提供自定义的方法或实现更多的trait，同时也可以让API更加清晰和易于使用。</p>
+<h2 id="零成本抽象"><a href="#零成本抽象" class="headerlink" title="零成本抽象"></a>零成本抽象</h2><p>在Rust中，New Type模式不仅是类型安全的，还是一种零成本抽象。这是因为Rust编译器在编译时期会进行足够的优化，以确保New Type的使用没有运行时开销。 Rust的零成本抽象原则确保了抽象不会引入额外的运行时成本。例如，当你使用Meters这样的New Type时，Rust确保：</p>
+<ol>
+<li>无额外内存开销：Meters只包含一个f64，在内存中的表现和单独的f64是一样的。</li>
+<li>无额外运行时开销：使用Meters时，性能和直接使用f64完全相同。编译器会移除任何关于New Type的包装和解包的代码。</li>
+</ol>
 ]]></content>
       <tags>
         <tag>Technique</tag>
@@ -2448,30 +2448,6 @@ await prisma.$transaction(async tx =&gt; &#123;
       </tags>
   </entry>
   <entry>
-    <title>caml_release_runtime_system导致的死锁问题</title>
-    <url>/2023/06/28/caml-release-runtime-system%E5%AF%BC%E8%87%B4%E7%9A%84%E6%AD%BB%E9%94%81%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>给出一个<code>test.ml</code>:</p>
-<figure class="highlight ocaml"><table><tr><td class="code"><pre><span class="line"><span class="type">Printf</span>.eprintf <span class="string">&quot;hello from OCaml\n%!&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>和<code>test-ocaml-5.c</code>:</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;caml/misc.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;caml/callback.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;caml/threads.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span></span><br><span class="line"><span class="title function_">main</span> <span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">fprintf</span> (<span class="built_in">stderr</span>, <span class="string">&quot;starting up ...\n&quot;</span>);</span><br><span class="line">    caml_startup (argv);</span><br><span class="line">    <span class="built_in">fprintf</span> (<span class="built_in">stderr</span>, <span class="string">&quot;acquiring ...\n&quot;</span>);</span><br><span class="line">    caml_acquire_runtime_system ();</span><br><span class="line">    <span class="built_in">fprintf</span> (<span class="built_in">stderr</span>, <span class="string">&quot;acquired\n&quot;</span>);</span><br><span class="line">    <span class="comment">// here is where I would be calling an OCaml callback</span></span><br><span class="line">    <span class="comment">// omitted for simplicity</span></span><br><span class="line">    caml_release_runtime_system ();</span><br><span class="line">    <span class="built_in">exit</span> (<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-<p>然后用OCaml5的ocaml native compiler编译一下（这里我用的是<code>ocaml-variants.5.0.0+options</code>）：<br><code>ocamlopt -g test-ocaml-5.c test.ml -o test-ocaml-5</code></p>
-<p>运行<code>test-ocaml-5</code> 会出现:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">starting up ...</span><br><span class="line">hello from OCaml</span><br><span class="line">acquiring ...</span><br><span class="line">Fatal error: Fatal error during lock: Resource deadlock avoided</span><br><span class="line"></span><br><span class="line">[1]    8998 IOT instruction (core dumped)  ./test-ocaml-5</span><br></pre></td></tr></table></figure>
-
-<p>这里我尝试了一下 4.14.0 和 4.14.1 ， 都没有出现这个情况，而如果用<code>threads</code>编译的话:<br><code>ocamlopt -g -I +unix unix.cmxa -I +threads threads.cmxa test-ocaml-5.c test.ml -o test-ocaml-5</code></p>
-<p>无论在5.0还是4.14.x，都会挂起。</p>
-<p>出现这个问题的一个可能原因是，在<code>test-ocaml-5.c</code>中，我在开头调用了<code>caml_startup()</code>，这会让当前线程获取锁，而<code>caml_acquire_runtime_system()</code>会再次获取它，<code>caml_acquire_runtime_system()</code> 应该在<code>caml_release_runtime_system（）</code>之后调用：</p>
-<figure class="highlight ocaml"><table><tr><td class="code"><pre><span class="line"><span class="built_in">int</span></span><br><span class="line">main (<span class="built_in">int</span> argc, <span class="built_in">char</span> *argv<span class="literal">[]</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    fprintf (stderr, <span class="string">&quot;starting up ...\n&quot;</span>);</span><br><span class="line">    caml_startup (argv);</span><br><span class="line">    fprintf (stderr, <span class="string">&quot;acquiring ...\n&quot;</span>);</span><br><span class="line">    caml_release_runtime_system <span class="literal">()</span>;</span><br><span class="line">    caml_acquire_runtime_system <span class="literal">()</span>;</span><br><span class="line">    fprintf (stderr, <span class="string">&quot;acquired\n&quot;</span>);</span><br><span class="line">    exit (<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-<p>运行结果为:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">starting up ...</span><br><span class="line">hello from OCaml</span><br><span class="line">acquiring ...</span><br><span class="line">acquired</span><br></pre></td></tr></table></figure>]]></content>
-      <tags>
-        <tag>Technique</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>WiscKey: Separating Keys from Values in SSD-conscious Storage</title>
     <url>/2023/07/21/WiscKey-Separating-Keys-from-Values-in-SSD-conscious-Storage/</url>
     <content><![CDATA[<p>We present WiscKey, a persistent LSM-tree-based key-value store with a performance-oriented data layoutthat separates keys from values to minimize I&#x2F;O amplifi-cation. The design of WiscKey is highly SSD optimized, leveraging both the sequential and random performance characteristics of the device.</p>
@@ -2505,6 +2481,30 @@ await prisma.$transaction(async tx =&gt; &#123;
 </li>
 </ul>
 ]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>caml_release_runtime_system导致的死锁问题</title>
+    <url>/2023/06/28/caml-release-runtime-system%E5%AF%BC%E8%87%B4%E7%9A%84%E6%AD%BB%E9%94%81%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>给出一个<code>test.ml</code>:</p>
+<figure class="highlight ocaml"><table><tr><td class="code"><pre><span class="line"><span class="type">Printf</span>.eprintf <span class="string">&quot;hello from OCaml\n%!&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>和<code>test-ocaml-5.c</code>:</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;caml/misc.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;caml/callback.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;caml/threads.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span></span><br><span class="line"><span class="title function_">main</span> <span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">fprintf</span> (<span class="built_in">stderr</span>, <span class="string">&quot;starting up ...\n&quot;</span>);</span><br><span class="line">    caml_startup (argv);</span><br><span class="line">    <span class="built_in">fprintf</span> (<span class="built_in">stderr</span>, <span class="string">&quot;acquiring ...\n&quot;</span>);</span><br><span class="line">    caml_acquire_runtime_system ();</span><br><span class="line">    <span class="built_in">fprintf</span> (<span class="built_in">stderr</span>, <span class="string">&quot;acquired\n&quot;</span>);</span><br><span class="line">    <span class="comment">// here is where I would be calling an OCaml callback</span></span><br><span class="line">    <span class="comment">// omitted for simplicity</span></span><br><span class="line">    caml_release_runtime_system ();</span><br><span class="line">    <span class="built_in">exit</span> (<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后用OCaml5的ocaml native compiler编译一下（这里我用的是<code>ocaml-variants.5.0.0+options</code>）：<br><code>ocamlopt -g test-ocaml-5.c test.ml -o test-ocaml-5</code></p>
+<p>运行<code>test-ocaml-5</code> 会出现:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">starting up ...</span><br><span class="line">hello from OCaml</span><br><span class="line">acquiring ...</span><br><span class="line">Fatal error: Fatal error during lock: Resource deadlock avoided</span><br><span class="line"></span><br><span class="line">[1]    8998 IOT instruction (core dumped)  ./test-ocaml-5</span><br></pre></td></tr></table></figure>
+
+<p>这里我尝试了一下 4.14.0 和 4.14.1 ， 都没有出现这个情况，而如果用<code>threads</code>编译的话:<br><code>ocamlopt -g -I +unix unix.cmxa -I +threads threads.cmxa test-ocaml-5.c test.ml -o test-ocaml-5</code></p>
+<p>无论在5.0还是4.14.x，都会挂起。</p>
+<p>出现这个问题的一个可能原因是，在<code>test-ocaml-5.c</code>中，我在开头调用了<code>caml_startup()</code>，这会让当前线程获取锁，而<code>caml_acquire_runtime_system()</code>会再次获取它，<code>caml_acquire_runtime_system()</code> 应该在<code>caml_release_runtime_system（）</code>之后调用：</p>
+<figure class="highlight ocaml"><table><tr><td class="code"><pre><span class="line"><span class="built_in">int</span></span><br><span class="line">main (<span class="built_in">int</span> argc, <span class="built_in">char</span> *argv<span class="literal">[]</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    fprintf (stderr, <span class="string">&quot;starting up ...\n&quot;</span>);</span><br><span class="line">    caml_startup (argv);</span><br><span class="line">    fprintf (stderr, <span class="string">&quot;acquiring ...\n&quot;</span>);</span><br><span class="line">    caml_release_runtime_system <span class="literal">()</span>;</span><br><span class="line">    caml_acquire_runtime_system <span class="literal">()</span>;</span><br><span class="line">    fprintf (stderr, <span class="string">&quot;acquired\n&quot;</span>);</span><br><span class="line">    exit (<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果为:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">starting up ...</span><br><span class="line">hello from OCaml</span><br><span class="line">acquiring ...</span><br><span class="line">acquired</span><br></pre></td></tr></table></figure>]]></content>
       <tags>
         <tag>Technique</tag>
       </tags>
@@ -2690,21 +2690,6 @@ await prisma.$transaction(async tx =&gt; &#123;
       </tags>
   </entry>
   <entry>
-    <title>使用 [@poll error] 实现线程安全的数据结构</title>
-    <url>/2023/08/15/poll-error-attribute-in-OCaml/</url>
-    <content><![CDATA[<p>OCaml的标准库提供了许多mutable的数据结构，比如Hashtbl, Queue, Stack之类的，但是这些数据结构都不是线程安全的。在 OCaml 4 和 OCaml 5 中，单个Domain中一次只能运行一个线程。换句话说，单个Domain中的线程仍然不会并行运行，除非在不同所的Domain中。</p>
-<p>而在单个Domain中 OCaml 的 runtime 是通过在safe point期间半抢占式的切换线程。也就是说，线程切换只会发生在safe point期间。例如内存分配就是是safe point。这意味着在没有safe point的代码块内，可以在Domain内原子性地进行多次读写或访问操作，因为线程没被切换。</p>
-<p>OCaml 编译器提供了一个名为 <a href="https://github.com/ocaml/ocaml/pull/10462"><code>[@poll error]</code></a> 的annotation，可以在函数中使用它来确保该函数不包含safe point。</p>
-<p>所以通过使用 <code>[@poll error]</code> 就可以创建在Domain内原子性执行的函数，也就是说，基于此特性可以实现单个Domain内线程安全的数据结构，例如 thread-table 便是使用这个特性实现的 Hash Table。可以看看它的 add 函数的实现:</p>
-<figure class="highlight ocaml"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span>[@poll error] add_atomically t buckets n i before after =</span><br><span class="line">  t.rehash = <span class="number">0</span> &amp;&amp; buckets == t.buckets</span><br><span class="line">  &amp;&amp; before == <span class="type">Array</span>.unsafe_get buckets i</span><br><span class="line">  &amp;&amp; <span class="keyword">begin</span></span><br><span class="line">       <span class="type">Array</span>.unsafe_set buckets i after;</span><br><span class="line">       <span class="keyword">let</span> length = t.length + <span class="number">1</span> <span class="keyword">in</span></span><br><span class="line">       t.length &lt;- length;</span><br><span class="line">       <span class="keyword">if</span> n &lt; length &amp;&amp; n &lt; max_buckets_div_2 <span class="keyword">then</span> t.rehash &lt;- n * <span class="number">2</span>;</span><br><span class="line">       <span class="literal">true</span></span><br><span class="line">     <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">rec</span> add t k&#x27; v&#x27; =</span><br><span class="line">  <span class="keyword">let</span> h = <span class="type">Mix</span>.<span class="built_in">int</span> k&#x27; <span class="keyword">in</span></span><br><span class="line">  maybe_rehash t;</span><br><span class="line">  <span class="keyword">let</span> buckets = t.buckets <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> n = <span class="type">Array</span>.length buckets <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> i = h <span class="keyword">land</span> (n - <span class="number">1</span>) <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> before = <span class="type">Array</span>.unsafe_get buckets i <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> after = <span class="type">Cons</span> (k&#x27;, v&#x27;, before) <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">if</span> not (add_atomically t buckets n i before after) <span class="keyword">then</span> add t k&#x27; v&#x27;</span><br></pre></td></tr></table></figure>
-
-<p>相比使用 Stdlib.Mutex，这种无锁实现会有更好的性能（特别是对于只读操作），并且还允许例如信号处理之类的上下文操作。</p>
-]]></content>
-      <tags>
-        <tag>Technique</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>NestJS bullmq 邮件发送业务中的小 tips</title>
     <url>/2025/05/07/nestjs-bullmq-mail-business/</url>
     <content><![CDATA[<p>在 BullMQ（以及它在 NestJS 里包装的 <code>@Processor</code>&#x2F;<code>WorkerHost</code>）里，整个生命周期大致是这样的：</p>
@@ -2750,6 +2735,67 @@ await prisma.$transaction(async tx =&gt; &#123;
 <li>“Retrying failing jobs” · BullMQ Guide<br><a href="https://docs.bullmq.io/guide/retrying-failing-jobs">https://docs.bullmq.io/guide/retrying-failing-jobs</a></li>
 <li>BullMQ Guide &amp; Patterns · Process Step Jobs (completed event only fires after process resolves)<br><a href="https://docs.bullmq.io/patterns/process-step-jobs">https://docs.bullmq.io/patterns/process-step-jobs</a></li>
 </ul>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>NestJS 嵌套查询参数解析错误分析与解决方案</title>
+    <url>/2025/07/29/nestjs-nested-object-dto/</url>
+    <content><![CDATA[<p>在开发 NestJS 应用程序时，一个常见的场景是根据复杂的条件筛选资源。当使用嵌套查询参数来表达这些条件时，例如通过 URL <code>http://localhost:3000/products/filter?filters[price][min]=100</code>，可能会意外地遇到 <code>property filters[price][min] should not exist</code> 错误。本文将深入剖析此问题背后的原因，并提供针对 Express 和 Fastify 两种底层框架的解决方案。</p>
+<h4 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h4><p>假设我们正在构建一个电子商务平台的后端，需要实现一个商品筛选接口 <code>/products/filter</code>。该接口应允许客户端根据不同的属性（如价格 <code>price</code>、库存 <code>stock</code>）进行筛选，并支持对数值型属性（如价格）指定一个范围。</p>
+<p>为了实现这一功能，我们定义了以下 NestJS 数据传输对象 (DTO) 结构：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">ApiPropertyOptional</span> &#125; <span class="keyword">from</span> <span class="string">&quot;@nestjs/swagger&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">  <span class="title class_">IsNumber</span>,</span><br><span class="line">  <span class="title class_">IsOptional</span>,</span><br><span class="line">  <span class="title class_">Min</span>,</span><br><span class="line">  <span class="title class_">ValidateNested</span>,</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&quot;class-validator&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Type</span> &#125; <span class="keyword">from</span> <span class="string">&quot;class-transformer&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RangeFilterDto</span> &#123;</span><br><span class="line">  <span class="meta">@ApiPropertyOptional</span>(&#123; <span class="attr">description</span>: <span class="string">&quot;最小值 (大于等于)&quot;</span> &#125;)</span><br><span class="line">  <span class="meta">@IsOptional</span>()</span><br><span class="line">  <span class="meta">@Type</span>(<span class="function">() =&gt;</span> <span class="title class_">Number</span>)</span><br><span class="line">  <span class="meta">@IsNumber</span>()</span><br><span class="line">  <span class="meta">@Min</span>(<span class="number">0</span>)</span><br><span class="line">  <span class="attr">min</span>?: <span class="built_in">number</span>;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@ApiPropertyOptional</span>(&#123; <span class="attr">description</span>: <span class="string">&quot;最大值 (小于等于)&quot;</span> &#125;)</span><br><span class="line">  <span class="meta">@IsOptional</span>()</span><br><span class="line">  <span class="meta">@Type</span>(<span class="function">() =&gt;</span> <span class="title class_">Number</span>)</span><br><span class="line">  <span class="meta">@IsNumber</span>()</span><br><span class="line">  <span class="meta">@Min</span>(<span class="number">0</span>)</span><br><span class="line">  <span class="attr">max</span>?: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ProductAttributeFilterDto</span> &#123;</span><br><span class="line">  <span class="meta">@ApiPropertyOptional</span>(&#123;</span><br><span class="line">    <span class="attr">description</span>: <span class="string">&quot;价格范围&quot;</span>,</span><br><span class="line">    <span class="attr">type</span>: <span class="title class_">RangeFilterDto</span>,</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="meta">@IsOptional</span>()</span><br><span class="line">  <span class="meta">@ValidateNested</span>()</span><br><span class="line">  <span class="meta">@Type</span>(<span class="function">() =&gt;</span> <span class="title class_">RangeFilterDto</span>)</span><br><span class="line">  <span class="attr">price</span>?: <span class="title class_">RangeFilterDto</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">ProductFilterDto</span> &#123;</span><br><span class="line">  <span class="meta">@ApiPropertyOptional</span>(&#123; <span class="attr">description</span>: <span class="string">&quot;商品属性筛选条件&quot;</span> &#125;)</span><br><span class="line">  <span class="meta">@IsOptional</span>()</span><br><span class="line">  <span class="meta">@ValidateNested</span>()</span><br><span class="line">  <span class="meta">@Type</span>(<span class="function">() =&gt;</span> <span class="title class_">ProductAttributeFilterDto</span>)</span><br><span class="line">  <span class="attr">filters</span>?: <span class="title class_">ProductAttributeFilterDto</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对应的控制器代码如下：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Controller</span>, <span class="title class_">Get</span>, <span class="title class_">Query</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">ApiOperation</span>, <span class="title class_">ApiResponse</span>, <span class="title class_">ApiTags</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/swagger&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">ProductFilterDto</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./dtos/product-filter.dto&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@ApiTags</span>(<span class="string">&#x27;products&#x27;</span>)</span><br><span class="line"><span class="meta">@Controller</span>(<span class="string">&#x27;products&#x27;</span>)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">ProductsController</span> &#123;</span><br><span class="line">  <span class="meta">@Get</span>(<span class="string">&quot;filter&quot;</span>)</span><br><span class="line">  <span class="meta">@ApiOperation</span>(&#123; <span class="attr">summary</span>: <span class="string">&quot;根据条件筛选商品&quot;</span> &#125;)</span><br><span class="line">  <span class="meta">@ApiResponse</span>(&#123; <span class="attr">status</span>: <span class="number">200</span>, <span class="attr">description</span>: <span class="string">&quot;筛选商品成功&quot;</span> &#125;)</span><br><span class="line">  <span class="meta">@ApiResponse</span>(&#123; <span class="attr">status</span>: <span class="number">400</span>, <span class="attr">description</span>: <span class="string">&quot;请求参数错误&quot;</span> &#125;)</span><br><span class="line">  <span class="keyword">async</span> <span class="title function_">getFilteredProducts</span>(</span><br><span class="line">    <span class="meta">@Query</span>() <span class="attr">query</span>: <span class="title class_">ProductFilterDto</span>,</span><br><span class="line">  ): <span class="title class_">Promise</span>&lt;<span class="built_in">any</span>&gt; &#123;</span><br><span class="line">    <span class="comment">// 在实际应用中，这里会调用服务处理筛选逻辑</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(query);</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="attr">message</span>: <span class="string">&quot;Products filtered successfully.&quot;</span>,</span><br><span class="line">      <span class="attr">data</span>: query,</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当客户端通过以下 URL 发送请求时：</p>
+<p><code>http://localhost:3000/products/filter?filters[price][min]=100</code></p>
+<p>后端返回了 HTTP 400 错误，并附带以下日志：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[Nest] 12345 - 07/29/2025, 11:00:00 AM   ERROR [HttpExceptionFilter] [GET /products/filter?filters%5Bprice%5D%5Bmin%5D=100] HTTP 400 Error: property filters[price][min] should not exist</span><br><span class="line">BadRequestException: Bad Request Exception</span><br><span class="line">    at ValidationPipe.exceptionFactory (/path/to/project/node_modules/@nestjs/common/pipes/validation.pipe.js:107:20)</span><br><span class="line">    at ValidationPipe.transform (/path/to/project/node_modules/@nestjs/common/pipes/validation.pipe.js:74:30)</span><br><span class="line">    ... (其他堆栈信息)</span><br></pre></td></tr></table></figure>
+
+<h4 id="错误分析"><a href="#错误分析" class="headerlink" title="错误分析"></a>错误分析</h4><p>此错误的核心在于 NestJS 的 <code>@Query()</code> 装饰器与 <code>ValidationPipe</code> 在处理 URL 查询字符串时的默认行为，未能正确地将客户端提供的嵌套方括号语法 (<code>filters[price][min]</code>) 解析为 DTO 所期望的 JavaScript 嵌套对象结构。</p>
+<ol>
+<li><p><strong>DTO 的预期结构:</strong><br><code>ProductFilterDto</code> 定义了 <code>filters</code> 属性，其类型为 <code>ProductAttributeFilterDto</code>。<code>ProductAttributeFilterDto</code> 又包含了 <code>price</code> 属性，类型为 <code>RangeFilterDto</code>，最终含有 <code>min</code> 和 <code>max</code> 属性。这意味着 DTO 期望接收的数据结构应为：<code>&#123; filters: &#123; price: &#123; min: 100 &#125; &#125; &#125;</code>。</p>
+</li>
+<li><p><strong>URL 查询参数的扁平化解析:</strong><br>HTTP 协议的查询字符串本质上是扁平的键值对集合。虽然 <code>key[nestedKey]=value</code> 这种方括号语法被许多 Web 框架（如 PHP、Ruby on Rails）和库（如 <code>qs</code>）广泛用于表示嵌套数据，但这并非 HTTP 协议的标准。<br>NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的请求。在默认配置下，Express 不会自动地、递归地将 <code>filters[price][min]</code> 这样的字符串键名解析成一个具有正确嵌套层级的 JavaScript 对象。相反，它会将其视为一个完整的、扁平的字符串键名 <code>filters[price][min]</code>，并将其值 <code>100</code> 与之对应。</p>
+</li>
+<li><p><strong><code>ValidationPipe</code> 的验证失败:</strong><br>当 <code>ValidationPipe</code> 接收到被扁平化解析后的查询参数时，它会在 <code>ProductFilterDto</code> 中寻找一个名为 <code>filters[price][min]</code> 的顶层属性。由于 DTO 中并未直接定义这样一个扁平的属性，并且 <code>ValidationPipe</code> 通常会启用 <code>forbidNonWhitelisted: true</code> 或 <code>whitelist: true</code> 选项来拒绝 DTO 中未明确声明的属性，因此验证过程失败，并抛出 <code>property filters[price][min] should not exist</code> 的错误。这表明 <code>ValidationPipe</code> 将 <code>filters[price][min]</code> 视为一个非法的、未在白名单中的属性，而不是预期的嵌套对象 <code>filters</code> 下的深层子属性。</p>
+</li>
+</ol>
+<p>简而言之，问题不在于 DTO 定义或 <code>@Query()</code> 装饰器本身，而在于底层 HTTP 框架对查询字符串的默认解析行为与 NestJS <code>ValidationPipe</code> 对复杂嵌套 DTO 结构的需求不匹配。</p>
+<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><p>要解决此问题，关键在于配置 NestJS 应用的底层 HTTP 适配器，使其能够正确地解析包含方括号语法的嵌套查询参数，将其转换为嵌套的 JavaScript 对象。</p>
+<h5 id="针对-Express-适配器"><a href="#针对-Express-适配器" class="headerlink" title="针对 Express 适配器"></a>针对 Express 适配器</h5><p>如果您的 NestJS 应用使用 Express 作为底层 HTTP 框架（这是新项目的默认配置），您需要在应用的入口文件（通常是 <code>main.ts</code>）中，通过 <code>app.set(&#39;query parser&#39;, &#39;extended&#39;);</code> 显式启用 Express 的扩展查询字符串解析功能。此配置会指示 Express 使用 <code>qs</code> 库（Express 内置依赖）来处理查询字符串，该库能够正确处理嵌套结构。</p>
+<p>示例 (<code>main.ts</code>):</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">NestFactory</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">AppModule</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./app.module&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">ValidationPipe</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">NestExpressApplication</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/platform-express&#x27;</span>; <span class="comment">// 导入此类型</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">bootstrap</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> app = <span class="keyword">await</span> <span class="title class_">NestFactory</span>.<span class="property">create</span>&lt;<span class="title class_">NestExpressApplication</span>&gt;(<span class="title class_">AppModule</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 启用 Express 的扩展查询参数解析</span></span><br><span class="line">  <span class="comment">// &#x27;simple&#x27; (默认) | &#x27;extended&#x27;</span></span><br><span class="line">  app.<span class="title function_">set</span>(<span class="string">&#x27;query parser&#x27;</span>, <span class="string">&#x27;extended&#x27;</span>);</span><br><span class="line"></span><br><span class="line">  app.<span class="title function_">useGlobalPipes</span>(<span class="keyword">new</span> <span class="title class_">ValidationPipe</span>(&#123;</span><br><span class="line">    <span class="attr">whitelist</span>: <span class="literal">true</span>,        <span class="comment">// 自动剥离 DTO 中未定义的属性</span></span><br><span class="line">    <span class="attr">forbidNonWhitelisted</span>: <span class="literal">true</span>, <span class="comment">// 如果传入 DTO 中未定义的属性，则抛出错误</span></span><br><span class="line">    <span class="attr">transform</span>: <span class="literal">true</span>,        <span class="comment">// 自动将负载转换为 DTO 类的实例</span></span><br><span class="line">    <span class="attr">transformOptions</span>: &#123;</span><br><span class="line">      <span class="attr">enableImplicitConversion</span>: <span class="literal">true</span>, <span class="comment">// 允许隐式类型转换，配合 @Type()</span></span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;));</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ... 其他配置</span></span><br><span class="line">  <span class="keyword">await</span> app.<span class="title function_">listen</span>(<span class="number">3000</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">bootstrap</span>();</span><br></pre></td></tr></table></figure>
+
+<h5 id="针对-Fastify-适配器"><a href="#针对-Fastify-适配器" class="headerlink" title="针对 Fastify 适配器"></a>针对 Fastify 适配器</h5><p>如果您的 NestJS 应用使用 Fastify 作为底层 HTTP 框架，您需要在创建 Fastify 适配器实例时，通过 <code>querystringParser</code> 选项提供一个自定义的查询字符串解析函数。通常，我们会利用 <code>qs</code> 这样的成熟库来完成递归解析。</p>
+<p>首先，确保已安装 <code>qs</code> 库及其类型定义：<br><code>npm install qs</code><br><code>npm install -D @types/qs</code></p>
+<p>示例 (<code>main.ts</code>):</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">NestFactory</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">AppModule</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./app.module&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">ValidationPipe</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">  <span class="title class_">FastifyAdapter</span>,</span><br><span class="line">  <span class="title class_">NestFastifyApplication</span>,</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/platform-fastify&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> qs <span class="keyword">from</span> <span class="string">&#x27;qs&#x27;</span>; <span class="comment">// 引入 qs 库</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">bootstrap</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> app = <span class="keyword">await</span> <span class="title class_">NestFactory</span>.<span class="property">create</span>&lt;<span class="title class_">NestFastifyApplication</span>&gt;(</span><br><span class="line">    <span class="title class_">AppModule</span>,</span><br><span class="line">    <span class="keyword">new</span> <span class="title class_">FastifyAdapter</span>(&#123;</span><br><span class="line">      <span class="comment">// 配置 Fastify 的查询字符串解析器</span></span><br><span class="line">      <span class="attr">querystringParser</span>: <span class="function">(<span class="params">str</span>) =&gt;</span> qs.<span class="title function_">parse</span>(str),</span><br><span class="line">    &#125;),</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  app.<span class="title function_">useGlobalPipes</span>(<span class="keyword">new</span> <span class="title class_">ValidationPipe</span>(&#123;</span><br><span class="line">    <span class="attr">whitelist</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">forbidNonWhitelisted</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">transform</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">transformOptions</span>: &#123;</span><br><span class="line">      <span class="attr">enableImplicitConversion</span>: <span class="literal">true</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;));</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ... 其他配置</span></span><br><span class="line">  <span class="keyword">await</span> app.<span class="title function_">listen</span>(<span class="number">3000</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">bootstrap</span>();</span><br></pre></td></tr></table></figure>
+
+<p>通过上述配置，无论是使用 Express 还是 Fastify，NestJS 应用都将能够正确地将 <code>?filters[price][min]=100</code> 解析为 <code>&#123; filters: &#123; price: &#123; min: &#39;100&#39; &#125; &#125; &#125;</code>。随后，在 <code>ValidationPipe</code> 的 <code>transform</code> 阶段，<code>@Type(() =&gt; Number)</code> 装饰器会确保 <code>min</code> 的值从字符串 <code>&#39;100&#39;</code> 转换为数字 <code>100</code>，从而顺利通过验证并注入到控制器方法中。</p>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><ul>
+<li><a href="https://stackoverflow.com/questions/29960764/what-does-extended-mean-in-express-4-0">What does ‘extended’ mean in express 4.0? - Stack Overflow</a></li>
+<li><a href="https://expressjs.com/en/5x/api.html#app.set">Express 5.0 - API Reference (<code>app.set</code>)</a></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用 [@poll error] 实现线程安全的数据结构</title>
+    <url>/2023/08/15/poll-error-attribute-in-OCaml/</url>
+    <content><![CDATA[<p>OCaml的标准库提供了许多mutable的数据结构，比如Hashtbl, Queue, Stack之类的，但是这些数据结构都不是线程安全的。在 OCaml 4 和 OCaml 5 中，单个Domain中一次只能运行一个线程。换句话说，单个Domain中的线程仍然不会并行运行，除非在不同所的Domain中。</p>
+<p>而在单个Domain中 OCaml 的 runtime 是通过在safe point期间半抢占式的切换线程。也就是说，线程切换只会发生在safe point期间。例如内存分配就是是safe point。这意味着在没有safe point的代码块内，可以在Domain内原子性地进行多次读写或访问操作，因为线程没被切换。</p>
+<p>OCaml 编译器提供了一个名为 <a href="https://github.com/ocaml/ocaml/pull/10462"><code>[@poll error]</code></a> 的annotation，可以在函数中使用它来确保该函数不包含safe point。</p>
+<p>所以通过使用 <code>[@poll error]</code> 就可以创建在Domain内原子性执行的函数，也就是说，基于此特性可以实现单个Domain内线程安全的数据结构，例如 thread-table 便是使用这个特性实现的 Hash Table。可以看看它的 add 函数的实现:</p>
+<figure class="highlight ocaml"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span>[@poll error] add_atomically t buckets n i before after =</span><br><span class="line">  t.rehash = <span class="number">0</span> &amp;&amp; buckets == t.buckets</span><br><span class="line">  &amp;&amp; before == <span class="type">Array</span>.unsafe_get buckets i</span><br><span class="line">  &amp;&amp; <span class="keyword">begin</span></span><br><span class="line">       <span class="type">Array</span>.unsafe_set buckets i after;</span><br><span class="line">       <span class="keyword">let</span> length = t.length + <span class="number">1</span> <span class="keyword">in</span></span><br><span class="line">       t.length &lt;- length;</span><br><span class="line">       <span class="keyword">if</span> n &lt; length &amp;&amp; n &lt; max_buckets_div_2 <span class="keyword">then</span> t.rehash &lt;- n * <span class="number">2</span>;</span><br><span class="line">       <span class="literal">true</span></span><br><span class="line">     <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">rec</span> add t k&#x27; v&#x27; =</span><br><span class="line">  <span class="keyword">let</span> h = <span class="type">Mix</span>.<span class="built_in">int</span> k&#x27; <span class="keyword">in</span></span><br><span class="line">  maybe_rehash t;</span><br><span class="line">  <span class="keyword">let</span> buckets = t.buckets <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> n = <span class="type">Array</span>.length buckets <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> i = h <span class="keyword">land</span> (n - <span class="number">1</span>) <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> before = <span class="type">Array</span>.unsafe_get buckets i <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> after = <span class="type">Cons</span> (k&#x27;, v&#x27;, before) <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">if</span> not (add_atomically t buckets n i before after) <span class="keyword">then</span> add t k&#x27; v&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>相比使用 Stdlib.Mutex，这种无锁实现会有更好的性能（特别是对于只读操作），并且还允许例如信号处理之类的上下文操作。</p>
 ]]></content>
       <tags>
         <tag>Technique</tag>
@@ -2816,40 +2862,6 @@ await prisma.$transaction(async tx =&gt; &#123;
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* The tick thread: posts a SIGPREEMPTION signal periodically */</span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> * <span class="title function_">caml_thread_tick</span><span class="params">(<span class="type">void</span> * arg)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> <span class="title">timeout</span>;</span></span><br><span class="line">  <span class="type">sigset_t</span> mask;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Block all signals so that we don&#x27;t try to execute an OCaml signal handler*/</span></span><br><span class="line">  sigfillset(&amp;mask);</span><br><span class="line">  pthread_sigmask(SIG_BLOCK, &amp;mask, <span class="literal">NULL</span>);</span><br><span class="line">  <span class="keyword">while</span>(! caml_tick_thread_stop) &#123;</span><br><span class="line">    <span class="comment">/* select() seems to be the most efficient way to suspend the</span></span><br><span class="line"><span class="comment">       thread for sub-second intervals */</span></span><br><span class="line">    timeout.tv_sec = <span class="number">0</span>;</span><br><span class="line">    timeout.tv_usec = Thread_timeout * <span class="number">1000</span>;</span><br><span class="line">    select(<span class="number">0</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>, &amp;timeout);</span><br><span class="line">    <span class="comment">/* The preemption signal should never cause a callback, so don&#x27;t</span></span><br><span class="line"><span class="comment">     go through caml_handle_signal(), just record signal delivery via</span></span><br><span class="line"><span class="comment">     caml_record_signal(). */</span></span><br><span class="line">    caml_record_signal(SIGPREEMPTION);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>这是因为Multicore OCaml的GC目前需要一个进程（或一个Domain）中的所有线程一起参与以避免并发访问。如果一个线程在system call上被阻塞，那么整个Domain就会被卡住，直到该线程可以参与当前的垃圾收集。为了避免这个问题，tick 线程可以代替被阻塞的线程执行垃圾收集操作。</p>
-]]></content>
-      <tags>
-        <tag>Technique</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>v8中的Number.toString()</title>
-    <url>/2023/10/05/v8%E4%B8%AD%E7%9A%84Number-toString/</url>
-    <content><![CDATA[<p>这里讲一下JavaScript中<code>Number.toString()</code>的实现， 以V8为例。</p>
-<ul>
-<li><a href="https://github.com/v8/v8/">The official mirror of the V8 Git repository</a></li>
-</ul>
-<p>在很多地方都能看到:</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">*isolate-&gt;<span class="built_in">factory</span>()-&gt;<span class="built_in">NumberToString</span>(value);</span><br></pre></td></tr></table></figure>
-<p>例如 <a href="https://github.com/v8/v8/blob/df99ca37a9d02a3318d3e5487c7803f6230b8f5f/src/builtins/builtins-number.cc#L140">&#x2F;src&#x2F;builtins&#x2F;builtins-number.cc</a> 中。</p>
-<p>下面看看<code>NumberToString</code>的定义， 应该是在 <a href="https://github.com/v8/v8/blob/829e8d18d73e21807c78223b0cc107c76c80da27/src/heap/factory-base.cc#L963-L978">src&#x2F;heap&#x2F;factory-base.cc</a> 中：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Impl&gt;</span><br><span class="line">Handle&lt;String&gt; FactoryBase&lt;Impl&gt;::<span class="built_in">NumberToString</span>(Handle&lt;Object&gt; number,</span><br><span class="line">                                                 NumberCacheMode mode) &#123;</span><br><span class="line">  <span class="built_in">SLOW_DCHECK</span>(<span class="built_in">IsNumber</span>(*number));</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">IsSmi</span>(*number)) <span class="keyword">return</span> <span class="built_in">SmiToString</span>(Smi::<span class="built_in">cast</span>(*number), mode);</span><br><span class="line"></span><br><span class="line">  <span class="type">double</span> double_value = Handle&lt;HeapNumber&gt;::<span class="built_in">cast</span>(number)-&gt;<span class="built_in">value</span>();</span><br><span class="line">  <span class="comment">// Try to canonicalize doubles.</span></span><br><span class="line">  <span class="type">int</span> smi_value;</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">DoubleToSmiInteger</span>(double_value, &amp;smi_value)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">SmiToString</span>(Smi::<span class="built_in">FromInt</span>(smi_value), mode);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">HeapNumberToString</span>(Handle&lt;HeapNumber&gt;::<span class="built_in">cast</span>(number), double_value,</span><br><span class="line">                            mode);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>可以看到这里调用了 <code>SmiToString</code>, 这里不往下翻这个函数的定义， 只需要知道Smi是什么即可。 Smi 是一种特殊的整数类型，它被用于表示较小的整数值，通常在 32 位系统中是 31 位有符号整数。Smi 类型的值存储在指针的低位，而指针的高位用于标记该值是一个 Smi 类型。<code>IsSmi</code> 函数会检查给定的值是否为 Smi 类型，如果是，则返回 true，否则返回 false。这个函数通常用于 V8 引擎内部的优化和性能优化。</p>
-<p>所以<code>NumberToString</code>会判断number是否是一个smi, 如果是的话就调用SmiToString， 否则会尝试将其转换为double再去调用<code>DoubleToSmiInteger</code>， 将<code>DoubleToSmiInteger</code>的调用结果存在<code>smi_value</code>里面， 再通过调用<code>SmiToString</code>将<code>smi_value</code>转换为字符串。</p>
-<p>如果这两条路都行不通的话，就直接调用<code>HeapNumberToString</code>了。</p>
-<p><code>HeapNumberToString</code>的定义如下:</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Impl&gt;</span><br><span class="line">Handle&lt;String&gt; FactoryBase&lt;Impl&gt;::<span class="built_in">HeapNumberToString</span>(Handle&lt;HeapNumber&gt; number,</span><br><span class="line">                                                     <span class="type">double</span> value,</span><br><span class="line">                                                     NumberCacheMode mode) &#123;</span><br><span class="line">  <span class="type">int</span> hash = mode == NumberCacheMode::kIgnore</span><br><span class="line">                 ? <span class="number">0</span></span><br><span class="line">                 : <span class="built_in">impl</span>()-&gt;<span class="built_in">NumberToStringCacheHash</span>(value);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (mode == NumberCacheMode::kBoth) &#123;</span><br><span class="line">    Handle&lt;Object&gt; cached = <span class="built_in">impl</span>()-&gt;<span class="built_in">NumberToStringCacheGet</span>(*number, hash);</span><br><span class="line">    <span class="keyword">if</span> (!<span class="built_in">IsUndefined</span>(*cached, <span class="built_in">isolate</span>())) <span class="keyword">return</span> Handle&lt;String&gt;::<span class="built_in">cast</span>(cached);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  Handle&lt;String&gt; result;</span><br><span class="line">  <span class="keyword">if</span> (value == <span class="number">0</span>) &#123;</span><br><span class="line">    result = <span class="built_in">zero_string</span>();</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (std::<span class="built_in">isnan</span>(value)) &#123;</span><br><span class="line">    result = <span class="built_in">NaN_string</span>();</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="type">char</span> arr[kNumberToStringBufferSize];</span><br><span class="line">    <span class="function">base::Vector&lt;<span class="type">char</span>&gt; <span class="title">buffer</span><span class="params">(arr, arraysize(arr))</span></span>;</span><br><span class="line">    <span class="type">const</span> <span class="type">char</span>* string = <span class="built_in">DoubleToCString</span>(value, buffer);</span><br><span class="line">    result = <span class="built_in">CharToString</span>(<span class="keyword">this</span>, string, mode);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (mode != NumberCacheMode::kIgnore) &#123;</span><br><span class="line">    <span class="built_in">impl</span>()-&gt;<span class="built_in">NumberToStringCacheSet</span>(number, hash, result);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>就是熟知的NaN, Undefined处理，重点在:</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">char</span> arr[kNumberToStringBufferSize];</span><br><span class="line"><span class="function">base::Vector&lt;<span class="type">char</span>&gt; <span class="title">buffer</span><span class="params">(arr, arraysize(arr))</span></span>;</span><br><span class="line"><span class="type">const</span> <span class="type">char</span>* string = <span class="built_in">DoubleToCString</span>(value, buffer);</span><br><span class="line">result = <span class="built_in">CharToString</span>(<span class="keyword">this</span>, string, mode);</span><br></pre></td></tr></table></figure>
-
-<p>这里调用了<code>DoubleToCString</code>， 其定义在 <a href="https://github.com/v8/v8/blob/829e8d18d73e21807c78223b0cc107c76c80da27/src/numbers/conversions.cc#L1064-L1126">&#x2F;src&#x2F;numbers&#x2F;conversions.cc</a> 中：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">const</span> <span class="type">char</span>* <span class="title">DoubleToCString</span><span class="params">(<span class="type">double</span> v, base::Vector&lt;<span class="type">char</span>&gt; buffer)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">switch</span> (FPCLASSIFY_NAMESPACE::<span class="built_in">fpclassify</span>(v)) &#123;</span><br><span class="line">    <span class="keyword">case</span> FP_NAN:</span><br><span class="line">      <span class="keyword">return</span> <span class="string">&quot;NaN&quot;</span>;</span><br><span class="line">    <span class="keyword">case</span> FP_INFINITE:</span><br><span class="line">      <span class="keyword">return</span> (v &lt; <span class="number">0.0</span> ? <span class="string">&quot;-Infinity&quot;</span> : <span class="string">&quot;Infinity&quot;</span>);</span><br><span class="line">    <span class="keyword">case</span> FP_ZERO:</span><br><span class="line">      <span class="keyword">return</span> <span class="string">&quot;0&quot;</span>;</span><br><span class="line">    <span class="keyword">default</span>: &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="built_in">IsInt32Double</span>(v)) &#123;</span><br><span class="line">        <span class="comment">// This will trigger if v is -0 and -0.0 is stringified to &quot;0&quot;.</span></span><br><span class="line">        <span class="comment">// (see ES section 7.1.12.1 #sec-tostring-applied-to-the-number-type)</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">IntToCString</span>(<span class="built_in">FastD2I</span>(v), buffer);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="function">SimpleStringBuilder <span class="title">builder</span><span class="params">(buffer.begin(), buffer.length())</span></span>;</span><br><span class="line">      <span class="type">int</span> decimal_point;</span><br><span class="line">      <span class="type">int</span> sign;</span><br><span class="line">      <span class="type">const</span> <span class="type">int</span> kV8DtoaBufferCapacity = base::kBase10MaximalLength + <span class="number">1</span>;</span><br><span class="line">      <span class="type">char</span> decimal_rep[kV8DtoaBufferCapacity];</span><br><span class="line">      <span class="type">int</span> length;</span><br><span class="line"></span><br><span class="line">      base::<span class="built_in">DoubleToAscii</span>(</span><br><span class="line">          v, base::DTOA_SHORTEST, <span class="number">0</span>,</span><br><span class="line">          base::<span class="built_in">Vector</span>&lt;<span class="type">char</span>&gt;(decimal_rep, kV8DtoaBufferCapacity), &amp;sign,</span><br><span class="line">          &amp;length, &amp;decimal_point);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (sign) builder.<span class="built_in">AddCharacter</span>(<span class="string">&#x27;-&#x27;</span>);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (length &lt;= decimal_point &amp;&amp; decimal_point &lt;= <span class="number">21</span>) &#123;</span><br><span class="line">        <span class="comment">// ECMA-262 section 9.8.1 step 6.</span></span><br><span class="line">        builder.<span class="built_in">AddString</span>(decimal_rep);</span><br><span class="line">        builder.<span class="built_in">AddPadding</span>(<span class="string">&#x27;0&#x27;</span>, decimal_point - length);</span><br><span class="line"></span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="number">0</span> &lt; decimal_point &amp;&amp; decimal_point &lt;= <span class="number">21</span>) &#123;</span><br><span class="line">        <span class="comment">// ECMA-262 section 9.8.1 step 7.</span></span><br><span class="line">        builder.<span class="built_in">AddSubstring</span>(decimal_rep, decimal_point);</span><br><span class="line">        builder.<span class="built_in">AddCharacter</span>(<span class="string">&#x27;.&#x27;</span>);</span><br><span class="line">        builder.<span class="built_in">AddString</span>(decimal_rep + decimal_point);</span><br><span class="line"></span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (decimal_point &lt;= <span class="number">0</span> &amp;&amp; decimal_point &gt; <span class="number">-6</span>) &#123;</span><br><span class="line">        <span class="comment">// ECMA-262 section 9.8.1 step 8.</span></span><br><span class="line">        builder.<span class="built_in">AddString</span>(<span class="string">&quot;0.&quot;</span>);</span><br><span class="line">        builder.<span class="built_in">AddPadding</span>(<span class="string">&#x27;0&#x27;</span>, -decimal_point);</span><br><span class="line">        builder.<span class="built_in">AddString</span>(decimal_rep);</span><br><span class="line"></span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// ECMA-262 section 9.8.1 step 9 and 10 combined.</span></span><br><span class="line">        builder.<span class="built_in">AddCharacter</span>(decimal_rep[<span class="number">0</span>]);</span><br><span class="line">        <span class="keyword">if</span> (length != <span class="number">1</span>) &#123;</span><br><span class="line">          builder.<span class="built_in">AddCharacter</span>(<span class="string">&#x27;.&#x27;</span>);</span><br><span class="line">          builder.<span class="built_in">AddString</span>(decimal_rep + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        builder.<span class="built_in">AddCharacter</span>(<span class="string">&#x27;e&#x27;</span>);</span><br><span class="line">        builder.<span class="built_in">AddCharacter</span>((decimal_point &gt;= <span class="number">0</span>) ? <span class="string">&#x27;+&#x27;</span> : <span class="string">&#x27;-&#x27;</span>);</span><br><span class="line">        <span class="type">int</span> exponent = decimal_point - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (exponent &lt; <span class="number">0</span>) exponent = -exponent;</span><br><span class="line">        builder.<span class="built_in">AddDecimalInteger</span>(exponent);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> builder.<span class="built_in">Finalize</span>();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>不用过多解释， 已经很清晰了， <code>FastD2I</code> 就是 Fast Double to Integer的意思， 定义如下， 注释也很详尽：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// The fast double-to-(unsigned-)int conversion routine does not guarantee</span></span><br><span class="line"><span class="comment">// rounding towards zero.</span></span><br><span class="line"><span class="comment">// The result is undefined if x is infinite or NaN, or if the rounded</span></span><br><span class="line"><span class="comment">// integer value is outside the range of type int.</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">int</span> <span class="title">FastD2I</span><span class="params">(<span class="type">double</span> x)</span> </span>&#123;</span><br><span class="line">  <span class="built_in">DCHECK</span>(x &lt;= INT_MAX);</span><br><span class="line">  <span class="built_in">DCHECK</span>(x &gt;= INT_MIN);</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">static_cast</span>&lt;<span class="type">int32_t</span>&gt;(x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>以上</p>
 ]]></content>
       <tags>
         <tag>Technique</tag>
@@ -2928,6 +2940,40 @@ await prisma.$transaction(async tx =&gt; &#123;
       </tags>
   </entry>
   <entry>
+    <title>v8中的Number.toString()</title>
+    <url>/2023/10/05/v8%E4%B8%AD%E7%9A%84Number-toString/</url>
+    <content><![CDATA[<p>这里讲一下JavaScript中<code>Number.toString()</code>的实现， 以V8为例。</p>
+<ul>
+<li><a href="https://github.com/v8/v8/">The official mirror of the V8 Git repository</a></li>
+</ul>
+<p>在很多地方都能看到:</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">*isolate-&gt;<span class="built_in">factory</span>()-&gt;<span class="built_in">NumberToString</span>(value);</span><br></pre></td></tr></table></figure>
+<p>例如 <a href="https://github.com/v8/v8/blob/df99ca37a9d02a3318d3e5487c7803f6230b8f5f/src/builtins/builtins-number.cc#L140">&#x2F;src&#x2F;builtins&#x2F;builtins-number.cc</a> 中。</p>
+<p>下面看看<code>NumberToString</code>的定义， 应该是在 <a href="https://github.com/v8/v8/blob/829e8d18d73e21807c78223b0cc107c76c80da27/src/heap/factory-base.cc#L963-L978">src&#x2F;heap&#x2F;factory-base.cc</a> 中：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Impl&gt;</span><br><span class="line">Handle&lt;String&gt; FactoryBase&lt;Impl&gt;::<span class="built_in">NumberToString</span>(Handle&lt;Object&gt; number,</span><br><span class="line">                                                 NumberCacheMode mode) &#123;</span><br><span class="line">  <span class="built_in">SLOW_DCHECK</span>(<span class="built_in">IsNumber</span>(*number));</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">IsSmi</span>(*number)) <span class="keyword">return</span> <span class="built_in">SmiToString</span>(Smi::<span class="built_in">cast</span>(*number), mode);</span><br><span class="line"></span><br><span class="line">  <span class="type">double</span> double_value = Handle&lt;HeapNumber&gt;::<span class="built_in">cast</span>(number)-&gt;<span class="built_in">value</span>();</span><br><span class="line">  <span class="comment">// Try to canonicalize doubles.</span></span><br><span class="line">  <span class="type">int</span> smi_value;</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">DoubleToSmiInteger</span>(double_value, &amp;smi_value)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">SmiToString</span>(Smi::<span class="built_in">FromInt</span>(smi_value), mode);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">HeapNumberToString</span>(Handle&lt;HeapNumber&gt;::<span class="built_in">cast</span>(number), double_value,</span><br><span class="line">                            mode);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到这里调用了 <code>SmiToString</code>, 这里不往下翻这个函数的定义， 只需要知道Smi是什么即可。 Smi 是一种特殊的整数类型，它被用于表示较小的整数值，通常在 32 位系统中是 31 位有符号整数。Smi 类型的值存储在指针的低位，而指针的高位用于标记该值是一个 Smi 类型。<code>IsSmi</code> 函数会检查给定的值是否为 Smi 类型，如果是，则返回 true，否则返回 false。这个函数通常用于 V8 引擎内部的优化和性能优化。</p>
+<p>所以<code>NumberToString</code>会判断number是否是一个smi, 如果是的话就调用SmiToString， 否则会尝试将其转换为double再去调用<code>DoubleToSmiInteger</code>， 将<code>DoubleToSmiInteger</code>的调用结果存在<code>smi_value</code>里面， 再通过调用<code>SmiToString</code>将<code>smi_value</code>转换为字符串。</p>
+<p>如果这两条路都行不通的话，就直接调用<code>HeapNumberToString</code>了。</p>
+<p><code>HeapNumberToString</code>的定义如下:</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Impl&gt;</span><br><span class="line">Handle&lt;String&gt; FactoryBase&lt;Impl&gt;::<span class="built_in">HeapNumberToString</span>(Handle&lt;HeapNumber&gt; number,</span><br><span class="line">                                                     <span class="type">double</span> value,</span><br><span class="line">                                                     NumberCacheMode mode) &#123;</span><br><span class="line">  <span class="type">int</span> hash = mode == NumberCacheMode::kIgnore</span><br><span class="line">                 ? <span class="number">0</span></span><br><span class="line">                 : <span class="built_in">impl</span>()-&gt;<span class="built_in">NumberToStringCacheHash</span>(value);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (mode == NumberCacheMode::kBoth) &#123;</span><br><span class="line">    Handle&lt;Object&gt; cached = <span class="built_in">impl</span>()-&gt;<span class="built_in">NumberToStringCacheGet</span>(*number, hash);</span><br><span class="line">    <span class="keyword">if</span> (!<span class="built_in">IsUndefined</span>(*cached, <span class="built_in">isolate</span>())) <span class="keyword">return</span> Handle&lt;String&gt;::<span class="built_in">cast</span>(cached);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  Handle&lt;String&gt; result;</span><br><span class="line">  <span class="keyword">if</span> (value == <span class="number">0</span>) &#123;</span><br><span class="line">    result = <span class="built_in">zero_string</span>();</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (std::<span class="built_in">isnan</span>(value)) &#123;</span><br><span class="line">    result = <span class="built_in">NaN_string</span>();</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="type">char</span> arr[kNumberToStringBufferSize];</span><br><span class="line">    <span class="function">base::Vector&lt;<span class="type">char</span>&gt; <span class="title">buffer</span><span class="params">(arr, arraysize(arr))</span></span>;</span><br><span class="line">    <span class="type">const</span> <span class="type">char</span>* string = <span class="built_in">DoubleToCString</span>(value, buffer);</span><br><span class="line">    result = <span class="built_in">CharToString</span>(<span class="keyword">this</span>, string, mode);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (mode != NumberCacheMode::kIgnore) &#123;</span><br><span class="line">    <span class="built_in">impl</span>()-&gt;<span class="built_in">NumberToStringCacheSet</span>(number, hash, result);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>就是熟知的NaN, Undefined处理，重点在:</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">char</span> arr[kNumberToStringBufferSize];</span><br><span class="line"><span class="function">base::Vector&lt;<span class="type">char</span>&gt; <span class="title">buffer</span><span class="params">(arr, arraysize(arr))</span></span>;</span><br><span class="line"><span class="type">const</span> <span class="type">char</span>* string = <span class="built_in">DoubleToCString</span>(value, buffer);</span><br><span class="line">result = <span class="built_in">CharToString</span>(<span class="keyword">this</span>, string, mode);</span><br></pre></td></tr></table></figure>
+
+<p>这里调用了<code>DoubleToCString</code>， 其定义在 <a href="https://github.com/v8/v8/blob/829e8d18d73e21807c78223b0cc107c76c80da27/src/numbers/conversions.cc#L1064-L1126">&#x2F;src&#x2F;numbers&#x2F;conversions.cc</a> 中：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">const</span> <span class="type">char</span>* <span class="title">DoubleToCString</span><span class="params">(<span class="type">double</span> v, base::Vector&lt;<span class="type">char</span>&gt; buffer)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">switch</span> (FPCLASSIFY_NAMESPACE::<span class="built_in">fpclassify</span>(v)) &#123;</span><br><span class="line">    <span class="keyword">case</span> FP_NAN:</span><br><span class="line">      <span class="keyword">return</span> <span class="string">&quot;NaN&quot;</span>;</span><br><span class="line">    <span class="keyword">case</span> FP_INFINITE:</span><br><span class="line">      <span class="keyword">return</span> (v &lt; <span class="number">0.0</span> ? <span class="string">&quot;-Infinity&quot;</span> : <span class="string">&quot;Infinity&quot;</span>);</span><br><span class="line">    <span class="keyword">case</span> FP_ZERO:</span><br><span class="line">      <span class="keyword">return</span> <span class="string">&quot;0&quot;</span>;</span><br><span class="line">    <span class="keyword">default</span>: &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="built_in">IsInt32Double</span>(v)) &#123;</span><br><span class="line">        <span class="comment">// This will trigger if v is -0 and -0.0 is stringified to &quot;0&quot;.</span></span><br><span class="line">        <span class="comment">// (see ES section 7.1.12.1 #sec-tostring-applied-to-the-number-type)</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">IntToCString</span>(<span class="built_in">FastD2I</span>(v), buffer);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="function">SimpleStringBuilder <span class="title">builder</span><span class="params">(buffer.begin(), buffer.length())</span></span>;</span><br><span class="line">      <span class="type">int</span> decimal_point;</span><br><span class="line">      <span class="type">int</span> sign;</span><br><span class="line">      <span class="type">const</span> <span class="type">int</span> kV8DtoaBufferCapacity = base::kBase10MaximalLength + <span class="number">1</span>;</span><br><span class="line">      <span class="type">char</span> decimal_rep[kV8DtoaBufferCapacity];</span><br><span class="line">      <span class="type">int</span> length;</span><br><span class="line"></span><br><span class="line">      base::<span class="built_in">DoubleToAscii</span>(</span><br><span class="line">          v, base::DTOA_SHORTEST, <span class="number">0</span>,</span><br><span class="line">          base::<span class="built_in">Vector</span>&lt;<span class="type">char</span>&gt;(decimal_rep, kV8DtoaBufferCapacity), &amp;sign,</span><br><span class="line">          &amp;length, &amp;decimal_point);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (sign) builder.<span class="built_in">AddCharacter</span>(<span class="string">&#x27;-&#x27;</span>);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (length &lt;= decimal_point &amp;&amp; decimal_point &lt;= <span class="number">21</span>) &#123;</span><br><span class="line">        <span class="comment">// ECMA-262 section 9.8.1 step 6.</span></span><br><span class="line">        builder.<span class="built_in">AddString</span>(decimal_rep);</span><br><span class="line">        builder.<span class="built_in">AddPadding</span>(<span class="string">&#x27;0&#x27;</span>, decimal_point - length);</span><br><span class="line"></span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="number">0</span> &lt; decimal_point &amp;&amp; decimal_point &lt;= <span class="number">21</span>) &#123;</span><br><span class="line">        <span class="comment">// ECMA-262 section 9.8.1 step 7.</span></span><br><span class="line">        builder.<span class="built_in">AddSubstring</span>(decimal_rep, decimal_point);</span><br><span class="line">        builder.<span class="built_in">AddCharacter</span>(<span class="string">&#x27;.&#x27;</span>);</span><br><span class="line">        builder.<span class="built_in">AddString</span>(decimal_rep + decimal_point);</span><br><span class="line"></span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (decimal_point &lt;= <span class="number">0</span> &amp;&amp; decimal_point &gt; <span class="number">-6</span>) &#123;</span><br><span class="line">        <span class="comment">// ECMA-262 section 9.8.1 step 8.</span></span><br><span class="line">        builder.<span class="built_in">AddString</span>(<span class="string">&quot;0.&quot;</span>);</span><br><span class="line">        builder.<span class="built_in">AddPadding</span>(<span class="string">&#x27;0&#x27;</span>, -decimal_point);</span><br><span class="line">        builder.<span class="built_in">AddString</span>(decimal_rep);</span><br><span class="line"></span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// ECMA-262 section 9.8.1 step 9 and 10 combined.</span></span><br><span class="line">        builder.<span class="built_in">AddCharacter</span>(decimal_rep[<span class="number">0</span>]);</span><br><span class="line">        <span class="keyword">if</span> (length != <span class="number">1</span>) &#123;</span><br><span class="line">          builder.<span class="built_in">AddCharacter</span>(<span class="string">&#x27;.&#x27;</span>);</span><br><span class="line">          builder.<span class="built_in">AddString</span>(decimal_rep + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        builder.<span class="built_in">AddCharacter</span>(<span class="string">&#x27;e&#x27;</span>);</span><br><span class="line">        builder.<span class="built_in">AddCharacter</span>((decimal_point &gt;= <span class="number">0</span>) ? <span class="string">&#x27;+&#x27;</span> : <span class="string">&#x27;-&#x27;</span>);</span><br><span class="line">        <span class="type">int</span> exponent = decimal_point - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (exponent &lt; <span class="number">0</span>) exponent = -exponent;</span><br><span class="line">        builder.<span class="built_in">AddDecimalInteger</span>(exponent);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> builder.<span class="built_in">Finalize</span>();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>不用过多解释， 已经很清晰了， <code>FastD2I</code> 就是 Fast Double to Integer的意思， 定义如下， 注释也很详尽：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// The fast double-to-(unsigned-)int conversion routine does not guarantee</span></span><br><span class="line"><span class="comment">// rounding towards zero.</span></span><br><span class="line"><span class="comment">// The result is undefined if x is infinite or NaN, or if the rounded</span></span><br><span class="line"><span class="comment">// integer value is outside the range of type int.</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">int</span> <span class="title">FastD2I</span><span class="params">(<span class="type">double</span> x)</span> </span>&#123;</span><br><span class="line">  <span class="built_in">DCHECK</span>(x &lt;= INT_MAX);</span><br><span class="line">  <span class="built_in">DCHECK</span>(x &gt;= INT_MIN);</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">static_cast</span>&lt;<span class="type">int32_t</span>&gt;(x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上</p>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>中老年人沉迷手机的问题</title>
     <url>/2024/09/08/%E4%B8%AD%E8%80%81%E5%B9%B4%E4%BA%BA%E6%B2%89%E8%BF%B7%E6%89%8B%E6%9C%BA%E7%9A%84%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<p>沉迷于手机的老年人，其实很多都是因为儿女不在身边，他们只能把这份孤独转嫁到手机上。</p>
@@ -2956,6 +3002,18 @@ await prisma.$transaction(async tx =&gt; &#123;
       </categories>
   </entry>
   <entry>
+    <title>二〇二三年六月二十九日</title>
+    <url>/2023/06/29/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%B8%89%E5%B9%B4%E5%85%AD%E6%9C%88%E4%BA%8C%E5%8D%81%E4%B9%9D%E6%97%A5/</url>
+    <content><![CDATA[<p>我能走遍大街小巷，但我走不出时间，这里有太多东西网住我了，每一个不知所措的老人家，每一个满身泥土的农民，每一只嬉戏打闹的猫狗和每一寸土地下的家人。</p>
+<p>我知道，能明确感受到，远处的风力发电机每转一圈我对这里的牵挂就更深一点，太阳每次升到我头顶都会把我的身体压进泥土里一点。</p>
+<p>夕阳下的街头空无一人，窗户间的缝隙吹来寒风，隔壁回锅肉的香味混在其中，困顿中还有美好的可能，所以别让自己太过消沉。</p>
+<p>所以别让自己太过消沉。</p>
+]]></content>
+      <categories>
+        <category>gallery</category>
+      </categories>
+  </entry>
+  <entry>
     <title>二〇二三年十一月二十九日</title>
     <url>/2023/11/29/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%B8%89%E5%B9%B4%E5%8D%81%E4%B8%80%E6%9C%88%E4%BA%8C%E5%8D%81%E4%B9%9D%E6%97%A5/</url>
     <content><![CDATA[<p>我们的人生，都是某座不知名的山上某片不知名的乱林里的某颗不知名姓的杂草，春带来霉湿，夏带来毒辣，秋带来阴沉，冬带来寒冰。</p>
@@ -2965,18 +3023,6 @@ await prisma.$transaction(async tx =&gt; &#123;
 <p>这世上也不是所有事都算得准的。</p>
 <p>云仰望着太阳，羡慕他的炙热，或许太阳也在仰望着云，渴求他的停留。</p>
 <p>地球距离太阳1.5亿公里，如无意外，两者此生不会相遇，但从此以后，我与世间美好再也不会分离。</p>
-]]></content>
-      <categories>
-        <category>gallery</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>二〇二三年六月二十九日</title>
-    <url>/2023/06/29/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%B8%89%E5%B9%B4%E5%85%AD%E6%9C%88%E4%BA%8C%E5%8D%81%E4%B9%9D%E6%97%A5/</url>
-    <content><![CDATA[<p>我能走遍大街小巷，但我走不出时间，这里有太多东西网住我了，每一个不知所措的老人家，每一个满身泥土的农民，每一只嬉戏打闹的猫狗和每一寸土地下的家人。</p>
-<p>我知道，能明确感受到，远处的风力发电机每转一圈我对这里的牵挂就更深一点，太阳每次升到我头顶都会把我的身体压进泥土里一点。</p>
-<p>夕阳下的街头空无一人，窗户间的缝隙吹来寒风，隔壁回锅肉的香味混在其中，困顿中还有美好的可能，所以别让自己太过消沉。</p>
-<p>所以别让自己太过消沉。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
@@ -3090,6 +3136,18 @@ await prisma.$transaction(async tx =&gt; &#123;
       </categories>
   </entry>
   <entry>
+    <title>二〇二五年二月二十四日</title>
+    <url>/2025/02/24/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%BA%94%E5%B9%B4%E4%BA%8C%E6%9C%88%E4%BA%8C%E5%8D%81%E5%9B%9B%E6%97%A5/</url>
+    <content><![CDATA[<p>街上的人躲进建筑，道路上的车变得缓慢。路边的黑猫坐在屋檐下张望，在雨天，它也有了思考的地方与时间。除了淅淅沥沥的雨声再无其他。</p>
+<p>衣服买大了，他们走路好急，地铁上只有老人没看手机，天怎么黑那么快是我起晚了吗，那个蹦蹦跳跳的女孩耳机里在听什么歌，我还在原地吗，我要再等等吗。</p>
+<p>家就像厚酒之后突然明晰的想象，时间不语，只是沉默，我沉默地走进时间，看着我和你的年龄相差越来越小。</p>
+<p>这雨天，世界都温柔的可以掐出水来。</p>
+]]></content>
+      <categories>
+        <category>gallery</category>
+      </categories>
+  </entry>
+  <entry>
     <title>二〇二五年四月三日</title>
     <url>/2025/04/03/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%BA%94%E5%B9%B4%E4%BA%94%E6%9C%88%E4%B8%89%E6%97%A5/</url>
     <content><![CDATA[<p>日历被一页页撕去，出钞口的暖风比任何毛毯更忠实，数字键盘的荧光就像圣徒光环般笼罩着他，这些废纸似乎可以延长家人存在的时间。</p>
@@ -3098,18 +3156,6 @@ await prisma.$transaction(async tx =&gt; &#123;
 <p>时间带走了一个人，带走了一个由无数粒子组成的，短暂观察了这个宇宙一瞬的意识，它们会在时间中无数次聚散，再无数次见这灿烂的一切。</p>
 <p>梦里明明有六趣，觉后空空无大千，</p>
 <p>又是一个难捱的冬天，为了脚不被冻住，我们只能起舞。</p>
-]]></content>
-      <categories>
-        <category>gallery</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>二〇二五年二月二十四日</title>
-    <url>/2025/02/24/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%BA%94%E5%B9%B4%E4%BA%8C%E6%9C%88%E4%BA%8C%E5%8D%81%E5%9B%9B%E6%97%A5/</url>
-    <content><![CDATA[<p>街上的人躲进建筑，道路上的车变得缓慢。路边的黑猫坐在屋檐下张望，在雨天，它也有了思考的地方与时间。除了淅淅沥沥的雨声再无其他。</p>
-<p>衣服买大了，他们走路好急，地铁上只有老人没看手机，天怎么黑那么快是我起晚了吗，那个蹦蹦跳跳的女孩耳机里在听什么歌，我还在原地吗，我要再等等吗。</p>
-<p>家就像厚酒之后突然明晰的想象，时间不语，只是沉默，我沉默地走进时间，看着我和你的年龄相差越来越小。</p>
-<p>这雨天，世界都温柔的可以掐出水来。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
@@ -3307,15 +3353,6 @@ await prisma.$transaction(async tx =&gt; &#123;
       </categories>
   </entry>
   <entry>
-    <title>二〇二四年八月一日</title>
-    <url>/2024/08/02/%E4%BA%8C%E3%80%87%E4%BA%8C%E5%9B%9B%E5%B9%B4%E5%85%AB%E6%9C%88%E4%B8%80%E6%97%A5/</url>
-    <content><![CDATA[<p>阿公烧烟成老瘾，<br>阿公饮酒会面红，<br>他说日子要开心，<br>他说人生要尽兴。</p>
-]]></content>
-      <categories>
-        <category>gallery</category>
-      </categories>
-  </entry>
-  <entry>
     <title>二〇二四年五月十六日</title>
     <url>/2024/05/16/%E4%BA%8C%E3%80%87%E4%BA%8C%E5%9B%9B%E5%B9%B4%E4%BA%94%E6%9C%88%E5%8D%81%E5%85%AD%E6%97%A5/</url>
     <content><![CDATA[<p>无眼耳鼻舌身意，无色声香味触法，四下皆空，但万物有实，活在真实世界，而非活在一系列参照物之中。</p>
@@ -3330,6 +3367,15 @@ await prisma.$transaction(async tx =&gt; &#123;
 <p>当有了一个目标，需要的不是豪言壮志，不是任何心理建设，而是尽快上手去做。<br>做一件事，无关心态，只要去做就是了。发挥最大的主观能动性，遇到问题就解决，碰到障碍就破开，需要帮助就求助。别因为所谓的自信就盲目冒进，也别因为所谓的自卑就胆小退缩，那俩玩意都不存在。</p>
 <p>尊重事情本身的客观发展规律，什么样的人匹配什么样的事，什么样的条件匹配什么样的理想。别把心态想得太重要，更别花太多时间精力去建设心态，客观规律不会因为心态就发生奇迹般地转变。</p>
 <p>你最好趁早学会尊重客观规律。</p>
+]]></content>
+      <categories>
+        <category>gallery</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>二〇二四年八月一日</title>
+    <url>/2024/08/02/%E4%BA%8C%E3%80%87%E4%BA%8C%E5%9B%9B%E5%B9%B4%E5%85%AB%E6%9C%88%E4%B8%80%E6%97%A5/</url>
+    <content><![CDATA[<p>阿公烧烟成老瘾，<br>阿公饮酒会面红，<br>他说日子要开心，<br>他说人生要尽兴。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
@@ -3435,19 +3481,6 @@ await prisma.$transaction(async tx =&gt; &#123;
       </categories>
   </entry>
   <entry>
-    <title>二零二三年九月十三日</title>
-    <url>/2023/09/13/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E4%B9%9D%E6%9C%88%E5%8D%81%E4%B8%89%E6%97%A5/</url>
-    <content><![CDATA[<p>“站好! 要拍了啊，倒数三秒，都不要眨眼。” 婚礼结束后, 门口路过的陌生男人拿着相机，充当起了临时的摄影师。</p>
-<p>镜头里，她和抱着雪狮的希文站在中间，她手边是依次排开的五个哥哥，希文手边是暮秋, 培元, 世琪, 婧灵五人。<br>在他们后排，其他人也各自找好位置挺直脊背站着。</p>
-<p>“拍了啊，倒数，三、二、一……茄子!”</p>
-<p>咔擦，画面定格，幸福定格，大家终于从苦难里彻底毕业了。</p>
-<p>萤火虫的微光与星空交相辉映，黑夜中潜滋暗长的花香沁人心脾，晚风挠过波光粼粼的海面，彼此相爱的人相拥而眠。</p>
-]]></content>
-      <categories>
-        <category>gallery</category>
-      </categories>
-  </entry>
-  <entry>
     <title>二零二三年七月三十日</title>
     <url>/2023/07/30/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E4%B8%83%E6%9C%88%E4%B8%89%E5%8D%81%E6%97%A5/</url>
     <content><![CDATA[<p>那天阳光很好，她想离开病房, 离开躺了快一辈子的病床，她说想晒晒太阳，我带着她去楼下的草坪。她摸摸花，摸摸草，摸摸树。她给自己编了个很好看很好看的辫子，把她摘的花插在上面。可是还没绑好她就垂下了头。</p>
@@ -3460,6 +3493,19 @@ await prisma.$transaction(async tx =&gt; &#123;
 <blockquote>
 <p>韩暮秋，息止安所。</p>
 </blockquote>
+]]></content>
+      <categories>
+        <category>gallery</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>二零二三年九月十三日</title>
+    <url>/2023/09/13/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E4%B9%9D%E6%9C%88%E5%8D%81%E4%B8%89%E6%97%A5/</url>
+    <content><![CDATA[<p>“站好! 要拍了啊，倒数三秒，都不要眨眼。” 婚礼结束后, 门口路过的陌生男人拿着相机，充当起了临时的摄影师。</p>
+<p>镜头里，她和抱着雪狮的希文站在中间，她手边是依次排开的五个哥哥，希文手边是暮秋, 培元, 世琪, 婧灵五人。<br>在他们后排，其他人也各自找好位置挺直脊背站着。</p>
+<p>“拍了啊，倒数，三、二、一……茄子!”</p>
+<p>咔擦，画面定格，幸福定格，大家终于从苦难里彻底毕业了。</p>
+<p>萤火虫的微光与星空交相辉映，黑夜中潜滋暗长的花香沁人心脾，晚风挠过波光粼粼的海面，彼此相爱的人相拥而眠。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
@@ -3565,6 +3611,19 @@ await prisma.$transaction(async tx =&gt; &#123;
       </categories>
   </entry>
   <entry>
+    <title>二零二三年十一月六日</title>
+    <url>/2023/11/06/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E5%8D%81%E4%B8%80%E6%9C%88%E5%85%AD%E6%97%A5/</url>
+    <content><![CDATA[<p>寒风打得他踉跄地摔进田野中，他颤抖着，疑惑的抬起头，云层捂住了月亮，摇曳着露出一角烛火般的月光，烛火同他的身体一般颤抖，那是落日的余晖，也是等待朝阳的希望。</p>
+<p>世界同可怜的孩子一起闭上了眼睛，世界不那么开心，但是</p>
+<blockquote>
+<p>这个世界，我真的爱你</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>gallery</category>
+      </categories>
+  </entry>
+  <entry>
     <title>二零二三年四月二十二日</title>
     <url>/2023/04/22/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E5%9B%9B%E6%9C%88%E4%BA%8C%E5%8D%81%E4%BA%8C%E6%97%A5/</url>
     <content><![CDATA[<p>  二零二三年四月二十二日， 风沙把阳光的气息卷入帐篷， 现在是凌晨四点二十七，快天亮了， 仍有些微凉， 我即将踏入看不到边的大漠。</p>
@@ -3577,19 +3636,6 @@ await prisma.$transaction(async tx =&gt; &#123;
 <p>  岁月中的某个文明中的某个人，曾经也骑着骆驼向远方，又是哪个人，吟着佛门心语站在我身旁，我听见大漠的念经声。</p>
 <p>  我不是个有耐心的人， 抄经书对我来说是种折磨， 我只能选择把经文抄在大地上， 黄沙上， 用自己的双腿一点点写， 用耳去倾听狂风卷积的声音。</p>
 <p>  我生来就是为了把这个世界的消息和秘密带到下一个世界去。</p>
-]]></content>
-      <categories>
-        <category>gallery</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>二零二三年十一月六日</title>
-    <url>/2023/11/06/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E5%8D%81%E4%B8%80%E6%9C%88%E5%85%AD%E6%97%A5/</url>
-    <content><![CDATA[<p>寒风打得他踉跄地摔进田野中，他颤抖着，疑惑的抬起头，云层捂住了月亮，摇曳着露出一角烛火般的月光，烛火同他的身体一般颤抖，那是落日的余晖，也是等待朝阳的希望。</p>
-<p>世界同可怜的孩子一起闭上了眼睛，世界不那么开心，但是</p>
-<blockquote>
-<p>这个世界，我真的爱你</p>
-</blockquote>
 ]]></content>
       <categories>
         <category>gallery</category>
@@ -3667,18 +3713,18 @@ await prisma.$transaction(async tx =&gt; &#123;
       </categories>
   </entry>
   <entry>
-    <title>二零二零年十二月九日</title>
-    <url>/2020/12/09/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E9%9B%B6%E5%B9%B4%E5%8D%81%E4%BA%8C%E6%9C%88%E4%B9%9D%E6%97%A5/</url>
-    <content><![CDATA[<p>我们走在朝阳的洪流上， 一步一个脚印， 踏散阳光， 向南是北。</p>
+    <title>二零二二年十月一日</title>
+    <url>/2022/10/01/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%BA%8C%E5%B9%B4%E5%8D%81%E6%9C%88%E4%B8%80%E6%97%A5/</url>
+    <content><![CDATA[<p>巨大而又空洞的表达欲，失语后渴望把自己潦草在这个时代里。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
       </categories>
   </entry>
   <entry>
-    <title>二零二二年十月一日</title>
-    <url>/2022/10/01/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%BA%8C%E5%B9%B4%E5%8D%81%E6%9C%88%E4%B8%80%E6%97%A5/</url>
-    <content><![CDATA[<p>巨大而又空洞的表达欲，失语后渴望把自己潦草在这个时代里。</p>
+    <title>二零二零年十二月九日</title>
+    <url>/2020/12/09/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E9%9B%B6%E5%B9%B4%E5%8D%81%E4%BA%8C%E6%9C%88%E4%B9%9D%E6%97%A5/</url>
+    <content><![CDATA[<p>我们走在朝阳的洪流上， 一步一个脚印， 踏散阳光， 向南是北。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
@@ -3971,34 +4017,6 @@ await prisma.$transaction(async tx =&gt; &#123;
       </tags>
   </entry>
   <entry>
-    <title>奥司他韦</title>
-    <url>/2023/03/05/%E5%A5%A5%E5%8F%B8%E4%BB%96%E9%9F%A6/</url>
-    <content><![CDATA[<p><img src="/img/%E5%8C%BB%E5%AD%A6/%E5%A5%A5%E5%8F%B8%E4%BB%96%E9%9F%A6.jpg" alt="奥司他韦.jpg"></p>
-<p>目前市场上销售的达菲为罗氏制药独家生产的抗流感药物，其通用名称为磷酸奥司他韦（Oseltamivirphosphate）。奥司他韦（Oseltamivir）于1999年在瑞士上市，2001年10月在我国上市。达菲是一种非常有效的流感治疗用药，并且可以大大减少并发症（主要是气管与支气管炎、肺炎、咽炎等）的发生和抗生素的使用，因而是目前治疗流感的最常用药物之一，也是公认的抗禽流感、甲型H1N1病毒最有效的药物之一。 </p>
-<h2 id="主要原理"><a href="#主要原理" class="headerlink" title="主要原理"></a>主要原理</h2><p>奥司他韦口服后经肝脏和肠道酯酶迅速催化转化为其活性代谢物奥司他韦羧酸，奥司他韦羧酸的构型与神经氨酸的过渡态相似，能够竞争性地与流感病毒神经氨酸酶（NA，neu－raminidase，也有称作神经氨酸苷酶）的活动位点结合，因而是一种强效的高选择性的流感病毒NA抑制剂（NAIs），它主要通过干扰病毒从被感染的宿主细胞中释放，从而减少甲型或乙型流感病毒的传播。 </p>
-<h2 id="特殊人群"><a href="#特殊人群" class="headerlink" title="特殊人群"></a>特殊人群</h2><ol>
-<li><p>对不同程度的肾功能不全患者给予100mg磷酸奥司他韦，每日两次，服用五天，显示活性代谢产物水平与降低肾功能成反比。对肌酐清除率小于30ml&#x2F;min的患者建议做剂量调整。目前没有研究数据指导肾功能衰竭患者的用药（肌酐清除小于10ml&#x2F;nin），所以对该人群用药时要慎重。</p>
-</li>
-<li><p>口服磷酸奥司他韦后。肝功能不全患者并没有象预期那样体内奥司他韦水平增高或其活性代谢产物水平降低。</p>
-</li>
-<li><p>给予相同剂量的磷酸奥司他韦，同年轻人相比，老年人（年龄在65—78岁间）的稳态代谢物水平比年轻人高25~35%，而两个人群药物半衰期很相似。考虑到药物暴露量和耐受力，老年人不必调整剂量。</p>
-</li>
-<li><p>对一小组5~18岁儿童给予单剂2mg&#x2F;kg的粉末剂，口服建立药代曲线，数据显示儿童年龄越小，对药物前体和其活性代谢产物的清除越快，人体对每mg&#x2F;kg计量单位的承受越少。比如给予5-8岁儿童2mg&#x2F;kg的剂量，若要达到可比性。即相当于要给予成年人单剂75mg奥司他韦（大约为1mg&#x2F;kg）。年龄相差越小，儿童与成年人对每一单位mg&#x2F;kg剂量的代谢差别越小。比如大于12岁的儿童与成年人在药代动力学方面就已经很相似了。</p>
-</li>
-</ol>
-<h2 id="不良反应"><a href="#不良反应" class="headerlink" title="不良反应"></a>不良反应</h2><p>在罗氏提交美国联邦食品和药品管理局的申报材料中指出，奥司他韦（达菲）主要的不良反应显示为消化道的不适，包括恶心、呕吐、腹泻、腹痛等，其次是呼吸系统的不良反应，包括支气管炎、咳嗽等，此外还有中枢神经系统的不良反应，如眩晕、头痛、失眠、疲劳等。</p>
-<p>在2004年1月，FDA还发出对于奥司他韦的消费警讯，声称由于1岁以内幼儿血脑屏障发育不完全，奥司他韦应用于幼儿可能造成脑内药物浓度过高，形成潜在的安全问题。</p>
-<p>2005年有日本媒体报道日本青少年服用奥斯他韦后自杀并有精神异常反应，此后日本先后报道数十例此类不良反应，此后世界各地媒体纷纷转载报道，引起公众关注。2005年11月FDA就这一反应作出报告，认为没有证据证明奥斯他韦可以导致精神异常，日本的不良反应病例系大众媒体报道后经心理暗示作用引起的群体性臆症。</p>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>需要注意的是，奥司他韦是通过抑制病毒的复制而起到治疗流感作用的，如果人体没有感染病毒，吃了“达菲”也是没有任何作用的。也就是说，“达菲”是在体内存在病毒的前提下起到杀灭病毒的作用，它不可能抵抗病毒侵入人体。</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li><a href="https://www.yixue.com/%e8%be%be%e8%8f%b2">https://www.yixue.com/%e8%be%be%e8%8f%b2</a></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>Medicine</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>在F#中处理复杂依赖注入的实践指南</title>
     <url>/2025/03/31/%E5%9C%A8F-%E4%B8%AD%E5%A4%84%E7%90%86%E5%A4%8D%E6%9D%82%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E7%9A%84%E5%AE%9E%E8%B7%B5%E6%8C%87%E5%8D%97/</url>
     <content><![CDATA[<h2 id="一、传统手艺：Partial-Application"><a href="#一、传统手艺：Partial-Application" class="headerlink" title="一、传统手艺：Partial Application"></a>一、传统手艺：Partial Application</h2><p>在函数式编程中，Partial Application 是传递依赖的常用方式。例如：</p>
@@ -4052,6 +4070,34 @@ await prisma.$transaction(async tx =&gt; &#123;
 ]]></content>
       <tags>
         <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>奥司他韦</title>
+    <url>/2023/03/05/%E5%A5%A5%E5%8F%B8%E4%BB%96%E9%9F%A6/</url>
+    <content><![CDATA[<p><img src="/img/%E5%8C%BB%E5%AD%A6/%E5%A5%A5%E5%8F%B8%E4%BB%96%E9%9F%A6.jpg" alt="奥司他韦.jpg"></p>
+<p>目前市场上销售的达菲为罗氏制药独家生产的抗流感药物，其通用名称为磷酸奥司他韦（Oseltamivirphosphate）。奥司他韦（Oseltamivir）于1999年在瑞士上市，2001年10月在我国上市。达菲是一种非常有效的流感治疗用药，并且可以大大减少并发症（主要是气管与支气管炎、肺炎、咽炎等）的发生和抗生素的使用，因而是目前治疗流感的最常用药物之一，也是公认的抗禽流感、甲型H1N1病毒最有效的药物之一。 </p>
+<h2 id="主要原理"><a href="#主要原理" class="headerlink" title="主要原理"></a>主要原理</h2><p>奥司他韦口服后经肝脏和肠道酯酶迅速催化转化为其活性代谢物奥司他韦羧酸，奥司他韦羧酸的构型与神经氨酸的过渡态相似，能够竞争性地与流感病毒神经氨酸酶（NA，neu－raminidase，也有称作神经氨酸苷酶）的活动位点结合，因而是一种强效的高选择性的流感病毒NA抑制剂（NAIs），它主要通过干扰病毒从被感染的宿主细胞中释放，从而减少甲型或乙型流感病毒的传播。 </p>
+<h2 id="特殊人群"><a href="#特殊人群" class="headerlink" title="特殊人群"></a>特殊人群</h2><ol>
+<li><p>对不同程度的肾功能不全患者给予100mg磷酸奥司他韦，每日两次，服用五天，显示活性代谢产物水平与降低肾功能成反比。对肌酐清除率小于30ml&#x2F;min的患者建议做剂量调整。目前没有研究数据指导肾功能衰竭患者的用药（肌酐清除小于10ml&#x2F;nin），所以对该人群用药时要慎重。</p>
+</li>
+<li><p>口服磷酸奥司他韦后。肝功能不全患者并没有象预期那样体内奥司他韦水平增高或其活性代谢产物水平降低。</p>
+</li>
+<li><p>给予相同剂量的磷酸奥司他韦，同年轻人相比，老年人（年龄在65—78岁间）的稳态代谢物水平比年轻人高25~35%，而两个人群药物半衰期很相似。考虑到药物暴露量和耐受力，老年人不必调整剂量。</p>
+</li>
+<li><p>对一小组5~18岁儿童给予单剂2mg&#x2F;kg的粉末剂，口服建立药代曲线，数据显示儿童年龄越小，对药物前体和其活性代谢产物的清除越快，人体对每mg&#x2F;kg计量单位的承受越少。比如给予5-8岁儿童2mg&#x2F;kg的剂量，若要达到可比性。即相当于要给予成年人单剂75mg奥司他韦（大约为1mg&#x2F;kg）。年龄相差越小，儿童与成年人对每一单位mg&#x2F;kg剂量的代谢差别越小。比如大于12岁的儿童与成年人在药代动力学方面就已经很相似了。</p>
+</li>
+</ol>
+<h2 id="不良反应"><a href="#不良反应" class="headerlink" title="不良反应"></a>不良反应</h2><p>在罗氏提交美国联邦食品和药品管理局的申报材料中指出，奥司他韦（达菲）主要的不良反应显示为消化道的不适，包括恶心、呕吐、腹泻、腹痛等，其次是呼吸系统的不良反应，包括支气管炎、咳嗽等，此外还有中枢神经系统的不良反应，如眩晕、头痛、失眠、疲劳等。</p>
+<p>在2004年1月，FDA还发出对于奥司他韦的消费警讯，声称由于1岁以内幼儿血脑屏障发育不完全，奥司他韦应用于幼儿可能造成脑内药物浓度过高，形成潜在的安全问题。</p>
+<p>2005年有日本媒体报道日本青少年服用奥斯他韦后自杀并有精神异常反应，此后日本先后报道数十例此类不良反应，此后世界各地媒体纷纷转载报道，引起公众关注。2005年11月FDA就这一反应作出报告，认为没有证据证明奥斯他韦可以导致精神异常，日本的不良反应病例系大众媒体报道后经心理暗示作用引起的群体性臆症。</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>需要注意的是，奥司他韦是通过抑制病毒的复制而起到治疗流感作用的，如果人体没有感染病毒，吃了“达菲”也是没有任何作用的。也就是说，“达菲”是在体内存在病毒的前提下起到杀灭病毒的作用，它不可能抵抗病毒侵入人体。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://www.yixue.com/%e8%be%be%e8%8f%b2">https://www.yixue.com/%e8%be%be%e8%8f%b2</a></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Medicine</tag>
       </tags>
   </entry>
   <entry>
@@ -4390,55 +4436,6 @@ await prisma.$transaction(async tx =&gt; &#123;
       </tags>
   </entry>
   <entry>
-    <title>灯笼草</title>
-    <url>/2023/06/22/%E7%81%AF%E7%AC%BC%E8%8D%89/</url>
-    <content><![CDATA[<p>今天在菜园子里看到了野生的灯笼草，都结果了：</p>
-<p><img src="/img/%E7%94%9F%E6%B4%BB/%E7%81%AF%E7%AC%BC%E8%8D%89.jpg"></p>
-<p>灯笼果别名为小果酸浆、秘鲁苦蘵、打头泡、灯笼草等，茄科酸浆属多年生草本植物。<br>灯笼果茎直立，叶较厚，阔卵形或心脏形，两面密生柔毛；花单独腋生，花萼阔钟状，花冠阔钟状，黄色而喉部有紫色斑纹，花丝及花药蓝紫色，花药长约3毫米。果萼薄纸质，淡绿色或淡黄色，浆果成熟时黄色，种子黄色，圆盘状，夏季开花结果。生于田间、路旁、村边。我国南北各地均有分市。</p>
-<p><strong>不要与<a href="https://en.wikipedia.org/wiki/Gooseberry">醋栗</a>混淆</strong></p>
-<p>醋栗长这样：</p>
-<p><img src="/img/%E7%94%9F%E6%B4%BB/%E9%86%8B%E6%A0%97.jpg"></p>
-<hr>
-<h2 id="性味"><a href="#性味" class="headerlink" title="性味"></a>性味</h2><ul>
-<li><p>《陆川本草》：”甘淡，微寒。”</p>
-</li>
-<li><p>《南宁市药物志》：”苦，寒，微甘。”</p>
-</li>
-</ul>
-<h2 id="功能主治"><a href="#功能主治" class="headerlink" title="功能主治"></a>功能主治</h2><blockquote>
-<p>清热，行气，止痛，消肿。治感冒，痄腮，喉痛，咳嗽，腹胀，疝气，天疱疮。</p>
-</blockquote>
-<ul>
-<li><p>《陆川本草》：”行气，消胀，利尿。治腹胀，睾丸炎，疝气。”</p>
-</li>
-<li><p>《南宁市药物志》：”清热杀虫，止痛消肿。治热眼，喉痛，咳嗽；外敷毒疮，并熏洗阴囊肿大。”</p>
-</li>
-<li><p>《生草药手册》：”内服治伤寒或小肠疝气。外洗治天疱疮。”</p>
-</li>
-<li><p>《中国药植图鉴》：”功同酸浆。”</p>
-</li>
-<li><p>广州空军《常用中草药手册》：”治感冒发热，腮腺炎，支气管炎，疱疹，疖疮，疝气痛。”</p>
-</li>
-</ul>
-<h2 id="用法用量"><a href="#用法用量" class="headerlink" title="用法用量"></a>用法用量</h2><ul>
-<li>内服：煎汤，3 ~ 5钱。</li>
-<li>外用：捣敷或煎水洗。</li>
-</ul>
-<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><ul>
-<li><p>《本草纲目》旧版草部第十六卷，草之五：燕京野果名红姑娘，外垂降囊，中含赤子如珠，酸甘可食盈盈绕砌，与翠草同芳，亦自可爱。捣计服治黄病（即黄胆性肝炎）多效，治上气咳嗽风热，明目，付小儿内辟等多种疾病。东北地区种植较广泛，其他地区种植较少，仍属稀特蔬菜。</p>
-</li>
-<li><p>《别录》：“酸浆，生荆、楚川泽及人家田园中。五月采，阴干。”陶弘景：“酸浆，处处人家多有。叶亦可食。子作房，房中有子，如梅李大，皆黄赤色。”《唐本草》：“灯笼草，所在有之。八月采。枝干高三、四尺，有花，红色，状若灯笼，内有子，红色可爱。根、茎、花、叶并入药用。”</p>
-</li>
-<li><p>《梦溪笔谈》：“苦耽，即本草酸浆也。河西番界中酸浆有盈丈者。”《本草衍义》：“酸浆，今天下皆有之。苗如天茄子，开小白花，结青壳，熟则深红，壳中子大如樱，亦红色，樱中复有细子，如落苏之子，食之有青草气。此即苦耽也。”</p>
-</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>Medicine</tag>
-        <tag>Life</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>气胸</title>
     <url>/2023/03/01/%E6%B0%94%E8%83%B8/</url>
     <content><![CDATA[<p><img src="/img/%E5%8C%BB%E5%AD%A6/%E6%B0%94%E8%83%B8/%E6%B0%94%E8%83%B8.jpg" alt="气胸.jpg"></p>
@@ -4489,6 +4486,55 @@ await prisma.$transaction(async tx =&gt; &#123;
 ]]></content>
       <tags>
         <tag>Medicine</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>灯笼草</title>
+    <url>/2023/06/22/%E7%81%AF%E7%AC%BC%E8%8D%89/</url>
+    <content><![CDATA[<p>今天在菜园子里看到了野生的灯笼草，都结果了：</p>
+<p><img src="/img/%E7%94%9F%E6%B4%BB/%E7%81%AF%E7%AC%BC%E8%8D%89.jpg"></p>
+<p>灯笼果别名为小果酸浆、秘鲁苦蘵、打头泡、灯笼草等，茄科酸浆属多年生草本植物。<br>灯笼果茎直立，叶较厚，阔卵形或心脏形，两面密生柔毛；花单独腋生，花萼阔钟状，花冠阔钟状，黄色而喉部有紫色斑纹，花丝及花药蓝紫色，花药长约3毫米。果萼薄纸质，淡绿色或淡黄色，浆果成熟时黄色，种子黄色，圆盘状，夏季开花结果。生于田间、路旁、村边。我国南北各地均有分市。</p>
+<p><strong>不要与<a href="https://en.wikipedia.org/wiki/Gooseberry">醋栗</a>混淆</strong></p>
+<p>醋栗长这样：</p>
+<p><img src="/img/%E7%94%9F%E6%B4%BB/%E9%86%8B%E6%A0%97.jpg"></p>
+<hr>
+<h2 id="性味"><a href="#性味" class="headerlink" title="性味"></a>性味</h2><ul>
+<li><p>《陆川本草》：”甘淡，微寒。”</p>
+</li>
+<li><p>《南宁市药物志》：”苦，寒，微甘。”</p>
+</li>
+</ul>
+<h2 id="功能主治"><a href="#功能主治" class="headerlink" title="功能主治"></a>功能主治</h2><blockquote>
+<p>清热，行气，止痛，消肿。治感冒，痄腮，喉痛，咳嗽，腹胀，疝气，天疱疮。</p>
+</blockquote>
+<ul>
+<li><p>《陆川本草》：”行气，消胀，利尿。治腹胀，睾丸炎，疝气。”</p>
+</li>
+<li><p>《南宁市药物志》：”清热杀虫，止痛消肿。治热眼，喉痛，咳嗽；外敷毒疮，并熏洗阴囊肿大。”</p>
+</li>
+<li><p>《生草药手册》：”内服治伤寒或小肠疝气。外洗治天疱疮。”</p>
+</li>
+<li><p>《中国药植图鉴》：”功同酸浆。”</p>
+</li>
+<li><p>广州空军《常用中草药手册》：”治感冒发热，腮腺炎，支气管炎，疱疹，疖疮，疝气痛。”</p>
+</li>
+</ul>
+<h2 id="用法用量"><a href="#用法用量" class="headerlink" title="用法用量"></a>用法用量</h2><ul>
+<li>内服：煎汤，3 ~ 5钱。</li>
+<li>外用：捣敷或煎水洗。</li>
+</ul>
+<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><ul>
+<li><p>《本草纲目》旧版草部第十六卷，草之五：燕京野果名红姑娘，外垂降囊，中含赤子如珠，酸甘可食盈盈绕砌，与翠草同芳，亦自可爱。捣计服治黄病（即黄胆性肝炎）多效，治上气咳嗽风热，明目，付小儿内辟等多种疾病。东北地区种植较广泛，其他地区种植较少，仍属稀特蔬菜。</p>
+</li>
+<li><p>《别录》：“酸浆，生荆、楚川泽及人家田园中。五月采，阴干。”陶弘景：“酸浆，处处人家多有。叶亦可食。子作房，房中有子，如梅李大，皆黄赤色。”《唐本草》：“灯笼草，所在有之。八月采。枝干高三、四尺，有花，红色，状若灯笼，内有子，红色可爱。根、茎、花、叶并入药用。”</p>
+</li>
+<li><p>《梦溪笔谈》：“苦耽，即本草酸浆也。河西番界中酸浆有盈丈者。”《本草衍义》：“酸浆，今天下皆有之。苗如天茄子，开小白花，结青壳，熟则深红，壳中子大如樱，亦红色，樱中复有细子，如落苏之子，食之有青草气。此即苦耽也。”</p>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Medicine</tag>
+        <tag>Life</tag>
       </tags>
   </entry>
   <entry>
@@ -4968,6 +5014,17 @@ await prisma.$transaction(async tx =&gt; &#123;
       </tags>
   </entry>
   <entry>
+    <title>藿香正气水和藿香正气口服液的区别</title>
+    <url>/2024/09/01/%E8%97%BF%E9%A6%99%E6%AD%A3%E6%B0%94%E6%B0%B4%E5%92%8C%E8%97%BF%E9%A6%99%E6%AD%A3%E6%B0%94%E5%8F%A3%E6%9C%8D%E6%B6%B2%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<p>虽然都是口服液体制剂，且看起来单支容量都一样，但是藿香正气水里含有 40%-50% 的乙醇，而藿香正气口服液不含有乙醇。同时藿香正气水不能和头孢一起服用（因为含有酒精），而藿香正气口服液可以和头孢一起服用。在选用之前，还希望大家能仔细看药品名称。</p>
+<p>正气水是酊剂，用的是生半夏，口服液用的是法半夏，比正气水多了炒的白术，生姜和大枣，两者的功效都是解表化湿，理气和中。藿香正气水由水煮及酒浸制而成，疗效最明显，但口感较差。由于霍香正气水药效比较峻猛，小儿和年老体虚者服用时应有医生指导。藿香正气口服液是藿香正气的换代产品。</p>
+]]></content>
+      <tags>
+        <tag>Medicine</tag>
+        <tag>Life</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>螺内酯片</title>
     <url>/2023/03/14/%E8%9E%BA%E5%86%85%E9%85%AF%E7%89%87/</url>
     <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>螺内酯是保钾利尿药，用于治疗心衰、低钾血症和高血压等。但是，它也会阻断雄激素受体，从而具有抗雄激素特性（我想你应该联想到了什么）；不过其效力较弱，需服用较大剂量方可充分起效（尿频等副作用也更明显）。</p>
@@ -5026,17 +5083,6 @@ await prisma.$transaction(async tx =&gt; &#123;
 ]]></content>
       <tags>
         <tag>Medicine</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>藿香正气水和藿香正气口服液的区别</title>
-    <url>/2024/09/01/%E8%97%BF%E9%A6%99%E6%AD%A3%E6%B0%94%E6%B0%B4%E5%92%8C%E8%97%BF%E9%A6%99%E6%AD%A3%E6%B0%94%E5%8F%A3%E6%9C%8D%E6%B6%B2%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
-    <content><![CDATA[<p>虽然都是口服液体制剂，且看起来单支容量都一样，但是藿香正气水里含有 40%-50% 的乙醇，而藿香正气口服液不含有乙醇。同时藿香正气水不能和头孢一起服用（因为含有酒精），而藿香正气口服液可以和头孢一起服用。在选用之前，还希望大家能仔细看药品名称。</p>
-<p>正气水是酊剂，用的是生半夏，口服液用的是法半夏，比正气水多了炒的白术，生姜和大枣，两者的功效都是解表化湿，理气和中。藿香正气水由水煮及酒浸制而成，疗效最明显，但口感较差。由于霍香正气水药效比较峻猛，小儿和年老体虚者服用时应有医生指导。藿香正气口服液是藿香正气的换代产品。</p>
-]]></content>
-      <tags>
-        <tag>Medicine</tag>
-        <tag>Life</tag>
       </tags>
   </entry>
   <entry>

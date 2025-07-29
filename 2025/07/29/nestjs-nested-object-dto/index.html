@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="韩暮秋">
+    
+        
+            <meta name="subtitle" content="暮秋小屋">
+            
+                
+                    <meta name="description" content="这里是暮秋小屋，思念和灵感的寄存处">
+                    
+                        
+                            <meta name="keywords" content="韩暮秋,MuqiuHan,'Muqiu Han', 'muqiu han', muqiuhan">
+                            
+
+                                
+
+                                    <title>
+                                        
+                                            NestJS 嵌套查询参数解析错误分析与解决方案 | 
+                                                    暮秋小屋
+                                    </title>
+
+                                    
+                                        
+                                            <link rel="icon" href="/favicon.ico">
+                                            
+
+                                                <style>
+                                                    @font-face {
+                                                        font-family: CarroisSong;
+                                                        src: url('/fonts/CarroisSong.ttf');
+                                                    }
+                                                </style>
+
+                                                
+                                                    
+                                                        <!-- stylesheets list from _config.yml -->
+                                                        
+                                                            <link rel="stylesheet" href="/css/style.css">
+                                                            
+                                                                
+
+                                                                    
+                                                                        
+                                                                            <!-- scripts list from _config.yml -->
+                                                                            
+                                                                                <script
+                                                                                    src="/js/menu.js"></script>
+                                                                                
+                                                                                    
+
+                                                                                        
+                                                                                            
+                                                                                                <script
+                                                                                                    src="https://polyfill.alicdn.com/polyfill.js?features=es6"></script>
+                                                                                                <script
+                                                                                                    id="MathJax-script"
+                                                                                                    async
+                                                                                                    src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/mathjax/3.2.0/es5/tex-mml-chtml.js"></script>
+                                                                                                
+
+                                                                                                    
+                                                                                                        
+  <meta name="generator" content="Hexo 6.3.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+              暮秋小屋
+                
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        菜单
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+                <li class="menu-item">
+                  <a href="/">
+                    主页
+                  </a>
+                </li>
+                
+                  
+            
+                <li class="menu-item">
+                  <a href="/categories/gallery/">
+                    日记本
+                  </a>
+                </li>
+                
+                  
+            
+                <li class="menu-item">
+                  <a href="/tags/Medicine/">
+                    医学
+                  </a>
+                </li>
+                
+                  
+            
+                <li class="menu-item">
+                  <a href="/tags/Technique/">
+                    计算机/互联网
+                  </a>
+                </li>
+                
+                  
+            
+                <li class="menu-item">
+                  <a href="/tags/Life/">
+                    生活
+                  </a>
+                </li>
+                
+                  
+            
+                <li class="menu-item">
+                  <a href="/archives">
+                    全部
+                  </a>
+                </li>
+                
+                  
+            
+                <li class="menu-item">
+                  <a href="/about">
+                    关于
+                  </a>
+                </li>
+                
+                  
+                    
+                      <li class="menu-item search-btn">
+                        <a href="#">Search</a>
+                      </li>
+                      
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/Technique/">
+                            Technique
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                NestJS 嵌套查询参数解析错误分析与解决方案
+            
+            
+        </div>
+        <span class="post-date">
+            Jul 29, 2025
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <p>在开发 NestJS 应用程序时，一个常见的场景是根据复杂的条件筛选资源。当使用嵌套查询参数来表达这些条件时，例如通过 URL <code>http://localhost:3000/products/filter?filters[price][min]=100</code>，可能会意外地遇到 <code>property filters[price][min] should not exist</code> 错误。本文将深入剖析此问题背后的原因，并提供针对 Express 和 Fastify 两种底层框架的解决方案。</p>
+<h4 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h4><p>假设我们正在构建一个电子商务平台的后端，需要实现一个商品筛选接口 <code>/products/filter</code>。该接口应允许客户端根据不同的属性（如价格 <code>price</code>、库存 <code>stock</code>）进行筛选，并支持对数值型属性（如价格）指定一个范围。</p>
+<p>为了实现这一功能，我们定义了以下 NestJS 数据传输对象 (DTO) 结构：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">ApiPropertyOptional</span> &#125; <span class="keyword">from</span> <span class="string">&quot;@nestjs/swagger&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">  <span class="title class_">IsNumber</span>,</span><br><span class="line">  <span class="title class_">IsOptional</span>,</span><br><span class="line">  <span class="title class_">Min</span>,</span><br><span class="line">  <span class="title class_">ValidateNested</span>,</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&quot;class-validator&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Type</span> &#125; <span class="keyword">from</span> <span class="string">&quot;class-transformer&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RangeFilterDto</span> &#123;</span><br><span class="line">  <span class="meta">@ApiPropertyOptional</span>(&#123; <span class="attr">description</span>: <span class="string">&quot;最小值 (大于等于)&quot;</span> &#125;)</span><br><span class="line">  <span class="meta">@IsOptional</span>()</span><br><span class="line">  <span class="meta">@Type</span>(<span class="function">() =&gt;</span> <span class="title class_">Number</span>)</span><br><span class="line">  <span class="meta">@IsNumber</span>()</span><br><span class="line">  <span class="meta">@Min</span>(<span class="number">0</span>)</span><br><span class="line">  <span class="attr">min</span>?: <span class="built_in">number</span>;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@ApiPropertyOptional</span>(&#123; <span class="attr">description</span>: <span class="string">&quot;最大值 (小于等于)&quot;</span> &#125;)</span><br><span class="line">  <span class="meta">@IsOptional</span>()</span><br><span class="line">  <span class="meta">@Type</span>(<span class="function">() =&gt;</span> <span class="title class_">Number</span>)</span><br><span class="line">  <span class="meta">@IsNumber</span>()</span><br><span class="line">  <span class="meta">@Min</span>(<span class="number">0</span>)</span><br><span class="line">  <span class="attr">max</span>?: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ProductAttributeFilterDto</span> &#123;</span><br><span class="line">  <span class="meta">@ApiPropertyOptional</span>(&#123;</span><br><span class="line">    <span class="attr">description</span>: <span class="string">&quot;价格范围&quot;</span>,</span><br><span class="line">    <span class="attr">type</span>: <span class="title class_">RangeFilterDto</span>,</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="meta">@IsOptional</span>()</span><br><span class="line">  <span class="meta">@ValidateNested</span>()</span><br><span class="line">  <span class="meta">@Type</span>(<span class="function">() =&gt;</span> <span class="title class_">RangeFilterDto</span>)</span><br><span class="line">  <span class="attr">price</span>?: <span class="title class_">RangeFilterDto</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">ProductFilterDto</span> &#123;</span><br><span class="line">  <span class="meta">@ApiPropertyOptional</span>(&#123; <span class="attr">description</span>: <span class="string">&quot;商品属性筛选条件&quot;</span> &#125;)</span><br><span class="line">  <span class="meta">@IsOptional</span>()</span><br><span class="line">  <span class="meta">@ValidateNested</span>()</span><br><span class="line">  <span class="meta">@Type</span>(<span class="function">() =&gt;</span> <span class="title class_">ProductAttributeFilterDto</span>)</span><br><span class="line">  <span class="attr">filters</span>?: <span class="title class_">ProductAttributeFilterDto</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对应的控制器代码如下：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Controller</span>, <span class="title class_">Get</span>, <span class="title class_">Query</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">ApiOperation</span>, <span class="title class_">ApiResponse</span>, <span class="title class_">ApiTags</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/swagger&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">ProductFilterDto</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./dtos/product-filter.dto&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@ApiTags</span>(<span class="string">&#x27;products&#x27;</span>)</span><br><span class="line"><span class="meta">@Controller</span>(<span class="string">&#x27;products&#x27;</span>)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">ProductsController</span> &#123;</span><br><span class="line">  <span class="meta">@Get</span>(<span class="string">&quot;filter&quot;</span>)</span><br><span class="line">  <span class="meta">@ApiOperation</span>(&#123; <span class="attr">summary</span>: <span class="string">&quot;根据条件筛选商品&quot;</span> &#125;)</span><br><span class="line">  <span class="meta">@ApiResponse</span>(&#123; <span class="attr">status</span>: <span class="number">200</span>, <span class="attr">description</span>: <span class="string">&quot;筛选商品成功&quot;</span> &#125;)</span><br><span class="line">  <span class="meta">@ApiResponse</span>(&#123; <span class="attr">status</span>: <span class="number">400</span>, <span class="attr">description</span>: <span class="string">&quot;请求参数错误&quot;</span> &#125;)</span><br><span class="line">  <span class="keyword">async</span> <span class="title function_">getFilteredProducts</span>(</span><br><span class="line">    <span class="meta">@Query</span>() <span class="attr">query</span>: <span class="title class_">ProductFilterDto</span>,</span><br><span class="line">  ): <span class="title class_">Promise</span>&lt;<span class="built_in">any</span>&gt; &#123;</span><br><span class="line">    <span class="comment">// 在实际应用中，这里会调用服务处理筛选逻辑</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(query);</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="attr">message</span>: <span class="string">&quot;Products filtered successfully.&quot;</span>,</span><br><span class="line">      <span class="attr">data</span>: query,</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当客户端通过以下 URL 发送请求时：</p>
+<p><code>http://localhost:3000/products/filter?filters[price][min]=100</code></p>
+<p>后端返回了 HTTP 400 错误，并附带以下日志：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[Nest] 12345 - 07/29/2025, 11:00:00 AM   ERROR [HttpExceptionFilter] [GET /products/filter?filters%5Bprice%5D%5Bmin%5D=100] HTTP 400 Error: property filters[price][min] should not exist</span><br><span class="line">BadRequestException: Bad Request Exception</span><br><span class="line">    at ValidationPipe.exceptionFactory (/path/to/project/node_modules/@nestjs/common/pipes/validation.pipe.js:107:20)</span><br><span class="line">    at ValidationPipe.transform (/path/to/project/node_modules/@nestjs/common/pipes/validation.pipe.js:74:30)</span><br><span class="line">    ... (其他堆栈信息)</span><br></pre></td></tr></table></figure>
+
+<h4 id="错误分析"><a href="#错误分析" class="headerlink" title="错误分析"></a>错误分析</h4><p>此错误的核心在于 NestJS 的 <code>@Query()</code> 装饰器与 <code>ValidationPipe</code> 在处理 URL 查询字符串时的默认行为，未能正确地将客户端提供的嵌套方括号语法 (<code>filters[price][min]</code>) 解析为 DTO 所期望的 JavaScript 嵌套对象结构。</p>
+<ol>
+<li><p><strong>DTO 的预期结构:</strong><br><code>ProductFilterDto</code> 定义了 <code>filters</code> 属性，其类型为 <code>ProductAttributeFilterDto</code>。<code>ProductAttributeFilterDto</code> 又包含了 <code>price</code> 属性，类型为 <code>RangeFilterDto</code>，最终含有 <code>min</code> 和 <code>max</code> 属性。这意味着 DTO 期望接收的数据结构应为：<code>&#123; filters: &#123; price: &#123; min: 100 &#125; &#125; &#125;</code>。</p>
+</li>
+<li><p><strong>URL 查询参数的扁平化解析:</strong><br>HTTP 协议的查询字符串本质上是扁平的键值对集合。虽然 <code>key[nestedKey]=value</code> 这种方括号语法被许多 Web 框架（如 PHP、Ruby on Rails）和库（如 <code>qs</code>）广泛用于表示嵌套数据，但这并非 HTTP 协议的标准。<br>NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的请求。在默认配置下，Express 不会自动地、递归地将 <code>filters[price][min]</code> 这样的字符串键名解析成一个具有正确嵌套层级的 JavaScript 对象。相反，它会将其视为一个完整的、扁平的字符串键名 <code>filters[price][min]</code>，并将其值 <code>100</code> 与之对应。</p>
+</li>
+<li><p><strong><code>ValidationPipe</code> 的验证失败:</strong><br>当 <code>ValidationPipe</code> 接收到被扁平化解析后的查询参数时，它会在 <code>ProductFilterDto</code> 中寻找一个名为 <code>filters[price][min]</code> 的顶层属性。由于 DTO 中并未直接定义这样一个扁平的属性，并且 <code>ValidationPipe</code> 通常会启用 <code>forbidNonWhitelisted: true</code> 或 <code>whitelist: true</code> 选项来拒绝 DTO 中未明确声明的属性，因此验证过程失败，并抛出 <code>property filters[price][min] should not exist</code> 的错误。这表明 <code>ValidationPipe</code> 将 <code>filters[price][min]</code> 视为一个非法的、未在白名单中的属性，而不是预期的嵌套对象 <code>filters</code> 下的深层子属性。</p>
+</li>
+</ol>
+<p>简而言之，问题不在于 DTO 定义或 <code>@Query()</code> 装饰器本身，而在于底层 HTTP 框架对查询字符串的默认解析行为与 NestJS <code>ValidationPipe</code> 对复杂嵌套 DTO 结构的需求不匹配。</p>
+<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><p>要解决此问题，关键在于配置 NestJS 应用的底层 HTTP 适配器，使其能够正确地解析包含方括号语法的嵌套查询参数，将其转换为嵌套的 JavaScript 对象。</p>
+<h5 id="针对-Express-适配器"><a href="#针对-Express-适配器" class="headerlink" title="针对 Express 适配器"></a>针对 Express 适配器</h5><p>如果您的 NestJS 应用使用 Express 作为底层 HTTP 框架（这是新项目的默认配置），您需要在应用的入口文件（通常是 <code>main.ts</code>）中，通过 <code>app.set(&#39;query parser&#39;, &#39;extended&#39;);</code> 显式启用 Express 的扩展查询字符串解析功能。此配置会指示 Express 使用 <code>qs</code> 库（Express 内置依赖）来处理查询字符串，该库能够正确处理嵌套结构。</p>
+<p>示例 (<code>main.ts</code>):</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">NestFactory</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">AppModule</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./app.module&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">ValidationPipe</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">NestExpressApplication</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/platform-express&#x27;</span>; <span class="comment">// 导入此类型</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">bootstrap</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> app = <span class="keyword">await</span> <span class="title class_">NestFactory</span>.<span class="property">create</span>&lt;<span class="title class_">NestExpressApplication</span>&gt;(<span class="title class_">AppModule</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 启用 Express 的扩展查询参数解析</span></span><br><span class="line">  <span class="comment">// &#x27;simple&#x27; (默认) | &#x27;extended&#x27;</span></span><br><span class="line">  app.<span class="title function_">set</span>(<span class="string">&#x27;query parser&#x27;</span>, <span class="string">&#x27;extended&#x27;</span>);</span><br><span class="line"></span><br><span class="line">  app.<span class="title function_">useGlobalPipes</span>(<span class="keyword">new</span> <span class="title class_">ValidationPipe</span>(&#123;</span><br><span class="line">    <span class="attr">whitelist</span>: <span class="literal">true</span>,        <span class="comment">// 自动剥离 DTO 中未定义的属性</span></span><br><span class="line">    <span class="attr">forbidNonWhitelisted</span>: <span class="literal">true</span>, <span class="comment">// 如果传入 DTO 中未定义的属性，则抛出错误</span></span><br><span class="line">    <span class="attr">transform</span>: <span class="literal">true</span>,        <span class="comment">// 自动将负载转换为 DTO 类的实例</span></span><br><span class="line">    <span class="attr">transformOptions</span>: &#123;</span><br><span class="line">      <span class="attr">enableImplicitConversion</span>: <span class="literal">true</span>, <span class="comment">// 允许隐式类型转换，配合 @Type()</span></span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;));</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ... 其他配置</span></span><br><span class="line">  <span class="keyword">await</span> app.<span class="title function_">listen</span>(<span class="number">3000</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">bootstrap</span>();</span><br></pre></td></tr></table></figure>
+
+<h5 id="针对-Fastify-适配器"><a href="#针对-Fastify-适配器" class="headerlink" title="针对 Fastify 适配器"></a>针对 Fastify 适配器</h5><p>如果您的 NestJS 应用使用 Fastify 作为底层 HTTP 框架，您需要在创建 Fastify 适配器实例时，通过 <code>querystringParser</code> 选项提供一个自定义的查询字符串解析函数。通常，我们会利用 <code>qs</code> 这样的成熟库来完成递归解析。</p>
+<p>首先，确保已安装 <code>qs</code> 库及其类型定义：<br><code>npm install qs</code><br><code>npm install -D @types/qs</code></p>
+<p>示例 (<code>main.ts</code>):</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">NestFactory</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">AppModule</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./app.module&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">ValidationPipe</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">  <span class="title class_">FastifyAdapter</span>,</span><br><span class="line">  <span class="title class_">NestFastifyApplication</span>,</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/platform-fastify&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> qs <span class="keyword">from</span> <span class="string">&#x27;qs&#x27;</span>; <span class="comment">// 引入 qs 库</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">bootstrap</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> app = <span class="keyword">await</span> <span class="title class_">NestFactory</span>.<span class="property">create</span>&lt;<span class="title class_">NestFastifyApplication</span>&gt;(</span><br><span class="line">    <span class="title class_">AppModule</span>,</span><br><span class="line">    <span class="keyword">new</span> <span class="title class_">FastifyAdapter</span>(&#123;</span><br><span class="line">      <span class="comment">// 配置 Fastify 的查询字符串解析器</span></span><br><span class="line">      <span class="attr">querystringParser</span>: <span class="function">(<span class="params">str</span>) =&gt;</span> qs.<span class="title function_">parse</span>(str),</span><br><span class="line">    &#125;),</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  app.<span class="title function_">useGlobalPipes</span>(<span class="keyword">new</span> <span class="title class_">ValidationPipe</span>(&#123;</span><br><span class="line">    <span class="attr">whitelist</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">forbidNonWhitelisted</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">transform</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">transformOptions</span>: &#123;</span><br><span class="line">      <span class="attr">enableImplicitConversion</span>: <span class="literal">true</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;));</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ... 其他配置</span></span><br><span class="line">  <span class="keyword">await</span> app.<span class="title function_">listen</span>(<span class="number">3000</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">bootstrap</span>();</span><br></pre></td></tr></table></figure>
+
+<p>通过上述配置，无论是使用 Express 还是 Fastify，NestJS 应用都将能够正确地将 <code>?filters[price][min]=100</code> 解析为 <code>&#123; filters: &#123; price: &#123; min: &#39;100&#39; &#125; &#125; &#125;</code>。随后，在 <code>ValidationPipe</code> 的 <code>transform</code> 阶段，<code>@Type(() =&gt; Number)</code> 装饰器会确保 <code>min</code> 的值从字符串 <code>&#39;100&#39;</code> 转换为数字 <code>100</code>，从而顺利通过验证并注入到控制器方法中。</p>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/29960764/what-does-extended-mean-in-express-4-0">What does ‘extended’ mean in express 4.0? - Stack Overflow</a></li>
+<li><a target="_blank" rel="noopener" href="https://expressjs.com/en/5x/api.html#app.set">Express 5.0 - API Reference (<code>app.set</code>)</a></li>
+</ul>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2025/07/11/fuck-hcho/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+                韩暮秋 | 
+            
+            
+                希望路过的人可以添点柴火让这里暖和点
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    
+      <div class="search-popup">
+    <div class="search-popup-overlay">  
+    </div>
+    <div class="search-popup-window" >
+        <div class="search-header">
+            <div class="search-input-container">
+              <input autocomplete="off" autocapitalize="off" maxlength="80"
+                     placeholder="Search Anything" spellcheck="false"
+                     type="search" class="search-input">
+            </div>
+            <div class="search-close-btn">
+                <div class="icon close-btn"></div>
+            </div>
+        </div>
+        <div class="search-result-container">
+        </div>
+    </div>
+</div>
+
+<script>
+    const searchConfig = {
+        path             : "/search.xml",
+        top_n_per_article: "1",
+        unescape         : "false",
+        trigger: "auto",
+        preload: "false"
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js"></script>
+<script src="/js/search.js"></script>
+    
+    
+
+  </body>
+</html>
