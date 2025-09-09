@@ -195,7 +195,6 @@
     <p>不知道我们所说的闪烁是不是一个东西，在我的笔记本上，闪烁是指偶发的屏幕中出现部分彩色雪花。</p>
 <p>我使用 Pop!_OS，此发行版使用 EFI 启动，故而可以在 <code>/boot/efi/loader/loader.conf</code> 中加上:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">options quiet splash amdgpu.dcdebugmask=0x10 amdgpu.sg_display=0</span><br></pre></td></tr></table></figure>
-
 <p>对于其他使用 EFI 或 GRUB 启动的发行版也可以添加类似的参数尝试尝试。</p>
 
 </div> 

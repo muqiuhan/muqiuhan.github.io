@@ -194,20 +194,19 @@
     <div class="post-content">
     <p>Rescript 11 之后，<code>@genType</code> 被合并进编译器，无需任何依赖就能使用，当在 Rescript 中 <code>@genType</code> 了使用某些 Rescript built-in 的基本类型时，可能会生成有问题的 <code>import</code> 相关代码，例如：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@genType</span><br><span class="line">module LoginResponse = &#123;</span><br><span class="line">  let status = response =&gt; &#123;</span><br><span class="line">    response</span><br><span class="line">    -&gt;Js.Json.decodeObject</span><br><span class="line">    -&gt;Option.flatMap(response =&gt; &#123;</span><br><span class="line">      response-&gt;Js_dict.get(&quot;status&quot;)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p><code>status</code> 函数具有 <code>Js.Json.t =&gt; option&lt;Js.Json.t&gt;</code> 类型，那么在生成的 TypeScript 文件中，会出现这样的 import:</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="keyword">type</span> &#123; <span class="title class_">Json</span>_t <span class="keyword">as</span> <span class="title class_">Js</span>_Json_t &#125; <span class="keyword">from</span> <span class="string">&quot;./Js.gen.tsx&quot;</span></span><br></pre></td></tr></table></figure>
-
 <p>而 <code>Js.gen.tsx</code> 这个文件是不存在的，解决方案是使用 <code>@genType</code> 的 <code>shim</code>：</p>
 <ul>
-<li><p>在 <code>rescript.json</code> 中的 <code>gentypeconfig</code> 中添加 <code>shim</code> 配置:</p>
+<li>在 <code>rescript.json</code> 中的 <code>gentypeconfig</code> 中添加 <code>shim</code> 配置:</li>
+</ul>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="attr">&quot;gentypeconfig&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">...</span><br><span class="line">  <span class="attr">&quot;shims&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;Js&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Js&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">...</span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>然后新建 <code>Js.shim.ts</code>:</p>
+<ul>
+<li>然后新建 <code>Js.shim.ts</code>:</li>
+</ul>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> <span class="title class_">Json</span>_t = <span class="built_in">unknown</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> t = <span class="built_in">unknown</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> <span class="title class_">Exn</span>_t = <span class="title class_">Error</span>;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>删除原来由 <code>@genType</code> 生成的 TypeScript 文件并重新生成</p>
-</li>
+<ul>
+<li>删除原来由 <code>@genType</code> 生成的 TypeScript 文件并重新生成</li>
 </ul>
 <p>现在生成的 TypeScript 文件将会从 <code>Js.shim.ts</code> import 类型:</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="keyword">type</span> &#123;<span class="title class_">Json</span>_t <span class="keyword">as</span> <span class="title class_">Js</span>_Json_t&#125; <span class="keyword">from</span> <span class="string">&#x27;../../src/model/Js.shim.ts&#x27;</span>;</span><br></pre></td></tr></table></figure>
