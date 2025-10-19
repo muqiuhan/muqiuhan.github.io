@@ -2623,6 +2623,43 @@ A relation table (also sometimes called a <em>JOIN</em>, <em>link</em> or <em>pi
       </tags>
   </entry>
   <entry>
+    <title>TypeScript With Rust Errors, No Try Catch, Heresy</title>
+    <url>/2023/04/30/TypeScript-With-Rust-Errors-No-Try-Catch-Heresy/</url>
+    <content><![CDATA[<blockquote>
+<p>It’s hard to miss things when you don’t know different things exist</p>
+</blockquote>
+<p>The first problem is, and personally, I believe it’s the biggest JavaScript problem ever: we don’t know what can throw an error. From a JavaScript error perspective, it’s the same as the following:</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> data = “<span class="title class_">Hello</span>”;</span><br><span class="line">&#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">error</span>(err);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>JavaScript doesn’t know; JavaScript doesn’t care. You should know.</p>
+<p>Second thing, this is perfectly viable code:</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> request = &#123; <span class="attr">name</span>: “test”, <span class="attr">value</span>: <span class="number">2n</span> &#125;;</span><br><span class="line"><span class="keyword">const</span> body = <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(request);</span><br><span class="line"><span class="keyword">const</span> response = <span class="keyword">await</span> <span class="title function_">fetch</span>(<span class="string">&quot;https://example.com&quot;</span>, &#123;</span><br><span class="line">  <span class="attr">method</span>: “<span class="variable constant_">POST</span>”,</span><br><span class="line">  body,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">if</span> (!response.<span class="property">ok</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>No errors, no linters, even though this can break your app.</p>
+<p>Right now, in my head, I can hear, “What’s the problem, just use try/catch everywhere.” Here comes the third problem: we don’t know which one is thrown. Of course, we can somehow guess by the error message, but what about bigger services/functions with many places where errors can happen? Are you sure you are handling all of them properly with one try/catch?</p>
+<hr>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">greeting_file_result</span> = File::<span class="title function_ invoke__">open</span>(“hello.txt”);  </span><br><span class="line"><span class="keyword">let</span> <span class="variable">greeting_file</span> = <span class="keyword">match</span> greeting_file_result &#123;  </span><br><span class="line">  <span class="title function_ invoke__">Ok</span>(file) =&gt; file,  </span><br><span class="line">  <span class="title function_ invoke__">Err</span>(error) =&gt; <span class="built_in">panic!</span>(<span class="string">&quot;Problem opening the file: &#123;:?&#125;&quot;</span>, error),  </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>The most verbose of the three shown here and, ironically, the best one. So, first of all, Rust handles the errors using its amazing enums (they are not the same as TypeScript enums!). Without going into detail, what is important here is that it uses an enum called <code>Result</code> with two variants: <code>Ok</code> and <code>Err</code>. As you might guess, <code>Ok</code> holds a value and <code>Err</code> holds…surprise, an error :D.</p>
+<p>The summary here is that Rust always know where there might be an error. And it force you to deal with it right where it appears (mostly). No hidden ones, no guessing, no breaking app with a surprise face.</p>
+<p>And this approach is just better. By A MILE.</p>
+<p>We cannot make TypeScript errors work like the Rust. The limiting factor here is the language itself; it doesn’t have the proper tools to do that.</p>
+<p>But what we can do is try to make it similar. And make it simple:</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> <span class="title class_">Safe</span>&lt;T&gt; =  </span><br><span class="line">  | &#123;  </span><br><span class="line">    <span class="attr">success</span>: <span class="literal">true</span>;  </span><br><span class="line">    <span class="attr">data</span>: T;  </span><br><span class="line">  &#125;  </span><br><span class="line">  | &#123;  </span><br><span class="line">    <span class="attr">success</span>: <span class="literal">false</span>;  </span><br><span class="line">    <span class="attr">error</span>: <span class="built_in">string</span>;  </span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure>
+<p>we do need a few try/catches. The good thing is we only need about two, not 100,000:</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> safe&lt;T&gt;(<span class="attr">promise</span>: <span class="title class_">Promise</span>&lt;T&gt;, <span class="attr">err</span>?: <span class="built_in">string</span>): <span class="title class_">Promise</span>&lt;<span class="title class_">Safe</span>&lt;T&gt;&gt;;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> safe&lt;T&gt;(<span class="attr">func</span>: <span class="function">() =&gt;</span> T, <span class="attr">err</span>?: <span class="built_in">string</span>): <span class="title class_">Safe</span>&lt;T&gt;;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> safe&lt;T&gt;(</span><br><span class="line">  <span class="attr">promiseOrFunc</span>: <span class="title class_">Promise</span>&lt;T&gt; | (<span class="function">() =&gt;</span> T),</span><br><span class="line">  <span class="attr">err</span>?: <span class="built_in">string</span>,</span><br><span class="line">): <span class="title class_">Promise</span>&lt;<span class="title class_">Safe</span>&lt;T&gt;&gt; | <span class="title class_">Safe</span>&lt;T&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (promiseOrFunc <span class="keyword">instanceof</span> <span class="title class_">Promise</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">safeAsync</span>(promiseOrFunc, err);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">safeSync</span>(promiseOrFunc, err);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> safeAsync&lt;T&gt;(</span><br><span class="line">  <span class="attr">promise</span>: <span class="title class_">Promise</span>&lt;T&gt;, </span><br><span class="line">  <span class="attr">err</span>?: <span class="built_in">string</span></span><br><span class="line">): <span class="title class_">Promise</span>&lt;<span class="title class_">Safe</span>&lt;T&gt;&gt; &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> data = <span class="keyword">await</span> promise;</span><br><span class="line">    <span class="keyword">return</span> &#123; data, <span class="attr">success</span>: <span class="literal">true</span> &#125;;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(e);</span><br><span class="line">    <span class="keyword">if</span> (err !== <span class="literal">undefined</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="attr">success</span>: <span class="literal">false</span>, <span class="attr">error</span>: err &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (e <span class="keyword">instanceof</span> <span class="title class_">Error</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="attr">success</span>: <span class="literal">false</span>, <span class="attr">error</span>: e.<span class="property">message</span> &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> &#123; <span class="attr">success</span>: <span class="literal">false</span>, <span class="attr">error</span>: <span class="string">&quot;Something went wrong&quot;</span> &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> safeSync&lt;T&gt;(</span><br><span class="line">  <span class="attr">func</span>: <span class="function">() =&gt;</span> T, </span><br><span class="line">  <span class="attr">err</span>?: <span class="built_in">string</span></span><br><span class="line">): <span class="title class_">Safe</span>&lt;T&gt; &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> data = <span class="title function_">func</span>();</span><br><span class="line">    <span class="keyword">return</span> &#123; data, <span class="attr">success</span>: <span class="literal">true</span> &#125;;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(e);</span><br><span class="line">    <span class="keyword">if</span> (err !== <span class="literal">undefined</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="attr">success</span>: <span class="literal">false</span>, <span class="attr">error</span>: err &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (e <span class="keyword">instanceof</span> <span class="title class_">Error</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="attr">success</span>: <span class="literal">false</span>, <span class="attr">error</span>: e.<span class="property">message</span> &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> &#123; <span class="attr">success</span>: <span class="literal">false</span>, <span class="attr">error</span>: <span class="string">&quot;Something went wrong&quot;</span> &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>This is just a wrapper with our <code>Safe</code> type as the return one. But sometimes simple things are all you need. Let’s combine them with the example from above.</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> request = &#123; <span class="attr">name</span>: “test”, <span class="attr">value</span>: <span class="number">2n</span> &#125;;  </span><br><span class="line"><span class="keyword">const</span> body = <span class="title function_">safe</span>(  </span><br><span class="line">  <span class="function">() =&gt;</span> <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(request),  </span><br><span class="line">  “<span class="title class_">Failed</span> to serialize request”,  </span><br><span class="line">);  </span><br><span class="line"><span class="keyword">if</span> (!body.<span class="property">success</span>) &#123;  </span><br><span class="line">  <span class="comment">// handle error (body.error)  </span></span><br><span class="line">  <span class="keyword">return</span>;  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="keyword">const</span> response = <span class="keyword">await</span> <span class="title function_">safe</span>(  </span><br><span class="line">  <span class="title function_">fetch</span>(<span class="string">&quot;https://example.com&quot;</span>, &#123;  </span><br><span class="line">    <span class="attr">method</span>: “<span class="variable constant_">POST</span>”,  </span><br><span class="line">    <span class="attr">body</span>: body.<span class="property">data</span>,  </span><br><span class="line">  &#125;),  </span><br><span class="line">);  </span><br><span class="line"><span class="keyword">if</span> (!response.<span class="property">success</span>) &#123;  </span><br><span class="line">  <span class="comment">// handle error (response.error)  </span></span><br><span class="line">  <span class="keyword">return</span>;  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="keyword">if</span> (!response.<span class="property">data</span>.<span class="property">ok</span>) &#123;  </span><br><span class="line">  <span class="comment">// handle network error  </span></span><br><span class="line">  <span class="keyword">return</span>;  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="comment">// handle response (body.data)</span></span><br></pre></td></tr></table></figure>
+<p>New solution is longer, but it performs better because of the following reasons:</p>
+<ul>
+<li>no try/catch</li>
+<li>we handle each error where it occurs</li>
+<li>we can specify an error message for a specific function</li>
+<li>we have a nice top-to-bottom logic, all errors on top, then only the response at the bottom</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>WiscKey: Separating Keys from Values in SSD-conscious Storage</title>
     <url>/2023/07/21/WiscKey-Separating-Keys-from-Values-in-SSD-conscious-Storage/</url>
     <content><![CDATA[<p>We present WiscKey, a persistent LSM-tree-based key-value store with a performance-oriented data layoutthat separates keys from values to minimize I/O amplifi-cation. The design of WiscKey is highly SSD optimized, leveraging both the sequential and random performance characteristics of the device.</p>
@@ -2659,43 +2696,6 @@ A relation table (also sometimes called a <em>JOIN</em>, <em>link</em> or <em>pi
 <p>而读取SSTable中的数据是通过Binary Search来实现的。为了加速Search，LevelDB为每个SSTable建立了一个稀疏索引，用来记录每个数据块的最大key和最小key。</p>
 </blockquote>
 </li>
-</ul>
-]]></content>
-      <tags>
-        <tag>Technique</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>TypeScript With Rust Errors, No Try Catch, Heresy</title>
-    <url>/2023/04/30/TypeScript-With-Rust-Errors-No-Try-Catch-Heresy/</url>
-    <content><![CDATA[<blockquote>
-<p>It’s hard to miss things when you don’t know different things exist</p>
-</blockquote>
-<p>The first problem is, and personally, I believe it’s the biggest JavaScript problem ever: we don’t know what can throw an error. From a JavaScript error perspective, it’s the same as the following:</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> data = “<span class="title class_">Hello</span>”;</span><br><span class="line">&#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">error</span>(err);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>JavaScript doesn’t know; JavaScript doesn’t care. You should know.</p>
-<p>Second thing, this is perfectly viable code:</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> request = &#123; <span class="attr">name</span>: “test”, <span class="attr">value</span>: <span class="number">2n</span> &#125;;</span><br><span class="line"><span class="keyword">const</span> body = <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(request);</span><br><span class="line"><span class="keyword">const</span> response = <span class="keyword">await</span> <span class="title function_">fetch</span>(<span class="string">&quot;https://example.com&quot;</span>, &#123;</span><br><span class="line">  <span class="attr">method</span>: “<span class="variable constant_">POST</span>”,</span><br><span class="line">  body,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">if</span> (!response.<span class="property">ok</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>No errors, no linters, even though this can break your app.</p>
-<p>Right now, in my head, I can hear, “What’s the problem, just use try/catch everywhere.” Here comes the third problem: we don’t know which one is thrown. Of course, we can somehow guess by the error message, but what about bigger services/functions with many places where errors can happen? Are you sure you are handling all of them properly with one try/catch?</p>
-<hr>
-<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">greeting_file_result</span> = File::<span class="title function_ invoke__">open</span>(“hello.txt”);  </span><br><span class="line"><span class="keyword">let</span> <span class="variable">greeting_file</span> = <span class="keyword">match</span> greeting_file_result &#123;  </span><br><span class="line">  <span class="title function_ invoke__">Ok</span>(file) =&gt; file,  </span><br><span class="line">  <span class="title function_ invoke__">Err</span>(error) =&gt; <span class="built_in">panic!</span>(<span class="string">&quot;Problem opening the file: &#123;:?&#125;&quot;</span>, error),  </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>The most verbose of the three shown here and, ironically, the best one. So, first of all, Rust handles the errors using its amazing enums (they are not the same as TypeScript enums!). Without going into detail, what is important here is that it uses an enum called <code>Result</code> with two variants: <code>Ok</code> and <code>Err</code>. As you might guess, <code>Ok</code> holds a value and <code>Err</code> holds…surprise, an error :D.</p>
-<p>The summary here is that Rust always know where there might be an error. And it force you to deal with it right where it appears (mostly). No hidden ones, no guessing, no breaking app with a surprise face.</p>
-<p>And this approach is just better. By A MILE.</p>
-<p>We cannot make TypeScript errors work like the Rust. The limiting factor here is the language itself; it doesn’t have the proper tools to do that.</p>
-<p>But what we can do is try to make it similar. And make it simple:</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> <span class="title class_">Safe</span>&lt;T&gt; =  </span><br><span class="line">  | &#123;  </span><br><span class="line">    <span class="attr">success</span>: <span class="literal">true</span>;  </span><br><span class="line">    <span class="attr">data</span>: T;  </span><br><span class="line">  &#125;  </span><br><span class="line">  | &#123;  </span><br><span class="line">    <span class="attr">success</span>: <span class="literal">false</span>;  </span><br><span class="line">    <span class="attr">error</span>: <span class="built_in">string</span>;  </span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure>
-<p>we do need a few try/catches. The good thing is we only need about two, not 100,000:</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> safe&lt;T&gt;(<span class="attr">promise</span>: <span class="title class_">Promise</span>&lt;T&gt;, <span class="attr">err</span>?: <span class="built_in">string</span>): <span class="title class_">Promise</span>&lt;<span class="title class_">Safe</span>&lt;T&gt;&gt;;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> safe&lt;T&gt;(<span class="attr">func</span>: <span class="function">() =&gt;</span> T, <span class="attr">err</span>?: <span class="built_in">string</span>): <span class="title class_">Safe</span>&lt;T&gt;;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> safe&lt;T&gt;(</span><br><span class="line">  <span class="attr">promiseOrFunc</span>: <span class="title class_">Promise</span>&lt;T&gt; | (<span class="function">() =&gt;</span> T),</span><br><span class="line">  <span class="attr">err</span>?: <span class="built_in">string</span>,</span><br><span class="line">): <span class="title class_">Promise</span>&lt;<span class="title class_">Safe</span>&lt;T&gt;&gt; | <span class="title class_">Safe</span>&lt;T&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (promiseOrFunc <span class="keyword">instanceof</span> <span class="title class_">Promise</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">safeAsync</span>(promiseOrFunc, err);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">safeSync</span>(promiseOrFunc, err);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> safeAsync&lt;T&gt;(</span><br><span class="line">  <span class="attr">promise</span>: <span class="title class_">Promise</span>&lt;T&gt;, </span><br><span class="line">  <span class="attr">err</span>?: <span class="built_in">string</span></span><br><span class="line">): <span class="title class_">Promise</span>&lt;<span class="title class_">Safe</span>&lt;T&gt;&gt; &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> data = <span class="keyword">await</span> promise;</span><br><span class="line">    <span class="keyword">return</span> &#123; data, <span class="attr">success</span>: <span class="literal">true</span> &#125;;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(e);</span><br><span class="line">    <span class="keyword">if</span> (err !== <span class="literal">undefined</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="attr">success</span>: <span class="literal">false</span>, <span class="attr">error</span>: err &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (e <span class="keyword">instanceof</span> <span class="title class_">Error</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="attr">success</span>: <span class="literal">false</span>, <span class="attr">error</span>: e.<span class="property">message</span> &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> &#123; <span class="attr">success</span>: <span class="literal">false</span>, <span class="attr">error</span>: <span class="string">&quot;Something went wrong&quot;</span> &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> safeSync&lt;T&gt;(</span><br><span class="line">  <span class="attr">func</span>: <span class="function">() =&gt;</span> T, </span><br><span class="line">  <span class="attr">err</span>?: <span class="built_in">string</span></span><br><span class="line">): <span class="title class_">Safe</span>&lt;T&gt; &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> data = <span class="title function_">func</span>();</span><br><span class="line">    <span class="keyword">return</span> &#123; data, <span class="attr">success</span>: <span class="literal">true</span> &#125;;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(e);</span><br><span class="line">    <span class="keyword">if</span> (err !== <span class="literal">undefined</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="attr">success</span>: <span class="literal">false</span>, <span class="attr">error</span>: err &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (e <span class="keyword">instanceof</span> <span class="title class_">Error</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="attr">success</span>: <span class="literal">false</span>, <span class="attr">error</span>: e.<span class="property">message</span> &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> &#123; <span class="attr">success</span>: <span class="literal">false</span>, <span class="attr">error</span>: <span class="string">&quot;Something went wrong&quot;</span> &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>This is just a wrapper with our <code>Safe</code> type as the return one. But sometimes simple things are all you need. Let’s combine them with the example from above.</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> request = &#123; <span class="attr">name</span>: “test”, <span class="attr">value</span>: <span class="number">2n</span> &#125;;  </span><br><span class="line"><span class="keyword">const</span> body = <span class="title function_">safe</span>(  </span><br><span class="line">  <span class="function">() =&gt;</span> <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(request),  </span><br><span class="line">  “<span class="title class_">Failed</span> to serialize request”,  </span><br><span class="line">);  </span><br><span class="line"><span class="keyword">if</span> (!body.<span class="property">success</span>) &#123;  </span><br><span class="line">  <span class="comment">// handle error (body.error)  </span></span><br><span class="line">  <span class="keyword">return</span>;  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="keyword">const</span> response = <span class="keyword">await</span> <span class="title function_">safe</span>(  </span><br><span class="line">  <span class="title function_">fetch</span>(<span class="string">&quot;https://example.com&quot;</span>, &#123;  </span><br><span class="line">    <span class="attr">method</span>: “<span class="variable constant_">POST</span>”,  </span><br><span class="line">    <span class="attr">body</span>: body.<span class="property">data</span>,  </span><br><span class="line">  &#125;),  </span><br><span class="line">);  </span><br><span class="line"><span class="keyword">if</span> (!response.<span class="property">success</span>) &#123;  </span><br><span class="line">  <span class="comment">// handle error (response.error)  </span></span><br><span class="line">  <span class="keyword">return</span>;  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="keyword">if</span> (!response.<span class="property">data</span>.<span class="property">ok</span>) &#123;  </span><br><span class="line">  <span class="comment">// handle network error  </span></span><br><span class="line">  <span class="keyword">return</span>;  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="comment">// handle response (body.data)</span></span><br></pre></td></tr></table></figure>
-<p>New solution is longer, but it performs better because of the following reasons:</p>
-<ul>
-<li>no try/catch</li>
-<li>we handle each error where it occurs</li>
-<li>we can specify an error message for a specific function</li>
-<li>we have a nice top-to-bottom logic, all errors on top, then only the response at the bottom</li>
 </ul>
 ]]></content>
       <tags>
@@ -3630,6 +3630,18 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       </categories>
   </entry>
   <entry>
+    <title>二〇二五年二月二十四日</title>
+    <url>/2025/02/24/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%BA%94%E5%B9%B4%E4%BA%8C%E6%9C%88%E4%BA%8C%E5%8D%81%E5%9B%9B%E6%97%A5/</url>
+    <content><![CDATA[<p>街上的人躲进建筑，道路上的车变得缓慢。路边的黑猫坐在屋檐下张望，在雨天，它也有了思考的地方与时间。除了淅淅沥沥的雨声再无其他。</p>
+<p>衣服买大了，他们走路好急，地铁上只有老人没看手机，天怎么黑那么快是我起晚了吗，那个蹦蹦跳跳的女孩耳机里在听什么歌，我还在原地吗，我要再等等吗。</p>
+<p>家就像厚酒之后突然明晰的想象，时间不语，只是沉默，我沉默地走进时间，看着我和你的年龄相差越来越小。</p>
+<p>这雨天，世界都温柔的可以掐出水来。</p>
+]]></content>
+      <categories>
+        <category>gallery</category>
+      </categories>
+  </entry>
+  <entry>
     <title>二〇二五年四月三日</title>
     <url>/2025/04/03/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%BA%94%E5%B9%B4%E4%BA%94%E6%9C%88%E4%B8%89%E6%97%A5/</url>
     <content><![CDATA[<p>日历被一页页撕去，出钞口的暖风比任何毛毯更忠实，数字键盘的荧光就像圣徒光环般笼罩着他，这些废纸似乎可以延长家人存在的时间。</p>
@@ -4036,6 +4048,15 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       </categories>
   </entry>
   <entry>
+    <title>二零二三年一月二十一日</title>
+    <url>/2023/01/21/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E4%B8%80%E6%9C%88%E4%BA%8C%E5%8D%81%E4%B8%80%E6%97%A5/</url>
+    <content><![CDATA[<p>我踏着烟火若隐若现， 我生来就是为了把这个世界的消息带到下一个世界去。</p>
+]]></content>
+      <categories>
+        <category>gallery</category>
+      </categories>
+  </entry>
+  <entry>
     <title>二零二三年七月三十日</title>
     <url>/2023/07/30/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E4%B8%83%E6%9C%88%E4%B8%89%E5%8D%81%E6%97%A5/</url>
     <content><![CDATA[<p>那天阳光很好，她想离开病房, 离开躺了快一辈子的病床，她说想晒晒太阳，我带着她去楼下的草坪。她摸摸花，摸摸草，摸摸树。她给自己编了个很好看很好看的辫子，把她摘的花插在上面。可是还没绑好她就垂下了头。</p>
@@ -4048,15 +4069,6 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
 <blockquote>
 <p>韩暮秋，息止安所。</p>
 </blockquote>
-]]></content>
-      <categories>
-        <category>gallery</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>二零二三年一月二十一日</title>
-    <url>/2023/01/21/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E4%B8%80%E6%9C%88%E4%BA%8C%E5%8D%81%E4%B8%80%E6%97%A5/</url>
-    <content><![CDATA[<p>我踏着烟火若隐若现， 我生来就是为了把这个世界的消息带到下一个世界去。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
@@ -4095,20 +4107,20 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       </categories>
   </entry>
   <entry>
-    <title>二零二三年二月二十六日</title>
-    <url>/2023/02/26/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E4%BA%8C%E6%9C%88%E4%BA%8C%E5%8D%81%E5%85%AD%E6%97%A5/</url>
-    <content><![CDATA[<p>翻滚的热汤接过焰火的能量把周围的蒸汽撕开一道裂缝，透过缝隙我见到一对爱人的时空交织在未来，他们幸运的错开孤独，人们举起手中的酒杯，祝因果与命运缠绵之人幸福</p>
+    <title>二零二三年二月二十五日</title>
+    <url>/2023/02/25/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E4%BA%8C%E6%9C%88%E4%BA%8C%E5%8D%81%E4%BA%94%E6%97%A5/</url>
+    <content><![CDATA[<p>我无法表达出我所处的时间概念，只是我的实际感受，睁眼闭眼就是过去和未来。</p>
+<p>我闭上眼睛就能感受到不知道是过去还是未来的某个时刻，阳光从睫毛的缝隙钻进我的眼睛，闭上眼睛是一片光圈，我看不清周围，我也不需要看清周围，我只需要感觉到整个世界给我最热烈的拥抱。</p>
+<p>我睁开眼睛也能感受到过去还是未来的某个时刻，我开车穿梭在灰蒙蒙的细雨笼罩中的城市，细雨模糊了整个城市的夜空，在我的车窗前汇成水珠晕开了红绿灯的光线，再被雨刮器一扫而空。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
       </categories>
   </entry>
   <entry>
-    <title>二零二三年二月二十五日</title>
-    <url>/2023/02/25/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E4%BA%8C%E6%9C%88%E4%BA%8C%E5%8D%81%E4%BA%94%E6%97%A5/</url>
-    <content><![CDATA[<p>我无法表达出我所处的时间概念，只是我的实际感受，睁眼闭眼就是过去和未来。</p>
-<p>我闭上眼睛就能感受到不知道是过去还是未来的某个时刻，阳光从睫毛的缝隙钻进我的眼睛，闭上眼睛是一片光圈，我看不清周围，我也不需要看清周围，我只需要感觉到整个世界给我最热烈的拥抱。</p>
-<p>我睁开眼睛也能感受到过去还是未来的某个时刻，我开车穿梭在灰蒙蒙的细雨笼罩中的城市，细雨模糊了整个城市的夜空，在我的车窗前汇成水珠晕开了红绿灯的光线，再被雨刮器一扫而空。</p>
+    <title>二零二三年二月二十六日</title>
+    <url>/2023/02/26/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E4%BA%8C%E6%9C%88%E4%BA%8C%E5%8D%81%E5%85%AD%E6%97%A5/</url>
+    <content><![CDATA[<p>翻滚的热汤接过焰火的能量把周围的蒸汽撕开一道裂缝，透过缝隙我见到一对爱人的时空交织在未来，他们幸运的错开孤独，人们举起手中的酒杯，祝因果与命运缠绵之人幸福</p>
 ]]></content>
       <categories>
         <category>gallery</category>
@@ -4180,6 +4192,19 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       </categories>
   </entry>
   <entry>
+    <title>二零二三年十一月六日</title>
+    <url>/2023/11/06/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E5%8D%81%E4%B8%80%E6%9C%88%E5%85%AD%E6%97%A5/</url>
+    <content><![CDATA[<p>寒风打得他踉跄地摔进田野中，他颤抖着，疑惑的抬起头，云层捂住了月亮，摇曳着露出一角烛火般的月光，烛火同他的身体一般颤抖，那是落日的余晖，也是等待朝阳的希望。</p>
+<p>世界同可怜的孩子一起闭上了眼睛，世界不那么开心，但是</p>
+<blockquote>
+<p>这个世界，我真的爱你</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>gallery</category>
+      </categories>
+  </entry>
+  <entry>
     <title>二零二三年四月二十二日</title>
     <url>/2023/04/22/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E5%9B%9B%E6%9C%88%E4%BA%8C%E5%8D%81%E4%BA%8C%E6%97%A5/</url>
     <content><![CDATA[<p>二零二三年四月二十二日， 风沙把阳光的气息卷入帐篷， 现在是凌晨四点二十七，快天亮了， 仍有些微凉， 我即将踏入看不到边的大漠。</p>
@@ -4192,19 +4217,6 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
 <p>岁月中的某个文明中的某个人，曾经也骑着骆驼向远方，又是哪个人，吟着佛门心语站在我身旁，我听见大漠的念经声。</p>
 <p>我不是个有耐心的人， 抄经书对我来说是种折磨， 我只能选择把经文抄在大地上， 黄沙上， 用自己的双腿一点点写， 用耳去倾听狂风卷积的声音。</p>
 <p>我生来就是为了把这个世界的消息和秘密带到下一个世界去。</p>
-]]></content>
-      <categories>
-        <category>gallery</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>二零二三年十一月六日</title>
-    <url>/2023/11/06/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E5%8D%81%E4%B8%80%E6%9C%88%E5%85%AD%E6%97%A5/</url>
-    <content><![CDATA[<p>寒风打得他踉跄地摔进田野中，他颤抖着，疑惑的抬起头，云层捂住了月亮，摇曳着露出一角烛火般的月光，烛火同他的身体一般颤抖，那是落日的余晖，也是等待朝阳的希望。</p>
-<p>世界同可怜的孩子一起闭上了眼睛，世界不那么开心，但是</p>
-<blockquote>
-<p>这个世界，我真的爱你</p>
-</blockquote>
 ]]></content>
       <categories>
         <category>gallery</category>
@@ -4264,18 +4276,18 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       </categories>
   </entry>
   <entry>
-    <title>二零二二年十二月三十一日</title>
-    <url>/2022/12/31/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%BA%8C%E5%B9%B4%E5%8D%81%E4%BA%8C%E6%9C%88%E4%B8%89%E5%8D%81%E4%B8%80%E6%97%A5/</url>
-    <content><![CDATA[<p>我要做时间富人，肆意挥霍，飘在世界上空，什么都不做，静静看着周遭的一切，命运给我什么我就接着，命运拿走什么我就看着，到模糊不见，到夜色如烟。</p>
+    <title>二零二二年十一月月三日</title>
+    <url>/2022/11/03/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%BA%8C%E5%B9%B4%E5%8D%81%E4%B8%80%E6%9C%88%E6%9C%88%E4%B8%89%E6%97%A5/</url>
+    <content><![CDATA[<p>我独自冒着冷风，去薄霜铺地的林子里，为听鸟语，为盼朝阳，为寻泥土里渐次苏醒的花草，但春信不至。我是如此单独而完整，在无数个夜晚，独自顶着冷风 伫立在老橘树下的桥头，只为听一曲夜莺的哀歌，倚暖了石栏上的青苔，青苔凉透了我的心坎，但夜莺不来，夜莺不来啊。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
       </categories>
   </entry>
   <entry>
-    <title>二零二二年十一月月三日</title>
-    <url>/2022/11/03/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%BA%8C%E5%B9%B4%E5%8D%81%E4%B8%80%E6%9C%88%E6%9C%88%E4%B8%89%E6%97%A5/</url>
-    <content><![CDATA[<p>我独自冒着冷风，去薄霜铺地的林子里，为听鸟语，为盼朝阳，为寻泥土里渐次苏醒的花草，但春信不至。我是如此单独而完整，在无数个夜晚，独自顶着冷风 伫立在老橘树下的桥头，只为听一曲夜莺的哀歌，倚暖了石栏上的青苔，青苔凉透了我的心坎，但夜莺不来，夜莺不来啊。</p>
+    <title>二零二二年十二月三十一日</title>
+    <url>/2022/12/31/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%BA%8C%E5%B9%B4%E5%8D%81%E4%BA%8C%E6%9C%88%E4%B8%89%E5%8D%81%E4%B8%80%E6%97%A5/</url>
+    <content><![CDATA[<p>我要做时间富人，肆意挥霍，飘在世界上空，什么都不做，静静看着周遭的一切，命运给我什么我就接着，命运拿走什么我就看着，到模糊不见，到夜色如烟。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
@@ -4357,6 +4369,20 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       </tags>
   </entry>
   <entry>
+    <title>儿童新型冠状病毒Omicron株和肺炎支原体混合感染重症肺炎1例</title>
+    <url>/2023/10/25/%E5%84%BF%E7%AB%A5%E6%96%B0%E5%9E%8B%E5%86%A0%E7%8A%B6%E7%97%85%E6%AF%92Omicron%E6%A0%AA%E5%92%8C%E8%82%BA%E7%82%8E%E6%94%AF%E5%8E%9F%E4%BD%93%E6%B7%B7%E5%90%88%E6%84%9F%E6%9F%93%E9%87%8D%E7%97%87%E8%82%BA%E7%82%8E1%E4%BE%8B/</url>
+    <content><![CDATA[<p>患儿 男, 3 岁 10 月龄,因“间歇发热 2 周伴咳嗽、气促”入上海交通大学医学院附属仁济医院(南部院区)定点医院隔离病房。<br>
+患儿病初发热,确诊为新型冠状病毒肺炎(简称新冠肺炎),热退 2d 再次持续高热&gt;3d 伴气促、吸气性凹陷,胸部 CT 示右肺下叶片状密度影,诊断“重型新冠肺炎”,行支气管镜肺泡灌洗,宏基因组病原检测确诊为混合肺炎支原体感染,治疗好转出院。<br>
+提示临床医生诊治重型新冠肺炎时需警惕混合感染</p>
+<ul>
+<li><a href="../papers/%E5%84%BF%E7%AB%A5%E6%96%B0%E5%9E%8B%E5%86%A0%E7%8A%B6%E7%97%85%E6%AF%92Omicron%E6%A0%AA%E5%92%8C%E8%82%BA%E7%82%8E%E6%94%AF%E5%8E%9F%E4%BD%93%E6%B7%B7%E5%90%88%E6%84%9F%E6%9F%93%E9%87%8D%E7%97%87%E8%82%BA%E7%82%8E1%E4%BE%8B.pdf">报告原档</a></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Medicine</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>冬季咳嗽辨别指南</title>
     <url>/2023/10/22/%E5%86%AC%E5%AD%A3%E5%92%B3%E5%97%BD%E8%BE%A8%E5%88%AB%E6%8C%87%E5%8D%97/</url>
     <content><![CDATA[<p>这里给出一些在冬季，临床上简单诊断咳嗽的例子，仅供参考, 无论结果如何, 立刻就医.</p>
@@ -4431,20 +4457,6 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       <tags>
         <tag>Medicine</tag>
         <tag>Life</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>儿童新型冠状病毒Omicron株和肺炎支原体混合感染重症肺炎1例</title>
-    <url>/2023/10/25/%E5%84%BF%E7%AB%A5%E6%96%B0%E5%9E%8B%E5%86%A0%E7%8A%B6%E7%97%85%E6%AF%92Omicron%E6%A0%AA%E5%92%8C%E8%82%BA%E7%82%8E%E6%94%AF%E5%8E%9F%E4%BD%93%E6%B7%B7%E5%90%88%E6%84%9F%E6%9F%93%E9%87%8D%E7%97%87%E8%82%BA%E7%82%8E1%E4%BE%8B/</url>
-    <content><![CDATA[<p>患儿 男, 3 岁 10 月龄,因“间歇发热 2 周伴咳嗽、气促”入上海交通大学医学院附属仁济医院(南部院区)定点医院隔离病房。<br>
-患儿病初发热,确诊为新型冠状病毒肺炎(简称新冠肺炎),热退 2d 再次持续高热&gt;3d 伴气促、吸气性凹陷,胸部 CT 示右肺下叶片状密度影,诊断“重型新冠肺炎”,行支气管镜肺泡灌洗,宏基因组病原检测确诊为混合肺炎支原体感染,治疗好转出院。<br>
-提示临床医生诊治重型新冠肺炎时需警惕混合感染</p>
-<ul>
-<li><a href="../papers/%E5%84%BF%E7%AB%A5%E6%96%B0%E5%9E%8B%E5%86%A0%E7%8A%B6%E7%97%85%E6%AF%92Omicron%E6%A0%AA%E5%92%8C%E8%82%BA%E7%82%8E%E6%94%AF%E5%8E%9F%E4%BD%93%E6%B7%B7%E5%90%88%E6%84%9F%E6%9F%93%E9%87%8D%E7%97%87%E8%82%BA%E7%82%8E1%E4%BE%8B.pdf">报告原档</a></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>Medicine</tag>
       </tags>
   </entry>
   <entry>
@@ -4836,6 +4848,33 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       </tags>
   </entry>
   <entry>
+    <title>实时搜索中的防抖函数</title>
+    <url>/2025/02/10/%E5%AE%9E%E6%97%B6%E6%90%9C%E7%B4%A2%E4%B8%AD%E7%9A%84%E9%98%B2%E6%8A%96%E5%87%BD%E6%95%B0/</url>
+    <content><![CDATA[<p>在实现实时搜索功能时，通常会使用输入框的事件监听器来捕获用户的输入变化，并在输入变化时发送搜索请求。为了避免过多的请求导致服务器负担过重，通常会使用“防抖”（debounce）技术来控制请求的频率。</p>
+<h3 id="实现步骤"><a class="header-anchor" href="#实现步骤">¶</a>实现步骤</h3>
+<ol>
+<li>监听输入框的变化：使用<code>input</code>事件监听器来捕获用户的输入变化。</li>
+<li>防抖处理：使用防抖函数来限制请求的频率。防抖函数会在用户停止输入一段时间后才发送请求。</li>
+<li>发送请求：在防抖函数中调用搜索请求。</li>
+</ol>
+<h3 id="防抖函数示例"><a class="header-anchor" href="#防抖函数示例">¶</a>防抖函数示例</h3>
+<p>以下是一个简单的防抖函数示例：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">debounce</span>(<span class="params">func, wait</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> timeout;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">...args</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> context = <span class="variable language_">this</span>;</span><br><span class="line">    <span class="built_in">clearTimeout</span>(timeout);</span><br><span class="line">    timeout = <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> func.<span class="title function_">apply</span>(context, args), wait);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="实现实时搜索"><a class="header-anchor" href="#实现实时搜索">¶</a>实现实时搜索</h3>
+<p>假设你有一个输入框用于搜索患者：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">  import &#123; onMount &#125; from &#x27;svelte&#x27;;</span><br><span class="line">  import &#123; patientsStore &#125; from &#x27;$lib/stores/patients.svelte&#x27;;</span><br><span class="line"></span><br><span class="line">  let searchTerm = &#x27;&#x27;;</span><br><span class="line"></span><br><span class="line">  // 防抖函数</span><br><span class="line">  function debounce(func, wait) &#123;</span><br><span class="line">    let timeout;</span><br><span class="line">    return function(...args) &#123;</span><br><span class="line">      const context = this;</span><br><span class="line">      clearTimeout(timeout);</span><br><span class="line">      timeout = setTimeout(() =&gt; func.apply(context, args), wait);</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 搜索函数</span><br><span class="line">  const searchPatients = debounce(async (term) =&gt; &#123;</span><br><span class="line">    if (term) &#123;</span><br><span class="line">      // 发送搜索请求</span><br><span class="line">      const response = await fetch(`/api/search-patients?query=$&#123;term&#125;`);</span><br><span class="line">      const data = await response.json();</span><br><span class="line">      patientsStore.mbglPatients = data;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      // 清空搜索结果或恢复默认数据</span><br><span class="line">      patientsStore.mbglPatients = [];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;, 300); // 300ms 的防抖时间</span><br><span class="line"></span><br><span class="line">  // 监听输入框变化</span><br><span class="line">  function handleInput(event) &#123;</span><br><span class="line">    searchTerm = event.target.value;</span><br><span class="line">    searchPatients(searchTerm);</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;input type=&quot;text&quot; placeholder=&quot;搜索患者...&quot; on:input=&#123;handleInput&#125; bind:value=&#123;searchTerm&#125; /&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="请求发送间隔"><a class="header-anchor" href="#请求发送间隔">¶</a>请求发送间隔</h3>
+<ul>
+<li>防抖时间：通常设置为 300ms 到 500ms 之间。这个时间足够让用户完成输入并减少不必要的请求。</li>
+<li>考虑用户体验：防抖时间过短可能导致过多请求，过长则可能让用户感到延迟。300ms 是一个常用的折中值。</li>
+</ul>
+<p>通过这种方式，你可以实现一个高效的实时搜索功能，既能保证用户体验，又能减少服务器的负担。</p>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>急诊与灾难医学--烧伤</title>
     <url>/2024/01/25/%E6%80%A5%E8%AF%8A%E4%B8%8E%E7%81%BE%E9%9A%BE%E5%8C%BB%E5%AD%A6-%E7%83%A7%E4%BC%A4/</url>
     <content><![CDATA[<p>烧伤，烫伤是一个很常见的急诊意外损伤，这里科普一下相关的知识。</p>
@@ -4983,33 +5022,6 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
 ]]></content>
       <tags>
         <tag>Medicine</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>实时搜索中的防抖函数</title>
-    <url>/2025/02/10/%E5%AE%9E%E6%97%B6%E6%90%9C%E7%B4%A2%E4%B8%AD%E7%9A%84%E9%98%B2%E6%8A%96%E5%87%BD%E6%95%B0/</url>
-    <content><![CDATA[<p>在实现实时搜索功能时，通常会使用输入框的事件监听器来捕获用户的输入变化，并在输入变化时发送搜索请求。为了避免过多的请求导致服务器负担过重，通常会使用“防抖”（debounce）技术来控制请求的频率。</p>
-<h3 id="实现步骤"><a class="header-anchor" href="#实现步骤">¶</a>实现步骤</h3>
-<ol>
-<li>监听输入框的变化：使用<code>input</code>事件监听器来捕获用户的输入变化。</li>
-<li>防抖处理：使用防抖函数来限制请求的频率。防抖函数会在用户停止输入一段时间后才发送请求。</li>
-<li>发送请求：在防抖函数中调用搜索请求。</li>
-</ol>
-<h3 id="防抖函数示例"><a class="header-anchor" href="#防抖函数示例">¶</a>防抖函数示例</h3>
-<p>以下是一个简单的防抖函数示例：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">debounce</span>(<span class="params">func, wait</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> timeout;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">...args</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> context = <span class="variable language_">this</span>;</span><br><span class="line">    <span class="built_in">clearTimeout</span>(timeout);</span><br><span class="line">    timeout = <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> func.<span class="title function_">apply</span>(context, args), wait);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="实现实时搜索"><a class="header-anchor" href="#实现实时搜索">¶</a>实现实时搜索</h3>
-<p>假设你有一个输入框用于搜索患者：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">  import &#123; onMount &#125; from &#x27;svelte&#x27;;</span><br><span class="line">  import &#123; patientsStore &#125; from &#x27;$lib/stores/patients.svelte&#x27;;</span><br><span class="line"></span><br><span class="line">  let searchTerm = &#x27;&#x27;;</span><br><span class="line"></span><br><span class="line">  // 防抖函数</span><br><span class="line">  function debounce(func, wait) &#123;</span><br><span class="line">    let timeout;</span><br><span class="line">    return function(...args) &#123;</span><br><span class="line">      const context = this;</span><br><span class="line">      clearTimeout(timeout);</span><br><span class="line">      timeout = setTimeout(() =&gt; func.apply(context, args), wait);</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 搜索函数</span><br><span class="line">  const searchPatients = debounce(async (term) =&gt; &#123;</span><br><span class="line">    if (term) &#123;</span><br><span class="line">      // 发送搜索请求</span><br><span class="line">      const response = await fetch(`/api/search-patients?query=$&#123;term&#125;`);</span><br><span class="line">      const data = await response.json();</span><br><span class="line">      patientsStore.mbglPatients = data;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      // 清空搜索结果或恢复默认数据</span><br><span class="line">      patientsStore.mbglPatients = [];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;, 300); // 300ms 的防抖时间</span><br><span class="line"></span><br><span class="line">  // 监听输入框变化</span><br><span class="line">  function handleInput(event) &#123;</span><br><span class="line">    searchTerm = event.target.value;</span><br><span class="line">    searchPatients(searchTerm);</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;input type=&quot;text&quot; placeholder=&quot;搜索患者...&quot; on:input=&#123;handleInput&#125; bind:value=&#123;searchTerm&#125; /&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="请求发送间隔"><a class="header-anchor" href="#请求发送间隔">¶</a>请求发送间隔</h3>
-<ul>
-<li>防抖时间：通常设置为 300ms 到 500ms 之间。这个时间足够让用户完成输入并减少不必要的请求。</li>
-<li>考虑用户体验：防抖时间过短可能导致过多请求，过长则可能让用户感到延迟。300ms 是一个常用的折中值。</li>
-</ul>
-<p>通过这种方式，你可以实现一个高效的实时搜索功能，既能保证用户体验，又能减少服务器的负担。</p>
-]]></content>
-      <tags>
-        <tag>Technique</tag>
       </tags>
   </entry>
   <entry>
@@ -5307,18 +5319,6 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       </tags>
   </entry>
   <entry>
-    <title>二〇二五年二月二十四日</title>
-    <url>/2025/02/24/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%BA%94%E5%B9%B4%E4%BA%8C%E6%9C%88%E4%BA%8C%E5%8D%81%E5%9B%9B%E6%97%A5/</url>
-    <content><![CDATA[<p>街上的人躲进建筑，道路上的车变得缓慢。路边的黑猫坐在屋檐下张望，在雨天，它也有了思考的地方与时间。除了淅淅沥沥的雨声再无其他。</p>
-<p>衣服买大了，他们走路好急，地铁上只有老人没看手机，天怎么黑那么快是我起晚了吗，那个蹦蹦跳跳的女孩耳机里在听什么歌，我还在原地吗，我要再等等吗。</p>
-<p>家就像厚酒之后突然明晰的想象，时间不语，只是沉默，我沉默地走进时间，看着我和你的年龄相差越来越小。</p>
-<p>这雨天，世界都温柔的可以掐出水来。</p>
-]]></content>
-      <categories>
-        <category>gallery</category>
-      </categories>
-  </entry>
-  <entry>
     <title>直系血亲之间不能直接输血</title>
     <url>/2024/08/12/%E7%9B%B4%E7%B3%BB%E8%A1%80%E4%BA%B2%E4%B9%8B%E9%97%B4%E4%B8%8D%E8%83%BD%E7%9B%B4%E6%8E%A5%E8%BE%93%E8%A1%80/</url>
     <content><![CDATA[<p>现代医学证明，直系血亲间输血有时会发生一种严重的输血反应，称为输血相关移植物抗宿主病，这种输血反应尽管发病率很低，但死亡率却高达 99.9%，一旦发生几乎无法挽救。所以，很多电视剧里的那些情节都是错误的。根据中国输血协会网站上的介绍，目前虽然可以通过“血液辐照”的处理技术，把这种具有免疫活性的淋巴细胞灭活，但是临床上仍不建议直系血亲之间输血。</p>
@@ -5567,18 +5567,6 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       </tags>
   </entry>
   <entry>
-    <title>什么玩意儿都是</title>
-    <url>/2024/09/07/%E7%BB%99%E5%AD%A9%E5%AD%90%E4%BB%AC%E7%9A%84%E8%AF%9D/</url>
-    <content><![CDATA[<p>那些自古流传至今的至理名言，如无证实都不可信。今天人人称道的真理，明天却有可能被证实为谬论；有些人被这种云山雾罩的谬论遮蔽了双眼，还以为那是会为他们的土地带来甘露的云雨。</p>
-<p>那些古人们认为不可能办到的事，我们要敢于尝试和创新，只有这样，才能发现是否是可以做到的。古人有古人的办法，新人有新人的办法。古人只知道不断添柴就可以让火苗不灭，而新人却可以在火车锅炉中放点干柴就可以让火车绕着地球跑。</p>
-<p>对于年势已高的老人家而言，不能仅凭年龄就说自己有资格成为年轻人的老师，因为他所失去的要比得到的多得多。任何人都有权怀疑，那些最聪明的人是否真正发现了生活的价值。</p>
-<p>说实话，老一辈人并没有什么至关重要的忠告留给年轻人，他们的生活经验如此不完美，他们的人生因为某种个人原因过得如此悲惨失败。也许阅历中还给了他们一些有悖于那种经验的信心，可惜他们已经不再年轻。我在这世上已经活了二十年零六天，却从没在我的长辈那里得到过一个有价值的忠告或建议。他们讲不出什么有意义的事情，却总是说一些不得要领的话来教训我。这就是生活，一个在很大程度上我并未尝试过的实验；他们尝试过了，对我来说却毫无益处。</p>
-]]></content>
-      <tags>
-        <tag>Life</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>给尸体上 ECMO 并维持心跳</title>
     <url>/2024/05/13/%E7%BB%99%E5%B0%B8%E4%BD%93%E4%B8%8A-ECMO-%E5%B9%B6%E7%BB%B4%E6%8C%81%E5%BF%83%E8%B7%B3/</url>
     <content><![CDATA[<p>没用，真实案例中，脑死亡一天后，大脑开始液化，腹腔内脏会自融，胸部肌肉皮肤会被人工呼吸机（通俗一点的叫法)捶打成肉糜一样烂，此时开颅查看大脑变成一摊灰色浆糊，脑脊液“会从鼻孔里流出来，好像清鼻涕一样。</p>
@@ -5588,6 +5576,18 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
 ]]></content>
       <tags>
         <tag>Medicine</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>什么玩意儿都是</title>
+    <url>/2024/09/07/%E7%BB%99%E5%AD%A9%E5%AD%90%E4%BB%AC%E7%9A%84%E8%AF%9D/</url>
+    <content><![CDATA[<p>那些自古流传至今的至理名言，如无证实都不可信。今天人人称道的真理，明天却有可能被证实为谬论；有些人被这种云山雾罩的谬论遮蔽了双眼，还以为那是会为他们的土地带来甘露的云雨。</p>
+<p>那些古人们认为不可能办到的事，我们要敢于尝试和创新，只有这样，才能发现是否是可以做到的。古人有古人的办法，新人有新人的办法。古人只知道不断添柴就可以让火苗不灭，而新人却可以在火车锅炉中放点干柴就可以让火车绕着地球跑。</p>
+<p>对于年势已高的老人家而言，不能仅凭年龄就说自己有资格成为年轻人的老师，因为他所失去的要比得到的多得多。任何人都有权怀疑，那些最聪明的人是否真正发现了生活的价值。</p>
+<p>说实话，老一辈人并没有什么至关重要的忠告留给年轻人，他们的生活经验如此不完美，他们的人生因为某种个人原因过得如此悲惨失败。也许阅历中还给了他们一些有悖于那种经验的信心，可惜他们已经不再年轻。我在这世上已经活了二十年零六天，却从没在我的长辈那里得到过一个有价值的忠告或建议。他们讲不出什么有意义的事情，却总是说一些不得要领的话来教训我。这就是生活，一个在很大程度上我并未尝试过的实验；他们尝试过了，对我来说却毫无益处。</p>
+]]></content>
+      <tags>
+        <tag>Life</tag>
       </tags>
   </entry>
   <entry>
