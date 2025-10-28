@@ -986,8 +986,6 @@ await prisma.$transaction(async tx =&gt; &#123;
 <p>这些细胞在肺泡和支气管黏膜定植后，释放MMP-9（促进基质降解和气道重构）、弹性蛋白酶（破坏弹性纤维，导致肺气肿）和LTB4（进一步放大炎症级联）。</p>
 <p>而 PDE4（磷酸二酯酶4）能够降解cAMP（环腺苷酸），从而增强中性粒细胞的趋化、脱颗粒和ROS产生。</p>
 <p>所以临床上，PDE4 抑制剂如罗氟司特（roflumilast）被批准用于重度COPD，以降低中性粒细胞介导的炎症，减少急性加重风险。</p>
-<p>同时，B细胞和T细胞的交互可间接放大中性粒细胞响应，而MMP-9的升高则与COPD进展相关，血清水平可作为生物标志物监测疾病严重度。</p>
-<p>总体而言，在COPD中，中性粒细胞从毒性释放加剧了气道阻塞、肺功能下降和共病风险，如心血管事件。</p>
 ]]></content>
       <tags>
         <tag>Medicine</tag>
@@ -4370,20 +4368,6 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       </categories>
   </entry>
   <entry>
-    <title>儿童新型冠状病毒Omicron株和肺炎支原体混合感染重症肺炎1例</title>
-    <url>/2023/10/25/%E5%84%BF%E7%AB%A5%E6%96%B0%E5%9E%8B%E5%86%A0%E7%8A%B6%E7%97%85%E6%AF%92Omicron%E6%A0%AA%E5%92%8C%E8%82%BA%E7%82%8E%E6%94%AF%E5%8E%9F%E4%BD%93%E6%B7%B7%E5%90%88%E6%84%9F%E6%9F%93%E9%87%8D%E7%97%87%E8%82%BA%E7%82%8E1%E4%BE%8B/</url>
-    <content><![CDATA[<p>患儿 男, 3 岁 10 月龄,因“间歇发热 2 周伴咳嗽、气促”入上海交通大学医学院附属仁济医院(南部院区)定点医院隔离病房。<br>
-患儿病初发热,确诊为新型冠状病毒肺炎(简称新冠肺炎),热退 2d 再次持续高热&gt;3d 伴气促、吸气性凹陷,胸部 CT 示右肺下叶片状密度影,诊断“重型新冠肺炎”,行支气管镜肺泡灌洗,宏基因组病原检测确诊为混合肺炎支原体感染,治疗好转出院。<br>
-提示临床医生诊治重型新冠肺炎时需警惕混合感染</p>
-<ul>
-<li><a href="../papers/%E5%84%BF%E7%AB%A5%E6%96%B0%E5%9E%8B%E5%86%A0%E7%8A%B6%E7%97%85%E6%AF%92Omicron%E6%A0%AA%E5%92%8C%E8%82%BA%E7%82%8E%E6%94%AF%E5%8E%9F%E4%BD%93%E6%B7%B7%E5%90%88%E6%84%9F%E6%9F%93%E9%87%8D%E7%97%87%E8%82%BA%E7%82%8E1%E4%BE%8B.pdf">报告原档</a></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>Medicine</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>从事件风暴看领域驱动设计</title>
     <url>/2025/02/11/%E4%BB%8E%E4%BA%8B%E4%BB%B6%E9%A3%8E%E6%9A%B4%E7%9C%8B%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1/</url>
     <content><![CDATA[<p>事件风暴（Event Storming）是一种领域驱动设计（DDD）的实践方法，由 Alberto Brandolini 提出，旨在通过团队协作的方式快速理解和建模业务领域。</p>
@@ -4420,6 +4404,20 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
 ]]></content>
       <tags>
         <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>儿童新型冠状病毒Omicron株和肺炎支原体混合感染重症肺炎1例</title>
+    <url>/2023/10/25/%E5%84%BF%E7%AB%A5%E6%96%B0%E5%9E%8B%E5%86%A0%E7%8A%B6%E7%97%85%E6%AF%92Omicron%E6%A0%AA%E5%92%8C%E8%82%BA%E7%82%8E%E6%94%AF%E5%8E%9F%E4%BD%93%E6%B7%B7%E5%90%88%E6%84%9F%E6%9F%93%E9%87%8D%E7%97%87%E8%82%BA%E7%82%8E1%E4%BE%8B/</url>
+    <content><![CDATA[<p>患儿 男, 3 岁 10 月龄,因“间歇发热 2 周伴咳嗽、气促”入上海交通大学医学院附属仁济医院(南部院区)定点医院隔离病房。<br>
+患儿病初发热,确诊为新型冠状病毒肺炎(简称新冠肺炎),热退 2d 再次持续高热&gt;3d 伴气促、吸气性凹陷,胸部 CT 示右肺下叶片状密度影,诊断“重型新冠肺炎”,行支气管镜肺泡灌洗,宏基因组病原检测确诊为混合肺炎支原体感染,治疗好转出院。<br>
+提示临床医生诊治重型新冠肺炎时需警惕混合感染</p>
+<ul>
+<li><a href="../papers/%E5%84%BF%E7%AB%A5%E6%96%B0%E5%9E%8B%E5%86%A0%E7%8A%B6%E7%97%85%E6%AF%92Omicron%E6%A0%AA%E5%92%8C%E8%82%BA%E7%82%8E%E6%94%AF%E5%8E%9F%E4%BD%93%E6%B7%B7%E5%90%88%E6%84%9F%E6%9F%93%E9%87%8D%E7%97%87%E8%82%BA%E7%82%8E1%E4%BE%8B.pdf">报告原档</a></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Medicine</tag>
       </tags>
   </entry>
   <entry>
