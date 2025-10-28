@@ -34,10 +34,6 @@ COPD患者常伴随吸烟或环境暴露诱发的氧化应激，导致气道上�
 
 所以临床上，PDE4 抑制剂如罗氟司特（roflumilast）被批准用于重度COPD，以降低中性粒细胞介导的炎症，减少急性加重风险。
 
-同时，B细胞和T细胞的交互可间接放大中性粒细胞响应，而MMP-9的升高则与COPD进展相关，血清水平可作为生物标志物监测疾病严重度。
-
-总体而言，在COPD中，中性粒细胞从毒性释放加剧了气道阻塞、肺功能下降和共病风险，如心血管事件。
-
 [^1]: Hogg JC, et al. The nature of small-airway obstruction in chronic obstructive pulmonary disease. *N Engl J Med*. 2004;350(26):2645-2653. doi:10.1056/NEJMoa032158. (链接: https://pubmed.ncbi.nlm.nih.gov/15215480/)
 
 [^2]: Global Initiative for Chronic Obstructive Lung Disease (GOLD). 2023 Report. (链接: https://goldcopd.org/2023-gold-report-2/)
