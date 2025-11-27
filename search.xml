@@ -1315,79 +1315,6 @@ await prisma.$transaction(async tx =&gt; &#123;
       </tags>
   </entry>
   <entry>
-    <title>OCaml News 2024-5</title>
-    <url>/2024/06/27/OCaml-News-2024-5/</url>
-    <content><![CDATA[<h2 id="语言的发展"><a class="header-anchor" href="#语言的发展">¶</a>语言的发展</h2>
-<ul>
-<li><a href="https://link.zhihu.com/?target=https%3A//github.com/ocaml/ocaml/pull/13097">Immutable arrays #13097: This PR proposes to add immutable arrays to OCaml.</a></li>
-<li><a href="https://link.zhihu.com/?target=https%3A//github.com/ocaml/ocaml/pull/13199">Support running native debuggers in ocamltest #13199</a>.</li>
-<li><a href="https://link.zhihu.com/?target=https%3A//github.com/ocaml/ocaml/pull/13152">The Pattern-Matching Bug: fix totality information by gasche · Pull Request #13152 · ocaml/ocaml</a>.</li>
-<li><a href="https://link.zhihu.com/?target=https%3A//github.com/ocaml/ocaml/pull/11974%23discussion_r1621832545">Add loongarch architecture support #11974</a>.</li>
-<li><a href="https://link.zhihu.com/?target=https%3A//github.com/ocaml/ocaml/pull/13101">Add Stdlib.todo #13101</a>.</li>
-<li><a href="https://link.zhihu.com/?target=https%3A//tarides.com/blog/2024-06-26-enhancing-the-ocaml-org-community-page-boosting-ux-and-ui-based-on-user-research/">Enhancing the OCaml.org Community Page: Boosting UX and UI Based on User Research.</a></li>
-<li><a href="https://link.zhihu.com/?target=https%3A//tarides.com/blog/2024-05-22-launching-the-first-class-windows-project/">Launching the First-Class Windows Project</a>.</li>
-</ul>
-<h2 id="新消息"><a class="header-anchor" href="#新消息">¶</a>新消息</h2>
-<ul>
-<li>
-<p><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/ann-project-wide-occurrences-in-merlin-and-lsp/14847">[ANN] Project wide occurrences in Merlin and LSP</a>.</p>
-</li>
-<li>
-<p><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/ann-opam-2-2-0-rc1-release/14842">[ANN] opam 2.2.0 rc1 release</a>.</p>
-</li>
-<li>
-<p><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/ann-first-release-of-baby/14840">[ANN] First release of baby</a>.</p>
-</li>
-<li>
-<p><a href="https://link.zhihu.com/?target=https%3A//github.com/fpottier/baby">baby</a> is an OCaml library that offers several implementations of balanced binary search trees.</p>
-</li>
-<li>
-<p><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/ann-preview-of-stripe-client-and-mock-server-dkstdrestapis/14841">[ANN] Preview of Stripe client and mock server - DkStdRestApis</a>.</p>
-</li>
-<li>
-<p><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/ann-caisar-release-2-0-a-platform-for-characterizing-ai-safety-and-robustness/14831">[ANN] CAISAR release 2.0, a platform for characterizing AI safety and robustness</a>.</p>
-</li>
-<li>
-<p><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/ann-forester-4-1/14800">[ANN] Forester 4.1</a>.</p>
-</li>
-<li>
-<p><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/ann-dream-html-pure-html-3-5-2/14808">[ANN] dream-html &amp; pure-html 3.5.2</a></p>
-</li>
-</ul>
-<h2 id="有价值的文章"><a class="header-anchor" href="#有价值的文章">¶</a>有价值的文章</h2>
-<ul>
-<li><a href="https://link.zhihu.com/?target=https%3A//tarides.com/blog/2024-06-19-keeping-up-with-the-compiler-how-we-help-maintain-the-ocaml-language/">Keeping Up With the Compiler: How we Help Maintain the OCaml Language</a></li>
-<li><a href="https://link.zhihu.com/?target=https%3A//github.com/ocaml/ocaml/pull/10995">Explain mapping between OCaml memory model and C.</a></li>
-<li><a href="https://link.zhihu.com/?target=https%3A//xavierleroy.org/CdF/2023-2024/index.html">Control structures – Xavier Leroy</a>.</li>
-<li><a href="https://link.zhihu.com/?target=https%3A//dev.to/chshersh/8-months-of-ocaml-after-8-years-of-haskell-in-production-h96">8 months of OCaml after 8 years of Haskell in production</a>.</li>
-<li><a href="https://link.zhihu.com/?target=https%3A//hypirion.com/musings/getting-ocaml-through-the-eye-of-a-needle">Getting OCaml Through the Eye of a Needle</a>.</li>
-<li><a href="https://link.zhihu.com/?target=https%3A//tarides.com/blog/2024-06-05-secure-from-the-ground-up-introducing-the-fides-project-combining-risc-v-and-mirageos/">Secure From the Ground Up: Introducing the FIDES Project Combining RISC-V and MirageOS.</a></li>
-<li><a href="https://link.zhihu.com/?target=https%3A//tarides.com/blog/2024-05-29-effective-ml-through-merlin-s-destruct-command/">Effective ML Through Merlin’s Destruct Command.</a></li>
-<li><a href="https://link.zhihu.com/?target=https%3A//blog.osau.re/articles/reproducible.html">Dinosaure’s website - Reproducibility!</a></li>
-<li><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/experiments-in-jitting/14853">Experiments in JITting</a>.</li>
-<li><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/how-to-write-an-efficient-cp-r-clone-with-eio/14848">How to write an efficient ‘cp -R’ clone with Eio?</a></li>
-<li><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/generating-infix-extension-nodes-with-ppxlib/14833">Generating infix extension nodes with Ppxlib</a>.</li>
-<li><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/this-made-my-day-float-to-string-and-string-of-float-without-loss-of-precision/14825">This made my day (float to string and string of float without loss of precision)</a>.</li>
-<li><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/help-with-cryptic-dependency-cycle-compile-errors-using-dune-build/14864">Help with cryptic dependency cycle compile errors using <code>dune build</code></a>.</li>
-<li><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/why-does-relaxed-value-restriction-treat-function-types-differently/14802">Why does relaxed value restriction treat function types differently?</a></li>
-<li><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/binding-existentials-in-a-non-uniform-gadt/14809">Binding existentials in a non-uniform GADT</a>.</li>
-</ul>
-<h2 id="有趣的项目"><a class="header-anchor" href="#有趣的项目">¶</a>有趣的项目</h2>
-<ul>
-<li><a href="https://link.zhihu.com/?target=https%3A//ocaml.org/p/ocaml-index/latest">ocaml-index 1.0 (latest) · OCaml Package: A tool that indexes value usages from cmt files</a>.</li>
-<li><a href="https://link.zhihu.com/?target=https%3A//ocaml.org/p/fileutils/latest">fileutils 0.6.4 (latest) · OCaml Package: API to manipulate files (POSIX like) and filenames.</a></li>
-<li><a href="https://link.zhihu.com/?target=https%3A//ocaml.org/p/pure-html/latest">pure-html 3.5.2 (latest) · OCaml Package</a></li>
-<li><a href="https://link.zhihu.com/?target=https%3A//github.com/fpottier/baby">GitHub - fpottier/baby: A balanced binary search tree library for OCaml</a>.</li>
-<li><a href="https://link.zhihu.com/?target=https%3A//github.com/akabe/ocaml-jupyter">GitHub - akabe/ocaml-jupyter: An OCaml kernel for Jupyter (IPython) notebook</a>.</li>
-<li><a href="https://link.zhihu.com/?target=https%3A//github.com/robur-coop/orb">Github - robur-coop/orb: check opam package reproductibility.</a></li>
-<li><a href="https://link.zhihu.com/?target=https%3A//github.com/ocaml-multicore/dscheck%23motivation">Github - ocaml-multicore/dscheck: Experimental model checker for testing concurrent algorithms.</a></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>Technique</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>OCaml News 2024-4</title>
     <url>/2024/07/01/OCaml-News-2024-4/</url>
     <content><![CDATA[<h2 id="那么接下来"><a class="header-anchor" href="#那么接下来">¶</a>那么接下来</h2>
@@ -1552,6 +1479,79 @@ await prisma.$transaction(async tx =&gt; &#123;
 <li>
 <p><a href="https://link.zhihu.com/?target=https%3A//github.com/gridbugs/llama">llama: A library for building software-defined modular synthesizers in a declarative style.</a></p>
 </li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>OCaml News 2024-5</title>
+    <url>/2024/06/27/OCaml-News-2024-5/</url>
+    <content><![CDATA[<h2 id="语言的发展"><a class="header-anchor" href="#语言的发展">¶</a>语言的发展</h2>
+<ul>
+<li><a href="https://link.zhihu.com/?target=https%3A//github.com/ocaml/ocaml/pull/13097">Immutable arrays #13097: This PR proposes to add immutable arrays to OCaml.</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//github.com/ocaml/ocaml/pull/13199">Support running native debuggers in ocamltest #13199</a>.</li>
+<li><a href="https://link.zhihu.com/?target=https%3A//github.com/ocaml/ocaml/pull/13152">The Pattern-Matching Bug: fix totality information by gasche · Pull Request #13152 · ocaml/ocaml</a>.</li>
+<li><a href="https://link.zhihu.com/?target=https%3A//github.com/ocaml/ocaml/pull/11974%23discussion_r1621832545">Add loongarch architecture support #11974</a>.</li>
+<li><a href="https://link.zhihu.com/?target=https%3A//github.com/ocaml/ocaml/pull/13101">Add Stdlib.todo #13101</a>.</li>
+<li><a href="https://link.zhihu.com/?target=https%3A//tarides.com/blog/2024-06-26-enhancing-the-ocaml-org-community-page-boosting-ux-and-ui-based-on-user-research/">Enhancing the OCaml.org Community Page: Boosting UX and UI Based on User Research.</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//tarides.com/blog/2024-05-22-launching-the-first-class-windows-project/">Launching the First-Class Windows Project</a>.</li>
+</ul>
+<h2 id="新消息"><a class="header-anchor" href="#新消息">¶</a>新消息</h2>
+<ul>
+<li>
+<p><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/ann-project-wide-occurrences-in-merlin-and-lsp/14847">[ANN] Project wide occurrences in Merlin and LSP</a>.</p>
+</li>
+<li>
+<p><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/ann-opam-2-2-0-rc1-release/14842">[ANN] opam 2.2.0 rc1 release</a>.</p>
+</li>
+<li>
+<p><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/ann-first-release-of-baby/14840">[ANN] First release of baby</a>.</p>
+</li>
+<li>
+<p><a href="https://link.zhihu.com/?target=https%3A//github.com/fpottier/baby">baby</a> is an OCaml library that offers several implementations of balanced binary search trees.</p>
+</li>
+<li>
+<p><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/ann-preview-of-stripe-client-and-mock-server-dkstdrestapis/14841">[ANN] Preview of Stripe client and mock server - DkStdRestApis</a>.</p>
+</li>
+<li>
+<p><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/ann-caisar-release-2-0-a-platform-for-characterizing-ai-safety-and-robustness/14831">[ANN] CAISAR release 2.0, a platform for characterizing AI safety and robustness</a>.</p>
+</li>
+<li>
+<p><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/ann-forester-4-1/14800">[ANN] Forester 4.1</a>.</p>
+</li>
+<li>
+<p><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/ann-dream-html-pure-html-3-5-2/14808">[ANN] dream-html &amp; pure-html 3.5.2</a></p>
+</li>
+</ul>
+<h2 id="有价值的文章"><a class="header-anchor" href="#有价值的文章">¶</a>有价值的文章</h2>
+<ul>
+<li><a href="https://link.zhihu.com/?target=https%3A//tarides.com/blog/2024-06-19-keeping-up-with-the-compiler-how-we-help-maintain-the-ocaml-language/">Keeping Up With the Compiler: How we Help Maintain the OCaml Language</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//github.com/ocaml/ocaml/pull/10995">Explain mapping between OCaml memory model and C.</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//xavierleroy.org/CdF/2023-2024/index.html">Control structures – Xavier Leroy</a>.</li>
+<li><a href="https://link.zhihu.com/?target=https%3A//dev.to/chshersh/8-months-of-ocaml-after-8-years-of-haskell-in-production-h96">8 months of OCaml after 8 years of Haskell in production</a>.</li>
+<li><a href="https://link.zhihu.com/?target=https%3A//hypirion.com/musings/getting-ocaml-through-the-eye-of-a-needle">Getting OCaml Through the Eye of a Needle</a>.</li>
+<li><a href="https://link.zhihu.com/?target=https%3A//tarides.com/blog/2024-06-05-secure-from-the-ground-up-introducing-the-fides-project-combining-risc-v-and-mirageos/">Secure From the Ground Up: Introducing the FIDES Project Combining RISC-V and MirageOS.</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//tarides.com/blog/2024-05-29-effective-ml-through-merlin-s-destruct-command/">Effective ML Through Merlin’s Destruct Command.</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//blog.osau.re/articles/reproducible.html">Dinosaure’s website - Reproducibility!</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/experiments-in-jitting/14853">Experiments in JITting</a>.</li>
+<li><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/how-to-write-an-efficient-cp-r-clone-with-eio/14848">How to write an efficient ‘cp -R’ clone with Eio?</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/generating-infix-extension-nodes-with-ppxlib/14833">Generating infix extension nodes with Ppxlib</a>.</li>
+<li><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/this-made-my-day-float-to-string-and-string-of-float-without-loss-of-precision/14825">This made my day (float to string and string of float without loss of precision)</a>.</li>
+<li><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/help-with-cryptic-dependency-cycle-compile-errors-using-dune-build/14864">Help with cryptic dependency cycle compile errors using <code>dune build</code></a>.</li>
+<li><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/why-does-relaxed-value-restriction-treat-function-types-differently/14802">Why does relaxed value restriction treat function types differently?</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/binding-existentials-in-a-non-uniform-gadt/14809">Binding existentials in a non-uniform GADT</a>.</li>
+</ul>
+<h2 id="有趣的项目"><a class="header-anchor" href="#有趣的项目">¶</a>有趣的项目</h2>
+<ul>
+<li><a href="https://link.zhihu.com/?target=https%3A//ocaml.org/p/ocaml-index/latest">ocaml-index 1.0 (latest) · OCaml Package: A tool that indexes value usages from cmt files</a>.</li>
+<li><a href="https://link.zhihu.com/?target=https%3A//ocaml.org/p/fileutils/latest">fileutils 0.6.4 (latest) · OCaml Package: API to manipulate files (POSIX like) and filenames.</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//ocaml.org/p/pure-html/latest">pure-html 3.5.2 (latest) · OCaml Package</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//github.com/fpottier/baby">GitHub - fpottier/baby: A balanced binary search tree library for OCaml</a>.</li>
+<li><a href="https://link.zhihu.com/?target=https%3A//github.com/akabe/ocaml-jupyter">GitHub - akabe/ocaml-jupyter: An OCaml kernel for Jupyter (IPython) notebook</a>.</li>
+<li><a href="https://link.zhihu.com/?target=https%3A//github.com/robur-coop/orb">Github - robur-coop/orb: check opam package reproductibility.</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//github.com/ocaml-multicore/dscheck%23motivation">Github - ocaml-multicore/dscheck: Experimental model checker for testing concurrent algorithms.</a></li>
 </ul>
 ]]></content>
       <tags>
@@ -2001,6 +2001,28 @@ A relation table (also sometimes called a <em>JOIN</em>, <em>link</em> or <em>pi
       </tags>
   </entry>
   <entry>
+    <title>Radiographic Absence of the Left Humeral Head</title>
+    <url>/2023/10/25/Radiographic-Absence-of-the-Left-Humeral-Head/</url>
+    <content><![CDATA[<p>A 67-year-old man with thoracolumbar scoliosis, poor mobility, and history of frequent falls presented to the emergency department with 2 months of left shoulder pain, stiffness and reduced range of motion, and numbness and paresthesias in his left upper extremity.</p>
+<p>Ten years prior to presentation, he underwent surgical decompression for syringomyelia.</p>
+<p>A magnetic resonance imaging (MRI) scan of his cervical and thoracic spine performed 2 years prior to presentation revealed a recurrent syrinx extending from Cl C1 to T11, which was not resected because it did not cause symptoms at that time.</p>
+<p>On physical examination, he had mild tenderness to palpation and reduced range of motion of the left shoulder with abduction and flexion limited to 120° (normal range of motion, 180°).</p>
+<p>The left scapular muscles were atrophic, and pain and temperature sensation were reduced in his proximal left arm, and dorsal aspect of his left shoulder.</p>
+<p>His complete blood cell count, serum glucose levels, C-reactive protein levels, and erythrocyte sedimentation rate were normal.</p>
+<p>Results of tests for rheumatoid factor and antinuclear antibody were negative.</p>
+<p>Left shoulder radiograph showed complete absence of the left humeral head and a well-demarcated smooth osseous margin of the proximal humerus with associated soft tissue swelling and periarticular calcification.</p>
+<p>A chest radiograph taken 2 years prior revealed a normal left shoulder joint. The patient was hospitalized for further evaluation and treatment.</p>
+<ul>
+<li><a href="/papers/Radiographic%20Absence%20of%20the%20Left%20Humeral%20Head.pdf">报告原档</a></li>
+</ul>
+<p>这里提到了一种罕见的进展性疾病, 叫Charcot肩, 是一种神经性关节病变，特点是关节迅速被破坏和相关软组织肿胀。患者通常表现为肩部逐渐增大的肿胀，可能伴有疼痛或无痛，肩部无力和活动范围减少。<br>
+大约80%的Charcot肩患者有脊髓空洞症, 表现为脊髓中的液体充满腔体</p>
+]]></content>
+      <tags>
+        <tag>Medicine</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Repository pattern in Typescript</title>
     <url>/2025/02/19/Repository-pattern-in-Typescript/</url>
     <content><![CDATA[<blockquote>
@@ -2037,28 +2059,6 @@ A relation table (also sometimes called a <em>JOIN</em>, <em>link</em> or <em>pi
 ]]></content>
       <tags>
         <tag>Technique</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Radiographic Absence of the Left Humeral Head</title>
-    <url>/2023/10/25/Radiographic-Absence-of-the-Left-Humeral-Head/</url>
-    <content><![CDATA[<p>A 67-year-old man with thoracolumbar scoliosis, poor mobility, and history of frequent falls presented to the emergency department with 2 months of left shoulder pain, stiffness and reduced range of motion, and numbness and paresthesias in his left upper extremity.</p>
-<p>Ten years prior to presentation, he underwent surgical decompression for syringomyelia.</p>
-<p>A magnetic resonance imaging (MRI) scan of his cervical and thoracic spine performed 2 years prior to presentation revealed a recurrent syrinx extending from Cl C1 to T11, which was not resected because it did not cause symptoms at that time.</p>
-<p>On physical examination, he had mild tenderness to palpation and reduced range of motion of the left shoulder with abduction and flexion limited to 120° (normal range of motion, 180°).</p>
-<p>The left scapular muscles were atrophic, and pain and temperature sensation were reduced in his proximal left arm, and dorsal aspect of his left shoulder.</p>
-<p>His complete blood cell count, serum glucose levels, C-reactive protein levels, and erythrocyte sedimentation rate were normal.</p>
-<p>Results of tests for rheumatoid factor and antinuclear antibody were negative.</p>
-<p>Left shoulder radiograph showed complete absence of the left humeral head and a well-demarcated smooth osseous margin of the proximal humerus with associated soft tissue swelling and periarticular calcification.</p>
-<p>A chest radiograph taken 2 years prior revealed a normal left shoulder joint. The patient was hospitalized for further evaluation and treatment.</p>
-<ul>
-<li><a href="/papers/Radiographic%20Absence%20of%20the%20Left%20Humeral%20Head.pdf">报告原档</a></li>
-</ul>
-<p>这里提到了一种罕见的进展性疾病, 叫Charcot肩, 是一种神经性关节病变，特点是关节迅速被破坏和相关软组织肿胀。患者通常表现为肩部逐渐增大的肿胀，可能伴有疼痛或无痛，肩部无力和活动范围减少。<br>
-大约80%的Charcot肩患者有脊髓空洞症, 表现为脊髓中的液体充满腔体</p>
-]]></content>
-      <tags>
-        <tag>Medicine</tag>
       </tags>
   </entry>
   <entry>
@@ -2115,6 +2115,28 @@ A relation table (also sometimes called a <em>JOIN</em>, <em>link</em> or <em>pi
       </tags>
   </entry>
   <entry>
+    <title>Rust NewType 模式</title>
+    <url>/2023/05/03/Rust-NewType-%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<p>New Type模式是一种软件设计模式，用于在已有类型的基础上创建一个新的类型。在Rust中，这通常是通过定义一个结构体，其中只包含一个单一成员。这个结构体（New Type）对外提供了一个新的、独立的类型，用于对原始类型增加额外的语义或限制。</p>
+<h2 id="加强类型安全"><a class="header-anchor" href="#加强类型安全">¶</a>加强类型安全</h2>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Meters</span>(<span class="type">f64</span>);</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Feet</span>(<span class="type">f64</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">length_in_meters</span> = <span class="title function_ invoke__">Meters</span>(<span class="number">100.0</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">length_in_feet</span> = <span class="title function_ invoke__">Feet</span>(<span class="number">328.084</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 编译器会防止以下代码执行，因为类型不匹配</span></span><br><span class="line"><span class="comment">// let wrong_length = Meters(length_in_feet); // 编译错误</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 正确的构造</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">add_lengths</span>(length1: Meters, length2: Meters) <span class="punctuation">-&gt;</span> Meters &#123;</span><br><span class="line">    <span class="title function_ invoke__">Meters</span>(length1.<span class="number">0</span> + length2.<span class="number">0</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个例子使用 newtype 模式避免将原始类型f64用于不同的量度，从而增强了类型的安全性。</p>
+<h2 id="实现特定-trait"><a class="header-anchor" href="#实现特定-trait">¶</a>实现特定 trait</h2>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Kilometers</span>(<span class="type">f64</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> <span class="title class_">Kilometers</span> &#123;</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">to_miles</span>(&amp;<span class="keyword">self</span>) <span class="punctuation">-&gt;</span> <span class="type">f64</span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.<span class="number">0</span> * <span class="number">0.621371</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">distance</span> = <span class="title function_ invoke__">Kilometers</span>(<span class="number">10.0</span>);</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;The distance in miles is &#123;&#125;&quot;</span>, distance.<span class="title function_ invoke__">to_miles</span>());</span><br></pre></td></tr></table></figure>
+<p>这里，Kilometers有一个方法to_miles，该方法是不会影响其他f64数据的。如果我们有另一个表示温度的f64类型，就不会意外调用到与距离相关的方法。</p>
+<p>New Type模式同样适用于对<code>Box&lt;dyn SomeTrait&gt;</code>类型的包装，这可以在需要动态分派（动态调用实现了某个接口的不同类型的对象的方法）的时候提供便利。通过创建一个New Type来包装这样的<code>Box&lt;dyn SomeTrait&gt;</code>类型，可以提供自定义的方法或实现更多的trait，同时也可以让API更加清晰和易于使用。</p>
+<h2 id="零成本抽象"><a class="header-anchor" href="#零成本抽象">¶</a>零成本抽象</h2>
+<p>在Rust中，New Type模式不仅是类型安全的，还是一种零成本抽象。这是因为Rust编译器在编译时期会进行足够的优化，以确保New Type的使用没有运行时开销。 Rust的零成本抽象原则确保了抽象不会引入额外的运行时成本。例如，当你使用Meters这样的New Type时，Rust确保：</p>
+<ol>
+<li>无额外内存开销：Meters只包含一个f64，在内存中的表现和单独的f64是一样的。</li>
+<li>无额外运行时开销：使用Meters时，性能和直接使用f64完全相同。编译器会移除任何关于New Type的包装和解包的代码。</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Rust Partial 语义</title>
     <url>/2023/05/02/Rust-Partial-%E8%AF%AD%E4%B9%89/</url>
     <content><![CDATA[<blockquote>
@@ -2137,28 +2159,6 @@ A relation table (also sometimes called a <em>JOIN</em>, <em>link</em> or <em>pi
 <li>表达性和灵活性：这些 trait 允许开发者为自定义类型定义适当的相等性和排序行为，从而加强了 Rust 类型系统的表达性和灵活性。</li>
 </ul>
 <p>PartialEq 和 PartialOrd trait 的设计允许程序员选择精准的相等性和排序语义，同时明确了对于某些类型相等性比较和大小排序并不总是可能的事实。通过引入适度的复杂性，让 Rust 的类型系统更加安全。</p>
-]]></content>
-      <tags>
-        <tag>Technique</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Rust NewType 模式</title>
-    <url>/2023/05/03/Rust-NewType-%E6%A8%A1%E5%BC%8F/</url>
-    <content><![CDATA[<p>New Type模式是一种软件设计模式，用于在已有类型的基础上创建一个新的类型。在Rust中，这通常是通过定义一个结构体，其中只包含一个单一成员。这个结构体（New Type）对外提供了一个新的、独立的类型，用于对原始类型增加额外的语义或限制。</p>
-<h2 id="加强类型安全"><a class="header-anchor" href="#加强类型安全">¶</a>加强类型安全</h2>
-<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Meters</span>(<span class="type">f64</span>);</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Feet</span>(<span class="type">f64</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">length_in_meters</span> = <span class="title function_ invoke__">Meters</span>(<span class="number">100.0</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">length_in_feet</span> = <span class="title function_ invoke__">Feet</span>(<span class="number">328.084</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 编译器会防止以下代码执行，因为类型不匹配</span></span><br><span class="line"><span class="comment">// let wrong_length = Meters(length_in_feet); // 编译错误</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 正确的构造</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">add_lengths</span>(length1: Meters, length2: Meters) <span class="punctuation">-&gt;</span> Meters &#123;</span><br><span class="line">    <span class="title function_ invoke__">Meters</span>(length1.<span class="number">0</span> + length2.<span class="number">0</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这个例子使用 newtype 模式避免将原始类型f64用于不同的量度，从而增强了类型的安全性。</p>
-<h2 id="实现特定-trait"><a class="header-anchor" href="#实现特定-trait">¶</a>实现特定 trait</h2>
-<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Kilometers</span>(<span class="type">f64</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> <span class="title class_">Kilometers</span> &#123;</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">to_miles</span>(&amp;<span class="keyword">self</span>) <span class="punctuation">-&gt;</span> <span class="type">f64</span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.<span class="number">0</span> * <span class="number">0.621371</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">distance</span> = <span class="title function_ invoke__">Kilometers</span>(<span class="number">10.0</span>);</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;The distance in miles is &#123;&#125;&quot;</span>, distance.<span class="title function_ invoke__">to_miles</span>());</span><br></pre></td></tr></table></figure>
-<p>这里，Kilometers有一个方法to_miles，该方法是不会影响其他f64数据的。如果我们有另一个表示温度的f64类型，就不会意外调用到与距离相关的方法。</p>
-<p>New Type模式同样适用于对<code>Box&lt;dyn SomeTrait&gt;</code>类型的包装，这可以在需要动态分派（动态调用实现了某个接口的不同类型的对象的方法）的时候提供便利。通过创建一个New Type来包装这样的<code>Box&lt;dyn SomeTrait&gt;</code>类型，可以提供自定义的方法或实现更多的trait，同时也可以让API更加清晰和易于使用。</p>
-<h2 id="零成本抽象"><a class="header-anchor" href="#零成本抽象">¶</a>零成本抽象</h2>
-<p>在Rust中，New Type模式不仅是类型安全的，还是一种零成本抽象。这是因为Rust编译器在编译时期会进行足够的优化，以确保New Type的使用没有运行时开销。 Rust的零成本抽象原则确保了抽象不会引入额外的运行时成本。例如，当你使用Meters这样的New Type时，Rust确保：</p>
-<ol>
-<li>无额外内存开销：Meters只包含一个f64，在内存中的表现和单独的f64是一样的。</li>
-<li>无额外运行时开销：使用Meters时，性能和直接使用f64完全相同。编译器会移除任何关于New Type的包装和解包的代码。</li>
-</ol>
 ]]></content>
       <tags>
         <tag>Technique</tag>
@@ -2831,83 +2831,6 @@ A relation table (also sometimes called a <em>JOIN</em>, <em>link</em> or <em>pi
       </tags>
   </entry>
   <entry>
-    <title>肠易激综合征 (IBS) 的病理学与药物治疗</title>
-    <url>/2025/06/30/ibs/</url>
-    <content><![CDATA[<p>肠易激综合征 (Irritable Bowel Syndrome, IBS) 是一种常见的功能性胃肠病。其核心特征是在没有发现任何器质性病变（如炎症、溃疡或肿瘤）的情况下，患者长期经历腹痛、腹胀，并伴有排便习惯的改变（腹泻、便秘或两者交替）。</p>
-<h3 id="一、-肠易激综合征的病理生理学"><a class="header-anchor" href="#一、-肠易激综合征的病理生理学">¶</a>一、 肠易激综合征的病理生理学</h3>
-<p>IBS 的病理生理机制非常复杂，并非由单一原因导致，而是多种因素相互作用的结果。目前的医学研究认为，其主要与以下几个核心机制有关：</p>
-<h4 id="1-脑-肠轴功能紊乱-Disorders-of-the-Brain-Gut-Axis"><a class="header-anchor" href="#1-脑-肠轴功能紊乱-Disorders-of-the-Brain-Gut-Axis">¶</a>1. 脑-肠轴功能紊乱 (Disorders of the Brain-Gut Axis)</h4>
-<p>这是 IBS 最核心的病理机制。大脑和肠道通过神经、内分泌和免疫系统形成一个双向沟通的“脑-肠轴”。在 IBS 患者中，这个轴的功能出现紊乱。</p>
-<ul>
-<li><strong>自上而下：</strong> 心理压力、焦虑、抑郁等负面情绪可以直接通过大脑影响肠道的运动、感觉和分泌功能，从而诱发或加重症状。</li>
-<li><strong>自下而上：</strong> 肠道内的信号（如食物、气体、肠道菌群代谢产物）被过度放大后传给大脑，导致大脑对这些正常刺激产生过度反应，表现为疼痛和不适。</li>
-</ul>
-<h4 id="2-内脏高敏感性-Visceral-Hypersensitivity"><a class="header-anchor" href="#2-内脏高敏感性-Visceral-Hypersensitivity">¶</a>2. 内脏高敏感性 (Visceral Hypersensitivity)</h4>
-<p>这是指 IBS 患者的肠道对各种刺激（如食物、气体、肠壁的牵拉）异常敏感。正常人可以耐受的肠道内压力或活动，在 IBS 患者身上却会引发强烈的腹痛、急便感或不适。这种“放大”的感觉是 IBS 腹痛的主要原因。</p>
-<h4 id="3-胃肠动力异常-Altered-Gut-Motility"><a class="header-anchor" href="#3-胃肠动力异常-Altered-Gut-Motility">¶</a>3. 胃肠动力异常 (Altered Gut Motility)</h4>
-<p>肠道肌肉的收缩和舒张节律出现问题，导致食物和粪便在肠道内的转运速度异常。</p>
-<ul>
-<li><strong>转运过快：</strong> 肠道内容物过快通过结肠，水分来不及被充分吸收，导致腹泻（IBS-D）。</li>
-<li><strong>转运过慢：</strong> 肠道蠕动乏力，粪便在结肠内停留时间过长，水分被过度吸收，导致便秘（IBS-C）。</li>
-<li><strong>节律紊乱：</strong> 有时快有时慢，导致腹泻与便秘交替出现（IBS-M）。</li>
-</ul>
-<h4 id="4-肠道微生态失调-Alteration-in-Gut-Microbiota"><a class="header-anchor" href="#4-肠道微生态失调-Alteration-in-Gut-Microbiota">¶</a>4. 肠道微生态失调 (Alteration in Gut Microbiota)</h4>
-<p>IBS 患者的肠道菌群组成和功能与健康人存在差异。有害菌可能增多，有益菌（如双歧杆菌、乳酸杆菌）可能减少。这些失调的菌群会影响肠道屏障功能、产生过多气体、并激活免疫系统，导致腹胀和腹泻。</p>
-<h4 id="5-肠道低度炎症与免疫激活-Low-Grade-Inflammation-and-Immune-Activation"><a class="header-anchor" href="#5-肠道低度炎症与免疫激活-Low-Grade-Inflammation-and-Immune-Activation">¶</a>5. 肠道低度炎症与免疫激活 (Low-Grade Inflammation and Immune Activation)</h4>
-<p>部分 IBS 患者的肠道黏膜中可以观察到轻微的炎症反应，例如肥大细胞等免疫细胞数量增多并被激活。这些细胞会释放组胺、5-羟色胺等物质，直接刺激肠道神经，引起疼痛和动力异常。这种情况尤其在感染性肠炎后发生的 IBS（PI-IBS）中更为常见。</p>
-<h4 id="6-遗传与饮食因素"><a class="header-anchor" href="#6-遗传与饮食因素">¶</a>6. 遗传与饮食因素</h4>
-<ul>
-<li><strong>遗传：</strong> IBS具有一定的家族聚集性，提示可能存在遗传易感性。</li>
-<li><strong>饮食：</strong> 某些食物，特别是含有高<strong>FODMAPs</strong>（可发酵的寡糖、双糖、单糖和多元醇）的食物，在小肠内难以被吸收，进入大肠后被细菌快速发酵，产生大量气体并增加肠道渗透压，从而诱发腹胀、腹痛和腹泻。</li>
-</ul>
-<h3 id="二、-肠易激综合征的药物治疗"><a class="header-anchor" href="#二、-肠易激综合征的药物治疗">¶</a>二、 肠易激综合征的药物治疗</h3>
-<blockquote>
-<p>IBS的治疗需要个体化，所有药物都应在医生指导下使用。医生应该根据具体的 IBS 亚型（腹泻型、便秘型、混合型）和主要症状来选择最合适的药物。</p>
-</blockquote>
-<h4 id="针对主要症状的药物"><a class="header-anchor" href="#针对主要症状的药物">¶</a>针对主要症状的药物</h4>
-<p><strong>1. 针对腹痛和腹胀（解痉药）</strong></p>
-<p>这类药物通过放松肠道平滑肌，缓解肠道痉挛来减轻疼痛。</p>
-<ul>
-<li><strong>匹维溴铵 (Pinaverium Bromide)：</strong> 作用于肠道平滑肌的钙离子通道，选择性高，副作用较小。</li>
-<li><strong>奥替溴铵 (Otilonium Bromide)：</strong> 与匹维溴铵类似，对结肠有较高的亲和力。</li>
-<li><strong>马来酸曲美布汀 (Trimebutine Maleate)：</strong> 具有双向调节作用，在肠道动力过快时抑制它，过慢时促进它，对腹痛、腹泻和便秘都有一定效果。</li>
-<li><strong>薄荷油 (Peppermint Oil)：</strong> 是一种天然的解痉剂，其肠溶胶囊可以有效缓解腹痛和腹胀。</li>
-</ul>
-<p><strong>2. 针对腹泻 (IBS-D)</strong></p>
-<ul>
-<li><strong>洛哌丁胺 (Loperamide)：</strong> 是一种止泻药，能减慢肠道蠕动，增加水分吸收。适用于急性腹泻发作，但不宜长期连续使用。</li>
-<li><strong>蒙脱石散 (Montmorillonite Powder)：</strong> 是一种肠道黏膜保护剂，能吸附肠道内的病菌和毒素，并覆盖在肠壁上形成保护层。</li>
-<li><strong>利福昔明 (Rifaximin)：</strong> 一种几乎不被肠道吸收的抗生素，可以调节肠道菌群，减少有害菌和产气，对改善腹泻和腹胀有良好效果。</li>
-<li><strong>5-HT₃受体拮抗剂（如阿洛司琼 Alosetron）：</strong> 能显著减缓肠道转运、减轻内脏敏感性。因可能引起严重便秘和缺血性结肠炎等副作用，使用受到严格限制，通常仅用于其他治疗无效的重度女性IBS-D患者。</li>
-<li><strong>胆汁酸螯合剂（如考来烯胺 Cholestyramine）：</strong> 适用于因胆汁酸吸收不良导致的腹泻型IBS。</li>
-</ul>
-<p><strong>3. 针对便秘 (IBS-C)</strong></p>
-<ul>
-<li><strong>容积性泻药（如欧车前、聚卡波非钙）：</strong> 通过吸收水分增加粪便体积，刺激肠道蠕动。使用时需饮用足量水，否则可能加重便秘。</li>
-<li><strong>渗透性泻药（如聚乙二醇 PEG、乳果糖）：</strong> 通过在肠道内形成高渗环境，将水分保留在肠腔内，软化粪便，促进排便。相对安全，适合长期使用。</li>
-<li><strong>促分泌药：</strong>
-<ul>
-<li><strong>鲁比前列酮 (Lubiprostone)：</strong> 激活肠道氯离子通道，增加肠液分泌，软化粪便。</li>
-<li><strong>利那洛肽 (Linaclotide)、普卡那肽 (Plecanatide)：</strong> 激活鸟苷酸环化酶-C，促进肠液分泌，并能一定程度上缓解腹痛。</li>
-</ul>
-</li>
-</ul>
-<p><strong>4. 调节脑-肠轴功能的药物（精神类药物）</strong></p>
-<p>对于伴有明显焦虑、抑郁或常规治疗无效的顽固性腹痛患者，医生可能会考虑使用低剂量的抗抑郁药。</p>
-<ul>
-<li><strong>三环类抗抑郁药 (TCAs)（如阿米替林）：</strong> 低剂量使用可以有效缓解IBS的慢性腹痛，其抗胆碱能作用也有助于控制腹泻。</li>
-<li><strong>选择性5-羟色胺再摄取抑制剂 (SSRIs)（如氟西汀、帕罗西汀）：</strong> 可用于伴有便秘和焦虑的IBS患者。</li>
-</ul>
-<ol start="5">
-<li>益生菌 (Probiotics)</li>
-</ol>
-<p>补充特定的益生菌菌株（如某些双歧杆菌和乳酸杆菌）有助于恢复肠道微生态平衡，改善腹胀和总体症状。不同菌株效果各异，需根据产品说明和医生建议选用。</p>
-]]></content>
-      <tags>
-        <tag>Medicine</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>由甲醛开始的碎碎念</title>
     <url>/2025/07/11/fuck-hcho/</url>
     <content><![CDATA[<p>前几天和群友聊到甲醛相关的东东，有点好奇甲醛进入人体之后的一系列反应，于逝，<s>我去吸了两口</s> ，先来看看一些无聊的总结：</p>
@@ -3001,6 +2924,83 @@ A relation table (also sometimes called a <em>JOIN</em>, <em>link</em> or <em>pi
 <p>当大量的ATM二聚体被招募到MRN复合体标记的DNA断端附近时，DNA断端的物理存在，加上MRN复合体的“撬动”作用，会诱导ATM二聚体的构象发生变化，促使这俩解离，变成两个独立的单体。</p>
 <p>解离后的ATM单体，其被隐藏的“催化核心区”立刻暴露了出来。一个ATM单体会立刻给另一个（或自己）的特定位点（如丝氨酸1981位点）“安装”上一个磷酸基团。这是个 “自我磷酸化” 的过程，会使其构象进一步稳定在完全激活的状态。</p>
 <h1>先到这儿吧，我要吃炒粉了</h1>
+]]></content>
+      <tags>
+        <tag>Medicine</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>肠易激综合征 (IBS) 的病理学与药物治疗</title>
+    <url>/2025/06/30/ibs/</url>
+    <content><![CDATA[<p>肠易激综合征 (Irritable Bowel Syndrome, IBS) 是一种常见的功能性胃肠病。其核心特征是在没有发现任何器质性病变（如炎症、溃疡或肿瘤）的情况下，患者长期经历腹痛、腹胀，并伴有排便习惯的改变（腹泻、便秘或两者交替）。</p>
+<h3 id="一、-肠易激综合征的病理生理学"><a class="header-anchor" href="#一、-肠易激综合征的病理生理学">¶</a>一、 肠易激综合征的病理生理学</h3>
+<p>IBS 的病理生理机制非常复杂，并非由单一原因导致，而是多种因素相互作用的结果。目前的医学研究认为，其主要与以下几个核心机制有关：</p>
+<h4 id="1-脑-肠轴功能紊乱-Disorders-of-the-Brain-Gut-Axis"><a class="header-anchor" href="#1-脑-肠轴功能紊乱-Disorders-of-the-Brain-Gut-Axis">¶</a>1. 脑-肠轴功能紊乱 (Disorders of the Brain-Gut Axis)</h4>
+<p>这是 IBS 最核心的病理机制。大脑和肠道通过神经、内分泌和免疫系统形成一个双向沟通的“脑-肠轴”。在 IBS 患者中，这个轴的功能出现紊乱。</p>
+<ul>
+<li><strong>自上而下：</strong> 心理压力、焦虑、抑郁等负面情绪可以直接通过大脑影响肠道的运动、感觉和分泌功能，从而诱发或加重症状。</li>
+<li><strong>自下而上：</strong> 肠道内的信号（如食物、气体、肠道菌群代谢产物）被过度放大后传给大脑，导致大脑对这些正常刺激产生过度反应，表现为疼痛和不适。</li>
+</ul>
+<h4 id="2-内脏高敏感性-Visceral-Hypersensitivity"><a class="header-anchor" href="#2-内脏高敏感性-Visceral-Hypersensitivity">¶</a>2. 内脏高敏感性 (Visceral Hypersensitivity)</h4>
+<p>这是指 IBS 患者的肠道对各种刺激（如食物、气体、肠壁的牵拉）异常敏感。正常人可以耐受的肠道内压力或活动，在 IBS 患者身上却会引发强烈的腹痛、急便感或不适。这种“放大”的感觉是 IBS 腹痛的主要原因。</p>
+<h4 id="3-胃肠动力异常-Altered-Gut-Motility"><a class="header-anchor" href="#3-胃肠动力异常-Altered-Gut-Motility">¶</a>3. 胃肠动力异常 (Altered Gut Motility)</h4>
+<p>肠道肌肉的收缩和舒张节律出现问题，导致食物和粪便在肠道内的转运速度异常。</p>
+<ul>
+<li><strong>转运过快：</strong> 肠道内容物过快通过结肠，水分来不及被充分吸收，导致腹泻（IBS-D）。</li>
+<li><strong>转运过慢：</strong> 肠道蠕动乏力，粪便在结肠内停留时间过长，水分被过度吸收，导致便秘（IBS-C）。</li>
+<li><strong>节律紊乱：</strong> 有时快有时慢，导致腹泻与便秘交替出现（IBS-M）。</li>
+</ul>
+<h4 id="4-肠道微生态失调-Alteration-in-Gut-Microbiota"><a class="header-anchor" href="#4-肠道微生态失调-Alteration-in-Gut-Microbiota">¶</a>4. 肠道微生态失调 (Alteration in Gut Microbiota)</h4>
+<p>IBS 患者的肠道菌群组成和功能与健康人存在差异。有害菌可能增多，有益菌（如双歧杆菌、乳酸杆菌）可能减少。这些失调的菌群会影响肠道屏障功能、产生过多气体、并激活免疫系统，导致腹胀和腹泻。</p>
+<h4 id="5-肠道低度炎症与免疫激活-Low-Grade-Inflammation-and-Immune-Activation"><a class="header-anchor" href="#5-肠道低度炎症与免疫激活-Low-Grade-Inflammation-and-Immune-Activation">¶</a>5. 肠道低度炎症与免疫激活 (Low-Grade Inflammation and Immune Activation)</h4>
+<p>部分 IBS 患者的肠道黏膜中可以观察到轻微的炎症反应，例如肥大细胞等免疫细胞数量增多并被激活。这些细胞会释放组胺、5-羟色胺等物质，直接刺激肠道神经，引起疼痛和动力异常。这种情况尤其在感染性肠炎后发生的 IBS（PI-IBS）中更为常见。</p>
+<h4 id="6-遗传与饮食因素"><a class="header-anchor" href="#6-遗传与饮食因素">¶</a>6. 遗传与饮食因素</h4>
+<ul>
+<li><strong>遗传：</strong> IBS具有一定的家族聚集性，提示可能存在遗传易感性。</li>
+<li><strong>饮食：</strong> 某些食物，特别是含有高<strong>FODMAPs</strong>（可发酵的寡糖、双糖、单糖和多元醇）的食物，在小肠内难以被吸收，进入大肠后被细菌快速发酵，产生大量气体并增加肠道渗透压，从而诱发腹胀、腹痛和腹泻。</li>
+</ul>
+<h3 id="二、-肠易激综合征的药物治疗"><a class="header-anchor" href="#二、-肠易激综合征的药物治疗">¶</a>二、 肠易激综合征的药物治疗</h3>
+<blockquote>
+<p>IBS的治疗需要个体化，所有药物都应在医生指导下使用。医生应该根据具体的 IBS 亚型（腹泻型、便秘型、混合型）和主要症状来选择最合适的药物。</p>
+</blockquote>
+<h4 id="针对主要症状的药物"><a class="header-anchor" href="#针对主要症状的药物">¶</a>针对主要症状的药物</h4>
+<p><strong>1. 针对腹痛和腹胀（解痉药）</strong></p>
+<p>这类药物通过放松肠道平滑肌，缓解肠道痉挛来减轻疼痛。</p>
+<ul>
+<li><strong>匹维溴铵 (Pinaverium Bromide)：</strong> 作用于肠道平滑肌的钙离子通道，选择性高，副作用较小。</li>
+<li><strong>奥替溴铵 (Otilonium Bromide)：</strong> 与匹维溴铵类似，对结肠有较高的亲和力。</li>
+<li><strong>马来酸曲美布汀 (Trimebutine Maleate)：</strong> 具有双向调节作用，在肠道动力过快时抑制它，过慢时促进它，对腹痛、腹泻和便秘都有一定效果。</li>
+<li><strong>薄荷油 (Peppermint Oil)：</strong> 是一种天然的解痉剂，其肠溶胶囊可以有效缓解腹痛和腹胀。</li>
+</ul>
+<p><strong>2. 针对腹泻 (IBS-D)</strong></p>
+<ul>
+<li><strong>洛哌丁胺 (Loperamide)：</strong> 是一种止泻药，能减慢肠道蠕动，增加水分吸收。适用于急性腹泻发作，但不宜长期连续使用。</li>
+<li><strong>蒙脱石散 (Montmorillonite Powder)：</strong> 是一种肠道黏膜保护剂，能吸附肠道内的病菌和毒素，并覆盖在肠壁上形成保护层。</li>
+<li><strong>利福昔明 (Rifaximin)：</strong> 一种几乎不被肠道吸收的抗生素，可以调节肠道菌群，减少有害菌和产气，对改善腹泻和腹胀有良好效果。</li>
+<li><strong>5-HT₃受体拮抗剂（如阿洛司琼 Alosetron）：</strong> 能显著减缓肠道转运、减轻内脏敏感性。因可能引起严重便秘和缺血性结肠炎等副作用，使用受到严格限制，通常仅用于其他治疗无效的重度女性IBS-D患者。</li>
+<li><strong>胆汁酸螯合剂（如考来烯胺 Cholestyramine）：</strong> 适用于因胆汁酸吸收不良导致的腹泻型IBS。</li>
+</ul>
+<p><strong>3. 针对便秘 (IBS-C)</strong></p>
+<ul>
+<li><strong>容积性泻药（如欧车前、聚卡波非钙）：</strong> 通过吸收水分增加粪便体积，刺激肠道蠕动。使用时需饮用足量水，否则可能加重便秘。</li>
+<li><strong>渗透性泻药（如聚乙二醇 PEG、乳果糖）：</strong> 通过在肠道内形成高渗环境，将水分保留在肠腔内，软化粪便，促进排便。相对安全，适合长期使用。</li>
+<li><strong>促分泌药：</strong>
+<ul>
+<li><strong>鲁比前列酮 (Lubiprostone)：</strong> 激活肠道氯离子通道，增加肠液分泌，软化粪便。</li>
+<li><strong>利那洛肽 (Linaclotide)、普卡那肽 (Plecanatide)：</strong> 激活鸟苷酸环化酶-C，促进肠液分泌，并能一定程度上缓解腹痛。</li>
+</ul>
+</li>
+</ul>
+<p><strong>4. 调节脑-肠轴功能的药物（精神类药物）</strong></p>
+<p>对于伴有明显焦虑、抑郁或常规治疗无效的顽固性腹痛患者，医生可能会考虑使用低剂量的抗抑郁药。</p>
+<ul>
+<li><strong>三环类抗抑郁药 (TCAs)（如阿米替林）：</strong> 低剂量使用可以有效缓解IBS的慢性腹痛，其抗胆碱能作用也有助于控制腹泻。</li>
+<li><strong>选择性5-羟色胺再摄取抑制剂 (SSRIs)（如氟西汀、帕罗西汀）：</strong> 可用于伴有便秘和焦虑的IBS患者。</li>
+</ul>
+<ol start="5">
+<li>益生菌 (Probiotics)</li>
+</ol>
+<p>补充特定的益生菌菌株（如某些双歧杆菌和乳酸杆菌）有助于恢复肠道微生态平衡，改善腹胀和总体症状。不同菌株效果各异，需根据产品说明和医生建议选用。</p>
 ]]></content>
       <tags>
         <tag>Medicine</tag>
@@ -3336,6 +3336,17 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       </tags>
   </entry>
   <entry>
+    <title>tick thread在Multicore OCaml中的作用</title>
+    <url>/2023/08/15/tick-thread%E5%9C%A8Multicore-OCaml%E4%B8%AD%E7%9A%84%E4%BD%9C%E7%94%A8/</url>
+    <content><![CDATA[<p>Multicore OCaml的程序在启动时会运行一个 tick thread，其实现如下:</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* The tick thread: posts a SIGPREEMPTION signal periodically */</span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> * <span class="title function_">caml_thread_tick</span><span class="params">(<span class="type">void</span> * arg)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> <span class="title">timeout</span>;</span></span><br><span class="line">  <span class="type">sigset_t</span> mask;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Block all signals so that we don&#x27;t try to execute an OCaml signal handler*/</span></span><br><span class="line">  sigfillset(&amp;mask);</span><br><span class="line">  pthread_sigmask(SIG_BLOCK, &amp;mask, <span class="literal">NULL</span>);</span><br><span class="line">  <span class="keyword">while</span>(! caml_tick_thread_stop) &#123;</span><br><span class="line">    <span class="comment">/* select() seems to be the most efficient way to suspend the</span></span><br><span class="line"><span class="comment">       thread for sub-second intervals */</span></span><br><span class="line">    timeout.tv_sec = <span class="number">0</span>;</span><br><span class="line">    timeout.tv_usec = Thread_timeout * <span class="number">1000</span>;</span><br><span class="line">    select(<span class="number">0</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>, &amp;timeout);</span><br><span class="line">    <span class="comment">/* The preemption signal should never cause a callback, so don&#x27;t</span></span><br><span class="line"><span class="comment">     go through caml_handle_signal(), just record signal delivery via</span></span><br><span class="line"><span class="comment">     caml_record_signal(). */</span></span><br><span class="line">    caml_record_signal(SIGPREEMPTION);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是因为Multicore OCaml的GC目前需要一个进程（或一个Domain）中的所有线程一起参与以避免并发访问。如果一个线程在system call上被阻塞，那么整个Domain就会被卡住，直到该线程可以参与当前的垃圾收集。为了避免这个问题，tick 线程可以代替被阻塞的线程执行垃圾收集操作。</p>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>UUID v7 是如何加快 RDBMS 索引速度的</title>
     <url>/2025/04/13/uuidv7-rdbms/</url>
     <content><![CDATA[<p>UUID v7 之所以能显著提升关系型数据库（尤其是采用聚集索引的 MySQL InnoDB）在插入和查询速度，主要归功于它在 ID 中引入了“可排序的时间戳前缀”，从而大幅减少了 B-Tree 索引页分裂（page split）和数据碎片化。这里分几点来说：</p>
@@ -3364,17 +3375,6 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
 <a href="https://stitcher.io/blog/optimised-uuids-in-mysql">https://stitcher.io/blog/optimised-uuids-in-mysql</a><br>
 [3] “Storing UUID Values in MySQL” percona<br>
 <a href="https://www.percona.com/blog/store-uuid-optimized-way/">https://www.percona.com/blog/store-uuid-optimized-way/</a></p>
-]]></content>
-      <tags>
-        <tag>Technique</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>tick thread在Multicore OCaml中的作用</title>
-    <url>/2023/08/15/tick-thread%E5%9C%A8Multicore-OCaml%E4%B8%AD%E7%9A%84%E4%BD%9C%E7%94%A8/</url>
-    <content><![CDATA[<p>Multicore OCaml的程序在启动时会运行一个 tick thread，其实现如下:</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* The tick thread: posts a SIGPREEMPTION signal periodically */</span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> * <span class="title function_">caml_thread_tick</span><span class="params">(<span class="type">void</span> * arg)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> <span class="title">timeout</span>;</span></span><br><span class="line">  <span class="type">sigset_t</span> mask;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Block all signals so that we don&#x27;t try to execute an OCaml signal handler*/</span></span><br><span class="line">  sigfillset(&amp;mask);</span><br><span class="line">  pthread_sigmask(SIG_BLOCK, &amp;mask, <span class="literal">NULL</span>);</span><br><span class="line">  <span class="keyword">while</span>(! caml_tick_thread_stop) &#123;</span><br><span class="line">    <span class="comment">/* select() seems to be the most efficient way to suspend the</span></span><br><span class="line"><span class="comment">       thread for sub-second intervals */</span></span><br><span class="line">    timeout.tv_sec = <span class="number">0</span>;</span><br><span class="line">    timeout.tv_usec = Thread_timeout * <span class="number">1000</span>;</span><br><span class="line">    select(<span class="number">0</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>, &amp;timeout);</span><br><span class="line">    <span class="comment">/* The preemption signal should never cause a callback, so don&#x27;t</span></span><br><span class="line"><span class="comment">     go through caml_handle_signal(), just record signal delivery via</span></span><br><span class="line"><span class="comment">     caml_record_signal(). */</span></span><br><span class="line">    caml_record_signal(SIGPREEMPTION);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这是因为Multicore OCaml的GC目前需要一个进程（或一个Domain）中的所有线程一起参与以避免并发访问。如果一个线程在system call上被阻塞，那么整个Domain就会被卡住，直到该线程可以参与当前的垃圾收集。为了避免这个问题，tick 线程可以代替被阻塞的线程执行垃圾收集操作。</p>
 ]]></content>
       <tags>
         <tag>Technique</tag>
@@ -3834,6 +3834,34 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
 <p>他不知道，他只知道，这个冬天，才刚刚开始。</p>
 <p>夜晚来临的时候，风会把整个灰石镇抱得更紧，像要把最后一点温度也挤出去。</p>
 <p>而他们，就像炉子里那两块小小的煤球，不知道自己还能燃烧多久。</p>
+]]></content>
+      <categories>
+        <category>gallery</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>二〇二五年十一月二十七日</title>
+    <url>/2025/11/27/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%BA%94%E5%B9%B4%E5%8D%81%E4%B8%80%E6%9C%88%E4%BA%8C%E5%8D%81%E4%B8%83%E6%97%A5/</url>
+    <content><![CDATA[<p>清晨的风裹着桂花香钻进房间，我蹲在衣柜前翻找厚外套，指尖碰到叠得方方正正的藏青布包，布料上似乎留着去年晒过的阳光的味道。</p>
+<p>某年的这个时候，爷爷生前种的桂花树树刚开花，奶奶在阳台，把我的被子摊在晾衣绳上，双手扶着腰仰起脸，鼻尖凑着被子角闻了又闻：“乐乐，你闻闻，是不是很香？”，我正啃着奶奶煮的玉米，凑过去吸了吸鼻子，浓烈的阳光和清淡的桂花香暖乎乎的包裹住我的脸，像奶奶的手掌。</p>
+<p>&quot;要翻三次哦。&quot;奶奶说着站起身，踮起脚扯住被子的一端，手腕轻轻一旋，被子像只大蝴蝶似的翻了个身，棉絮里的阳光簌簌落下来，落在她眼角的皱纹里。</p>
+<p>我啃着玉米笑：“奶奶，你比闹钟还准时。”，她回头瞪我，却藏不住眼里的笑：“等你上了大学，谁给你翻被子？”</p>
+<p>后来我真的去了外地读大学。</p>
+<p>出发前晚，奶奶坐在台灯下给我缝被子。她戴起老花镜，穿针的时候手总抖，最后还是我帮她穿进去的。</p>
+<p>“针脚粗点没关系”，她摸着被子上的补丁说，“棉絮是去年的新棉花，晒了整整三天，比超市里的羽绒被还暖。”</p>
+<p>我看着她的白发，忽然想起小时候她给我织毛衣，也是这样的动作，手指绕着毛线，绕着绕着就把岁月绕成了温暖的形状。</p>
+<p>傍晚出门收被子，我抱着被子上楼，重量刚好压在胸口，像奶奶的手轻轻贴着我。</p>
+<p>夕阳穿过阳台的玻璃，照在被子上，还是去年的藏青布，还是那股熟悉的太阳味，甚至比去年更浓。</p>
+<p>伸手摸被子角可以摸到一团软硬软硬的东西，那是用纱布包着的橘子皮，晒干的果皮卷成小筒，散着淡淡的香。</p>
+<p>奶奶总说橘子皮驱虫子，我对着夕阳举起纱布包，去年冬天，奶奶把橘子皮晒在窗台上，说等我回来做橘子糖。</p>
+<p>我那时候嫌麻烦，说 “奶奶，超市里有卖的”，她就把橘子皮收进抽屉，说 “超市里的哪有家里的香”。</p>
+<p>现在看着手里的橘子皮，我忽然想起她晒橘子皮的样子：坐在小马扎上，把橘子皮一片一片铺在竹匾里，阳光照在她的白发上，像撒了一层金。</p>
+<p>手机在茶几上震动，是奶奶的视频电话。我赶紧接起来，屏幕里先出现的是奶奶的手，捧着个橘子，果皮上还带着新鲜的汁水：“乐乐，今天天气好，被子晒了没？这里桂花开了，好香好香”，我把手机凑到被子前，说：“奶奶，闻到了，比去年的还香。” 她笑起来，眼角的皱纹挤成了花：“昨天晒了橘子皮，你上次说喜欢，我留了最好的。”</p>
+<p>“奶奶”，我摸着被子上的针脚，声音忽然哑了，“我想你了。”</p>
+<p>屏幕里的奶奶愣了愣，随即放下橘子，伸手摸了摸屏幕：“想我就回来，被子给你留着，太阳每天都晒。”，她的手在屏幕上晃了晃，像以前摸我的头那样：“回来我去买排骨，再煮点玉米，你爱吃的玉米排骨汤，要选颗粒大的。”</p>
+<p>睡前我把被子铺在床上。藏青布贴着皮肤，暖得像奶奶的怀抱。我抱着被子滚了滚，闻到橘子皮的香，闻到太阳的香，闻到奶奶身旁桂花树的香味。</p>
+<p>桂花香，看不见摸不着，却一直绕着我。</p>
+<p>今年风里的桂花香比去年更浓，深夜的月光洒在被子上，我摸着被子上的补丁睡着了，梦里看见奶奶坐在阳台晒被子，阳光照在她的白发上，她回头对我笑：“乐乐，过来帮奶奶翻下被子。” 我跑过去，接过她手里的被子，指尖碰到她的手掌，暖得像晒过的太阳。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
