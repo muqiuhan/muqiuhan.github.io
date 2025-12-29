@@ -626,6 +626,88 @@ char          sa_data[]       socket address (variable-length data)</p>
       </tags>
   </entry>
   <entry>
+    <title>FDA 仿制药流程</title>
+    <url>/2025/11/29/FDA-%E4%BB%BF%E5%88%B6%E8%8D%AF%E6%B5%81%E7%A8%8B/</url>
+    <content><![CDATA[<p>#药物研发</p>
+<p>在FDA监管的药物研发、临床试验和上市流程中，当一个已上市药物（通常指创新药，通过新药申请NDA获得批准）出现一种更低廉的制药方式，但其活性成分的分子式保持完全相同时，这种情况本质上涉及仿制药（generic drug）的开发或工艺优化申请，而非从零开始的全新药物研发。简单来说，不需要重新进行完整的临床试验（即I-III期的大规模人体试验），但必须通过简化的监管路径证明新制药方式生产的药物与原药在质量、安全性和疗效上等效。</p>
+<p>首先，理解核心前提：分子式完全相同意味着活性成分（active pharmaceutical ingredient, API）是相同的化学实体，例如从专利保护的原研药转向无专利保护的仿制药生产。这不同于生物制品（如单克隆抗体）的生物类似药，后者可能需要更多比较性临床试验。FDA将此类药物归类为“仿制药”，其审批路径是缩减新药申请（Abbreviated New Drug Application, ANDA），而非完整的NDA。ANDA的目的是避免重复证明已知的安全性和有效性数据，这些数据已在原药的NDA中确立<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>。</p>
+<p>FDA的《仿制药用户费用法案》（GDUFA）和相关指南明确规定，对于相同分子式的药物，新制药方式（如改进的合成路线、晶型优化或更高效的提取工艺）只需证明“生物等效性”（bioequivalence），而非全面临床试验。生物等效性研究通常包括：1）体外溶出测试（in vitro dissolution），评估药物在模拟生理条件下的释放速率；2）人体药代动力学研究（pharmacokinetic studies），在健康志愿者中比较新药与原药的吸收、分布、代谢和排泄曲线（如AUC和Cmax参数的90%置信区间在80%-125%内）。这些研究规模小，通常只需24-36名受试者，持续数周，而非数年<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>。如果新工艺导致杂质谱或稳定性变化，FDA可能要求额外的数据，如加速稳定性测试或毒性评估，但仍无需重复疗效试验，除非有证据显示潜在差异（如新杂质超过许可阈值）<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>。</p>
+<p>在实际操作中，这一路径大大降低了成本和时间：ANDA审批平均需10-15个月，费用远低于NDA的数亿美元和数年周期。新制药方式的低廉性往往源于规模化生产或工艺创新，但FDA要求申请者提交化学、制造和控制（CMC）信息，证明新工艺符合良好生产规范（cGMP）。例如，阿司匹林或扑热息痛等经典药物，其多种仿制药版本均通过此路径上市，而无需重新验证其止痛或抗炎疗效<sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup>。然而，如果新方式涉及重大变更（如从化学合成转为生物合成，尽管分子式相同），FDA可能视其为“混合型”申请，需要桥接研究来确认等效性。</p>
+<p>如果生物等效性未能证明（例如，新工艺导致生物利用度差异&gt;20%），申请将被拒，或需额外桥接试验，这可能增加延误和成本。不过上市后监测（post-marketing surveillance）仍适用，包括不良事件报告（FAERS系统），以捕捉任何罕见差异。</p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>U.S. Food and Drug Administration. (2023). <em>Frequently Asked Questions about Generic Drugs</em>. Retrieved from <a href="https://www.fda.gov/drugs/generic-drugs/frequently-asked-questions-about-generic-drugs">https://www.fda.gov/drugs/generic-drugs/frequently-asked-questions-about-generic-drugs</a> <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>U.S. Food and Drug Administration. (2019). <em>Bioequivalence Studies with Pharmacokinetic Endpoints for Drugs Submitted Under an ANDA</em>. Guidance for Industry. Retrieved from <a href="https://www.fda.gov/regulatory-information/search-fda-guidance-documents/bioequivalence-studies-pharmacokinetic-endpoints-drugs-submitted-under-abbreviated-new-drug">https://www.fda.gov/regulatory-information/search-fda-guidance-documents/bioequivalence-studies-pharmacokinetic-endpoints-drugs-submitted-under-abbreviated-new-drug</a> <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p>U.S. Food and Drug Administration. (2020). <em>Changes to an Approved NDA or ANDA</em>. Guidance for Industry. Retrieved from <a href="https://www.fda.gov/regulatory-information/search-fda-guidance-documents/changes-approved-nda-or-anda">https://www.fda.gov/regulatory-information/search-fda-guidance-documents/changes-approved-nda-or-anda</a> <a href="#fnref3" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p>U.S. Food and Drug Administration. (2023). <em>Approved Drug Products with Therapeutic Equivalence Evaluations (Orange Book)</em>. Retrieved from <a href="https://www.fda.gov/drugs/drug-approvals-and-databases/approved-drug-products-therapeutic-equivalence-evaluations-orange-book">https://www.fda.gov/drugs/drug-approvals-and-databases/approved-drug-products-therapeutic-equivalence-evaluations-orange-book</a> <a href="#fnref4" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+]]></content>
+      <tags>
+        <tag>Medicine</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>FHIR 记录患者的用药记录</title>
+    <url>/2025/12/29/FHIR-%E8%AE%B0%E5%BD%95%E6%82%A3%E8%80%85%E7%9A%84%E7%94%A8%E8%8D%AF%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<p>FHIR 中的“用药记录”并非一个单一概念，而是一个由不同角色、不同时间点和不同意图构成的连续工作流。</p>
+<p>FHIR 中的药物相关记录类型本质上是是<strong>状态机（State Machine）和责任链（Chain of Responsibility）</strong>。每个资源代表业务流程中的一个特定状态（如“已下达”、“已执行”、“已陈述”），并通过引用链接形成完整的、可审计的责任链。以下是基于此原理的决策逻辑与实现方案。</p>
+<h3 id="核心逻辑：根据数据源的意图选择资源"><a class="header-anchor" href="#核心逻辑：根据数据源的意图选择资源">¶</a>核心逻辑：根据数据源的意图选择资源</h3>
+<p>用药信息的记录遵循“谁在什么时间点产生了什么信息”的原则。这直接对应到三个核心资源：</p>
+<ol>
+<li>
+<p><strong>MedicationRequest（用药请求）</strong></p>
+<ul>
+<li><strong>意图与状态</strong>：代表一个<strong>临床意图</strong>或<strong>指令</strong>。这是一个对未来行为的请求，其状态包括 <code>active</code>（激活）、<code>completed</code>（完成）、<code>cancelled</code>（取消）等。</li>
+<li><strong>数据来源</strong>：由具有处方权的医疗专业人员（如医生）创建。</li>
+<li><strong>核心信息</strong>：包含用药方案（药品、剂量、频次、途径）、用药原因、有效时间段、开立者、开立时间。</li>
+<li><strong>类比</strong>：医院的“医嘱单”或药房的“处方”。</li>
+</ul>
+</li>
+<li>
+<p><strong>MedicationAdministration（用药管理）</strong></p>
+<ul>
+<li><strong>意图与状态</strong>：代表一个<strong>已发生的事实</strong>。这是对MedicationRequest指令的一次具体执行事件的记录，状态为 <code>completed</code>。</li>
+<li><strong>数据来源</strong>：由执行给药的医疗专业人员（如护士）在给药后记录。</li>
+<li><strong>核心信息</strong>：包含实际使用的药品、实际剂量、实际给药时间、给药途径、执行者。它必须通过 <code>.basedOn</code> 字段引用一个或多个MedicationRequest，以建立从“指令”到“执行”的可追溯性。</li>
+<li><strong>类比</strong>：护士的“给药记录”，精确到某年某月某日某时某分给患者注射了某药。</li>
+</ul>
+</li>
+<li>
+<p><strong>MedicationStatement（用药陈述）</strong></p>
+<ul>
+<li><strong>意图与状态</strong>：代表一个<strong>关于用药的断言或声明</strong>。它描述的是患者<strong>正在使用、曾经使用或计划使用</strong>某种药物的状态，不一定关联到具体的医嘱。</li>
+<li><strong>数据来源</strong>：可以来自患者自述（如“我每天吃一粒阿司匹林”）、家属转述，或由系统从历史记录中汇总生成。</li>
+<li><strong>核心信息</strong>：包含陈述的用药信息、有效时间段、信息状态（如 <code>active</code>, <code>completed</code>）、信息来源（<code>patient-reported</code>）。</li>
+<li><strong>类比</strong>：病历中的“现病史-用药史”部分，或患者填写的“用药清单”。</li>
+</ul>
+</li>
+</ol>
+<p>一个完整的院内用药闭环通常遵循以下可追溯的数据流：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">graph LR</span><br><span class="line">    A[医生创建&lt;br&gt;MedicationRequest] -- `.basedOn` 引用 --&gt; B[护士执行后创建&lt;br&gt;MedicationAdministration];</span><br><span class="line">    B -- 系统可推导生成 --&gt; C[系统生成&lt;br&gt;MedicationStatement&lt;br&gt;（汇总当前有效用药）];</span><br><span class="line">    D[患者自述&lt;br&gt;MedicationStatement] -- 可提供给 --&gt; A;</span><br></pre></td></tr></table></figure>
+<p>这种设计确保了数据的<strong>不可变性与可审计性</strong>。每个事件（开立、执行）作为一个独立的资源被记录，通过引用链形成完整的溯源路径。</p>
+<ul>
+<li><strong>追求完整审计溯源</strong>：必须使用 <code>MedicationRequest</code> + <code>MedicationAdministration</code> 的组合。这引入了更高的系统复杂性，但提供了从医嘱到执行的全链路证据。</li>
+<li><strong>记录患者用药史或社区医疗场景</strong>：使用 <code>MedicationStatement</code> 更为合适和轻量。它牺牲了与具体执行事件的强关联，但能更灵活地捕获患者陈述或汇总的用药信息。</li>
+<li><strong>一个常见错误</strong>是试图用一个 <code>MedicationStatement</code> 来同时扮演“医嘱”和“执行记录”的角色。这会破坏数据模型，导致无法区分“医嘱内容”、“实际执行情况”和“患者陈述”，在出现用药差错时无法进行有效溯源。</li>
+</ul>
+<h3 id="示例：记录一次门诊处方及取药"><a class="header-anchor" href="#示例：记录一次门诊处方及取药">¶</a>示例：记录一次门诊处方及取药</h3>
+<ol>
+<li><strong>医生开处方</strong>：创建 <code>MedicationRequest</code>，状态为 <code>active</code>，包含药品、用法用量、开立时间。</li>
+<li><strong>药师发药</strong>：（若需记录发药行为）可创建 <code>MedicationDispense</code> 资源（另一个相关资源），记录发药时间、数量，并通过 <code>.basedOn</code> 引用上述 <code>MedicationRequest</code>。</li>
+<li><strong>患者回家服药</strong>：此事件通常不在临床系统直接记录。但患者复诊时，可自述“我按处方吃了药”，此时可创建一条来源为 <code>patient-reported</code> 的 <code>MedicationStatement</code>，通过 <code>.derivedFrom</code> 关联到最初的 <code>MedicationRequest</code>，表明此陈述源于该处方。</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Fever of Unknown Origin</title>
     <url>/2023/11/16/Fever-of-Unknown-Origin/</url>
     <content><![CDATA[<p>Fever of unknown origin (FUO) has been recognized as a disease state for over100 years.<br>
@@ -2165,52 +2247,6 @@ A relation table (also sometimes called a <em>JOIN</em>, <em>link</em> or <em>pi
       </tags>
   </entry>
   <entry>
-    <title>Rust 虚表布局规则介绍</title>
-    <url>/2023/05/01/Rust-%E8%99%9A%E8%A1%A8%E5%B8%83%E5%B1%80%E8%A7%84%E5%88%99%E4%BB%8B%E7%BB%8D/</url>
-    <content><![CDATA[<p>在 Rust 中，一个指向未知大小对象（!Sized）的引用或指针被实现为一个由两个 usize 大小的域构成的胖指针。这两个域中，其中一个域保存了被引用或被指向的对象的地址，另一个域保存了一个名为 metadata 的数据。对于 slice 的引用或指针来说，其 metadata 为 slice 的长度。对于 trait object 的引用或指针来说，其 metadata 为虚表（vtable）地址。与 C++ 虚表类似，Rust 虚表的存在使得诸多动态语言特性得以实现，例如动态派发（dynamic dispatch）、向上转换（upcasting）、向下转换（downcast）等。本文将对 Rust 中虚表的布局规则进行简要介绍，并在此过程中对 Rust 中若干动态特性的实现方法进行简要介绍。</p>
-<blockquote>
-<p>注意：Rust 虚表及其结构属于 Rust 语言的内部实现细节，不保证稳定性。本文所介绍的虚表布局仅反映本文创作时最新的 Rust 虚表结构[1]，在将来 Rust 虚表结构可能会发生变化。一个 Rust 程序的正确性不应该以任何方式依赖于 Rust 虚表的结构。</p>
-</blockquote>
-<h2 id="基本结构"><a class="header-anchor" href="#基本结构">¶</a>基本结构</h2>
-<p>Rust 程序中的所有虚表均以一个固定结构的 header 开头。Header 中按顺序包含三个usize 大小的字段：drop_in_place ，size 和 align 。在 header 之后是一系列的 usize 大小字段，其数量以及含义在每个虚表中可能都不同。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">+---------------+</span><br><span class="line">| drop_in_place |</span><br><span class="line">+---------------+</span><br><span class="line">| size          |</span><br><span class="line">+---------------+</span><br><span class="line">| align         |</span><br><span class="line">+---------------+</span><br><span class="line">| entry1        |</span><br><span class="line">+---------------+</span><br><span class="line">| entry2        |</span><br><span class="line">+---------------+</span><br><span class="line">| entry3        |</span><br><span class="line">+---------------+</span><br></pre></td></tr></table></figure>
-<p>虚表 header 中的drop_in_place 是一个函数指针，其指向的函数能够原地 drop 当前胖指针所引用的对象。size 和 align 两个域分别给出对象的大小和内存对齐，这两个域共同构成一个 std::alloc::Layout 结构，可用于释放当前胖指针所引用的对象所占据的内存。虚表 header 的存在使得 trait object 总是能被销毁和释放。例如当销毁一个 <code>Box&lt;dyn Trait&gt;</code> 时，<code>Box::&lt;dyn Trait&gt;::drop</code> 会首先调用虚表中的 drop_in_place 函数原地销毁 Box 所引用的对象，然后再调用 dealloc 函数并传递虚表中的 size 和 align 释放堆空间。</p>
-<p>在虚表 header 之后是一系列的字段。在最普遍的情况下，每个字段代表一个指向 trait 所定义的函数的指针。例如，对于下列 object safe 的 trait:</p>
-<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="keyword">trait</span> <span class="title class_">Trait</span> &#123;</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">fun1</span>(&amp;<span class="keyword">self</span>);</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">fun2</span>(&amp;<span class="keyword">self</span>);</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">fun3</span>(&amp;<span class="keyword">self</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果类型T 实现了 Trait，那么为 T 生成的 Trait 虚表的结构为：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">+--------------------------+</span><br><span class="line">| fn drop_in_place(*mut T) |</span><br><span class="line">+--------------------------+</span><br><span class="line">| size of T                |</span><br><span class="line">+--------------------------+</span><br><span class="line">| align of T               |</span><br><span class="line">+--------------------------+</span><br><span class="line">| fn &lt;T as Trait&gt;::fun1    |</span><br><span class="line">+--------------------------+</span><br><span class="line">| fn &lt;T as Trait&gt;::fun2    |</span><br><span class="line">+--------------------------+</span><br><span class="line">| fn &lt;T as Trait&gt;::fun3    |</span><br><span class="line">+--------------------------+</span><br></pre></td></tr></table></figure>
-<p>Trait 中的函数按照声明顺序依次排列在虚表 header 之后。当通过一个指向 T 对象的 &amp;dyn Trait 调用 fun2 函数时，程序会先从虚表的第 5 个域中得到为 T 实现的 Trait::fun2 函数的地址，然后再调用之。</p>
-<h2 id="Super-Trait"><a class="header-anchor" href="#Super-Trait">¶</a>Super Trait</h2>
-<p>Object safe 的 trait 可以有 super trait。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pub trait Grand &#123;</span><br><span class="line">    fn grand_fun1(&amp;self);</span><br><span class="line">    fn grand_fun2(&amp;self);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pub trait Parent : Grand &#123;</span><br><span class="line">    fn parent_fun1(&amp;self);</span><br><span class="line">    fn parent_fun2(&amp;self);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pub trait Trait : Parent &#123;</span><br><span class="line">    fn fun(&amp;self);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果类型T 实现了 Trait，那么此时为 T 生成的 Trait 虚表的结构为：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">+-------------------------------+</span><br><span class="line">| fn drop_in_place(*mut T)      |</span><br><span class="line">+-------------------------------+</span><br><span class="line">| size of T                     |</span><br><span class="line">+-------------------------------+</span><br><span class="line">| align of T                    |</span><br><span class="line">+-------------------------------+</span><br><span class="line">| fn &lt;T as Grand&gt;::grand_fun1   |</span><br><span class="line">+-------------------------------+</span><br><span class="line">| fn &lt;T as Grand&gt;::grand_fun2   |</span><br><span class="line">+-------------------------------+</span><br><span class="line">| fn &lt;T as Parent&gt;::parent_fun1 |</span><br><span class="line">+-------------------------------+</span><br><span class="line">| fn &lt;T as Parent&gt;::parent_fun2 |</span><br><span class="line">+-------------------------------+</span><br><span class="line">| fn &lt;T as Trait&gt;::fun          |</span><br><span class="line">+-------------------------------+</span><br></pre></td></tr></table></figure>
-<p>可以看到，此时Trait 以及 Trait 的所有直接或间接父 trait 所定义的所有函数均包含在虚表 header 之后，且顺序为后序（即先排布 Trait 的父 trait 所定义的所有函数，最后再排布 Trait 所定义的所有函数）。这样的排布方式使得在得到 T 类型的 Trait 虚表的同时也同时得到了 T 类型的 Parent 虚表和 Grand 虚表。T 类型的 Grand 虚表恰好由 Trait 虚表的前五个域构成，T 类型的 Parent 虚表恰好由 Trait 虚表的前七项构成。这使得向上转换变得非常简单。</p>
-<p>所谓向上转换，即 Rust 允许将&amp;dyn Trait 转换为 &amp;dyn Parent 或 &amp;dyn Grand 。在向上转换的过程中，胖指针的对象地址域保持不变，但 metadata 域可能需要进行调整，因为不同的 trait 可能具有不同的虚表地址。但在当前示例中，向上转换不需要调整 metadata 域，因为一个指向 Trait 虚表的指针同时也指向 Parent 虚表和 Grand 虚表。在后文中我们会进一步介绍需要调整 metadata 域的向上转换的情况。</p>
-<blockquote>
-<p>注意：目前 stable Rust 暂不支持向上转换。要使用向上转换特性，必须使用 nightly 工具链，并向源文件中添加 #![feature(trait_upcasting)] 特性开关。</p>
-</blockquote>
-<h2 id="多重继承"><a class="header-anchor" href="#多重继承">¶</a>多重继承</h2>
-<p>Trait 可以有多个 super trait。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pub trait Base &#123;</span><br><span class="line">    fn base_fun1(&amp;self);</span><br><span class="line">    fn base_fun2(&amp;self);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pub trait Left : Base &#123;</span><br><span class="line">    fn left_fun1(&amp;self);</span><br><span class="line">    fn left_fun2(&amp;self);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pub trait Right : Base &#123;</span><br><span class="line">    fn right_fun1(&amp;self);</span><br><span class="line">    fn right_fun2(&amp;self);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pub trait Trait : Left + Right &#123;</span><br><span class="line">    fn fun(&amp;self);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果类型T 实现了 Trait，那么此时为 T 生成的 Trait 虚表的结构为：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">+-----------------------------+</span><br><span class="line">| fn drop_in_place(*mut T)    |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| size of T                   |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| align of T                  |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| fn &lt;T as Base&gt;::base_fun1   |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| fn &lt;T as Base&gt;::base_fun2   |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| fn &lt;T as Left&gt;::left_fun1   |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| fn &lt;T as Left&gt;::left_fun2   |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| fn &lt;T as Right&gt;::right_fun1 |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| fn &lt;T as Right&gt;::right_fun2 |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| ptr to &lt;T as Right&gt;::vtable |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| fn &lt;T as Trait&gt;::fun        |</span><br><span class="line">+-----------------------------+</span><br></pre></td></tr></table></figure>
-<p>可以看到，此时Trait 及其所有直接或间接父 trait 所定义的所有函数仍然包含在虚表内，因此通过 &amp;dyn Trait 调用的函数仍然可以直接从虚表内得到其实际目标函数的地址。另外，Trait 虚表内仍然包含有效的 Base 虚表和 Left 虚表。因此，将 &amp;dyn Trait 向上转换为 &amp;dyn Left 或 &amp;dyn Base 仍然是极其简单的，不需要调整胖指针的 metadata 域。但是，将 &amp;dyn Trait 向上转换为 &amp;dyn Right 就需要调整 metadata 域了，因为 Trait 虚表内并不包含一个有效的 Right 虚表。这也是 Trait 虚表中 ptr to <code>&lt;T as Right&gt;::vtable</code> 域的作用：在执行向上转换时，程序会读取 Trait 虚表的这个域作为得到的 &amp;dyn Right 胖指针的 metadata 。这也是 <em>Rust 向上转换与 C++ 向上转换的一个很大不同：在 C++ 中的向上转换通常并不需要访问虚表（除非需要执行跨虚继承边界的转换），但在 Rust 中向上转换可能需要访问虚表。</em></p>
-<p>更加一般地，对于一个 object safe 的 traitTr，将其第一个父 trait、第一个父 trait 的第一个父 trait、…… 这一系列直接或间接父 trait 记为这个 trait 的 PrefixTrait 集合。在将 &amp;dyn Tr 向上转换时，如果转换到的目标 trait 包含在 PrefixTrait 集合内，那么这个向上转换是平凡的：不需要调整胖指针的 metadata 域。否则，这个向上转换需要在 Tr 的虚表内读取目标 trait 的虚表指针作为转换结果的 metadata 。在 Tr 的虚表结构中，位于 PrefixTrait 集合中的父 trait 只需要排布他们所定义的函数即可；对于其他父 trait 还需要额外在虚表内排布一个指向其虚表的指针用于向上转换。</p>
-<h2 id="向下转换"><a class="header-anchor" href="#向下转换">¶</a>向下转换</h2>
-<p>Rust 提供了一个特殊的 trait：std::any::Any 。该 trait 支持向下转换，即可以将 &amp;dyn Any 转换为 T 。转换过程中会对胖指针所指向的对象的实际类型进行检查，确认其确实是一个 T 类型的对象。Any trait 的虚表结构有一些特殊；在虚表 header 之后，Any 虚表仅包含一个域，这个域直接给出胖指针指向的对象的类型标识（由一个 std::any::TypeId 类型的值表示）。例如，对于任意的 T: 'static，编译器为其生成的 Any 虚表为：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">+--------------------------+</span><br><span class="line">| fn drop_in_place(*mut T) |</span><br><span class="line">+--------------------------+</span><br><span class="line">| size of T                |</span><br><span class="line">+--------------------------+</span><br><span class="line">| align of T               |</span><br><span class="line">+--------------------------+</span><br><span class="line">| TypeId of T              |</span><br><span class="line">+--------------------------+</span><br></pre></td></tr></table></figure>
-<p>在执行向下转换时，程序首先检查转换到的类型是否与虚表中给出的TypeId 所标识的类型一致。若类型检查通过，向下转换操作可以直接返回胖指针中的指针域作为转换结果。</p>
-<h3 id="REFERENCE"><a class="header-anchor" href="#REFERENCE">¶</a>REFERENCE</h3>
-<ol>
-<li>Vtable format to support dyn upcasting coercion <a href="https://rust-lang.github.io/dyn-upcasting-coercion-initiative/design-discussions/vtable-layout.*html">https://rust-lang.github.io/dyn-upcasting-coercion-initiative/design-discussions/vtable-layout.*html</a>*</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>Technique</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Rust 闭包 lifetime may not live long enough 问题</title>
     <url>/2023/05/24/Rust-%E9%97%AD%E5%8C%85-lifetime-may-not-live-long-enough-%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<p>代码：</p>
@@ -2382,6 +2418,52 @@ A relation table (also sometimes called a <em>JOIN</em>, <em>link</em> or <em>pi
       </tags>
   </entry>
   <entry>
+    <title>Rust 虚表布局规则介绍</title>
+    <url>/2023/05/01/Rust-%E8%99%9A%E8%A1%A8%E5%B8%83%E5%B1%80%E8%A7%84%E5%88%99%E4%BB%8B%E7%BB%8D/</url>
+    <content><![CDATA[<p>在 Rust 中，一个指向未知大小对象（!Sized）的引用或指针被实现为一个由两个 usize 大小的域构成的胖指针。这两个域中，其中一个域保存了被引用或被指向的对象的地址，另一个域保存了一个名为 metadata 的数据。对于 slice 的引用或指针来说，其 metadata 为 slice 的长度。对于 trait object 的引用或指针来说，其 metadata 为虚表（vtable）地址。与 C++ 虚表类似，Rust 虚表的存在使得诸多动态语言特性得以实现，例如动态派发（dynamic dispatch）、向上转换（upcasting）、向下转换（downcast）等。本文将对 Rust 中虚表的布局规则进行简要介绍，并在此过程中对 Rust 中若干动态特性的实现方法进行简要介绍。</p>
+<blockquote>
+<p>注意：Rust 虚表及其结构属于 Rust 语言的内部实现细节，不保证稳定性。本文所介绍的虚表布局仅反映本文创作时最新的 Rust 虚表结构[1]，在将来 Rust 虚表结构可能会发生变化。一个 Rust 程序的正确性不应该以任何方式依赖于 Rust 虚表的结构。</p>
+</blockquote>
+<h2 id="基本结构"><a class="header-anchor" href="#基本结构">¶</a>基本结构</h2>
+<p>Rust 程序中的所有虚表均以一个固定结构的 header 开头。Header 中按顺序包含三个usize 大小的字段：drop_in_place ，size 和 align 。在 header 之后是一系列的 usize 大小字段，其数量以及含义在每个虚表中可能都不同。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">+---------------+</span><br><span class="line">| drop_in_place |</span><br><span class="line">+---------------+</span><br><span class="line">| size          |</span><br><span class="line">+---------------+</span><br><span class="line">| align         |</span><br><span class="line">+---------------+</span><br><span class="line">| entry1        |</span><br><span class="line">+---------------+</span><br><span class="line">| entry2        |</span><br><span class="line">+---------------+</span><br><span class="line">| entry3        |</span><br><span class="line">+---------------+</span><br></pre></td></tr></table></figure>
+<p>虚表 header 中的drop_in_place 是一个函数指针，其指向的函数能够原地 drop 当前胖指针所引用的对象。size 和 align 两个域分别给出对象的大小和内存对齐，这两个域共同构成一个 std::alloc::Layout 结构，可用于释放当前胖指针所引用的对象所占据的内存。虚表 header 的存在使得 trait object 总是能被销毁和释放。例如当销毁一个 <code>Box&lt;dyn Trait&gt;</code> 时，<code>Box::&lt;dyn Trait&gt;::drop</code> 会首先调用虚表中的 drop_in_place 函数原地销毁 Box 所引用的对象，然后再调用 dealloc 函数并传递虚表中的 size 和 align 释放堆空间。</p>
+<p>在虚表 header 之后是一系列的字段。在最普遍的情况下，每个字段代表一个指向 trait 所定义的函数的指针。例如，对于下列 object safe 的 trait:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="keyword">trait</span> <span class="title class_">Trait</span> &#123;</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">fun1</span>(&amp;<span class="keyword">self</span>);</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">fun2</span>(&amp;<span class="keyword">self</span>);</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">fun3</span>(&amp;<span class="keyword">self</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果类型T 实现了 Trait，那么为 T 生成的 Trait 虚表的结构为：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">+--------------------------+</span><br><span class="line">| fn drop_in_place(*mut T) |</span><br><span class="line">+--------------------------+</span><br><span class="line">| size of T                |</span><br><span class="line">+--------------------------+</span><br><span class="line">| align of T               |</span><br><span class="line">+--------------------------+</span><br><span class="line">| fn &lt;T as Trait&gt;::fun1    |</span><br><span class="line">+--------------------------+</span><br><span class="line">| fn &lt;T as Trait&gt;::fun2    |</span><br><span class="line">+--------------------------+</span><br><span class="line">| fn &lt;T as Trait&gt;::fun3    |</span><br><span class="line">+--------------------------+</span><br></pre></td></tr></table></figure>
+<p>Trait 中的函数按照声明顺序依次排列在虚表 header 之后。当通过一个指向 T 对象的 &amp;dyn Trait 调用 fun2 函数时，程序会先从虚表的第 5 个域中得到为 T 实现的 Trait::fun2 函数的地址，然后再调用之。</p>
+<h2 id="Super-Trait"><a class="header-anchor" href="#Super-Trait">¶</a>Super Trait</h2>
+<p>Object safe 的 trait 可以有 super trait。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pub trait Grand &#123;</span><br><span class="line">    fn grand_fun1(&amp;self);</span><br><span class="line">    fn grand_fun2(&amp;self);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pub trait Parent : Grand &#123;</span><br><span class="line">    fn parent_fun1(&amp;self);</span><br><span class="line">    fn parent_fun2(&amp;self);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pub trait Trait : Parent &#123;</span><br><span class="line">    fn fun(&amp;self);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果类型T 实现了 Trait，那么此时为 T 生成的 Trait 虚表的结构为：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">+-------------------------------+</span><br><span class="line">| fn drop_in_place(*mut T)      |</span><br><span class="line">+-------------------------------+</span><br><span class="line">| size of T                     |</span><br><span class="line">+-------------------------------+</span><br><span class="line">| align of T                    |</span><br><span class="line">+-------------------------------+</span><br><span class="line">| fn &lt;T as Grand&gt;::grand_fun1   |</span><br><span class="line">+-------------------------------+</span><br><span class="line">| fn &lt;T as Grand&gt;::grand_fun2   |</span><br><span class="line">+-------------------------------+</span><br><span class="line">| fn &lt;T as Parent&gt;::parent_fun1 |</span><br><span class="line">+-------------------------------+</span><br><span class="line">| fn &lt;T as Parent&gt;::parent_fun2 |</span><br><span class="line">+-------------------------------+</span><br><span class="line">| fn &lt;T as Trait&gt;::fun          |</span><br><span class="line">+-------------------------------+</span><br></pre></td></tr></table></figure>
+<p>可以看到，此时Trait 以及 Trait 的所有直接或间接父 trait 所定义的所有函数均包含在虚表 header 之后，且顺序为后序（即先排布 Trait 的父 trait 所定义的所有函数，最后再排布 Trait 所定义的所有函数）。这样的排布方式使得在得到 T 类型的 Trait 虚表的同时也同时得到了 T 类型的 Parent 虚表和 Grand 虚表。T 类型的 Grand 虚表恰好由 Trait 虚表的前五个域构成，T 类型的 Parent 虚表恰好由 Trait 虚表的前七项构成。这使得向上转换变得非常简单。</p>
+<p>所谓向上转换，即 Rust 允许将&amp;dyn Trait 转换为 &amp;dyn Parent 或 &amp;dyn Grand 。在向上转换的过程中，胖指针的对象地址域保持不变，但 metadata 域可能需要进行调整，因为不同的 trait 可能具有不同的虚表地址。但在当前示例中，向上转换不需要调整 metadata 域，因为一个指向 Trait 虚表的指针同时也指向 Parent 虚表和 Grand 虚表。在后文中我们会进一步介绍需要调整 metadata 域的向上转换的情况。</p>
+<blockquote>
+<p>注意：目前 stable Rust 暂不支持向上转换。要使用向上转换特性，必须使用 nightly 工具链，并向源文件中添加 #![feature(trait_upcasting)] 特性开关。</p>
+</blockquote>
+<h2 id="多重继承"><a class="header-anchor" href="#多重继承">¶</a>多重继承</h2>
+<p>Trait 可以有多个 super trait。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pub trait Base &#123;</span><br><span class="line">    fn base_fun1(&amp;self);</span><br><span class="line">    fn base_fun2(&amp;self);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pub trait Left : Base &#123;</span><br><span class="line">    fn left_fun1(&amp;self);</span><br><span class="line">    fn left_fun2(&amp;self);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pub trait Right : Base &#123;</span><br><span class="line">    fn right_fun1(&amp;self);</span><br><span class="line">    fn right_fun2(&amp;self);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pub trait Trait : Left + Right &#123;</span><br><span class="line">    fn fun(&amp;self);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果类型T 实现了 Trait，那么此时为 T 生成的 Trait 虚表的结构为：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">+-----------------------------+</span><br><span class="line">| fn drop_in_place(*mut T)    |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| size of T                   |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| align of T                  |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| fn &lt;T as Base&gt;::base_fun1   |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| fn &lt;T as Base&gt;::base_fun2   |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| fn &lt;T as Left&gt;::left_fun1   |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| fn &lt;T as Left&gt;::left_fun2   |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| fn &lt;T as Right&gt;::right_fun1 |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| fn &lt;T as Right&gt;::right_fun2 |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| ptr to &lt;T as Right&gt;::vtable |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| fn &lt;T as Trait&gt;::fun        |</span><br><span class="line">+-----------------------------+</span><br></pre></td></tr></table></figure>
+<p>可以看到，此时Trait 及其所有直接或间接父 trait 所定义的所有函数仍然包含在虚表内，因此通过 &amp;dyn Trait 调用的函数仍然可以直接从虚表内得到其实际目标函数的地址。另外，Trait 虚表内仍然包含有效的 Base 虚表和 Left 虚表。因此，将 &amp;dyn Trait 向上转换为 &amp;dyn Left 或 &amp;dyn Base 仍然是极其简单的，不需要调整胖指针的 metadata 域。但是，将 &amp;dyn Trait 向上转换为 &amp;dyn Right 就需要调整 metadata 域了，因为 Trait 虚表内并不包含一个有效的 Right 虚表。这也是 Trait 虚表中 ptr to <code>&lt;T as Right&gt;::vtable</code> 域的作用：在执行向上转换时，程序会读取 Trait 虚表的这个域作为得到的 &amp;dyn Right 胖指针的 metadata 。这也是 <em>Rust 向上转换与 C++ 向上转换的一个很大不同：在 C++ 中的向上转换通常并不需要访问虚表（除非需要执行跨虚继承边界的转换），但在 Rust 中向上转换可能需要访问虚表。</em></p>
+<p>更加一般地，对于一个 object safe 的 traitTr，将其第一个父 trait、第一个父 trait 的第一个父 trait、…… 这一系列直接或间接父 trait 记为这个 trait 的 PrefixTrait 集合。在将 &amp;dyn Tr 向上转换时，如果转换到的目标 trait 包含在 PrefixTrait 集合内，那么这个向上转换是平凡的：不需要调整胖指针的 metadata 域。否则，这个向上转换需要在 Tr 的虚表内读取目标 trait 的虚表指针作为转换结果的 metadata 。在 Tr 的虚表结构中，位于 PrefixTrait 集合中的父 trait 只需要排布他们所定义的函数即可；对于其他父 trait 还需要额外在虚表内排布一个指向其虚表的指针用于向上转换。</p>
+<h2 id="向下转换"><a class="header-anchor" href="#向下转换">¶</a>向下转换</h2>
+<p>Rust 提供了一个特殊的 trait：std::any::Any 。该 trait 支持向下转换，即可以将 &amp;dyn Any 转换为 T 。转换过程中会对胖指针所指向的对象的实际类型进行检查，确认其确实是一个 T 类型的对象。Any trait 的虚表结构有一些特殊；在虚表 header 之后，Any 虚表仅包含一个域，这个域直接给出胖指针指向的对象的类型标识（由一个 std::any::TypeId 类型的值表示）。例如，对于任意的 T: 'static，编译器为其生成的 Any 虚表为：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">+--------------------------+</span><br><span class="line">| fn drop_in_place(*mut T) |</span><br><span class="line">+--------------------------+</span><br><span class="line">| size of T                |</span><br><span class="line">+--------------------------+</span><br><span class="line">| align of T               |</span><br><span class="line">+--------------------------+</span><br><span class="line">| TypeId of T              |</span><br><span class="line">+--------------------------+</span><br></pre></td></tr></table></figure>
+<p>在执行向下转换时，程序首先检查转换到的类型是否与虚表中给出的TypeId 所标识的类型一致。若类型检查通过，向下转换操作可以直接返回胖指针中的指针域作为转换结果。</p>
+<h3 id="REFERENCE"><a class="header-anchor" href="#REFERENCE">¶</a>REFERENCE</h3>
+<ol>
+<li>Vtable format to support dyn upcasting coercion <a href="https://rust-lang.github.io/dyn-upcasting-coercion-initiative/design-discussions/vtable-layout.*html">https://rust-lang.github.io/dyn-upcasting-coercion-initiative/design-discussions/vtable-layout.*html</a>*</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>TDD 和 DDD 的一些小想法</title>
     <url>/2025/03/20/TDD-%E5%92%8C-DDD-%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%83%B3%E6%B3%95/</url>
     <content><![CDATA[<p>Test-Driven Development (TDD) 和 Domain-Driven Design (DDD) 是两种不同的软件开发方法论，各自有其独特的优缺点和应用场景。</p>
@@ -2419,6 +2501,19 @@ A relation table (also sometimes called a <em>JOIN</em>, <em>link</em> or <em>pi
 ]]></content>
       <tags>
         <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>TSOPT 检查</title>
+    <url>/2025/12/29/TSOPT-%E6%A3%80%E6%9F%A5/</url>
+    <content><![CDATA[<p>T-SPOT检查，其全称为T-SPOT.TB，是一种用于检测结核分枝杆菌感染的体外诊断血液检测技术。该方法属于一类被称为γ-干扰素释放试验（Interferon Gamma Release Assay, IGRA）的检测手段，旨在辅助医生诊断个体是否存在结核菌感染，包括活动性结核病和潜伏性结-核感染。此项检测并非直接寻找病原体，而是通过评估人体免疫系统对结核菌特定抗原的反应来做出间接判断，因此，其结果需要结合临床风险评估、影像学检查及其他医疗诊断信息进行综合解读。</p>
+<p>该检测的核心原理在于测量外周血中效应T淋巴细胞的功能。具体而言，检测过程中会分离患者血液中的单个核细胞，并在体外用两种结核分枝杆菌特异性抗原——早期分泌性抗原靶6（ESAT-6）和培养滤液蛋白10（CFP-10）——对其进行刺激。这两种蛋白由结核分枝杆菌表达，但绝大多数非结核分枝杆菌以及目前使用的所有卡介苗（BCG疫苗）菌株均不表达，这使得T-SPOT.TB检测相比于传统的结核菌素皮肤试验（TST）具有更高的特异性，能有效避免因卡介苗接种史或大多数非结核分枝杆菌感染而导致的假阳性结果。</p>
+<p>如果受检者的免疫系统曾经接触过结核分枝杆菌，其血液中会存在能够识别这些特异性抗原的效应T细胞。当这些T细胞在体外再次遇到ESAT-6和CFP-10时，会被激活并释放γ-干扰素（IFN-γ）。T-SPOT.TB检测利用一种名为酶联免疫斑点（ELISPOT）的技术，在微孔板中捕获并可视化这些由单个T细胞释放的γ-干扰素，形成可见的“斑点”。通过计数这些斑点的数量，可以量化对结核菌抗原敏感的T细胞的丰度，从而判断免疫系统是否对结核菌存在记忆反应。</p>
+<p>检测结果通常以阳性、阴性或临界（可疑）的形式报告。阳性结果表明受检者很可能感染了结核分枝杆菌；阴性结果则意味着未检测到对结核菌的免疫反应，提示可能没有感染；而临界结果则表示无法明确判断，可能建议重新进行检测或结合其他诊断方法进一步评估。由于其操作的标准化和对特定抗原的依赖，T-SPOT.TB被认为是一种重要的结核病辅助诊断工具，尤其适用于那些因免疫抑制状态（如HIV感染者或长期使用免疫抑制剂的患者）而导致结核菌素皮肤试验结果不可靠的人群。</p>
+<h3 id="参考文献"><a class="header-anchor" href="#参考文献">¶</a>参考文献</h3>
+]]></content>
+      <tags>
+        <tag>Medicine</tag>
       </tags>
   </entry>
   <entry>
@@ -3507,6 +3602,60 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       </tags>
   </entry>
   <entry>
+    <title>临床研究中盲态规则存在的原因</title>
+    <url>/2025/12/19/%E4%B8%B4%E5%BA%8A%E7%A0%94%E7%A9%B6%E4%B8%AD%E7%9B%B2%E6%80%81%E8%A7%84%E5%88%99%E5%AD%98%E5%9C%A8%E7%9A%84%E5%8E%9F%E5%9B%A0/</url>
+    <content><![CDATA[<p>在临床药物试验中，盲态是一种核心方法学设计，旨在消除主观偏见对试验结果的影响。其本质在于对研究参与者、研究者或评估者中的一方或多方隐藏治疗分配信息，从而确保数据收集和结果判读的客观性。盲态的实施贯穿试验设计、执行、数据管理和分析的全链条，其规定与存在原因植根于循证医学对科学严谨性的追求。</p>
+<p>从试验启动到结束，盲态管理需遵循标准化流程。在方案设计阶段，需明确盲法层级（如单盲、双盲或三盲），并制定相应的盲法实施计划。随机化编码由独立于临床团队的统计人员或第三方机构生成，治疗药物与对照品（如安慰剂）需在外观、气味、包装上完全一致，以确保盲态的完整性。在试验执行期间，发药、药物清点及受试者管理均由不参与疗效评估的人员负责，避免无意间泄露分组信息。当受试者出现严重不良事件，且必须知晓具体用药才能实施救治时，可启动紧急揭盲程序，但需严格记录揭盲原因、时间及操作人员，并在最终报告中说明。数据录入与管理环节，所有标识治疗组别的字段均需隐藏，数据库锁定前由盲态审核委员会进行一致性核查，确保无意外破盲。直至最终统计分析完成，研究团队方可正式揭盲。这一系列措施在《药物临床试验质量管理规范》及ICH-GCP指南中均有详细规定，旨在维护试验结果的科学可靠性<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>。</p>
+<p>盲态的核心价值在于控制两类主要偏倚：性能偏倚与检测偏倚。若研究者或受试者知晓治疗分配，可能在评估症状改善、记录不良事件或调整合并用药时产生倾向性，例如对试验组过度乐观或对对照组过度严苛，这种主观介入会扭曲药物真实疗效的测量。此外，在患者报告结局或生活质量评分等软终点指标中，知晓分组可能直接影响受试者的心理预期与反馈，进一步干扰结果有效性。通过盲态设计，可最大程度剥离人为因素对终点事件的干扰，从而更准确地估计药物与安慰剂或对照药之间的差异。从统计学角度，盲态有助于维持随机化带来的组间均衡性，使基线特征与未知混杂因素在组间均匀分布，提升因果推断的可靠性。历史上多项研究显示，非盲试验倾向于高估治疗效果约25%左右，尤其在主观性终点中偏倚更为显著<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>。</p>
+<hr>
+<p><strong>参考文献</strong></p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>International Council for Harmonisation of Technical Requirements for Pharmaceuticals for Human Use. <em>ICH Harmonised Guideline: Integrated Addendum to ICH E6(R1): Guideline for Good Clinical Practice E6(R2)</em>. 2016. <a href="https://database.ich.org/sites/default/files/E6_R2_Addendum.pdf">https://database.ich.org/sites/default/files/E6_R2_Addendum.pdf</a> <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>Hróbjartsson A, et al. <em>Blinded trials taken to the test: an analysis of randomized clinical trials that report tests for the success of blinding</em>. International Journal of Epidemiology. 2007;36(3):654-663. <a href="https://doi.org/10.1093/ije/dym020">https://doi.org/10.1093/ije/dym020</a> <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+]]></content>
+      <tags>
+        <tag>Medicine</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>乙酰半脱氨酸的药理学与药代动力学特性</title>
+    <url>/2025/12/30/%E4%B9%99%E9%85%B0%E5%8D%8A%E8%84%B1%E6%B0%A8%E9%85%B8%E7%9A%84%E8%8D%AF%E7%90%86%E5%AD%A6%E4%B8%8E%E8%8D%AF%E4%BB%A3%E5%8A%A8%E5%8A%9B%E5%AD%A6%E7%89%B9%E6%80%A7/</url>
+    <content><![CDATA[<p>乙酰半胱氨酸的药理活性核心在于其分子中的游离巯基（-SH）。这一化学基团赋予其两项主要且机制迥异的临床应用：作为粘痰溶解剂和作为对乙酰氨基酚（扑热息痛）过量的特效解毒剂。</p>
+<p>作为粘痰溶解剂，其作用直接作用于气道分泌物。慢性阻塞性肺疾病、支气管扩张等病理状态下，痰液中的粘蛋白通过大量的二硫键（-S-S-）交联，形成致密的凝胶网络，导致粘稠度升高。乙酰半胱氨酸的巯基能与这些二硫键发生互换反应，将其断裂，从而将大分子的粘蛋白聚合物解聚为小分子肽链<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>。这一生化过程直接降低了痰液的粘滞性和弹性，使其易于咳出。此外，该药物还具备抗氧化特性，能直接清除羟基自由基、次氯酸等氧化物质，并作为合成细胞内重要抗氧化剂谷胱甘肽的前体，间接减轻气道氧化应激损伤<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>。</p>
+<p>作为对乙酰氨基酚过量的解毒剂，其药理学机制则涉及肝脏代谢的干预。对乙酰氨基酚在治疗剂量下，主要经葡萄糖醛酸化和硫酸化结合反应后排泄，少量经细胞色素P450 2E1代谢为高活性的毒性中间体N-乙酰对苯醌亚胺（NAPQI）。NAPQI在正常情况下可被肝细胞内丰富的谷胱甘肽迅速结合而解毒。过量时，结合代谢途径饱和，P450代谢生成的NAPQI显著增加，耗竭谷胱甘肽储备，导致NAPQI与肝细胞蛋白共价结合，引发中心小叶性肝坏死。乙酰半胱氨酸在此情境下，可作为谷胱甘肽的前体物质，通过提供半胱氨酸来促进谷胱甘肽的重新合成，从而恢复肝脏解毒NAPQI的能力<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>。同时，它也可能直接与NAPQI结合，发挥替代解毒作用。</p>
+<p>接下来是药代动力学部分。“颗粒剂”在体内过程上与口服溶液剂相似，其吸收和代谢特征如下。口服后，乙酰半胱氨酸在小肠被迅速吸收，但其绝对生物利用度较低，研究表明仅约6%至10%<sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup>。这主要归因于显著的肝脏首过代谢——药物在进入体循环前，大部分在肝脏被脱去乙酰基，转化为半胱氨酸，进而参与谷胱甘肽合成或蛋白质代谢。服药后，血浆中原形药物的达峰时间约在1至2小时。药物在体内分布广泛，原形药物的血浆蛋白结合率约为50%。乙酰半胱氨酸及其代谢产物可穿透胎盘屏障，并少量进入乳汁。其消除半衰期约为5.6小时，主要经肝脏代谢，最终代谢产物通过肾脏排泄。</p>
+<p><strong>药物信息总结</strong></p>
+<ul>
+<li><strong>通用名</strong>：乙酰半胱氨酸 (Acetylcysteine)</li>
+<li><strong>核心药理机制</strong>：1) 提供游离巯基，裂解痰液中粘蛋白二硫键（祛痰）；2) 作为谷胱甘肽前体，恢复肝脏解毒能力（解毒）。</li>
+<li><strong>关键药代参数</strong>：口服生物利用度低（6-10%），首过效应显著，达峰时间1-2小时，半衰期约5.6小时，主要经肝代谢、肾排泄。</li>
+<li><strong>临床注意</strong>：不同剂型（颗粒、泡腾片、注射液）的药代动力学特征存在差异，尤其是静脉给药的生物利用度为100%，用于对乙酰氨基酚中毒的紧急救治时，需遵循特定的负荷-维持给药方案。</li>
+</ul>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>基于粘蛋白生物化学及巯基-二硫键交换反应原理。这是其作为粘痰溶解剂的经典且确证的作用机制。 <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>其抗氧化作用在大量体外与动物研究中被证实，是支持其在慢性呼吸系统疾病中潜在获益的理论基础之一。 <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p>此解毒机制基于对乙酰氨基酚肝毒性的经典三阶段理论，并被多项随机对照试验及荟萃分析所支持，是临床标准治疗方案的核心依据。 <a href="#fnref3" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p>数据来源于人体药代动力学研究。低生物利用度提示口服给药时，大量药物在肝脏被“首过”利用，这恰好解释了其在口服用于肝保护时的作用基础。 <a href="#fnref4" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+]]></content>
+      <tags>
+        <tag>Medicine</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>二〇二三年八月一日</title>
     <url>/2023/08/01/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%B8%89%E5%B9%B4%E5%85%AB%E6%9C%88%E4%B8%80%E6%97%A5/</url>
     <content><![CDATA[<p>阳光给他病态一般白的皮肤注入了一些生机，左手手臂上斑驳的伤痕，每一道都诉诸着他对家人浓重的思念。那是在暗无天日的岁月里，他通过痛楚得到的慰藉。</p>
@@ -4030,27 +4179,29 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
     <title>二〇二五年十二月二十八日</title>
     <url>/2025/12/28/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%BA%94%E5%B9%B4%E5%8D%81%E4%BA%8C%E6%9C%88%E4%BA%8C%E5%8D%81%E5%85%AB%E6%97%A5/</url>
     <content><![CDATA[<p>我曾经是个极度渴望远方的人，十六七岁的时候，我就觉得生活应该在别处。去极北的冰原看极光，在热带的雨林里听蝉鸣。那时候，我以为勇敢就是不断地出发，不断地跨越国境线，去触摸那些地图上遥远的坐标。</p>
-<p>当那些宏大的风景在眼里渐渐褪色，变成了一张张大同小异的明信片。我发现，自己并不渴望那个虚无缥缈的“远方”，我只是想找到一个可爱的地方，能让心跳安稳下来。</p>
+<p>直到那些宏大的风景在眼里渐渐褪色，变成了一张张大同小异的明信片。我发现，自己并不渴望那个虚无缥缈的“远方”，我只是想找到一个可爱的地方，能让心跳安稳下来。</p>
 <p>于是，我回到了这座南方的小城。</p>
 <p>小城多雨，空气里总带着一股湿润的青苔味。</p>
-<p>我撑着一把黑色的旧伞，走在交错纵横的弄堂里。这里的建筑保留着旧时代的局促与温情，电线杆上晾着洗得发白的床单，偶尔有几只野猫从瓦片上跳过。</p>
-<p>跨过那座被称为“通济”的石拱桥。桥下的河水浑浊而缓慢，像极了流淌不动的时光。我并没有明确的目的地，只是随性地穿梭在一条又一条弄堂之间。</p>
-<p>就在转过一个转角，走进一条连地图上都没有标注的、始料未及的小巷时，我停住了脚步。</p>
+<p>我撑着一把黑色的旧伞，这把伞是我在离开这座城市的前两年就花十几元购入的，当时陈桉说我背着它像一个中二的少年。</p>
+<p>我走在交错纵横的弄堂里。这里的建筑保留着旧时代的局促与温情，电线杆上晾着洗得发白的床单，偶尔有几只野猫从瓦片上跳过。</p>
+<p>跨过那座被称为“通济”的石拱桥。桥下的河水浑浊而缓慢，像流淌不动的时光。我并没有明确的目的地，只是随性地穿梭在一条又一条弄堂之间。</p>
+<p>就在转过一个转角，走进一条地图上没有标注的、始料未及的小巷时，我停住了脚步。</p>
 <p>雨不知道什么时候停了。巷子很窄，两旁的红砖墙上爬满了枯萎的藤蔓。你就站在巷子的尽头，手里提着一袋刚出炉的生煎包，正低头躲避屋檐落下的水滴。</p>
 <p>在我的旅行生涯中，曾独自面对过一望无际的沙海，也曾在暴风雪的极夜徒步。我一直以为那些是勇敢。</p>
 <p>可直到这一刻，看着几步之外的你，我才意识到，自己一生中最勇敢的瞬间，竟然是此时此刻，是在这个平凡得不能再平凡的小巷里，决定不再逃避，决定停下流浪的脚步，去面对一个真实的、近在咫尺的人。</p>
 <p>你抬起头，看见了我。</p>
 <p>眼神里先是错愕，随即漾开了一层淡淡的、如同湖水般的温柔。</p>
-<p>“你回来了？”你轻声问，语气自然得就像我只是下楼买了一份报纸。</p>
-<p>我没有说话。我看着你，觉得你明明就在眼前，却又像从世界的尽头跋涉而来。或者说，有你在的地方，就是我所有流浪的终点。</p>
-<p>你说我的眼中藏着星点，那是久违的、对生活的热忱，你说我的嘴角不自觉地勾起一丝弧线，那是被治愈的证明。</p>
-<p>“我以为你还在地平线的那头。”你走近了几步，把那一小袋生煎包往怀里缩了缩，似乎怕冷风吹散了热气。</p>
-<p>“我找过了，地平线没有终点。”我接过你手中的伞，声音有些沙哑，“但你在这里，你就是我的终点。”</p>
+<p>“你回来了？”你轻声问，语气自然得就像我只是刚刚下楼买了一份报纸。</p>
+<p>我没有说话。我看着你，觉得你明明就在眼前，却又像从世界的尽头跋涉而来。</p>
+<p>或者说，有你在的地方，就是我所有流浪的终点。</p>
+<p>后来你说我的眼中藏着星点，那是久违的、对生活的热忱，你说我的嘴角不自觉地勾起一丝弧线，那是被治愈的证明。</p>
+<p>“我以为你还在地平线的那头。”你走近了几步，把那一小袋生煎包往怀里捂了捂，似乎怕冷风吹散了热气。</p>
+<p>“我找过了，地平线没有终点。”我接过你手中的伞，声音有些沙哑。</p>
 <p>这句话说出来很俗气，但在这一刻，在这一条被夕阳余晖染成橘色的小巷里，它是唯一的真理。</p>
-<p>我突然想把时间揉成碎片，捧在手心里。不想再去计算明天要去哪座城市，不想再去规划下一次航行。他只想把这些碎片化的时间，全部挥霍在眼前的琐碎里：比如陪你走完这条巷子，比如和你一起吃掉这袋生煎，比如在下一个转角讨论晚饭的菜单。</p>
+<p>我突然想把时间揉成碎片，捧在手心里。不想再去计算明天要去哪座城市，不想再去规划下一次航行。只想把这些碎片化的时间，全部挥霍在眼前的琐碎里：比如陪你走完这条巷子，比如和你一起吃掉这袋生煎，比如在下一个转角讨论晚饭的菜单。</p>
 <p>“还没吃晚饭吧？”你笑着问我，眼睛弯成了好看的月牙。</p>
 <p>“没呢。”</p>
-<p>“那……算是一次约会吗？”你歪着头，眨了眨眼。</p>
+<p>“那……”你歪着头，眨了眨眼。</p>
 <p>我认真地看着你，郑重地点了点头。</p>
 <p>我知道，这次没有期限。在经历了无数个孤独的远方之后，在这一条始料未及的小巷里，再见面，就是永远。</p>
 ]]></content>
@@ -5497,6 +5648,55 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       </tags>
   </entry>
   <entry>
+    <title>意向性治疗原则</title>
+    <url>/2025/12/27/%E6%84%8F%E5%90%91%E6%80%A7%E6%B2%BB%E7%96%97%E5%8E%9F%E5%88%99/</url>
+    <content><![CDATA[<p>意向性治疗（Intention-to-Treat, ITT）原则是临床试验数据分析中的一项基本准则，被广泛认为是评估干预措施效果的“金标准”，尤其是在随机对照试验（RCT）中。它的核心思想极其简洁：<strong>一旦患者被随机分配到某个治疗组，无论他们后续是否真正接受了该治疗、是否完成了治疗方案、是否中途换药，甚至是否完全退出了试验，他们的数据都必须被纳入其最初被分配的那个组进行最终的统计分析</strong><sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>。这个原则可以通俗地理解为“一次随机，终身分组”（Once randomized, always analyzed）。</p>
+<p>ITT原则的首要目标是<strong>最大限度地保留随机化的完整性</strong>。在临床试验的开始阶段，随机化的目的是为了确保试验组和对照组在所有已知的和未知的基线特征（如年龄、疾病严重程度、遗传背景等）上是均衡可比的。这是后续进行无偏比较的基石。</p>
+<p>如果在分析时将某些患者从其原分配的组中剔除，这种均衡就会被打破，从而引入严重的偏倚（Bias）。例如：</p>
+<ol>
+<li>
+<p><strong>避免选择性偏倚（Selection Bias）</strong>：假设一种新药的副作用较大，许多患者因无法耐受而停止服药。如果分析时将这些停药的患者剔除，那么剩下的就是能够耐受该药物的患者群体。这个群体可能本身就更健康或对药物反应更好，分析结果会高估药物的疗效并低估其风险。</p>
+</li>
+<li>
+<p><strong>避免脱落偏倚（Attrition Bias）</strong>：在安慰剂组，一些感觉病情没有改善的患者可能会寻求其他治疗而退出试验。如果将他们剔除，剩下的安慰剂组患者可能病情相对稳定，这会使得安慰剂组的结局看起来比实际情况要好，从而可能掩盖试验药物的真实疗效。</p>
+</li>
+</ol>
+<p>通过强制性地将所有随机化的患者都纳入原分组进行分析，ITT原则<strong>模拟了真实世界的临床情景</strong>。在现实中，医生给患者开出处方后，并不能保证每位患者都会严格按时按量服药。有些患者会忘记，有些会因副作用而自行停药。ITT分析得出的结论，更能反映将该疗法推广到广大患者群体中时可能获得的<strong>实际效果（Effectiveness）</strong>，而不仅仅是在理想条件下严格遵守方案才能达到的<strong>理论疗效（Efficacy）</strong><sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>。</p>
+<p>假设我们进行一项研究，比较新降压药A与安慰剂的效果。我们随机分配了200名高血压患者，100人进入药物A组，100人进入安慰剂组。研究终点是6个月后血压达标的患者比例。</p>
+<ul>
+<li><strong>药物A组（100人）</strong>：在研究期间，10人因无法忍受的头晕副作用而停药，另外10人因搬家而失访。最终只有80人完成了研究，其中60人血压达标。</li>
+<li><strong>安慰剂组（100人）</strong>：15人因感觉无效而自行寻求其他治疗退出，5人失访。最终80人完成研究，其中30人血压达标。</li>
+</ul>
+<p><strong>如果采用非ITT分析（例如，仅分析完成研究的患者，即“符合方案分析 Per-Protocol Analysis”）</strong>：</p>
+<ul>
+<li>药物A组的达标率 = 60 / 80 = 75%</li>
+<li>安慰剂组的达标率 = 30 / 80 = 37.5%<br>
+这个结果看起来非常理想，药物效果显著。但它忽略了因副作用而停药的10名患者，他们的结局很可能是“未达标”，这个分析美化了药物的耐受性和真实效果。</li>
+</ul>
+<p><strong>如果采用ITT分析</strong>：</p>
+<p>所有200名患者都必须被纳入分析。对于失访或中途退出的患者，需要采用保守的统计方法来处理他们的缺失数据（例如，假设他们均未达到治疗终点）。</p>
+<ul>
+<li><strong>药物A组（100人）</strong>：我们知道60人达标。对于退出的20人，我们保守估计他们均未达标。因此，达标人数仍为60人。达标率 = 60 / 100 = 60%。</li>
+<li><strong>安慰剂组（100人）</strong>：我们知道30人达标。对于退出的20人，同样估计他们未达标。因此，达标人数仍为30人。达标率 = 30 / 100 = 30%。</li>
+</ul>
+<p>ITT分析的结果（60% vs 30%）虽然不如前者那么“亮眼”，但它更真实、更稳健。它反映了一个事实：当给100个患者开这个药时，考虑到副作用和失访等真实世界因素，大概能期望60个人最终血压达标。这个结论对于临床医生和卫生决策者来说，远比那个75%的理想化数据更有价值。</p>
+<hr>
+<h3 id="参考文献"><a class="header-anchor" href="#参考文献">¶</a>参考文献</h3>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>Gupta, S. K. (2011). Intention-to-treat concept: A review. <em>Perspectives in Clinical Research, 2</em>(3), 109–112. <sup>1</sup> <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3159210/"><sup>1</sup></a> <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>McCoy, C. E. (2017). Understanding the Intention-to-Treat Principle in Randomized Controlled Trials. <em>Western Journal of Emergency Medicine, 18</em>(6), 1075–1078. <sup>2</sup> <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5654875/"><sup>2</sup></a> <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+]]></content>
+      <tags>
+        <tag>Medicine</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>慢性肺源性心脏病</title>
     <url>/2024/01/23/%E6%85%A2%E6%80%A7%E8%82%BA%E6%BA%90%E6%80%A7%E5%BF%83%E8%84%8F%E7%97%85/</url>
     <content><![CDATA[<p>肺源性心脏病(cor pulmonale)简称肺心病, 指由于支气管-肺组织, 胸廓或肺血管病变引起肺血管阻力增加, 产生肺动脉高压,继而右心室结构和/或功能改变的疾病.<br>
@@ -5791,17 +5991,6 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       </tags>
   </entry>
   <entry>
-    <title>直系血亲之间不能直接输血</title>
-    <url>/2024/08/12/%E7%9B%B4%E7%B3%BB%E8%A1%80%E4%BA%B2%E4%B9%8B%E9%97%B4%E4%B8%8D%E8%83%BD%E7%9B%B4%E6%8E%A5%E8%BE%93%E8%A1%80/</url>
-    <content><![CDATA[<p>现代医学证明，直系血亲间输血有时会发生一种严重的输血反应，称为输血相关移植物抗宿主病，这种输血反应尽管发病率很低，但死亡率却高达 99.9%，一旦发生几乎无法挽救。所以，很多电视剧里的那些情节都是错误的。根据中国输血协会网站上的介绍，目前虽然可以通过“血液辐照”的处理技术，把这种具有免疫活性的淋巴细胞灭活，但是临床上仍不建议直系血亲之间输血。</p>
-<p>无血缘关系的人，血细胞的抗原差异很大，很容易被免疫系统识别排斥和清除；而亲属间特别是直系亲属间的细胞抗原差异小，难辨识，加上受血者本身是需要输血的病人，免疫功能低下，因此，对输入的具有免疫活性的淋巴细胞排斥弱，从而外来的淋巴细胞就在患者体内分裂、增殖，然后向皮肤、肝脏、肠道、骨髓等器官发动攻击，从而引起致命性的并发症。</p>
-]]></content>
-      <tags>
-        <tag>Medicine</tag>
-        <tag>Life</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>内护神经系统重点考点</title>
     <url>/2024/07/09/%E7%A5%9E%E7%BB%8F%E7%B3%BB%E7%BB%9F%E9%87%8D%E7%82%B9/</url>
     <content><![CDATA[<ol>
@@ -6035,6 +6224,17 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
 </ul>
 ]]></content>
       <tags>
+        <tag>Life</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>直系血亲之间不能直接输血</title>
+    <url>/2024/08/12/%E7%9B%B4%E7%B3%BB%E8%A1%80%E4%BA%B2%E4%B9%8B%E9%97%B4%E4%B8%8D%E8%83%BD%E7%9B%B4%E6%8E%A5%E8%BE%93%E8%A1%80/</url>
+    <content><![CDATA[<p>现代医学证明，直系血亲间输血有时会发生一种严重的输血反应，称为输血相关移植物抗宿主病，这种输血反应尽管发病率很低，但死亡率却高达 99.9%，一旦发生几乎无法挽救。所以，很多电视剧里的那些情节都是错误的。根据中国输血协会网站上的介绍，目前虽然可以通过“血液辐照”的处理技术，把这种具有免疫活性的淋巴细胞灭活，但是临床上仍不建议直系血亲之间输血。</p>
+<p>无血缘关系的人，血细胞的抗原差异很大，很容易被免疫系统识别排斥和清除；而亲属间特别是直系亲属间的细胞抗原差异小，难辨识，加上受血者本身是需要输血的病人，免疫功能低下，因此，对输入的具有免疫活性的淋巴细胞排斥弱，从而外来的淋巴细胞就在患者体内分裂、增殖，然后向皮肤、肝脏、肠道、骨髓等器官发动攻击，从而引起致命性的并发症。</p>
+]]></content>
+      <tags>
+        <tag>Medicine</tag>
         <tag>Life</tag>
       </tags>
   </entry>
