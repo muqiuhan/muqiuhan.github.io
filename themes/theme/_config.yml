@@ -12,7 +12,7 @@ logo_image:
 menu:
   主页: /
   日记本: /categories/gallery/
-  医学: /tags/Medicine/
+  临床/泛医学: /tags/Medicine/
   计算机/互联网: /tags/Technique/
   生活: /tags/Life/
   全部: /archives
@@ -39,7 +39,7 @@ profile:
 
   links:
     计算机/互联网: /tags/Technique/
-    医学: /tags/Medicine/
+    临床/泛医学: /tags/Medicine/
     生活: /tags/Life/
     日记本: /categories/gallery/
     网页存档: /tags/Archive
