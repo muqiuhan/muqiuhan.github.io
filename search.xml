@@ -876,49 +876,6 @@ Given the impracticality of prolonged hospitalizations and advancing technology 
       </tags>
   </entry>
   <entry>
-    <title>N+1 selects problem 与 Prisma ORM</title>
-    <url>/2025/04/02/N-1-selects-problem-%E4%B8%8E-Prisma-ORM/</url>
-    <content><![CDATA[<p>N+1 查询问题是指在通过 ORM 查询数据时，执行了一次初始查询来获取父对象列表（这 1 次查询），然后为列表中的每一个父对象都单独执行了一次额外的查询来获取其关联的子对象（这 N 次查询）。最终导致总共执行了 1 + N 次数据库查询，其中 N 是初始查询返回的父对象的数量。</p>
-<p>举个例子：</p>
-<p>假设有两个数据库模型：<code>User</code>（用户）和 <code>Post</code>（帖子），一个用户可以有多篇帖子（一对多关系）。</p>
-<p>现在，需要获取前 10 个用户以及他们各自的所有帖子。</p>
-<p>一种有问题的 ORM 实现（或不当的使用方式）可能会这样执行：</p>
-<ol>
-<li>第一次查询 (The “1”): 获取前 10 个用户。<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> <span class="keyword">User</span> LIMIT <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
-</li>
-<li>接下来的 N (=10) 次查询 (The “N”): 对于上一步获取到的每一个用户，单独执行一次查询来获取该用户的帖子。<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 用户 1</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> Post <span class="keyword">WHERE</span> authorId <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line"><span class="comment">-- 用户 2</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> Post <span class="keyword">WHERE</span> authorId <span class="operator">=</span> <span class="number">2</span>;</span><br><span class="line"><span class="comment">-- 用户 3</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> Post <span class="keyword">WHERE</span> authorId <span class="operator">=</span> <span class="number">3</span>;</span><br><span class="line"><span class="comment">-- ... 直到 用户 10</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> Post <span class="keyword">WHERE</span> authorId <span class="operator">=</span> <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>在这个场景下，总共执行了 1 + 10 = 11 次数据库查询。如果 N 的值很大（比如获取 1000 个用户），就会产生 1001 次查询，这对数据库造成巨大的、不必要的压力，并显著增加应用程序的响应时间。每一次数据库交互都有网络延迟和数据库处理的开销，N+1 次查询会将这些开销放大 N 倍。</p>
-<p>N+1 问题通常源于 ORM 处理关联数据的方式，特别是与“懒加载”（Lazy Loading）相关的策略。懒加载是指只有在显式访问关联属性时，ORM 才会去数据库加载这些数据。虽然这在某些情况下可以避免加载不需要的数据，但如果在循环中访问关联属性，就很容易触发 N+1 问题。</p>
-<p>然而，问题的根源在于没有有效地预先加载（或批量加载）所需的关联数据。即使不使用严格意义上的懒加载，如果 ORM 在处理关联查询时不够智能，采用了逐个获取关联对象的策略，同样会产生 N+1 查询。</p>
-<p>在 Prisma 出现之前或在其他 ORM 中，解决 N+1 问题常见的方法包括：</p>
-<ol>
-<li>预先加载（Eager Loading）: 在执行初始查询时，就明确指示 ORM 同时将关联数据也查询出来。这通常通过 SQL 的 <code>JOIN</code> 操作实现。例如，一次性查询出用户和他们的帖子。虽然这减少了查询次数，但复杂的 <code>JOIN</code> 可能会导致查询本身变得庞大和低效，并可能返回冗余数据。</li>
-<li>批量加载（Batch Loading）: 先执行初始查询获取父对象列表，然后收集所有父对象的 ID，在第二次查询中使用 <code>WHERE IN (...)</code> 子句一次性加载所有相关的子对象。这种方式通常需要两次查询，但避免了 N 次单独的查询。</li>
-</ol>
-<p>Prisma ORM 在设计上就考虑了 N+1 问题，并提供了一种既方便开发者又高效的解决方案。当使用 Prisma Client 查询数据并需要包含关联模型时，Prisma 会自动优化查询，避免产生 N+1 查询，主要通过关系查询（Relation Queries）中的 <code>include</code> 选项或嵌套读取（nested reads）来实现这一点：</p>
-<p>假设想获取所有用户及其发布的帖子，使用 Prisma Client，可以这样写：</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">PrismaClient</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@prisma/client&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> prisma = <span class="keyword">new</span> <span class="title class_">PrismaClient</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getUsersWithPosts</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> usersWithPosts = <span class="keyword">await</span> prisma.<span class="property">user</span>.<span class="title function_">findMany</span>(&#123;</span><br><span class="line">    <span class="attr">include</span>: &#123;</span><br><span class="line">      <span class="attr">posts</span>: <span class="literal">true</span>, <span class="comment">// 指示 Prisma 加载关联的 posts</span></span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="comment">// usersWithPosts 包含了用户列表，每个用户对象中都有一个 posts 数组</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(usersWithPosts)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">getUsersWithPosts</span>()</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">throw</span> e</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">finally</span>(<span class="title function_">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">await</span> prisma.$disconnect()</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
-<p>当执行上述查询时，Prisma 不会 生成 N+1 个 SQL 查询。而是首先会分析请求，并将其转化为数量非常有限的高效 SQL 查询。对于上面这个一对多关系的 <code>include</code> 查询，Prisma 通常会执行以下两步（类似于批量加载策略）：</p>
-<ol>
-<li>查询父模型: 获取所有 <code>User</code> 记录。<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> &quot;public&quot;.&quot;User&quot;.&quot;id&quot;, &quot;public&quot;.&quot;User&quot;.&quot;name&quot;, <span class="comment">/* ... other user fields */</span> <span class="keyword">FROM</span> &quot;public&quot;.&quot;User&quot; <span class="keyword">WHERE</span> <span class="number">1</span><span class="operator">=</span><span class="number">1</span></span><br></pre></td></tr></table></figure>
-</li>
-<li>查询关联的子模型: 使用上一步获取到的所有用户 <code>id</code>，通过 <code>WHERE IN (...)</code> 子句一次性查询所有相关的 <code>Post</code> 记录。<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> &quot;public&quot;.&quot;Post&quot;.&quot;id&quot;, &quot;public&quot;.&quot;Post&quot;.&quot;title&quot;, &quot;public&quot;.&quot;Post&quot;.&quot;authorId&quot;, <span class="comment">/* ... other post fields */</span> <span class="keyword">FROM</span> &quot;public&quot;.&quot;Post&quot; <span class="keyword">WHERE</span> &quot;public&quot;.&quot;Post&quot;.&quot;authorId&quot; <span class="keyword">IN</span> ($<span class="number">1</span>, $<span class="number">2</span>, $<span class="number">3</span>, ...) <span class="comment">/* 这里的 $1, $2, ... 是第一步查到的用户 ID 列表 */</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>Prisma Client 在内存中将这两次查询的结果高效地组合起来，最终返回嵌套的、符合 TypeScript 类型的数据。</p>
-<h2 id="Refs"><a class="header-anchor" href="#Refs">¶</a>Refs.</h2>
-<ul>
-<li><a href="https://stackoverflow.com/questions/97197/what-is-the-n1-selects-problem-in-orm-object-relational-mapping">Stack Overflow: What is the N+1 selects problem in ORM?</a></li>
-<li><a href="https://www.prisma.io/docs/orm/prisma-client/queries/query-optimization-performance#solving-the-n1-problem">Prisma Docs: Solving the N+1 problem</a></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>Technique</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>多人协作系统中的实现策略 (CRDT，锁等实现方案）</title>
     <url>/2025/05/08/Multiplayer-Collaborative-Systems-tips/</url>
     <content><![CDATA[<p>最近碰到一块业务：在系统中可以存在多个用户同时对某个项目信息进行编辑，这种多人协作的场景挺有意思的，不过在我们的业务中，并不需要实时协作，只需要保证不会出错就行，话虽如此，但也可以探索一下实时协作的实现方案，防止老年痴呆。</p>
@@ -1034,6 +991,66 @@ await prisma.$transaction(async tx =&gt; &#123;
       </tags>
   </entry>
   <entry>
+    <title>N+1 selects problem 与 Prisma ORM</title>
+    <url>/2025/04/02/N-1-selects-problem-%E4%B8%8E-Prisma-ORM/</url>
+    <content><![CDATA[<p>N+1 查询问题是指在通过 ORM 查询数据时，执行了一次初始查询来获取父对象列表（这 1 次查询），然后为列表中的每一个父对象都单独执行了一次额外的查询来获取其关联的子对象（这 N 次查询）。最终导致总共执行了 1 + N 次数据库查询，其中 N 是初始查询返回的父对象的数量。</p>
+<p>举个例子：</p>
+<p>假设有两个数据库模型：<code>User</code>（用户）和 <code>Post</code>（帖子），一个用户可以有多篇帖子（一对多关系）。</p>
+<p>现在，需要获取前 10 个用户以及他们各自的所有帖子。</p>
+<p>一种有问题的 ORM 实现（或不当的使用方式）可能会这样执行：</p>
+<ol>
+<li>第一次查询 (The “1”): 获取前 10 个用户。<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> <span class="keyword">User</span> LIMIT <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li>接下来的 N (=10) 次查询 (The “N”): 对于上一步获取到的每一个用户，单独执行一次查询来获取该用户的帖子。<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 用户 1</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> Post <span class="keyword">WHERE</span> authorId <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line"><span class="comment">-- 用户 2</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> Post <span class="keyword">WHERE</span> authorId <span class="operator">=</span> <span class="number">2</span>;</span><br><span class="line"><span class="comment">-- 用户 3</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> Post <span class="keyword">WHERE</span> authorId <span class="operator">=</span> <span class="number">3</span>;</span><br><span class="line"><span class="comment">-- ... 直到 用户 10</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> Post <span class="keyword">WHERE</span> authorId <span class="operator">=</span> <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>在这个场景下，总共执行了 1 + 10 = 11 次数据库查询。如果 N 的值很大（比如获取 1000 个用户），就会产生 1001 次查询，这对数据库造成巨大的、不必要的压力，并显著增加应用程序的响应时间。每一次数据库交互都有网络延迟和数据库处理的开销，N+1 次查询会将这些开销放大 N 倍。</p>
+<p>N+1 问题通常源于 ORM 处理关联数据的方式，特别是与“懒加载”（Lazy Loading）相关的策略。懒加载是指只有在显式访问关联属性时，ORM 才会去数据库加载这些数据。虽然这在某些情况下可以避免加载不需要的数据，但如果在循环中访问关联属性，就很容易触发 N+1 问题。</p>
+<p>然而，问题的根源在于没有有效地预先加载（或批量加载）所需的关联数据。即使不使用严格意义上的懒加载，如果 ORM 在处理关联查询时不够智能，采用了逐个获取关联对象的策略，同样会产生 N+1 查询。</p>
+<p>在 Prisma 出现之前或在其他 ORM 中，解决 N+1 问题常见的方法包括：</p>
+<ol>
+<li>预先加载（Eager Loading）: 在执行初始查询时，就明确指示 ORM 同时将关联数据也查询出来。这通常通过 SQL 的 <code>JOIN</code> 操作实现。例如，一次性查询出用户和他们的帖子。虽然这减少了查询次数，但复杂的 <code>JOIN</code> 可能会导致查询本身变得庞大和低效，并可能返回冗余数据。</li>
+<li>批量加载（Batch Loading）: 先执行初始查询获取父对象列表，然后收集所有父对象的 ID，在第二次查询中使用 <code>WHERE IN (...)</code> 子句一次性加载所有相关的子对象。这种方式通常需要两次查询，但避免了 N 次单独的查询。</li>
+</ol>
+<p>Prisma ORM 在设计上就考虑了 N+1 问题，并提供了一种既方便开发者又高效的解决方案。当使用 Prisma Client 查询数据并需要包含关联模型时，Prisma 会自动优化查询，避免产生 N+1 查询，主要通过关系查询（Relation Queries）中的 <code>include</code> 选项或嵌套读取（nested reads）来实现这一点：</p>
+<p>假设想获取所有用户及其发布的帖子，使用 Prisma Client，可以这样写：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">PrismaClient</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@prisma/client&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> prisma = <span class="keyword">new</span> <span class="title class_">PrismaClient</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getUsersWithPosts</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> usersWithPosts = <span class="keyword">await</span> prisma.<span class="property">user</span>.<span class="title function_">findMany</span>(&#123;</span><br><span class="line">    <span class="attr">include</span>: &#123;</span><br><span class="line">      <span class="attr">posts</span>: <span class="literal">true</span>, <span class="comment">// 指示 Prisma 加载关联的 posts</span></span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="comment">// usersWithPosts 包含了用户列表，每个用户对象中都有一个 posts 数组</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(usersWithPosts)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">getUsersWithPosts</span>()</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">throw</span> e</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">finally</span>(<span class="title function_">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">await</span> prisma.$disconnect()</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+<p>当执行上述查询时，Prisma 不会 生成 N+1 个 SQL 查询。而是首先会分析请求，并将其转化为数量非常有限的高效 SQL 查询。对于上面这个一对多关系的 <code>include</code> 查询，Prisma 通常会执行以下两步（类似于批量加载策略）：</p>
+<ol>
+<li>查询父模型: 获取所有 <code>User</code> 记录。<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> &quot;public&quot;.&quot;User&quot;.&quot;id&quot;, &quot;public&quot;.&quot;User&quot;.&quot;name&quot;, <span class="comment">/* ... other user fields */</span> <span class="keyword">FROM</span> &quot;public&quot;.&quot;User&quot; <span class="keyword">WHERE</span> <span class="number">1</span><span class="operator">=</span><span class="number">1</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>查询关联的子模型: 使用上一步获取到的所有用户 <code>id</code>，通过 <code>WHERE IN (...)</code> 子句一次性查询所有相关的 <code>Post</code> 记录。<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> &quot;public&quot;.&quot;Post&quot;.&quot;id&quot;, &quot;public&quot;.&quot;Post&quot;.&quot;title&quot;, &quot;public&quot;.&quot;Post&quot;.&quot;authorId&quot;, <span class="comment">/* ... other post fields */</span> <span class="keyword">FROM</span> &quot;public&quot;.&quot;Post&quot; <span class="keyword">WHERE</span> &quot;public&quot;.&quot;Post&quot;.&quot;authorId&quot; <span class="keyword">IN</span> ($<span class="number">1</span>, $<span class="number">2</span>, $<span class="number">3</span>, ...) <span class="comment">/* 这里的 $1, $2, ... 是第一步查到的用户 ID 列表 */</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>Prisma Client 在内存中将这两次查询的结果高效地组合起来，最终返回嵌套的、符合 TypeScript 类型的数据。</p>
+<h2 id="Refs"><a class="header-anchor" href="#Refs">¶</a>Refs.</h2>
+<ul>
+<li><a href="https://stackoverflow.com/questions/97197/what-is-the-n1-selects-problem-in-orm-object-relational-mapping">Stack Overflow: What is the N+1 selects problem in ORM?</a></li>
+<li><a href="https://www.prisma.io/docs/orm/prisma-client/queries/query-optimization-performance#solving-the-n1-problem">Prisma Docs: Solving the N+1 problem</a></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>.NET AOT 下的 F# 命令行参数解析库选择</title>
+    <url>/2024/06/06/NET-AOT-%E4%B8%8B%E7%9A%84-F-%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0%E8%A7%A3%E6%9E%90%E5%BA%93%E9%80%89%E6%8B%A9/</url>
+    <content><![CDATA[<p>Argu 不支持 AOT，不过用 F# 的话可以看整个 .NET 的生态，我看了一下 C# 的 CommandLineParser：<br>
+<a href="https://github.com/commandlineparser">https://github.com/commandlineparser</a></p>
+<p>在这个 PR 中支持了 Native AOT<br>
+<a href="https://github.com/commandlineparser/commandline/pull/913">https://github.com/commandlineparser/commandline/pull/913</a></p>
+<p>除此之外，还有一个更加精巧的 F# 库可以用，只有两百多行：<br>
+<a href="https://github.com/B2R2-org/FsOptParse/">https://github.com/B2R2-org/FsOptParse/</a></p>
+<p>AOT 后的大小很可观，并且支持 full trim.</p>
+<p>用例：</p>
+<figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">(** defines a state to pass to the option parser *)</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">opts</span> <span class="operator">=</span></span><br><span class="line">  &#123;</span><br><span class="line">    optX <span class="operator">:</span> <span class="type">int</span>;</span><br><span class="line">    optY <span class="operator">:</span> <span class="type">bool</span>;</span><br><span class="line">    optZ <span class="operator">:</span> <span class="type">string</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">(** default option state *)</span></span><br><span class="line"><span class="keyword">let</span> defaultOpts <span class="operator">=</span></span><br><span class="line">  &#123;</span><br><span class="line">    optX <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    optY <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">    optZ <span class="operator">=</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">(*</span></span><br><span class="line"><span class="comment">  An example command line specification, which is a list of Options.</span></span><br><span class="line"><span class="comment">  Each Option describes a command line option (switch) that is specified with</span></span><br><span class="line"><span class="comment">  either a short (a single-dash option) or long option (a double-dash option).</span></span><br><span class="line"><span class="comment">*)</span></span><br><span class="line"><span class="keyword">let</span> spec <span class="operator">=</span></span><br><span class="line">  [</span><br><span class="line">    <span class="comment">(* This option can be specified with -x &lt;NUM&gt;. There is an extra argument to</span></span><br><span class="line"><span class="comment">       specify a value in integer. *)</span></span><br><span class="line">    Option (<span class="comment">(* description of the option *)</span></span><br><span class="line">            descr<span class="operator">=</span><span class="string">&quot;this is a testing param X&quot;</span>,</span><br><span class="line">            <span class="comment">(* how many extra argument must be provided by a user? *)</span></span><br><span class="line">            extra<span class="operator">=</span><span class="number">1</span>,</span><br><span class="line">            <span class="comment">(* callback sets up the option and returns it *)</span></span><br><span class="line">            callback<span class="operator">=</span>(<span class="keyword">fun</span> opts arg <span class="operator">-&gt;</span> &#123;opts <span class="keyword">with</span> optX<span class="operator">=</span>(int) arg.[<span class="number">0</span>]&#125;),</span><br><span class="line">            <span class="comment">(* use a short option style -x *)</span></span><br><span class="line">            short<span class="operator">=</span><span class="string">&quot;-x&quot;</span></span><br><span class="line">           );</span><br><span class="line"></span><br><span class="line">    <span class="comment">(* This option can be specified with -y. There is no extra argument. This</span></span><br><span class="line"><span class="comment">       option just sets a flag, optY. *)</span></span><br><span class="line">    Option (<span class="comment">(* description of the option *)</span></span><br><span class="line">            descr<span class="operator">=</span><span class="string">&quot;this is a testing param Y&quot;</span>,</span><br><span class="line">            <span class="comment">(* set the option to be true *)</span></span><br><span class="line">            callback<span class="operator">=</span>(<span class="keyword">fun</span> opts _ <span class="operator">-&gt;</span> &#123;opts <span class="keyword">with</span> optY<span class="operator">=</span><span class="literal">true</span>&#125;),</span><br><span class="line">            <span class="comment">(* use a short option style (-y) *)</span></span><br><span class="line">            short<span class="operator">=</span><span class="string">&quot;-y&quot;</span>,</span><br><span class="line">            <span class="comment">(* also use a long option style (--yoohoo) *)</span></span><br><span class="line">            long<span class="operator">=</span><span class="string">&quot;--yoohoo&quot;</span></span><br><span class="line">           );</span><br><span class="line"></span><br><span class="line">    <span class="comment">(* A dummy option to pretty-print the usage *)</span></span><br><span class="line">    Option (<span class="comment">(* description of the option *)</span></span><br><span class="line">            descr<span class="operator">=</span><span class="string">&quot;&quot;</span>,</span><br><span class="line">            dummy<span class="operator">=</span><span class="literal">true</span></span><br><span class="line">           );</span><br><span class="line">    Option (<span class="comment">(* description of the option *)</span></span><br><span class="line">            descr<span class="operator">=</span><span class="string">&quot;[Required Options]&quot;</span>,</span><br><span class="line">            descrColor<span class="operator">=</span>System.ConsoleColor.DarkCyan,</span><br><span class="line">            dummy<span class="operator">=</span><span class="literal">true</span></span><br><span class="line">           );</span><br><span class="line"></span><br><span class="line">    <span class="comment">(* The third option is a required option. In other words, option parsing</span></span><br><span class="line"><span class="comment">       will raise an exception if this option is not given by a user. This</span></span><br><span class="line"><span class="comment">       option takes in an additional integer argument, and set it to the global</span></span><br><span class="line"><span class="comment">       variable z. *)</span></span><br><span class="line">    Option (<span class="comment">(* description of the option *)</span></span><br><span class="line">            descr<span class="operator">=</span><span class="string">&quot;required parameter &lt;STRING&gt; with an integer option&quot;</span>,</span><br><span class="line">            <span class="comment">(* callback to set the optZ value *)</span></span><br><span class="line">            callback<span class="operator">=</span>(<span class="keyword">fun</span> opts arg <span class="operator">-&gt;</span> &#123;opts <span class="keyword">with</span> optZ<span class="operator">=</span>arg.[<span class="number">0</span>]&#125;),</span><br><span class="line">            <span class="comment">(* specifying this is a required option *)</span></span><br><span class="line">            required<span class="operator">=</span><span class="literal">true</span>,</span><br><span class="line">            <span class="comment">(* one additional argument to specify an integer value *)</span></span><br><span class="line">            extra<span class="operator">=</span><span class="number">1</span>,</span><br><span class="line">            <span class="comment">(* use only a long option style *)</span></span><br><span class="line">            long<span class="operator">=</span><span class="string">&quot;--req&quot;</span></span><br><span class="line">           );</span><br><span class="line">  ]</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> _ <span class="operator">=</span></span><br><span class="line">  <span class="keyword">let</span> prog <span class="operator">=</span> <span class="string">&quot;opttest.fsx&quot;</span></span><br><span class="line">  <span class="keyword">let</span> args <span class="operator">=</span> System.Environment.GetCommandLineArgs ()</span><br><span class="line">  <span class="keyword">let</span> usageGetter () <span class="operator">=</span> <span class="string">&quot;[Usage]\n  %p %o&quot;</span></span><br><span class="line">  <span class="keyword">try</span></span><br><span class="line">    <span class="keyword">let</span> left, opts <span class="operator">=</span> optParse spec usageGetter prog args defaultOpts</span><br><span class="line">    <span class="built_in">printfn</span> <span class="string">&quot;Rest args: %A, x: %d, y: %b, z: %s&quot;</span></span><br><span class="line">      left opts.optX opts.optY opts.optZ</span><br><span class="line">    <span class="number">0</span></span><br><span class="line">  <span class="keyword">with</span></span><br><span class="line">    <span class="operator">|</span> SpecErr msg <span class="operator">-&gt;</span></span><br><span class="line">        <span class="built_in">eprintfn</span> <span class="string">&quot;Invalid spec: %s&quot;</span> msg</span><br><span class="line">        exit <span class="number">1</span></span><br><span class="line">    <span class="operator">|</span> RuntimeErr msg <span class="operator">-&gt;</span></span><br><span class="line">        <span class="built_in">eprintfn</span> <span class="string">&quot;Invalid args given by user: %s&quot;</span> msg</span><br><span class="line">        usagePrint spec prog usageGetter (<span class="keyword">fun</span> () <span class="operator">-&gt;</span> exit <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>中性粒细胞连你一起干</title>
     <url>/2025/10/24/Neutrophils-are-a-double-edged-sword/</url>
     <content><![CDATA[<p>中性粒细胞作为人体先天免疫系统中最丰富的白细胞亚型，约占循环白细胞总数的50-70%，其核心功能在于快速响应感染和炎症信号，从而维持组织稳态和防御外来入侵者。但其在高效杀灭病原体却可能释放有毒物质，这源于其进化设计：在急性感染中，这些物质针对性破坏微生物，而在慢性疾病如慢性阻塞性肺疾病（COPD）中，过度激活则可能加剧组织损伤。</p>
@@ -1054,23 +1071,6 @@ await prisma.$transaction(async tx =&gt; &#123;
 ]]></content>
       <tags>
         <tag>Medicine</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>.NET AOT 下的 F# 命令行参数解析库选择</title>
-    <url>/2024/06/06/NET-AOT-%E4%B8%8B%E7%9A%84-F-%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0%E8%A7%A3%E6%9E%90%E5%BA%93%E9%80%89%E6%8B%A9/</url>
-    <content><![CDATA[<p>Argu 不支持 AOT，不过用 F# 的话可以看整个 .NET 的生态，我看了一下 C# 的 CommandLineParser：<br>
-<a href="https://github.com/commandlineparser">https://github.com/commandlineparser</a></p>
-<p>在这个 PR 中支持了 Native AOT<br>
-<a href="https://github.com/commandlineparser/commandline/pull/913">https://github.com/commandlineparser/commandline/pull/913</a></p>
-<p>除此之外，还有一个更加精巧的 F# 库可以用，只有两百多行：<br>
-<a href="https://github.com/B2R2-org/FsOptParse/">https://github.com/B2R2-org/FsOptParse/</a></p>
-<p>AOT 后的大小很可观，并且支持 full trim.</p>
-<p>用例：</p>
-<figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">(** defines a state to pass to the option parser *)</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">opts</span> <span class="operator">=</span></span><br><span class="line">  &#123;</span><br><span class="line">    optX <span class="operator">:</span> <span class="type">int</span>;</span><br><span class="line">    optY <span class="operator">:</span> <span class="type">bool</span>;</span><br><span class="line">    optZ <span class="operator">:</span> <span class="type">string</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">(** default option state *)</span></span><br><span class="line"><span class="keyword">let</span> defaultOpts <span class="operator">=</span></span><br><span class="line">  &#123;</span><br><span class="line">    optX <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    optY <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">    optZ <span class="operator">=</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">(*</span></span><br><span class="line"><span class="comment">  An example command line specification, which is a list of Options.</span></span><br><span class="line"><span class="comment">  Each Option describes a command line option (switch) that is specified with</span></span><br><span class="line"><span class="comment">  either a short (a single-dash option) or long option (a double-dash option).</span></span><br><span class="line"><span class="comment">*)</span></span><br><span class="line"><span class="keyword">let</span> spec <span class="operator">=</span></span><br><span class="line">  [</span><br><span class="line">    <span class="comment">(* This option can be specified with -x &lt;NUM&gt;. There is an extra argument to</span></span><br><span class="line"><span class="comment">       specify a value in integer. *)</span></span><br><span class="line">    Option (<span class="comment">(* description of the option *)</span></span><br><span class="line">            descr<span class="operator">=</span><span class="string">&quot;this is a testing param X&quot;</span>,</span><br><span class="line">            <span class="comment">(* how many extra argument must be provided by a user? *)</span></span><br><span class="line">            extra<span class="operator">=</span><span class="number">1</span>,</span><br><span class="line">            <span class="comment">(* callback sets up the option and returns it *)</span></span><br><span class="line">            callback<span class="operator">=</span>(<span class="keyword">fun</span> opts arg <span class="operator">-&gt;</span> &#123;opts <span class="keyword">with</span> optX<span class="operator">=</span>(int) arg.[<span class="number">0</span>]&#125;),</span><br><span class="line">            <span class="comment">(* use a short option style -x *)</span></span><br><span class="line">            short<span class="operator">=</span><span class="string">&quot;-x&quot;</span></span><br><span class="line">           );</span><br><span class="line"></span><br><span class="line">    <span class="comment">(* This option can be specified with -y. There is no extra argument. This</span></span><br><span class="line"><span class="comment">       option just sets a flag, optY. *)</span></span><br><span class="line">    Option (<span class="comment">(* description of the option *)</span></span><br><span class="line">            descr<span class="operator">=</span><span class="string">&quot;this is a testing param Y&quot;</span>,</span><br><span class="line">            <span class="comment">(* set the option to be true *)</span></span><br><span class="line">            callback<span class="operator">=</span>(<span class="keyword">fun</span> opts _ <span class="operator">-&gt;</span> &#123;opts <span class="keyword">with</span> optY<span class="operator">=</span><span class="literal">true</span>&#125;),</span><br><span class="line">            <span class="comment">(* use a short option style (-y) *)</span></span><br><span class="line">            short<span class="operator">=</span><span class="string">&quot;-y&quot;</span>,</span><br><span class="line">            <span class="comment">(* also use a long option style (--yoohoo) *)</span></span><br><span class="line">            long<span class="operator">=</span><span class="string">&quot;--yoohoo&quot;</span></span><br><span class="line">           );</span><br><span class="line"></span><br><span class="line">    <span class="comment">(* A dummy option to pretty-print the usage *)</span></span><br><span class="line">    Option (<span class="comment">(* description of the option *)</span></span><br><span class="line">            descr<span class="operator">=</span><span class="string">&quot;&quot;</span>,</span><br><span class="line">            dummy<span class="operator">=</span><span class="literal">true</span></span><br><span class="line">           );</span><br><span class="line">    Option (<span class="comment">(* description of the option *)</span></span><br><span class="line">            descr<span class="operator">=</span><span class="string">&quot;[Required Options]&quot;</span>,</span><br><span class="line">            descrColor<span class="operator">=</span>System.ConsoleColor.DarkCyan,</span><br><span class="line">            dummy<span class="operator">=</span><span class="literal">true</span></span><br><span class="line">           );</span><br><span class="line"></span><br><span class="line">    <span class="comment">(* The third option is a required option. In other words, option parsing</span></span><br><span class="line"><span class="comment">       will raise an exception if this option is not given by a user. This</span></span><br><span class="line"><span class="comment">       option takes in an additional integer argument, and set it to the global</span></span><br><span class="line"><span class="comment">       variable z. *)</span></span><br><span class="line">    Option (<span class="comment">(* description of the option *)</span></span><br><span class="line">            descr<span class="operator">=</span><span class="string">&quot;required parameter &lt;STRING&gt; with an integer option&quot;</span>,</span><br><span class="line">            <span class="comment">(* callback to set the optZ value *)</span></span><br><span class="line">            callback<span class="operator">=</span>(<span class="keyword">fun</span> opts arg <span class="operator">-&gt;</span> &#123;opts <span class="keyword">with</span> optZ<span class="operator">=</span>arg.[<span class="number">0</span>]&#125;),</span><br><span class="line">            <span class="comment">(* specifying this is a required option *)</span></span><br><span class="line">            required<span class="operator">=</span><span class="literal">true</span>,</span><br><span class="line">            <span class="comment">(* one additional argument to specify an integer value *)</span></span><br><span class="line">            extra<span class="operator">=</span><span class="number">1</span>,</span><br><span class="line">            <span class="comment">(* use only a long option style *)</span></span><br><span class="line">            long<span class="operator">=</span><span class="string">&quot;--req&quot;</span></span><br><span class="line">           );</span><br><span class="line">  ]</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> _ <span class="operator">=</span></span><br><span class="line">  <span class="keyword">let</span> prog <span class="operator">=</span> <span class="string">&quot;opttest.fsx&quot;</span></span><br><span class="line">  <span class="keyword">let</span> args <span class="operator">=</span> System.Environment.GetCommandLineArgs ()</span><br><span class="line">  <span class="keyword">let</span> usageGetter () <span class="operator">=</span> <span class="string">&quot;[Usage]\n  %p %o&quot;</span></span><br><span class="line">  <span class="keyword">try</span></span><br><span class="line">    <span class="keyword">let</span> left, opts <span class="operator">=</span> optParse spec usageGetter prog args defaultOpts</span><br><span class="line">    <span class="built_in">printfn</span> <span class="string">&quot;Rest args: %A, x: %d, y: %b, z: %s&quot;</span></span><br><span class="line">      left opts.optX opts.optY opts.optZ</span><br><span class="line">    <span class="number">0</span></span><br><span class="line">  <span class="keyword">with</span></span><br><span class="line">    <span class="operator">|</span> SpecErr msg <span class="operator">-&gt;</span></span><br><span class="line">        <span class="built_in">eprintfn</span> <span class="string">&quot;Invalid spec: %s&quot;</span> msg</span><br><span class="line">        exit <span class="number">1</span></span><br><span class="line">    <span class="operator">|</span> RuntimeErr msg <span class="operator">-&gt;</span></span><br><span class="line">        <span class="built_in">eprintfn</span> <span class="string">&quot;Invalid args given by user: %s&quot;</span> msg</span><br><span class="line">        usagePrint spec prog usageGetter (<span class="keyword">fun</span> () <span class="operator">-&gt;</span> exit <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>Technique</tag>
       </tags>
   </entry>
   <entry>
@@ -3565,6 +3565,28 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       </tags>
   </entry>
   <entry>
+    <title>临床研究中盲态规则存在的原因</title>
+    <url>/2025/12/19/%E4%B8%B4%E5%BA%8A%E7%A0%94%E7%A9%B6%E4%B8%AD%E7%9B%B2%E6%80%81%E8%A7%84%E5%88%99%E5%AD%98%E5%9C%A8%E7%9A%84%E5%8E%9F%E5%9B%A0/</url>
+    <content><![CDATA[<p>在临床药物试验中，盲态是一种核心方法学设计，旨在消除主观偏见对试验结果的影响。其本质在于对研究参与者、研究者或评估者中的一方或多方隐藏治疗分配信息，从而确保数据收集和结果判读的客观性。盲态的实施贯穿试验设计、执行、数据管理和分析的全链条，其规定与存在原因植根于循证医学对科学严谨性的追求。</p>
+<p>从试验启动到结束，盲态管理需遵循标准化流程。在方案设计阶段，需明确盲法层级（如单盲、双盲或三盲），并制定相应的盲法实施计划。随机化编码由独立于临床团队的统计人员或第三方机构生成，治疗药物与对照品（如安慰剂）需在外观、气味、包装上完全一致，以确保盲态的完整性。在试验执行期间，发药、药物清点及受试者管理均由不参与疗效评估的人员负责，避免无意间泄露分组信息。当受试者出现严重不良事件，且必须知晓具体用药才能实施救治时，可启动紧急揭盲程序，但需严格记录揭盲原因、时间及操作人员，并在最终报告中说明。数据录入与管理环节，所有标识治疗组别的字段均需隐藏，数据库锁定前由盲态审核委员会进行一致性核查，确保无意外破盲。直至最终统计分析完成，研究团队方可正式揭盲。这一系列措施在《药物临床试验质量管理规范》及ICH-GCP指南中均有详细规定，旨在维护试验结果的科学可靠性<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>。</p>
+<p>盲态的核心价值在于控制两类主要偏倚：性能偏倚与检测偏倚。若研究者或受试者知晓治疗分配，可能在评估症状改善、记录不良事件或调整合并用药时产生倾向性，例如对试验组过度乐观或对对照组过度严苛，这种主观介入会扭曲药物真实疗效的测量。此外，在患者报告结局或生活质量评分等软终点指标中，知晓分组可能直接影响受试者的心理预期与反馈，进一步干扰结果有效性。通过盲态设计，可最大程度剥离人为因素对终点事件的干扰，从而更准确地估计药物与安慰剂或对照药之间的差异。从统计学角度，盲态有助于维持随机化带来的组间均衡性，使基线特征与未知混杂因素在组间均匀分布，提升因果推断的可靠性。历史上多项研究显示，非盲试验倾向于高估治疗效果约25%左右，尤其在主观性终点中偏倚更为显著<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>。</p>
+<hr>
+<p><strong>参考文献</strong></p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>International Council for Harmonisation of Technical Requirements for Pharmaceuticals for Human Use. <em>ICH Harmonised Guideline: Integrated Addendum to ICH E6(R1): Guideline for Good Clinical Practice E6(R2)</em>. 2016. <a href="https://database.ich.org/sites/default/files/E6_R2_Addendum.pdf">https://database.ich.org/sites/default/files/E6_R2_Addendum.pdf</a> <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>Hróbjartsson A, et al. <em>Blinded trials taken to the test: an analysis of randomized clinical trials that report tests for the success of blinding</em>. International Journal of Epidemiology. 2007;36(3):654-663. <a href="https://doi.org/10.1093/ije/dym020">https://doi.org/10.1093/ije/dym020</a> <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+]]></content>
+      <tags>
+        <tag>Medicine</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>乙酰半脱氨酸的药理学与药代动力学特性</title>
     <url>/2025/12/30/%E4%B9%99%E9%85%B0%E5%8D%8A%E8%84%B1%E6%B0%A8%E9%85%B8%E7%9A%84%E8%8D%AF%E7%90%86%E5%AD%A6%E4%B8%8E%E8%8D%AF%E4%BB%A3%E5%8A%A8%E5%8A%9B%E5%AD%A6%E7%89%B9%E6%80%A7/</url>
     <content><![CDATA[<p>乙酰半胱氨酸的药理活性核心在于其分子中的游离巯基（-SH）。这一化学基团赋予其两项主要且机制迥异的临床应用：作为粘痰溶解剂和作为对乙酰氨基酚（扑热息痛）过量的特效解毒剂。</p>
@@ -3588,28 +3610,6 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
 <li id="fn3" class="footnote-item"><p>此解毒机制基于对乙酰氨基酚肝毒性的经典三阶段理论，并被多项随机对照试验及荟萃分析所支持，是临床标准治疗方案的核心依据。 <a href="#fnref3" class="footnote-backref">↩︎</a></p>
 </li>
 <li id="fn4" class="footnote-item"><p>数据来源于人体药代动力学研究。低生物利用度提示口服给药时，大量药物在肝脏被“首过”利用，这恰好解释了其在口服用于肝保护时的作用基础。 <a href="#fnref4" class="footnote-backref">↩︎</a></p>
-</li>
-</ol>
-</section>
-]]></content>
-      <tags>
-        <tag>Medicine</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>临床研究中盲态规则存在的原因</title>
-    <url>/2025/12/19/%E4%B8%B4%E5%BA%8A%E7%A0%94%E7%A9%B6%E4%B8%AD%E7%9B%B2%E6%80%81%E8%A7%84%E5%88%99%E5%AD%98%E5%9C%A8%E7%9A%84%E5%8E%9F%E5%9B%A0/</url>
-    <content><![CDATA[<p>在临床药物试验中，盲态是一种核心方法学设计，旨在消除主观偏见对试验结果的影响。其本质在于对研究参与者、研究者或评估者中的一方或多方隐藏治疗分配信息，从而确保数据收集和结果判读的客观性。盲态的实施贯穿试验设计、执行、数据管理和分析的全链条，其规定与存在原因植根于循证医学对科学严谨性的追求。</p>
-<p>从试验启动到结束，盲态管理需遵循标准化流程。在方案设计阶段，需明确盲法层级（如单盲、双盲或三盲），并制定相应的盲法实施计划。随机化编码由独立于临床团队的统计人员或第三方机构生成，治疗药物与对照品（如安慰剂）需在外观、气味、包装上完全一致，以确保盲态的完整性。在试验执行期间，发药、药物清点及受试者管理均由不参与疗效评估的人员负责，避免无意间泄露分组信息。当受试者出现严重不良事件，且必须知晓具体用药才能实施救治时，可启动紧急揭盲程序，但需严格记录揭盲原因、时间及操作人员，并在最终报告中说明。数据录入与管理环节，所有标识治疗组别的字段均需隐藏，数据库锁定前由盲态审核委员会进行一致性核查，确保无意外破盲。直至最终统计分析完成，研究团队方可正式揭盲。这一系列措施在《药物临床试验质量管理规范》及ICH-GCP指南中均有详细规定，旨在维护试验结果的科学可靠性<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>。</p>
-<p>盲态的核心价值在于控制两类主要偏倚：性能偏倚与检测偏倚。若研究者或受试者知晓治疗分配，可能在评估症状改善、记录不良事件或调整合并用药时产生倾向性，例如对试验组过度乐观或对对照组过度严苛，这种主观介入会扭曲药物真实疗效的测量。此外，在患者报告结局或生活质量评分等软终点指标中，知晓分组可能直接影响受试者的心理预期与反馈，进一步干扰结果有效性。通过盲态设计，可最大程度剥离人为因素对终点事件的干扰，从而更准确地估计药物与安慰剂或对照药之间的差异。从统计学角度，盲态有助于维持随机化带来的组间均衡性，使基线特征与未知混杂因素在组间均匀分布，提升因果推断的可靠性。历史上多项研究显示，非盲试验倾向于高估治疗效果约25%左右，尤其在主观性终点中偏倚更为显著<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>。</p>
-<hr>
-<p><strong>参考文献</strong></p>
-<hr class="footnotes-sep">
-<section class="footnotes">
-<ol class="footnotes-list">
-<li id="fn1" class="footnote-item"><p>International Council for Harmonisation of Technical Requirements for Pharmaceuticals for Human Use. <em>ICH Harmonised Guideline: Integrated Addendum to ICH E6(R1): Guideline for Good Clinical Practice E6(R2)</em>. 2016. <a href="https://database.ich.org/sites/default/files/E6_R2_Addendum.pdf">https://database.ich.org/sites/default/files/E6_R2_Addendum.pdf</a> <a href="#fnref1" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn2" class="footnote-item"><p>Hróbjartsson A, et al. <em>Blinded trials taken to the test: an analysis of randomized clinical trials that report tests for the success of blinding</em>. International Journal of Epidemiology. 2007;36(3):654-663. <a href="https://doi.org/10.1093/ije/dym020">https://doi.org/10.1093/ije/dym020</a> <a href="#fnref2" class="footnote-backref">↩︎</a></p>
 </li>
 </ol>
 </section>
@@ -3870,6 +3870,15 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       </categories>
   </entry>
   <entry>
+    <title>二〇二五年六月二十九日</title>
+    <url>/2025/06/29/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%BA%94%E5%B9%B4%E5%85%AD%E6%9C%88%E4%BA%8C%E5%8D%81%E4%B9%9D%E6%97%A5/</url>
+    <content><![CDATA[<p>我很想你们。</p>
+]]></content>
+      <categories>
+        <category>gallery</category>
+      </categories>
+  </entry>
+  <entry>
     <title>二〇二五年六月十日</title>
     <url>/2025/06/10/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%BA%94%E5%B9%B4%E5%85%AD%E6%9C%88%E5%8D%81%E6%97%A5/</url>
     <content><![CDATA[<p>头盔塑料面罩边缘积了一圈水，沉甸甸的。</p>
@@ -3906,15 +3915,6 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
 <p>希望我们再见时，可以向你讲述沿途风景，讲述我感受到的世界与爱。</p>
 <p>也希望你在那边一切都好。</p>
 <p>在星空的另一端，思念从未停止。</p>
-]]></content>
-      <categories>
-        <category>gallery</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>二〇二五年六月二十九日</title>
-    <url>/2025/06/29/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%BA%94%E5%B9%B4%E5%85%AD%E6%9C%88%E4%BA%8C%E5%8D%81%E4%B9%9D%E6%97%A5/</url>
-    <content><![CDATA[<p>我很想你们。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
@@ -4091,40 +4091,6 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       </categories>
   </entry>
   <entry>
-    <title>二〇二五年十二月二十八日</title>
-    <url>/2025/12/28/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%BA%94%E5%B9%B4%E5%8D%81%E4%BA%8C%E6%9C%88%E4%BA%8C%E5%8D%81%E5%85%AB%E6%97%A5/</url>
-    <content><![CDATA[<p>我曾经是个极度渴望远方的人，十六七岁的时候，我就觉得生活应该在别处。去极北的冰原看极光，在热带的雨林里听蝉鸣。那时候，我以为勇敢就是不断地出发，不断地跨越国境线，去触摸那些地图上遥远的坐标。</p>
-<p>直到那些宏大的风景在眼里渐渐褪色，变成了一张张大同小异的明信片。我发现，自己并不渴望那个虚无缥缈的“远方”，我只是想找到一个可爱的地方，能让心跳安稳下来。</p>
-<p>于是，我回到了这座南方的小城。</p>
-<p>小城多雨，空气里总带着一股湿润的青苔味。</p>
-<p>我撑着一把黑色的旧伞，这把伞是我在离开这座城市的前两年就花十几元购入的，当时陈桉说我背着它像一个中二的少年。</p>
-<p>我走在交错纵横的弄堂里。这里的建筑保留着旧时代的局促与温情，电线杆上晾着洗得发白的床单，偶尔有几只野猫从瓦片上跳过。</p>
-<p>跨过那座被称为“通济”的石拱桥。桥下的河水浑浊而缓慢，像流淌不动的时光。我并没有明确的目的地，只是随性地穿梭在一条又一条弄堂之间。</p>
-<p>就在转过一个转角，走进一条地图上没有标注的、始料未及的小巷时，我停住了脚步。</p>
-<p>雨不知道什么时候停了。巷子很窄，两旁的红砖墙上爬满了枯萎的藤蔓。你就站在巷子的尽头，手里提着一袋刚出炉的生煎包，正低头躲避屋檐落下的水滴。</p>
-<p>在我的旅行生涯中，曾独自面对过一望无际的沙海，也曾在暴风雪的极夜徒步。我一直以为那些是勇敢。</p>
-<p>可直到这一刻，看着几步之外的你，我才意识到，自己一生中最勇敢的瞬间，竟然是此时此刻，是在这个平凡得不能再平凡的小巷里，决定不再逃避，决定停下流浪的脚步，去面对一个真实的、近在咫尺的人。</p>
-<p>你抬起头，看见了我。</p>
-<p>眼神里先是错愕，随即漾开了一层淡淡的、如同湖水般的温柔。</p>
-<p>“你回来了？”你轻声问，语气自然得就像我只是刚刚下楼买了一份报纸。</p>
-<p>我没有说话。我看着你，觉得你明明就在眼前，却又像从世界的尽头跋涉而来。</p>
-<p>或者说，有你在的地方，就是我所有流浪的终点。</p>
-<p>后来你说我的眼中藏着星点，那是久违的、对生活的热忱，你说我的嘴角不自觉地勾起一丝弧线，那是被治愈的证明。</p>
-<p>“我以为你还在地平线的那头。”你走近了几步，把那一小袋生煎包往怀里捂了捂，似乎怕冷风吹散了热气。</p>
-<p>“我找过了，地平线没有终点。”我接过你手中的伞，声音有些沙哑。</p>
-<p>这句话说出来很俗气，但在这一刻，在这一条被夕阳余晖染成橘色的小巷里，它是唯一的真理。</p>
-<p>我突然想把时间揉成碎片，捧在手心里。不想再去计算明天要去哪座城市，不想再去规划下一次航行。只想把这些碎片化的时间，全部挥霍在眼前的琐碎里：比如陪你走完这条巷子，比如和你一起吃掉这袋生煎，比如在下一个转角讨论晚饭的菜单。</p>
-<p>“还没吃晚饭吧？”你笑着问我，眼睛弯成了好看的月牙。</p>
-<p>“没呢。”</p>
-<p>“那……”你歪着头，眨了眨眼。</p>
-<p>我认真地看着你，郑重地点了点头。</p>
-<p>我知道，这次没有期限。在经历了无数个孤独的远方之后，在这一条始料未及的小巷里，再见面，就是永远。</p>
-]]></content>
-      <categories>
-        <category>gallery</category>
-      </categories>
-  </entry>
-  <entry>
     <title>二〇二五年十二月二十五日</title>
     <url>/2025/12/25/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%BA%94%E5%B9%B4%E5%8D%81%E4%BA%8C%E6%9C%88%E4%BA%8C%E5%8D%81%E4%BA%94%E6%97%A5/</url>
     <content><![CDATA[<p>那是南方最寻常不过的一个盛夏，空气里裹挟着滚烫的水汽，只要伸手一抓，就能攥出一把湿漉漉的燥热。</p>
@@ -4167,6 +4133,40 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
 <p>我依然是那个木讷的我。</p>
 <p>海浪一遍遍慢慢地拍打着沙滩，没关系，慢一点也没关系。</p>
 <p>在这片蓝色的寂静里听懂自己。</p>
+]]></content>
+      <categories>
+        <category>gallery</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>二〇二五年十二月二十八日</title>
+    <url>/2025/12/28/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%BA%94%E5%B9%B4%E5%8D%81%E4%BA%8C%E6%9C%88%E4%BA%8C%E5%8D%81%E5%85%AB%E6%97%A5/</url>
+    <content><![CDATA[<p>我曾经是个极度渴望远方的人，十六七岁的时候，我就觉得生活应该在别处。去极北的冰原看极光，在热带的雨林里听蝉鸣。那时候，我以为勇敢就是不断地出发，不断地跨越国境线，去触摸那些地图上遥远的坐标。</p>
+<p>直到那些宏大的风景在眼里渐渐褪色，变成了一张张大同小异的明信片。我发现，自己并不渴望那个虚无缥缈的“远方”，我只是想找到一个可爱的地方，能让心跳安稳下来。</p>
+<p>于是，我回到了这座南方的小城。</p>
+<p>小城多雨，空气里总带着一股湿润的青苔味。</p>
+<p>我撑着一把黑色的旧伞，这把伞是我在离开这座城市的前两年就花十几元购入的，当时陈桉说我背着它像一个中二的少年。</p>
+<p>我走在交错纵横的弄堂里。这里的建筑保留着旧时代的局促与温情，电线杆上晾着洗得发白的床单，偶尔有几只野猫从瓦片上跳过。</p>
+<p>跨过那座被称为“通济”的石拱桥。桥下的河水浑浊而缓慢，像流淌不动的时光。我并没有明确的目的地，只是随性地穿梭在一条又一条弄堂之间。</p>
+<p>就在转过一个转角，走进一条地图上没有标注的、始料未及的小巷时，我停住了脚步。</p>
+<p>雨不知道什么时候停了。巷子很窄，两旁的红砖墙上爬满了枯萎的藤蔓。你就站在巷子的尽头，手里提着一袋刚出炉的生煎包，正低头躲避屋檐落下的水滴。</p>
+<p>在我的旅行生涯中，曾独自面对过一望无际的沙海，也曾在暴风雪的极夜徒步。我一直以为那些是勇敢。</p>
+<p>可直到这一刻，看着几步之外的你，我才意识到，自己一生中最勇敢的瞬间，竟然是此时此刻，是在这个平凡得不能再平凡的小巷里，决定不再逃避，决定停下流浪的脚步，去面对一个真实的、近在咫尺的人。</p>
+<p>你抬起头，看见了我。</p>
+<p>眼神里先是错愕，随即漾开了一层淡淡的、如同湖水般的温柔。</p>
+<p>“你回来了？”你轻声问，语气自然得就像我只是刚刚下楼买了一份报纸。</p>
+<p>我没有说话。我看着你，觉得你明明就在眼前，却又像从世界的尽头跋涉而来。</p>
+<p>或者说，有你在的地方，就是我所有流浪的终点。</p>
+<p>后来你说我的眼中藏着星点，那是久违的、对生活的热忱，你说我的嘴角不自觉地勾起一丝弧线，那是被治愈的证明。</p>
+<p>“我以为你还在地平线的那头。”你走近了几步，把那一小袋生煎包往怀里捂了捂，似乎怕冷风吹散了热气。</p>
+<p>“我找过了，地平线没有终点。”我接过你手中的伞，声音有些沙哑。</p>
+<p>这句话说出来很俗气，但在这一刻，在这一条被夕阳余晖染成橘色的小巷里，它是唯一的真理。</p>
+<p>我突然想把时间揉成碎片，捧在手心里。不想再去计算明天要去哪座城市，不想再去规划下一次航行。只想把这些碎片化的时间，全部挥霍在眼前的琐碎里：比如陪你走完这条巷子，比如和你一起吃掉这袋生煎，比如在下一个转角讨论晚饭的菜单。</p>
+<p>“还没吃晚饭吧？”你笑着问我，眼睛弯成了好看的月牙。</p>
+<p>“没呢。”</p>
+<p>“那……”你歪着头，眨了眨眼。</p>
+<p>我认真地看着你，郑重地点了点头。</p>
+<p>我知道，这次没有期限。在经历了无数个孤独的远方之后，在这一条始料未及的小巷里，再见面，就是永远。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
@@ -6676,8 +6676,7 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
   <entry>
     <title>谈谈软件工程</title>
     <url>/2025/12/20/%E8%B0%88%E8%B0%88%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/</url>
-    <content><![CDATA[<p>#软件工程</p>
-<blockquote>
+    <content><![CDATA[<blockquote>
 <p>在有限认知下，持续对抗系统熵增，在相互冲突的目标间做出最优权衡，以可工程化的方式交付价值。</p>
 </blockquote>
 <p>一、复杂性是固有属性，而非偶然缺陷</p>
