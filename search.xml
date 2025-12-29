@@ -2247,6 +2247,52 @@ A relation table (also sometimes called a <em>JOIN</em>, <em>link</em> or <em>pi
       </tags>
   </entry>
   <entry>
+    <title>Rust 虚表布局规则介绍</title>
+    <url>/2023/05/01/Rust-%E8%99%9A%E8%A1%A8%E5%B8%83%E5%B1%80%E8%A7%84%E5%88%99%E4%BB%8B%E7%BB%8D/</url>
+    <content><![CDATA[<p>在 Rust 中，一个指向未知大小对象（!Sized）的引用或指针被实现为一个由两个 usize 大小的域构成的胖指针。这两个域中，其中一个域保存了被引用或被指向的对象的地址，另一个域保存了一个名为 metadata 的数据。对于 slice 的引用或指针来说，其 metadata 为 slice 的长度。对于 trait object 的引用或指针来说，其 metadata 为虚表（vtable）地址。与 C++ 虚表类似，Rust 虚表的存在使得诸多动态语言特性得以实现，例如动态派发（dynamic dispatch）、向上转换（upcasting）、向下转换（downcast）等。本文将对 Rust 中虚表的布局规则进行简要介绍，并在此过程中对 Rust 中若干动态特性的实现方法进行简要介绍。</p>
+<blockquote>
+<p>注意：Rust 虚表及其结构属于 Rust 语言的内部实现细节，不保证稳定性。本文所介绍的虚表布局仅反映本文创作时最新的 Rust 虚表结构[1]，在将来 Rust 虚表结构可能会发生变化。一个 Rust 程序的正确性不应该以任何方式依赖于 Rust 虚表的结构。</p>
+</blockquote>
+<h2 id="基本结构"><a class="header-anchor" href="#基本结构">¶</a>基本结构</h2>
+<p>Rust 程序中的所有虚表均以一个固定结构的 header 开头。Header 中按顺序包含三个usize 大小的字段：drop_in_place ，size 和 align 。在 header 之后是一系列的 usize 大小字段，其数量以及含义在每个虚表中可能都不同。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">+---------------+</span><br><span class="line">| drop_in_place |</span><br><span class="line">+---------------+</span><br><span class="line">| size          |</span><br><span class="line">+---------------+</span><br><span class="line">| align         |</span><br><span class="line">+---------------+</span><br><span class="line">| entry1        |</span><br><span class="line">+---------------+</span><br><span class="line">| entry2        |</span><br><span class="line">+---------------+</span><br><span class="line">| entry3        |</span><br><span class="line">+---------------+</span><br></pre></td></tr></table></figure>
+<p>虚表 header 中的drop_in_place 是一个函数指针，其指向的函数能够原地 drop 当前胖指针所引用的对象。size 和 align 两个域分别给出对象的大小和内存对齐，这两个域共同构成一个 std::alloc::Layout 结构，可用于释放当前胖指针所引用的对象所占据的内存。虚表 header 的存在使得 trait object 总是能被销毁和释放。例如当销毁一个 <code>Box&lt;dyn Trait&gt;</code> 时，<code>Box::&lt;dyn Trait&gt;::drop</code> 会首先调用虚表中的 drop_in_place 函数原地销毁 Box 所引用的对象，然后再调用 dealloc 函数并传递虚表中的 size 和 align 释放堆空间。</p>
+<p>在虚表 header 之后是一系列的字段。在最普遍的情况下，每个字段代表一个指向 trait 所定义的函数的指针。例如，对于下列 object safe 的 trait:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="keyword">trait</span> <span class="title class_">Trait</span> &#123;</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">fun1</span>(&amp;<span class="keyword">self</span>);</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">fun2</span>(&amp;<span class="keyword">self</span>);</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">fun3</span>(&amp;<span class="keyword">self</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果类型T 实现了 Trait，那么为 T 生成的 Trait 虚表的结构为：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">+--------------------------+</span><br><span class="line">| fn drop_in_place(*mut T) |</span><br><span class="line">+--------------------------+</span><br><span class="line">| size of T                |</span><br><span class="line">+--------------------------+</span><br><span class="line">| align of T               |</span><br><span class="line">+--------------------------+</span><br><span class="line">| fn &lt;T as Trait&gt;::fun1    |</span><br><span class="line">+--------------------------+</span><br><span class="line">| fn &lt;T as Trait&gt;::fun2    |</span><br><span class="line">+--------------------------+</span><br><span class="line">| fn &lt;T as Trait&gt;::fun3    |</span><br><span class="line">+--------------------------+</span><br></pre></td></tr></table></figure>
+<p>Trait 中的函数按照声明顺序依次排列在虚表 header 之后。当通过一个指向 T 对象的 &amp;dyn Trait 调用 fun2 函数时，程序会先从虚表的第 5 个域中得到为 T 实现的 Trait::fun2 函数的地址，然后再调用之。</p>
+<h2 id="Super-Trait"><a class="header-anchor" href="#Super-Trait">¶</a>Super Trait</h2>
+<p>Object safe 的 trait 可以有 super trait。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pub trait Grand &#123;</span><br><span class="line">    fn grand_fun1(&amp;self);</span><br><span class="line">    fn grand_fun2(&amp;self);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pub trait Parent : Grand &#123;</span><br><span class="line">    fn parent_fun1(&amp;self);</span><br><span class="line">    fn parent_fun2(&amp;self);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pub trait Trait : Parent &#123;</span><br><span class="line">    fn fun(&amp;self);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果类型T 实现了 Trait，那么此时为 T 生成的 Trait 虚表的结构为：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">+-------------------------------+</span><br><span class="line">| fn drop_in_place(*mut T)      |</span><br><span class="line">+-------------------------------+</span><br><span class="line">| size of T                     |</span><br><span class="line">+-------------------------------+</span><br><span class="line">| align of T                    |</span><br><span class="line">+-------------------------------+</span><br><span class="line">| fn &lt;T as Grand&gt;::grand_fun1   |</span><br><span class="line">+-------------------------------+</span><br><span class="line">| fn &lt;T as Grand&gt;::grand_fun2   |</span><br><span class="line">+-------------------------------+</span><br><span class="line">| fn &lt;T as Parent&gt;::parent_fun1 |</span><br><span class="line">+-------------------------------+</span><br><span class="line">| fn &lt;T as Parent&gt;::parent_fun2 |</span><br><span class="line">+-------------------------------+</span><br><span class="line">| fn &lt;T as Trait&gt;::fun          |</span><br><span class="line">+-------------------------------+</span><br></pre></td></tr></table></figure>
+<p>可以看到，此时Trait 以及 Trait 的所有直接或间接父 trait 所定义的所有函数均包含在虚表 header 之后，且顺序为后序（即先排布 Trait 的父 trait 所定义的所有函数，最后再排布 Trait 所定义的所有函数）。这样的排布方式使得在得到 T 类型的 Trait 虚表的同时也同时得到了 T 类型的 Parent 虚表和 Grand 虚表。T 类型的 Grand 虚表恰好由 Trait 虚表的前五个域构成，T 类型的 Parent 虚表恰好由 Trait 虚表的前七项构成。这使得向上转换变得非常简单。</p>
+<p>所谓向上转换，即 Rust 允许将&amp;dyn Trait 转换为 &amp;dyn Parent 或 &amp;dyn Grand 。在向上转换的过程中，胖指针的对象地址域保持不变，但 metadata 域可能需要进行调整，因为不同的 trait 可能具有不同的虚表地址。但在当前示例中，向上转换不需要调整 metadata 域，因为一个指向 Trait 虚表的指针同时也指向 Parent 虚表和 Grand 虚表。在后文中我们会进一步介绍需要调整 metadata 域的向上转换的情况。</p>
+<blockquote>
+<p>注意：目前 stable Rust 暂不支持向上转换。要使用向上转换特性，必须使用 nightly 工具链，并向源文件中添加 #![feature(trait_upcasting)] 特性开关。</p>
+</blockquote>
+<h2 id="多重继承"><a class="header-anchor" href="#多重继承">¶</a>多重继承</h2>
+<p>Trait 可以有多个 super trait。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pub trait Base &#123;</span><br><span class="line">    fn base_fun1(&amp;self);</span><br><span class="line">    fn base_fun2(&amp;self);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pub trait Left : Base &#123;</span><br><span class="line">    fn left_fun1(&amp;self);</span><br><span class="line">    fn left_fun2(&amp;self);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pub trait Right : Base &#123;</span><br><span class="line">    fn right_fun1(&amp;self);</span><br><span class="line">    fn right_fun2(&amp;self);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pub trait Trait : Left + Right &#123;</span><br><span class="line">    fn fun(&amp;self);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果类型T 实现了 Trait，那么此时为 T 生成的 Trait 虚表的结构为：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">+-----------------------------+</span><br><span class="line">| fn drop_in_place(*mut T)    |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| size of T                   |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| align of T                  |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| fn &lt;T as Base&gt;::base_fun1   |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| fn &lt;T as Base&gt;::base_fun2   |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| fn &lt;T as Left&gt;::left_fun1   |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| fn &lt;T as Left&gt;::left_fun2   |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| fn &lt;T as Right&gt;::right_fun1 |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| fn &lt;T as Right&gt;::right_fun2 |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| ptr to &lt;T as Right&gt;::vtable |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| fn &lt;T as Trait&gt;::fun        |</span><br><span class="line">+-----------------------------+</span><br></pre></td></tr></table></figure>
+<p>可以看到，此时Trait 及其所有直接或间接父 trait 所定义的所有函数仍然包含在虚表内，因此通过 &amp;dyn Trait 调用的函数仍然可以直接从虚表内得到其实际目标函数的地址。另外，Trait 虚表内仍然包含有效的 Base 虚表和 Left 虚表。因此，将 &amp;dyn Trait 向上转换为 &amp;dyn Left 或 &amp;dyn Base 仍然是极其简单的，不需要调整胖指针的 metadata 域。但是，将 &amp;dyn Trait 向上转换为 &amp;dyn Right 就需要调整 metadata 域了，因为 Trait 虚表内并不包含一个有效的 Right 虚表。这也是 Trait 虚表中 ptr to <code>&lt;T as Right&gt;::vtable</code> 域的作用：在执行向上转换时，程序会读取 Trait 虚表的这个域作为得到的 &amp;dyn Right 胖指针的 metadata 。这也是 <em>Rust 向上转换与 C++ 向上转换的一个很大不同：在 C++ 中的向上转换通常并不需要访问虚表（除非需要执行跨虚继承边界的转换），但在 Rust 中向上转换可能需要访问虚表。</em></p>
+<p>更加一般地，对于一个 object safe 的 traitTr，将其第一个父 trait、第一个父 trait 的第一个父 trait、…… 这一系列直接或间接父 trait 记为这个 trait 的 PrefixTrait 集合。在将 &amp;dyn Tr 向上转换时，如果转换到的目标 trait 包含在 PrefixTrait 集合内，那么这个向上转换是平凡的：不需要调整胖指针的 metadata 域。否则，这个向上转换需要在 Tr 的虚表内读取目标 trait 的虚表指针作为转换结果的 metadata 。在 Tr 的虚表结构中，位于 PrefixTrait 集合中的父 trait 只需要排布他们所定义的函数即可；对于其他父 trait 还需要额外在虚表内排布一个指向其虚表的指针用于向上转换。</p>
+<h2 id="向下转换"><a class="header-anchor" href="#向下转换">¶</a>向下转换</h2>
+<p>Rust 提供了一个特殊的 trait：std::any::Any 。该 trait 支持向下转换，即可以将 &amp;dyn Any 转换为 T 。转换过程中会对胖指针所指向的对象的实际类型进行检查，确认其确实是一个 T 类型的对象。Any trait 的虚表结构有一些特殊；在虚表 header 之后，Any 虚表仅包含一个域，这个域直接给出胖指针指向的对象的类型标识（由一个 std::any::TypeId 类型的值表示）。例如，对于任意的 T: 'static，编译器为其生成的 Any 虚表为：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">+--------------------------+</span><br><span class="line">| fn drop_in_place(*mut T) |</span><br><span class="line">+--------------------------+</span><br><span class="line">| size of T                |</span><br><span class="line">+--------------------------+</span><br><span class="line">| align of T               |</span><br><span class="line">+--------------------------+</span><br><span class="line">| TypeId of T              |</span><br><span class="line">+--------------------------+</span><br></pre></td></tr></table></figure>
+<p>在执行向下转换时，程序首先检查转换到的类型是否与虚表中给出的TypeId 所标识的类型一致。若类型检查通过，向下转换操作可以直接返回胖指针中的指针域作为转换结果。</p>
+<h3 id="REFERENCE"><a class="header-anchor" href="#REFERENCE">¶</a>REFERENCE</h3>
+<ol>
+<li>Vtable format to support dyn upcasting coercion <a href="https://rust-lang.github.io/dyn-upcasting-coercion-initiative/design-discussions/vtable-layout.*html">https://rust-lang.github.io/dyn-upcasting-coercion-initiative/design-discussions/vtable-layout.*html</a>*</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Rust 闭包 lifetime may not live long enough 问题</title>
     <url>/2023/05/24/Rust-%E9%97%AD%E5%8C%85-lifetime-may-not-live-long-enough-%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<p>代码：</p>
@@ -2412,52 +2458,6 @@ A relation table (also sometimes called a <em>JOIN</em>, <em>link</em> or <em>pi
 <hr>
 <p>Scala 3 提供了几个与 Capture Checking 相关的编译选项，。<code>-Xprint:cc</code> 选项会打印出带有推断捕获类型的程序代码 1。这对于理解编译器是如何推断捕获集的以及调试与类型相关的错误非常有用。另一个选项是 <code>-Ycc-debug</code>，它提供了关于 Capture Checking 过程的详细的、面向实现的的信息。这个选项对于需要深入了解 Capture Checking 器工作原理或者遇到复杂问题的开发者来说很有帮助。这些编译选项是使用 Capture Checking 的开发者的重要工具，它们允许开发者检查编译器的推理并诊断问题。</p>
 <p>Capture Checking被实现为一个传播约束求解器，它在标准的类型检查阶段之后运行，未知的捕获集由约束变量表示。在类型中显式编写的捕获集被求解器视为常量。类型之间的子类型要求会转化为它们各自捕获集上的子捕获测试。求解器根据程序的结构和类型约束，将 Capability 传播给约束变量及其超集。捕获集的映射受到类型参数的变性（协变、逆变、不变）的影响。装箱（boxing）和拆箱（unboxing）是用于隐藏和恢复捕获集的虚拟操作，特别是在类型参数的上下文中用于管理捕获隧道。<code>-Ycc-debug</code> 的输出提供了关于变量依赖关系和Capture Checking器在编译过程中的状态的深入信息。</p>
-]]></content>
-      <tags>
-        <tag>Technique</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Rust 虚表布局规则介绍</title>
-    <url>/2023/05/01/Rust-%E8%99%9A%E8%A1%A8%E5%B8%83%E5%B1%80%E8%A7%84%E5%88%99%E4%BB%8B%E7%BB%8D/</url>
-    <content><![CDATA[<p>在 Rust 中，一个指向未知大小对象（!Sized）的引用或指针被实现为一个由两个 usize 大小的域构成的胖指针。这两个域中，其中一个域保存了被引用或被指向的对象的地址，另一个域保存了一个名为 metadata 的数据。对于 slice 的引用或指针来说，其 metadata 为 slice 的长度。对于 trait object 的引用或指针来说，其 metadata 为虚表（vtable）地址。与 C++ 虚表类似，Rust 虚表的存在使得诸多动态语言特性得以实现，例如动态派发（dynamic dispatch）、向上转换（upcasting）、向下转换（downcast）等。本文将对 Rust 中虚表的布局规则进行简要介绍，并在此过程中对 Rust 中若干动态特性的实现方法进行简要介绍。</p>
-<blockquote>
-<p>注意：Rust 虚表及其结构属于 Rust 语言的内部实现细节，不保证稳定性。本文所介绍的虚表布局仅反映本文创作时最新的 Rust 虚表结构[1]，在将来 Rust 虚表结构可能会发生变化。一个 Rust 程序的正确性不应该以任何方式依赖于 Rust 虚表的结构。</p>
-</blockquote>
-<h2 id="基本结构"><a class="header-anchor" href="#基本结构">¶</a>基本结构</h2>
-<p>Rust 程序中的所有虚表均以一个固定结构的 header 开头。Header 中按顺序包含三个usize 大小的字段：drop_in_place ，size 和 align 。在 header 之后是一系列的 usize 大小字段，其数量以及含义在每个虚表中可能都不同。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">+---------------+</span><br><span class="line">| drop_in_place |</span><br><span class="line">+---------------+</span><br><span class="line">| size          |</span><br><span class="line">+---------------+</span><br><span class="line">| align         |</span><br><span class="line">+---------------+</span><br><span class="line">| entry1        |</span><br><span class="line">+---------------+</span><br><span class="line">| entry2        |</span><br><span class="line">+---------------+</span><br><span class="line">| entry3        |</span><br><span class="line">+---------------+</span><br></pre></td></tr></table></figure>
-<p>虚表 header 中的drop_in_place 是一个函数指针，其指向的函数能够原地 drop 当前胖指针所引用的对象。size 和 align 两个域分别给出对象的大小和内存对齐，这两个域共同构成一个 std::alloc::Layout 结构，可用于释放当前胖指针所引用的对象所占据的内存。虚表 header 的存在使得 trait object 总是能被销毁和释放。例如当销毁一个 <code>Box&lt;dyn Trait&gt;</code> 时，<code>Box::&lt;dyn Trait&gt;::drop</code> 会首先调用虚表中的 drop_in_place 函数原地销毁 Box 所引用的对象，然后再调用 dealloc 函数并传递虚表中的 size 和 align 释放堆空间。</p>
-<p>在虚表 header 之后是一系列的字段。在最普遍的情况下，每个字段代表一个指向 trait 所定义的函数的指针。例如，对于下列 object safe 的 trait:</p>
-<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="keyword">trait</span> <span class="title class_">Trait</span> &#123;</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">fun1</span>(&amp;<span class="keyword">self</span>);</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">fun2</span>(&amp;<span class="keyword">self</span>);</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">fun3</span>(&amp;<span class="keyword">self</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果类型T 实现了 Trait，那么为 T 生成的 Trait 虚表的结构为：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">+--------------------------+</span><br><span class="line">| fn drop_in_place(*mut T) |</span><br><span class="line">+--------------------------+</span><br><span class="line">| size of T                |</span><br><span class="line">+--------------------------+</span><br><span class="line">| align of T               |</span><br><span class="line">+--------------------------+</span><br><span class="line">| fn &lt;T as Trait&gt;::fun1    |</span><br><span class="line">+--------------------------+</span><br><span class="line">| fn &lt;T as Trait&gt;::fun2    |</span><br><span class="line">+--------------------------+</span><br><span class="line">| fn &lt;T as Trait&gt;::fun3    |</span><br><span class="line">+--------------------------+</span><br></pre></td></tr></table></figure>
-<p>Trait 中的函数按照声明顺序依次排列在虚表 header 之后。当通过一个指向 T 对象的 &amp;dyn Trait 调用 fun2 函数时，程序会先从虚表的第 5 个域中得到为 T 实现的 Trait::fun2 函数的地址，然后再调用之。</p>
-<h2 id="Super-Trait"><a class="header-anchor" href="#Super-Trait">¶</a>Super Trait</h2>
-<p>Object safe 的 trait 可以有 super trait。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pub trait Grand &#123;</span><br><span class="line">    fn grand_fun1(&amp;self);</span><br><span class="line">    fn grand_fun2(&amp;self);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pub trait Parent : Grand &#123;</span><br><span class="line">    fn parent_fun1(&amp;self);</span><br><span class="line">    fn parent_fun2(&amp;self);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pub trait Trait : Parent &#123;</span><br><span class="line">    fn fun(&amp;self);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果类型T 实现了 Trait，那么此时为 T 生成的 Trait 虚表的结构为：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">+-------------------------------+</span><br><span class="line">| fn drop_in_place(*mut T)      |</span><br><span class="line">+-------------------------------+</span><br><span class="line">| size of T                     |</span><br><span class="line">+-------------------------------+</span><br><span class="line">| align of T                    |</span><br><span class="line">+-------------------------------+</span><br><span class="line">| fn &lt;T as Grand&gt;::grand_fun1   |</span><br><span class="line">+-------------------------------+</span><br><span class="line">| fn &lt;T as Grand&gt;::grand_fun2   |</span><br><span class="line">+-------------------------------+</span><br><span class="line">| fn &lt;T as Parent&gt;::parent_fun1 |</span><br><span class="line">+-------------------------------+</span><br><span class="line">| fn &lt;T as Parent&gt;::parent_fun2 |</span><br><span class="line">+-------------------------------+</span><br><span class="line">| fn &lt;T as Trait&gt;::fun          |</span><br><span class="line">+-------------------------------+</span><br></pre></td></tr></table></figure>
-<p>可以看到，此时Trait 以及 Trait 的所有直接或间接父 trait 所定义的所有函数均包含在虚表 header 之后，且顺序为后序（即先排布 Trait 的父 trait 所定义的所有函数，最后再排布 Trait 所定义的所有函数）。这样的排布方式使得在得到 T 类型的 Trait 虚表的同时也同时得到了 T 类型的 Parent 虚表和 Grand 虚表。T 类型的 Grand 虚表恰好由 Trait 虚表的前五个域构成，T 类型的 Parent 虚表恰好由 Trait 虚表的前七项构成。这使得向上转换变得非常简单。</p>
-<p>所谓向上转换，即 Rust 允许将&amp;dyn Trait 转换为 &amp;dyn Parent 或 &amp;dyn Grand 。在向上转换的过程中，胖指针的对象地址域保持不变，但 metadata 域可能需要进行调整，因为不同的 trait 可能具有不同的虚表地址。但在当前示例中，向上转换不需要调整 metadata 域，因为一个指向 Trait 虚表的指针同时也指向 Parent 虚表和 Grand 虚表。在后文中我们会进一步介绍需要调整 metadata 域的向上转换的情况。</p>
-<blockquote>
-<p>注意：目前 stable Rust 暂不支持向上转换。要使用向上转换特性，必须使用 nightly 工具链，并向源文件中添加 #![feature(trait_upcasting)] 特性开关。</p>
-</blockquote>
-<h2 id="多重继承"><a class="header-anchor" href="#多重继承">¶</a>多重继承</h2>
-<p>Trait 可以有多个 super trait。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pub trait Base &#123;</span><br><span class="line">    fn base_fun1(&amp;self);</span><br><span class="line">    fn base_fun2(&amp;self);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pub trait Left : Base &#123;</span><br><span class="line">    fn left_fun1(&amp;self);</span><br><span class="line">    fn left_fun2(&amp;self);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pub trait Right : Base &#123;</span><br><span class="line">    fn right_fun1(&amp;self);</span><br><span class="line">    fn right_fun2(&amp;self);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pub trait Trait : Left + Right &#123;</span><br><span class="line">    fn fun(&amp;self);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果类型T 实现了 Trait，那么此时为 T 生成的 Trait 虚表的结构为：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">+-----------------------------+</span><br><span class="line">| fn drop_in_place(*mut T)    |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| size of T                   |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| align of T                  |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| fn &lt;T as Base&gt;::base_fun1   |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| fn &lt;T as Base&gt;::base_fun2   |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| fn &lt;T as Left&gt;::left_fun1   |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| fn &lt;T as Left&gt;::left_fun2   |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| fn &lt;T as Right&gt;::right_fun1 |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| fn &lt;T as Right&gt;::right_fun2 |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| ptr to &lt;T as Right&gt;::vtable |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| fn &lt;T as Trait&gt;::fun        |</span><br><span class="line">+-----------------------------+</span><br></pre></td></tr></table></figure>
-<p>可以看到，此时Trait 及其所有直接或间接父 trait 所定义的所有函数仍然包含在虚表内，因此通过 &amp;dyn Trait 调用的函数仍然可以直接从虚表内得到其实际目标函数的地址。另外，Trait 虚表内仍然包含有效的 Base 虚表和 Left 虚表。因此，将 &amp;dyn Trait 向上转换为 &amp;dyn Left 或 &amp;dyn Base 仍然是极其简单的，不需要调整胖指针的 metadata 域。但是，将 &amp;dyn Trait 向上转换为 &amp;dyn Right 就需要调整 metadata 域了，因为 Trait 虚表内并不包含一个有效的 Right 虚表。这也是 Trait 虚表中 ptr to <code>&lt;T as Right&gt;::vtable</code> 域的作用：在执行向上转换时，程序会读取 Trait 虚表的这个域作为得到的 &amp;dyn Right 胖指针的 metadata 。这也是 <em>Rust 向上转换与 C++ 向上转换的一个很大不同：在 C++ 中的向上转换通常并不需要访问虚表（除非需要执行跨虚继承边界的转换），但在 Rust 中向上转换可能需要访问虚表。</em></p>
-<p>更加一般地，对于一个 object safe 的 traitTr，将其第一个父 trait、第一个父 trait 的第一个父 trait、…… 这一系列直接或间接父 trait 记为这个 trait 的 PrefixTrait 集合。在将 &amp;dyn Tr 向上转换时，如果转换到的目标 trait 包含在 PrefixTrait 集合内，那么这个向上转换是平凡的：不需要调整胖指针的 metadata 域。否则，这个向上转换需要在 Tr 的虚表内读取目标 trait 的虚表指针作为转换结果的 metadata 。在 Tr 的虚表结构中，位于 PrefixTrait 集合中的父 trait 只需要排布他们所定义的函数即可；对于其他父 trait 还需要额外在虚表内排布一个指向其虚表的指针用于向上转换。</p>
-<h2 id="向下转换"><a class="header-anchor" href="#向下转换">¶</a>向下转换</h2>
-<p>Rust 提供了一个特殊的 trait：std::any::Any 。该 trait 支持向下转换，即可以将 &amp;dyn Any 转换为 T 。转换过程中会对胖指针所指向的对象的实际类型进行检查，确认其确实是一个 T 类型的对象。Any trait 的虚表结构有一些特殊；在虚表 header 之后，Any 虚表仅包含一个域，这个域直接给出胖指针指向的对象的类型标识（由一个 std::any::TypeId 类型的值表示）。例如，对于任意的 T: 'static，编译器为其生成的 Any 虚表为：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">+--------------------------+</span><br><span class="line">| fn drop_in_place(*mut T) |</span><br><span class="line">+--------------------------+</span><br><span class="line">| size of T                |</span><br><span class="line">+--------------------------+</span><br><span class="line">| align of T               |</span><br><span class="line">+--------------------------+</span><br><span class="line">| TypeId of T              |</span><br><span class="line">+--------------------------+</span><br></pre></td></tr></table></figure>
-<p>在执行向下转换时，程序首先检查转换到的类型是否与虚表中给出的TypeId 所标识的类型一致。若类型检查通过，向下转换操作可以直接返回胖指针中的指针域作为转换结果。</p>
-<h3 id="REFERENCE"><a class="header-anchor" href="#REFERENCE">¶</a>REFERENCE</h3>
-<ol>
-<li>Vtable format to support dyn upcasting coercion <a href="https://rust-lang.github.io/dyn-upcasting-coercion-initiative/design-discussions/vtable-layout.*html">https://rust-lang.github.io/dyn-upcasting-coercion-initiative/design-discussions/vtable-layout.*html</a>*</li>
-</ol>
 ]]></content>
       <tags>
         <tag>Technique</tag>
@@ -5991,6 +5991,17 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       </tags>
   </entry>
   <entry>
+    <title>直系血亲之间不能直接输血</title>
+    <url>/2024/08/12/%E7%9B%B4%E7%B3%BB%E8%A1%80%E4%BA%B2%E4%B9%8B%E9%97%B4%E4%B8%8D%E8%83%BD%E7%9B%B4%E6%8E%A5%E8%BE%93%E8%A1%80/</url>
+    <content><![CDATA[<p>现代医学证明，直系血亲间输血有时会发生一种严重的输血反应，称为输血相关移植物抗宿主病，这种输血反应尽管发病率很低，但死亡率却高达 99.9%，一旦发生几乎无法挽救。所以，很多电视剧里的那些情节都是错误的。根据中国输血协会网站上的介绍，目前虽然可以通过“血液辐照”的处理技术，把这种具有免疫活性的淋巴细胞灭活，但是临床上仍不建议直系血亲之间输血。</p>
+<p>无血缘关系的人，血细胞的抗原差异很大，很容易被免疫系统识别排斥和清除；而亲属间特别是直系亲属间的细胞抗原差异小，难辨识，加上受血者本身是需要输血的病人，免疫功能低下，因此，对输入的具有免疫活性的淋巴细胞排斥弱，从而外来的淋巴细胞就在患者体内分裂、增殖，然后向皮肤、肝脏、肠道、骨髓等器官发动攻击，从而引起致命性的并发症。</p>
+]]></content>
+      <tags>
+        <tag>Medicine</tag>
+        <tag>Life</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>内护神经系统重点考点</title>
     <url>/2024/07/09/%E7%A5%9E%E7%BB%8F%E7%B3%BB%E7%BB%9F%E9%87%8D%E7%82%B9/</url>
     <content><![CDATA[<ol>
@@ -6224,17 +6235,6 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
 </ul>
 ]]></content>
       <tags>
-        <tag>Life</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>直系血亲之间不能直接输血</title>
-    <url>/2024/08/12/%E7%9B%B4%E7%B3%BB%E8%A1%80%E4%BA%B2%E4%B9%8B%E9%97%B4%E4%B8%8D%E8%83%BD%E7%9B%B4%E6%8E%A5%E8%BE%93%E8%A1%80/</url>
-    <content><![CDATA[<p>现代医学证明，直系血亲间输血有时会发生一种严重的输血反应，称为输血相关移植物抗宿主病，这种输血反应尽管发病率很低，但死亡率却高达 99.9%，一旦发生几乎无法挽救。所以，很多电视剧里的那些情节都是错误的。根据中国输血协会网站上的介绍，目前虽然可以通过“血液辐照”的处理技术，把这种具有免疫活性的淋巴细胞灭活，但是临床上仍不建议直系血亲之间输血。</p>
-<p>无血缘关系的人，血细胞的抗原差异很大，很容易被免疫系统识别排斥和清除；而亲属间特别是直系亲属间的细胞抗原差异小，难辨识，加上受血者本身是需要输血的病人，免疫功能低下，因此，对输入的具有免疫活性的淋巴细胞排斥弱，从而外来的淋巴细胞就在患者体内分裂、增殖，然后向皮肤、肝脏、肠道、骨髓等器官发动攻击，从而引起致命性的并发症。</p>
-]]></content>
-      <tags>
-        <tag>Medicine</tag>
         <tag>Life</tag>
       </tags>
   </entry>
@@ -6708,6 +6708,90 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       <tags>
         <tag>Medicine</tag>
         <tag>Life</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>谈谈软件工程</title>
+    <url>/2025/12/20/%E8%B0%88%E8%B0%88%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/</url>
+    <content><![CDATA[<p>#软件工程</p>
+<blockquote>
+<p>在有限认知下，持续对抗系统熵增，在相互冲突的目标间做出最优权衡，以可工程化的方式交付价值。</p>
+</blockquote>
+<p>一、复杂性是固有属性，而非偶然缺陷</p>
+<p>软件复杂性源于<strong>状态空间的指数级爆炸</strong>。一个仅有100个布尔变量的系统，其状态空间已达 $2^{100}$（约 $10^{30}$），远超人类认知极限。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 示例：复杂度不在于代码行数，而在于状态组合</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Order</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="variable language_">self</span>.paid = <span class="literal">False</span>          <span class="comment"># 2^1</span></span><br><span class="line">        <span class="variable language_">self</span>.shipped = <span class="literal">False</span>       <span class="comment"># 2^2</span></span><br><span class="line">        <span class="variable language_">self</span>.cancelled = <span class="literal">False</span>     <span class="comment"># 2^3</span></span><br><span class="line">        <span class="comment"># 3个布尔值 -&gt; 8种合法状态，但业务规则会禁止某些组合</span></span><br><span class="line">        <span class="comment"># 真实系统有上千个状态变量 -&gt; 灾难</span></span><br></pre></td></tr></table></figure>
+<p>复杂性是软件的本质，无法消除，只能转移或控制。这与建筑工程有本质区别，桥梁不会自发产生新状态。</p>
+<p>二、 熵增是不可逆热力学过程</p>
+<p>组织沟通结构的混乱会精确映射为代码结构的混乱。代码在没有外力干预下必然走向腐烂。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">graph TD</span><br><span class="line">    A[需求变更] --&gt; B[快速补丁]</span><br><span class="line">    B --&gt; C[技术债务]</span><br><span class="line">    C --&gt; D[开发速度下降]</span><br><span class="line">    D --&gt; E[更多补丁]</span><br><span class="line">    E --&gt; C</span><br><span class="line">    style C fill:#f00,stroke:#333,stroke-width:2px</span><br></pre></td></tr></table></figure>
+<p>技术债务的利息是<strong>超线性</strong>增长的。一个类被10个模块依赖时，修改它的成本不是10倍，而是约 $O(n^2)$ 倍，因为需要理解所有依赖方的上下文。</p>
+<p>三、人类认知约束</p>
+<p>人类工作记忆容量为 $7 \pm 2$ 个信息单元。这是代码审查、架构设计、故障排查的硬性天花板。</p>
+<ul>
+<li><strong>微观影响</strong>：函数参数超过5个，Bug率指数上升（认知过载）</li>
+<li><strong>宏观影响</strong>：微服务拆分粒度需匹配团队规模（2个披萨团队原则）</li>
+</ul>
+<p><strong>工程化手段</strong>：通过<strong>抽象</strong>和<strong>封装</strong>将信息压缩到认知边界内。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 坏：每次调用需理解10个参数</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">processOrder</span><span class="params">(<span class="type">int</span> userId, <span class="type">int</span> productId, String addr, ... )</span> <span class="comment">// 8+参数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 好：将认知负荷压缩到1个概念</span></span><br><span class="line">orderProcessor.handle(<span class="keyword">new</span> <span class="title class_">OrderContext</span>(...)); <span class="comment">// 单一职责</span></span><br></pre></td></tr></table></figure>
+<p>四、权衡是唯一的决策动作</p>
+<p>不存在&quot;最佳实践&quot;，只存在&quot;在特定约束下的最优权衡&quot;。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">维度</th>
+<th style="text-align:left">方案A</th>
+<th style="text-align:left">方案B</th>
+<th style="text-align:left">权衡代价</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>一致性</strong></td>
+<td style="text-align:left">强一致 (分布式锁)</td>
+<td style="text-align:left">最终一致 (事件驱动)</td>
+<td style="text-align:left">可用性↓ vs 延迟↓</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>性能</strong></td>
+<td style="text-align:left">缓存热点数据</td>
+<td style="text-align:left">实时查询DB</td>
+<td style="text-align:left">一致性风险 vs 成本↑</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>交付</strong></td>
+<td style="text-align:left">重构老系统</td>
+<td style="text-align:left">增量迁移</td>
+<td style="text-align:left">短期风险 vs 长期成本</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>灵活性</strong></td>
+<td style="text-align:left">抽象接口</td>
+<td style="text-align:left">硬编码</td>
+<td style="text-align:left">复杂度↑ vs 开发速度↑</td>
+</tr>
+</tbody>
+</table>
+<p><strong>决策框架</strong>：每次技术选型必须回答：</p>
+<ol>
+<li>优化了什么指标？（延迟、吞吐、正确性）</li>
+<li>牺牲了什么？（成本、一致性、简单性）</li>
+<li>牺牲是否可接受？（业务是否允许P99.9延迟上升50ms？）</li>
+</ol>
+<p>五、工程化 = 可重复 + 可验证 + 可协作</p>
+<p>代码本身是廉价的，<strong>可维护、可演进的系统</strong>才是工程目标。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">graph LR</span><br><span class="line">    subgraph &quot;工程化三支柱&quot;</span><br><span class="line">        A[自动化测试] --&gt; D[可验证]</span><br><span class="line">        B[CI/CD流水线] --&gt; E[可重复]</span><br><span class="line">        C[Code Review + 文档] --&gt; F[可协作]</span><br><span class="line">    end</span><br><span class="line">    D &amp; E &amp; F --&gt; G[对抗熵增]</span><br></pre></td></tr></table></figure>
+<p><strong>关键指标</strong>：</p>
+<ul>
+<li><strong>MTTR</strong>（平均修复时间） &lt; <strong>MTBF</strong>（平均故障间隔）是伪命题。真实目标是：<strong>MTTR 必须小于业务容忍的极限</strong>。</li>
+<li><strong>Bus Factor</strong>：核心模块的 Bus Factor=1 时，系统已处于高风险状态，与人无关，是工程化失败。</li>
+</ul>
+<hr>
+<p>自然界趋向无序，软件工程通过持续注入<strong>负熵</strong>（规范、测试、重构）维持秩序。</p>
+<p>在认知约束下，通过严格的工程纪律，将不可控的复杂性转化为可控的复杂性，并在永恒的权衡中追求局部最优解。</p>
+<p>没有银弹，只有<strong>在正确的时间，为正确的目标，做出正确的权衡，并准备好为选择付出代价</strong>。</p>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
       </tags>
   </entry>
   <entry>

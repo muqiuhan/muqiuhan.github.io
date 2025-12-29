@@ -21,7 +21,7 @@
 
                                     <title>
                                         
-                                            临床研究中盲态规则存在的原因 | 
+                                            谈谈软件工程 | 
                                                     暮秋小屋
                                     </title>
 
@@ -167,8 +167,8 @@
             
                 
                     <span class="post-tag">
-                        <a href="/tags/Medicine/">
-                            Medicine
+                        <a href="/tags/Technique/">
+                            Technique
                         </a>
                     </span>    
                            
@@ -177,12 +177,12 @@
         <div class="post-title">
             
             
-                临床研究中盲态规则存在的原因
+                谈谈软件工程
             
             
         </div>
         <span class="post-date">
-            Dec 19, 2025
+            Dec 20, 2025
         </span>
     </div>
     <div class="post-img">
@@ -192,20 +192,82 @@
     </div>
 </div>
     <div class="post-content">
-    <p>在临床药物试验中，盲态是一种核心方法学设计，旨在消除主观偏见对试验结果的影响。其本质在于对研究参与者、研究者或评估者中的一方或多方隐藏治疗分配信息，从而确保数据收集和结果判读的客观性。盲态的实施贯穿试验设计、执行、数据管理和分析的全链条，其规定与存在原因植根于循证医学对科学严谨性的追求。</p>
-<p>从试验启动到结束，盲态管理需遵循标准化流程。在方案设计阶段，需明确盲法层级（如单盲、双盲或三盲），并制定相应的盲法实施计划。随机化编码由独立于临床团队的统计人员或第三方机构生成，治疗药物与对照品（如安慰剂）需在外观、气味、包装上完全一致，以确保盲态的完整性。在试验执行期间，发药、药物清点及受试者管理均由不参与疗效评估的人员负责，避免无意间泄露分组信息。当受试者出现严重不良事件，且必须知晓具体用药才能实施救治时，可启动紧急揭盲程序，但需严格记录揭盲原因、时间及操作人员，并在最终报告中说明。数据录入与管理环节，所有标识治疗组别的字段均需隐藏，数据库锁定前由盲态审核委员会进行一致性核查，确保无意外破盲。直至最终统计分析完成，研究团队方可正式揭盲。这一系列措施在《药物临床试验质量管理规范》及ICH-GCP指南中均有详细规定，旨在维护试验结果的科学可靠性<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>。</p>
-<p>盲态的核心价值在于控制两类主要偏倚：性能偏倚与检测偏倚。若研究者或受试者知晓治疗分配，可能在评估症状改善、记录不良事件或调整合并用药时产生倾向性，例如对试验组过度乐观或对对照组过度严苛，这种主观介入会扭曲药物真实疗效的测量。此外，在患者报告结局或生活质量评分等软终点指标中，知晓分组可能直接影响受试者的心理预期与反馈，进一步干扰结果有效性。通过盲态设计，可最大程度剥离人为因素对终点事件的干扰，从而更准确地估计药物与安慰剂或对照药之间的差异。从统计学角度，盲态有助于维持随机化带来的组间均衡性，使基线特征与未知混杂因素在组间均匀分布，提升因果推断的可靠性。历史上多项研究显示，非盲试验倾向于高估治疗效果约25%左右，尤其在主观性终点中偏倚更为显著<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>。</p>
-<hr>
-<p><strong>参考文献</strong></p>
-<hr class="footnotes-sep">
-<section class="footnotes">
-<ol class="footnotes-list">
-<li id="fn1" class="footnote-item"><p>International Council for Harmonisation of Technical Requirements for Pharmaceuticals for Human Use. <em>ICH Harmonised Guideline: Integrated Addendum to ICH E6(R1): Guideline for Good Clinical Practice E6(R2)</em>. 2016. <a target="_blank" rel="noopener" href="https://database.ich.org/sites/default/files/E6_R2_Addendum.pdf">https://database.ich.org/sites/default/files/E6_R2_Addendum.pdf</a> <a href="#fnref1" class="footnote-backref">↩︎</a></p>
-</li>
-<li id="fn2" class="footnote-item"><p>Hróbjartsson A, et al. <em>Blinded trials taken to the test: an analysis of randomized clinical trials that report tests for the success of blinding</em>. International Journal of Epidemiology. 2007;36(3):654-663. <a target="_blank" rel="noopener" href="https://doi.org/10.1093/ije/dym020">https://doi.org/10.1093/ije/dym020</a> <a href="#fnref2" class="footnote-backref">↩︎</a></p>
-</li>
+    <p>#软件工程</p>
+<blockquote>
+<p>在有限认知下，持续对抗系统熵增，在相互冲突的目标间做出最优权衡，以可工程化的方式交付价值。</p>
+</blockquote>
+<p>一、复杂性是固有属性，而非偶然缺陷</p>
+<p>软件复杂性源于<strong>状态空间的指数级爆炸</strong>。一个仅有100个布尔变量的系统，其状态空间已达 $2^{100}$（约 $10^{30}$），远超人类认知极限。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 示例：复杂度不在于代码行数，而在于状态组合</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Order</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="variable language_">self</span>.paid = <span class="literal">False</span>          <span class="comment"># 2^1</span></span><br><span class="line">        <span class="variable language_">self</span>.shipped = <span class="literal">False</span>       <span class="comment"># 2^2</span></span><br><span class="line">        <span class="variable language_">self</span>.cancelled = <span class="literal">False</span>     <span class="comment"># 2^3</span></span><br><span class="line">        <span class="comment"># 3个布尔值 -&gt; 8种合法状态，但业务规则会禁止某些组合</span></span><br><span class="line">        <span class="comment"># 真实系统有上千个状态变量 -&gt; 灾难</span></span><br></pre></td></tr></table></figure>
+<p>复杂性是软件的本质，无法消除，只能转移或控制。这与建筑工程有本质区别，桥梁不会自发产生新状态。</p>
+<p>二、 熵增是不可逆热力学过程</p>
+<p>组织沟通结构的混乱会精确映射为代码结构的混乱。代码在没有外力干预下必然走向腐烂。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">    A[需求变更] --&gt; B[快速补丁]</span><br><span class="line">    B --&gt; C[技术债务]</span><br><span class="line">    C --&gt; D[开发速度下降]</span><br><span class="line">    D --&gt; E[更多补丁]</span><br><span class="line">    E --&gt; C</span><br><span class="line">    style C fill:#f00,stroke:#333,stroke-width:2px</span><br></pre></td></tr></table></figure>
+<p>技术债务的利息是<strong>超线性</strong>增长的。一个类被10个模块依赖时，修改它的成本不是10倍，而是约 $O(n^2)$ 倍，因为需要理解所有依赖方的上下文。</p>
+<p>三、人类认知约束</p>
+<p>人类工作记忆容量为 $7 \pm 2$ 个信息单元。这是代码审查、架构设计、故障排查的硬性天花板。</p>
+<ul>
+<li><strong>微观影响</strong>：函数参数超过5个，Bug率指数上升（认知过载）</li>
+<li><strong>宏观影响</strong>：微服务拆分粒度需匹配团队规模（2个披萨团队原则）</li>
+</ul>
+<p><strong>工程化手段</strong>：通过<strong>抽象</strong>和<strong>封装</strong>将信息压缩到认知边界内。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 坏：每次调用需理解10个参数</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">processOrder</span><span class="params">(<span class="type">int</span> userId, <span class="type">int</span> productId, String addr, ... )</span> <span class="comment">// 8+参数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 好：将认知负荷压缩到1个概念</span></span><br><span class="line">orderProcessor.handle(<span class="keyword">new</span> <span class="title class_">OrderContext</span>(...)); <span class="comment">// 单一职责</span></span><br></pre></td></tr></table></figure>
+<p>四、权衡是唯一的决策动作</p>
+<p>不存在&quot;最佳实践&quot;，只存在&quot;在特定约束下的最优权衡&quot;。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">维度</th>
+<th style="text-align:left">方案A</th>
+<th style="text-align:left">方案B</th>
+<th style="text-align:left">权衡代价</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>一致性</strong></td>
+<td style="text-align:left">强一致 (分布式锁)</td>
+<td style="text-align:left">最终一致 (事件驱动)</td>
+<td style="text-align:left">可用性↓ vs 延迟↓</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>性能</strong></td>
+<td style="text-align:left">缓存热点数据</td>
+<td style="text-align:left">实时查询DB</td>
+<td style="text-align:left">一致性风险 vs 成本↑</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>交付</strong></td>
+<td style="text-align:left">重构老系统</td>
+<td style="text-align:left">增量迁移</td>
+<td style="text-align:left">短期风险 vs 长期成本</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>灵活性</strong></td>
+<td style="text-align:left">抽象接口</td>
+<td style="text-align:left">硬编码</td>
+<td style="text-align:left">复杂度↑ vs 开发速度↑</td>
+</tr>
+</tbody>
+</table>
+<p><strong>决策框架</strong>：每次技术选型必须回答：</p>
+<ol>
+<li>优化了什么指标？（延迟、吞吐、正确性）</li>
+<li>牺牲了什么？（成本、一致性、简单性）</li>
+<li>牺牲是否可接受？（业务是否允许P99.9延迟上升50ms？）</li>
 </ol>
-</section>
+<p>五、工程化 = 可重复 + 可验证 + 可协作</p>
+<p>代码本身是廉价的，<strong>可维护、可演进的系统</strong>才是工程目标。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">    subgraph &quot;工程化三支柱&quot;</span><br><span class="line">        A[自动化测试] --&gt; D[可验证]</span><br><span class="line">        B[CI/CD流水线] --&gt; E[可重复]</span><br><span class="line">        C[Code Review + 文档] --&gt; F[可协作]</span><br><span class="line">    end</span><br><span class="line">    D &amp; E &amp; F --&gt; G[对抗熵增]</span><br></pre></td></tr></table></figure>
+<p><strong>关键指标</strong>：</p>
+<ul>
+<li><strong>MTTR</strong>（平均修复时间） &lt; <strong>MTBF</strong>（平均故障间隔）是伪命题。真实目标是：<strong>MTTR 必须小于业务容忍的极限</strong>。</li>
+<li><strong>Bus Factor</strong>：核心模块的 Bus Factor=1 时，系统已处于高风险状态，与人无关，是工程化失败。</li>
+</ul>
+<hr>
+<p>自然界趋向无序，软件工程通过持续注入<strong>负熵</strong>（规范、测试、重构）维持秩序。</p>
+<p>在认知约束下，通过严格的工程纪律，将不可控的复杂性转化为可控的复杂性，并在永恒的权衡中追求局部最优解。</p>
+<p>没有银弹，只有<strong>在正确的时间，为正确的目标，做出正确的权衡，并准备好为选择付出代价</strong>。</p>
 
 </div> 
 
@@ -219,7 +281,7 @@
            
                 <div class="icon arrow-left"></div>
                 <div class="post-link">
-                    <a href="/2025/12/20/%E8%B0%88%E8%B0%88%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/">Prev</a>
+                    <a href="/2025/12/25/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%BA%94%E5%B9%B4%E5%8D%81%E4%BA%8C%E6%9C%88%E4%BA%8C%E5%8D%81%E4%BA%94%E6%97%A5/">Prev</a>
                 </div>
             
         </div>
@@ -227,7 +289,7 @@
             
                 <div class="icon arrow-right"></div>
                 <div class="post-link">
-                  <a href="/2025/12/19/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%BA%94%E5%B9%B4%E5%8D%81%E4%BA%8C%E6%9C%88%E5%8D%81%E4%B9%9D%E6%97%A5/">Next</a>  
+                  <a href="/2025/12/19/%E4%B8%B4%E5%BA%8A%E7%A0%94%E7%A9%B6%E4%B8%AD%E7%9B%B2%E6%80%81%E8%A7%84%E5%88%99%E5%AD%98%E5%9C%A8%E7%9A%84%E5%8E%9F%E5%9B%A0/">Next</a>  
                 </div>  
             
         </div>
