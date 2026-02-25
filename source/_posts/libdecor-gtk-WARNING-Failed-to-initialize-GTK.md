@@ -1,5 +1,5 @@
 ---
-title: 'libdecor-gtk-WARNING: Failed to initialize GTK' in VSCode on Wayland
+title: libdecor-gtk-WARNING Failed to initialize GTK in VSCode on Wayland
 date: 2025-03-30 17:51:15
 tags: [Technique]
 ---
