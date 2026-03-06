@@ -226,7 +226,10 @@
 </li>
 </ol>
 <p>一个完整的院内用药闭环通常遵循以下可追溯的数据流：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">    A[医生创建&lt;br&gt;MedicationRequest] -- `.basedOn` 引用 --&gt; B[护士执行后创建&lt;br&gt;MedicationAdministration];</span><br><span class="line">    B -- 系统可推导生成 --&gt; C[系统生成&lt;br&gt;MedicationStatement&lt;br&gt;（汇总当前有效用药）];</span><br><span class="line">    D[患者自述&lt;br&gt;MedicationStatement] -- 可提供给 --&gt; A;</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">graph LR
+    A[医生创建<br>MedicationRequest] -- `.basedOn` 引用 --> B[护士执行后创建<br>MedicationAdministration];
+    B -- 系统可推导生成 --> C[系统生成<br>MedicationStatement<br>（汇总当前有效用药）];
+    D[患者自述<br>MedicationStatement] -- 可提供给 --> A;</pre>
 <p>这种设计确保了数据的<strong>不可变性与可审计性</strong>。每个事件（开立、执行）作为一个独立的资源被记录，通过引用链形成完整的溯源路径。</p>
 <ul>
 <li><strong>追求完整审计溯源</strong>：必须使用 <code>MedicationRequest</code> + <code>MedicationAdministration</code> 的组合。这引入了更高的系统复杂性，但提供了从医嘱到执行的全链路证据。</li>
@@ -239,7 +242,7 @@
 <li><strong>药师发药</strong>：（若需记录发药行为）可创建 <code>MedicationDispense</code> 资源（另一个相关资源），记录发药时间、数量，并通过 <code>.basedOn</code> 引用上述 <code>MedicationRequest</code>。</li>
 <li><strong>患者回家服药</strong>：此事件通常不在临床系统直接记录。但患者复诊时，可自述“我按处方吃了药”，此时可创建一条来源为 <code>patient-reported</code> 的 <code>MedicationStatement</code>，通过 <code>.derivedFrom</code> 关联到最初的 <code>MedicationRequest</code>，表明此陈述源于该处方。</li>
 </ol>
-
+<script type="module"> import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';	mermaid.initialize({startOnLoad: true, flowchart: {curve: 'linear'}}); </script>
 </div> 
 
 <script>
@@ -287,15 +290,16 @@
     <div class="flex-container">
         <div class="footer-text">
             
-            
-                韩暮秋 | 
-            
-            
-                希望路过的人可以添点柴火让这里暖和点
-                
+                        
+                            韩暮秋 |
+                                
+                                    
+                                        希望路过的人可以添点柴火让这里暖和点
+                                        
         </div>
     </div>
 </div>
+
 
     </div>
 
