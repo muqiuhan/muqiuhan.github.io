@@ -1,26 +1,31 @@
-table, td, th
-    border $color-text-primary solid $line-third 
-    width 100%
-    text-align left
+.post-content
+    table
+        border $color-text-primary solid $line-third 
+        width 100%
+        text-align left
+        border-collapse collapse
+        table-layout fixed
 
-table
-    border-collapse collapse
-    table-layout fixed
+        td, th
+            padding $margin-m-1
 
-td, th
-    padding $margin-m-1
+        th
+            font-variation-settings 'wght' $font-weight-medium
 
-th
-    font-variation-settings: 'wght' $font-weight-medium
+        td
+            font-variation-settings 'wght' $font-weight-light
 
-td
-    font-variation-settings: 'wght' $font-weight-light
-
-table, tboby, tr, td
-    background-color inherit
+        table, tboby, tr, td
+            background-color inherit
 
 .highlight>table
+    width auto
     min-width fit-content
+    border none
+    
+    td
+        padding 0
+        border none
 
 @media (max-width: 480px)
     .block-table

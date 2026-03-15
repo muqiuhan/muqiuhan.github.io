@@ -20,14 +20,14 @@
     transform translate(-50%, -50%)
     width 640px
     height 60%
-    border $line-secondary solid $color-text-primary
+    border 1px solid $color-border
     overflow hidden
     display flex
     flex-direction column
 
 .search-result-container
     flex-grow 1
-    overflow: scroll
+    overflow scroll
     padding $margin-m-1 $margin-m-1
 
     .search-result-message
@@ -60,7 +60,7 @@
     flex-direction row
     align-items center
     padding $margin-m-1 $margin-m-1
-    border-bottom $line-secondary solid $color-text-primary
+    border-bottom 1px solid $color-border
 
     .search-input-container
         flex-grow 1
@@ -86,3 +86,5 @@
     .search-popup-window
         width 100%
         height 100%
+        top $header-height
+        transform translate(-50%, 0)

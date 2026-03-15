@@ -1,21 +1,21 @@
 underline-motion(n)
     if n == 'link'
-        background-image linear-gradient($color-background, $color-background), linear-gradient($color-text-primary, $color-text-primary)
+        background-image linear-gradient($color-background, $color-background), linear-gradient($color-accent, $color-accent)
         background-size 100% $line-third, 0% $line-third
         background-position 100% 100%, 0 100%
         background-repeat no-repeat, no-repeat
-        transition background-size .6s linear
+        transition background-size $transition-duration ease
 
         &:hover 
             background-size 0 $line-third, 100% $line-third
 
     else if n == 'underline-link'
         padding-bottom $line-secondary
-        background-image linear-gradient($color-text-primary, $color-text-primary), linear-gradient($color-text-primary, $color-text-primary)
+        background-image linear-gradient($color-text-primary, $color-text-primary), linear-gradient($color-accent, $color-accent)
         background-size 100% $line-third, 0 $line-secondary
         background-position 100% 100%, 0 100%
         background-repeat no-repeat, no-repeat
-        transition background-size .6s linear
+        transition background-size $transition-duration ease
 
         &:hover 
             background-size 100% $line-third, 100% $line-secondary
@@ -23,13 +23,12 @@ underline-motion(n)
     else if n == 'header'
         &:after
             content ""
-            -webkit-transition width .4s ease-in-out
-            transition width .4s ease-in-out
+            transition width $transition-duration ease
             position absolute
             left 0
             bottom 0
             width 0
-            border-bottom solid $line-third $color-text-primary
+            border-bottom solid $line-third $color-accent
 
         &:hover:after
             width 100%

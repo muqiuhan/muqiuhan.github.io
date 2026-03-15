@@ -1,14 +1,29 @@
 .header
-    border $line-secondary solid $color-text-primary
+    position fixed
+    top 0
+    left 0
+    right 0
+    z-index 100
+    background $color-glass
+    backdrop-filter blur(12px)
+    -webkit-backdrop-filter blur(12px)
+    border-bottom 1px solid $color-border
     text-style(header)
 
+@supports not (backdrop-filter: blur(12px))
+    .header
+        background $color-background
+
+@media (max-width: 688px)
+    @supports not (backdrop-filter: blur(12px))
+        .header-inner .site-nav .menu-list
+            background $color-background
 
 .header-inner
     display flex
     flex-wrap nowrap
     align-items center
-    margin-top $margin-m-2
-    margin-bottom $margin-m-2
+    height $header-height
 
     #menu-btn
         display none
@@ -17,63 +32,90 @@
         flex-grow 1
         overflow-x auto
 
+.site-brand-container
+    a
+        font-weight $font-weight-semibold
+        color $color-text-primary
+
 .menu-list
     text-align right
     display flex
-    .menu-item
-        position relative
-        margin-left $margin-l-0
-
+    
     &:before
         content ""
         flex-grow 1
 
 .menu-item
+    position relative
+    margin-left $margin-l-0
     underline-motion(header)
 
 .menu-item-active:after
-    border-bottom solid $line-secondary 
+    border-bottom solid $line-secondary $color-accent
     width 100%
 
 .logo-img
     max-height $line-height-heading-h1
     width auto
     max-width 100%
-    display flex 
+    display flex
 
 @media (max-width: 688px)
+    .header
+        overflow visible
+    
     .header-inner
         flex-wrap wrap
+        align-items center
+        height $header-height
+        padding-top 0
+        padding-bottom 0
+        
         #menu-btn
-            display block!important
-            text-align right
+            display flex !important
+            align-items center
+            justify-content flex-end
             width 50%
+            height 100%
+            cursor pointer
+            color $color-text-primary
+            transition color $transition-duration ease
             
-            .icon
-                float right
+            &:hover
+                color $color-accent
 
         .site-brand-container
+            display flex
+            align-items center
             width 50%
+            height 100%
             
         .site-nav
             width 100%
+            
             .menu-list
-                height 0
-                overflow hidden
-                .menu-item
-                    margin-right 0
-                    margin-left auto
-                    margin-top $margin-m-0
-
-
-            .active
-                margin-top $margin-m-1
-                height auto
+                display flex
                 flex-direction column
-                 
-
-        
-
-        
-
-    
+                max-height 0
+                overflow hidden
+                margin-top 0
+                background $color-glass
+                backdrop-filter blur(12px)
+                -webkit-backdrop-filter blur(12px)
+                border-top 1px solid $color-border
+                transition max-height 300ms ease-out
+                text-align left
+                
+                &.active
+                    max-height 400px
+                
+                .menu-item
+                    margin 0
+                    padding $margin-m-0 $margin-m-1
+                    border-bottom 1px solid $color-border
+                    
+                    &:last-child
+                        border-bottom none
+                    
+                    a
+                        display block

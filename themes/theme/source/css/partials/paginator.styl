@@ -1,5 +1,5 @@
 .paginator
-    margin-top $margin-primary
+    margin-top $margin-l-1
 
 .pagination
     margin-top $margin-m-1
@@ -16,8 +16,13 @@
     underline-motion(header)
 
 .pagination .current:after
-    border-bottom solid $line-secondary 
+    border-bottom solid $line-secondary $color-accent
     width 100%
 
 .pagination .space
     margin-left $margin-l-0
+
+@media (max-width: 688px)
+    .paginator
+        margin-top $margin-m-1
+        margin-bottom $margin-m-1
