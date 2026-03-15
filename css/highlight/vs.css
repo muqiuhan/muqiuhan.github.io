@@ -54,5 +54,5 @@ Visual Studio-like style based on original C# coloring by Jason Diamond <jason@d
   font-style: italic;
 }
 .highlight .code .strong {
-  font-weight: bold;
+  font-weight: normal;
 }

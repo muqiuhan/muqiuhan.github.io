@@ -10,7 +10,6 @@
 }
 .post-list-item .post-title {
   flex-grow: 1;
-  font-variation-settings: 'wght' $font-weight-medium;
 }
 .post-list-item .post-date {
   margin-left: $margin-l-0;

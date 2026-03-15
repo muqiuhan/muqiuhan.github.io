@@ -10,10 +10,10 @@
   padding: $margin-m-1;
 }
 .post-content table th {
-  font-variation-settings: 'wght' $font-weight-medium;
+  font-weight: 400;
 }
 .post-content table td {
-  font-variation-settings: 'wght' $font-weight-light;
+  font-weight: 400;
 }
 .post-content table table,
 .post-content table tboby,

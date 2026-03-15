@@ -63,7 +63,7 @@ abbr[title] {
 }
 b,
 strong {
-  font-weight: bolder;
+  font-weight: 400;
 }
 code,
 kbd,
@@ -189,7 +189,7 @@ template {
 .highlight .code .selector-tag,
 .highlight .code .subst {
   color: #333;
-  font-weight: bold;
+  font-weight: normal;
 }
 .highlight .code .number,
 .highlight .code .literal,
@@ -206,7 +206,7 @@ template {
 .highlight .code .section,
 .highlight .code .selector-id {
   color: #900;
-  font-weight: bold;
+  font-weight: normal;
 }
 .highlight .code .subst {
   font-weight: normal;
@@ -214,7 +214,7 @@ template {
 .highlight .code .type,
 .highlight .code .class .title {
   color: #458;
-  font-weight: bold;
+  font-weight: normal;
 }
 .highlight .code .tag,
 .highlight .code .name,
@@ -236,7 +236,7 @@ template {
 }
 .highlight .code .meta {
   color: #999;
-  font-weight: bold;
+  font-weight: normal;
 }
 .highlight .code .deletion {
   background: #fdd;
@@ -248,7 +248,7 @@ template {
   font-style: italic;
 }
 .highlight .code .strong {
-  font-weight: bold;
+  font-weight: normal;
 }
 @font-face {
   font-family: 'GoogleSansCode';
@@ -329,8 +329,8 @@ input {
 }
 body {
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-size: 0.9375rem;
   font-weight: 400;
+  font-size: 0.9375rem;
   line-height: 1.375rem;
   color: #09090b;
   background-color: #fff;
@@ -362,8 +362,8 @@ input[type="search"]::-webkit-search-results-decoration {
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid #e4e4e7;
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 400;
   font-size: 0.8125rem;
-  font-weight: 500;
   line-height: 1.125rem;
   color: #09090b;
 }
@@ -393,7 +393,7 @@ input[type="search"]::-webkit-search-results-decoration {
   overflow-x: auto;
 }
 .site-brand-container a {
-  font-weight: 600;
+  font-weight: 400;
   color: #09090b;
 }
 .menu-list {
@@ -495,8 +495,8 @@ input[type="search"]::-webkit-search-results-decoration {
   margin-top: auto;
   border-top: 1px solid #e4e4e7;
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-size: 0.6875rem;
   font-weight: 400;
+  font-size: 0.6875rem;
   line-height: 1.125rem;
   color: #71717a;
 }
@@ -528,8 +528,8 @@ input[type="search"]::-webkit-search-results-decoration {
   margin-top: 2rem;
   margin-bottom: 0.75rem;
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 400;
   font-size: 1.625rem;
-  font-weight: 700;
   line-height: 2rem;
   color: #a1a1aa;
 }
@@ -542,19 +542,18 @@ input[type="search"]::-webkit-search-results-decoration {
 .post-list-item .post-title {
   flex-grow: 1;
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-size: 0.9375rem;
   font-weight: 400;
+  font-size: 0.9375rem;
   line-height: 1.375rem;
   color: #09090b;
-  font-variation-settings: 'wght' 500;
 }
 .post-list-item .post-date {
   margin-left: 1.5rem;
   min-width: 8rem;
   text-align: right;
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-size: 0.8125rem;
   font-weight: 400;
+  font-size: 0.8125rem;
   line-height: 1.125rem;
   color: #71717a;
   line-height: 1.375rem;
@@ -593,15 +592,15 @@ input[type="search"]::-webkit-search-results-decoration {
 .post-gallery-item .post-info .post-title {
   margin-bottom: 0.75rem;
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 400;
   font-size: 1.625rem;
-  font-weight: 700;
   line-height: 2rem;
   color: #09090b;
 }
 .post-gallery-item .post-info .post-date {
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-size: 0.8125rem;
   font-weight: 400;
+  font-size: 0.8125rem;
   line-height: 1.125rem;
   color: #71717a;
 }
@@ -636,8 +635,8 @@ input[type="search"]::-webkit-search-results-decoration {
 .pagination {
   margin-top: 0.75rem;
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 400;
   font-size: 0.8125rem;
-  font-weight: 500;
   line-height: 1.125rem;
   color: #09090b;
   display: flex;
@@ -696,15 +695,15 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 .profile .profile-content .profile-title {
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 400;
   font-size: 1.625rem;
-  font-weight: 700;
   line-height: 2rem;
   color: #09090b;
 }
 .profile .profile-content .profile-body {
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-size: 0.9375rem;
   font-weight: 400;
+  font-size: 0.9375rem;
   line-height: 1.375rem;
   color: #09090b;
 }
@@ -786,7 +785,8 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 .search-result-container .search-result-message {
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-family: monospace;
+  font-weight: 400;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 0.8125rem;
   line-height: 0.9375rem;
   color: #a1a1aa;
@@ -795,8 +795,8 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 .search-result-container .search-result-title {
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 400;
   font-size: 0.9375rem;
-  font-weight: 700;
   line-height: 1.25rem;
   color: #09090b;
   color: #09090b;
@@ -817,8 +817,8 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 .search-result-container .search-result {
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-size: 0.9375rem;
   font-weight: 400;
+  font-size: 0.9375rem;
   line-height: 1.375rem;
   color: #09090b;
   color: #09090b;
@@ -842,8 +842,8 @@ input[type="search"]::-webkit-search-results-decoration {
 .search-header .search-input-container .search-input {
   width: 100%;
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 400;
   font-size: 0.875rem;
-  font-weight: 500;
   line-height: 1.125rem;
   color: #09090b;
   color: #09090b;
@@ -880,72 +880,72 @@ h6 {
 }
 h1 {
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 400;
   font-size: 1.625rem;
-  font-weight: 700;
   line-height: 2rem;
   color: #09090b;
 }
 h2 {
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 400;
   font-size: 1.375rem;
-  font-weight: 700;
   line-height: 1.75rem;
   color: #09090b;
 }
 h3 {
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 400;
   font-size: 1.0625rem;
-  font-weight: 700;
   line-height: 1.375rem;
   color: #09090b;
 }
 h4 {
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 400;
   font-size: 0.9375rem;
-  font-weight: 700;
   line-height: 1.25rem;
   color: #09090b;
 }
 h5 {
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 400;
   font-size: 0.875rem;
-  font-weight: 600;
   line-height: 1.125rem;
   color: #09090b;
 }
 h6 {
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 400;
   font-size: 0.875rem;
-  font-weight: 500;
   line-height: 1.125rem;
   color: #09090b;
 }
 p {
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-size: 0.9375rem;
   font-weight: 400;
+  font-size: 0.9375rem;
   line-height: 1.375rem;
   color: #09090b;
 }
 strong {
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 400;
   font-size: 0.9375rem;
-  font-weight: 700;
   line-height: 1.375rem;
   color: #09090b;
 }
 em {
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-size: 0.9375rem;
   font-weight: 400;
+  font-size: 0.9375rem;
   font-style: italic;
   line-height: 1.375rem;
   color: #09090b;
 }
 del {
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-size: 0.9375rem;
   font-weight: 400;
+  font-size: 0.9375rem;
   line-height: 1.375rem;
   text-decoration: line-through;
   color: #09090b;
@@ -982,8 +982,8 @@ blockquote blockquote {
 }
 .post-content li {
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-size: 0.9375rem;
   font-weight: 400;
+  font-size: 0.9375rem;
   line-height: 1.375rem;
   color: #09090b;
   margin-top: 0.5rem;
@@ -1018,8 +1018,8 @@ blockquote blockquote {
 dl dt {
   padding: 0.5rem 0;
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 400;
   font-size: 0.9375rem;
-  font-weight: 700;
   line-height: 1.375rem;
   color: #09090b;
 }
@@ -1040,15 +1040,15 @@ dl dd {
 .post-head .post-info .post-title {
   margin-bottom: 0.75rem;
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 400;
   font-size: 1.625rem;
-  font-weight: 700;
   line-height: 2rem;
   color: #09090b;
 }
 .post-head .post-info .post-date {
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-size: 0.8125rem;
   font-weight: 400;
+  font-size: 0.8125rem;
   line-height: 1.125rem;
   color: #71717a;
 }
@@ -1073,8 +1073,8 @@ dl dd {
   display: flex;
   flex-wrap: wrap;
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 400;
   font-size: 0.8125rem;
-  font-weight: 500;
   line-height: 1.125rem;
   color: #09090b;
 }
@@ -1110,24 +1110,28 @@ dl dd {
 }
 code {
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-family: monospace;
+  font-weight: 400;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 0.8125rem;
   line-height: 0.9375rem;
   color: #2563eb;
+  font-weight: 400;
 }
 .code pre span {
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-family: monospace;
+  font-weight: 400;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 0.8125rem;
   line-height: 0.9375rem;
   color: #52525b;
+  font-weight: 400;
 }
 .highlight {
   margin: 0 0 1rem 0;
   overflow-x: auto;
   border: 1px solid #e4e4e7;
   border-radius: 0.125rem;
-  padding: 0.5rem;
+  background-color: #f4f4f5;
 }
 .highlight .line {
   width: 2.5rem;
@@ -1136,9 +1140,14 @@ code {
   margin: 0;
   border-spacing: 0;
   border: none;
+  background-color: transparent;
 }
 .highlight td.code {
   padding: 0 0.125rem 0 0.5rem;
+}
+.highlight pre {
+  font-weight: 400;
+  background-color: transparent;
 }
 td.gutter {
   width: 1.5rem;
@@ -1147,22 +1156,34 @@ td.gutter {
   position: -webkit-sticky;
   position: sticky;
   left: 0;
-  background: #fff;
+  background-color: #f4f4f5;
+  border-right: 1px solid #e4e4e7;
+  z-index: 1;
 }
 td.gutter pre {
   margin: 0;
   color: #a1a1aa;
   font-size: 0.8125rem;
+  font-weight: 400;
+  background-color: transparent;
 }
 td.code {
   vertical-align: top;
+  background-color: transparent;
 }
 td.code pre {
   margin: 0;
+  font-weight: 400;
+  background-color: transparent;
 }
 pre {
   margin: 0;
   overflow-x: auto;
+  font-weight: 400;
+}
+.highlight code {
+  background-color: transparent;
+  padding: 0;
 }
 @media (max-width: 688px) {
   code {
@@ -1175,6 +1196,7 @@ pre {
     width: 1rem;
     padding-right: 0.25rem;
     font-size: 0.6875rem;
+    background-color: #f4f4f5;
   }
 }
 .post-content table {
@@ -1189,10 +1211,10 @@ pre {
   padding: 0.75rem;
 }
 .post-content table th {
-  font-variation-settings: 'wght' 500;
+  font-weight: 400;
 }
 .post-content table td {
-  font-variation-settings: 'wght' 300;
+  font-weight: 400;
 }
 .post-content table table,
 .post-content table tboby,
@@ -1459,8 +1481,8 @@ hr {
 }
 .post-tag {
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 400;
   font-size: 0.6875rem;
-  font-weight: 500;
   line-height: 0.875rem;
   color: #71717a;
   border: 1px solid #e4e4e7;

@@ -46,7 +46,7 @@
 .highlight .code .type,
 .highlight .code .name,
 .highlight .code .strong {
-  font-weight: bold;
+  font-weight: normal;
 }
 .highlight .code .emphasis {
   font-style: italic;

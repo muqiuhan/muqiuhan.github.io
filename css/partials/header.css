@@ -35,7 +35,7 @@
   overflow-x: auto;
 }
 .site-brand-container a {
-  font-weight: $font-weight-semibold;
+  font-weight: 400;
   color: $color-text-primary;
 }
 .menu-list {

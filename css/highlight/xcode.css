@@ -67,7 +67,7 @@ XCode style (c) Angel Garcia <angelgarcia.mail@gmail.com>
 }
 .highlight .code .doctag,
 .highlight .code .strong {
-  font-weight: bold;
+  font-weight: normal;
 }
 .highlight .code .emphasis {
   font-style: italic;

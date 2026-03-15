@@ -30,7 +30,7 @@ Original style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiac
 .highlight .code .name,
 .highlight .code .type,
 .highlight .code .strong {
-  font-weight: bold;
+  font-weight: normal;
 }
 .highlight .code .emphasis {
   font-style: italic;

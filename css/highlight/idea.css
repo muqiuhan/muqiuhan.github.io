@@ -31,14 +31,14 @@ Intellij Idea-like styling (c) Vasily Polovnyov <vast@whiteants.net>
 .highlight .code .type,
 .highlight .code .selector-id,
 .highlight .code .selector-class {
-  font-weight: bold;
+  font-weight: normal;
   color: #000080;
 }
 .highlight .code .attribute,
 .highlight .code .number,
 .highlight .code .regexp,
 .highlight .code .link {
-  font-weight: bold;
+  font-weight: normal;
   color: #00f;
 }
 .highlight .code .number,
@@ -48,7 +48,7 @@ Intellij Idea-like styling (c) Vasily Polovnyov <vast@whiteants.net>
 }
 .highlight .code .string {
   color: #008000;
-  font-weight: bold;
+  font-weight: normal;
 }
 .highlight .code .symbol,
 .highlight .code .bullet,
@@ -74,5 +74,5 @@ Intellij Idea-like styling (c) Vasily Polovnyov <vast@whiteants.net>
   font-style: italic;
 }
 .highlight .code .strong {
-  font-weight: bold;
+  font-weight: normal;
 }

@@ -12,7 +12,7 @@ School Book style from goldblog.com.ua (c) Zaripov Yura <yur4ik7@ukr.net>
 .highlight .code .selector-tag,
 .highlight .code .literal {
   color: #059;
-  font-weight: bold;
+  font-weight: normal;
 }
 .highlight .code .highlight,
 .highlight .code .subst {
@@ -50,7 +50,7 @@ School Book style from goldblog.com.ua (c) Zaripov Yura <yur4ik7@ukr.net>
 .highlight .code .name,
 .highlight .code .selector-id,
 .highlight .code .strong {
-  font-weight: bold;
+  font-weight: normal;
 }
 .highlight .code .emphasis {
   font-style: italic;

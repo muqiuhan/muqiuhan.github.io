@@ -44,7 +44,7 @@
 .highlight .code .section,
 .highlight .code .name,
 .highlight .code .strong {
-  font-weight: bold;
+  font-weight: normal;
 }
 .highlight .code .symbol,
 .highlight .code .bullet,

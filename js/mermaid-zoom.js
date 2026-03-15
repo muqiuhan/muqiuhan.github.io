@@ -9,6 +9,21 @@
         
         if (mermaidElements.length === 0) return;
 
+        // 检测是否为移动端
+        const isMobile = window.innerWidth <= 688;
+
+        // 移动端：为 mermaid 元素添加提示样式
+        if (isMobile) {
+            mermaidElements.forEach(function(el) {
+                el.style.position = 'relative';
+                // 创建提示元素
+                const hint = document.createElement('span');
+                hint.textContent = '点击放大';
+                hint.style.cssText = 'position:absolute;bottom:4px;right:4px;font-size:10px;padding:2px 6px;background:rgba(0,0,0,0.5);color:#fff;border-radius:4px;pointer-events:none;';
+                el.appendChild(hint);
+            });
+        }
+
         // 创建模态框
         const modal = document.createElement('div');
         modal.className = 'mermaid-modal';
@@ -42,8 +57,19 @@
                 const originalWidth = svg.viewBox.baseVal.width || svg.width.baseVal.value || 800;
                 const originalHeight = svg.viewBox.baseVal.height || svg.height.baseVal.value || 600;
                 
-                // 计算放大比例：目标宽度为视口宽度的 80%
-                const targetWidth = Math.min(window.innerWidth * 0.85, 1600);
+                // 检测是否为移动端
+                const isMobile = window.innerWidth <= 688;
+                
+                // 计算放大比例
+                let targetWidth;
+                if (isMobile) {
+                    // 移动端：适配屏幕宽度，留出边距
+                    targetWidth = window.innerWidth - 32; // 16px padding × 2
+                } else {
+                    // 桌面端：85% 视口宽度，最大 1600px
+                    targetWidth = Math.min(window.innerWidth * 0.85, 1600);
+                }
+                
                 const scale = targetWidth / originalWidth;
                 const newWidth = originalWidth * scale;
                 const newHeight = originalHeight * scale;
@@ -66,6 +92,22 @@
                 // 显示模态框
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden';
+                
+                // 移动端样式调整
+                if (isMobile) {
+                    content.style.maxWidth = '100vw';
+                    content.style.maxHeight = '100vh';
+                    content.style.padding = '12px';
+                    content.style.borderRadius = '0';
+                    modal.style.padding = '0';
+                } else {
+                    // 恢复桌面端样式
+                    content.style.maxWidth = '';
+                    content.style.maxHeight = '';
+                    content.style.padding = '';
+                    content.style.borderRadius = '';
+                    modal.style.padding = '';
+                }
             });
         });
 

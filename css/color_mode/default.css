@@ -11,7 +11,7 @@
 .highlight .code .selector-tag,
 .highlight .code .subst {
   color: #333;
-  font-weight: bold;
+  font-weight: normal;
 }
 .highlight .code .number,
 .highlight .code .literal,
@@ -28,7 +28,7 @@
 .highlight .code .section,
 .highlight .code .selector-id {
   color: #900;
-  font-weight: bold;
+  font-weight: normal;
 }
 .highlight .code .subst {
   font-weight: normal;
@@ -36,7 +36,7 @@
 .highlight .code .type,
 .highlight .code .class .title {
   color: #458;
-  font-weight: bold;
+  font-weight: normal;
 }
 .highlight .code .tag,
 .highlight .code .name,
@@ -58,7 +58,7 @@
 }
 .highlight .code .meta {
   color: #999;
-  font-weight: bold;
+  font-weight: normal;
 }
 .highlight .code .deletion {
   background: #fdd;
@@ -70,5 +70,5 @@
   font-style: italic;
 }
 .highlight .code .strong {
-  font-weight: bold;
+  font-weight: normal;
 }

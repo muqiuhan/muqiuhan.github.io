@@ -5,7 +5,7 @@
   white-space: nowrap;
   border-radius: $margin-m-2;
   font-size: $font-size-header;
-  font-weight: $font-weight-medium;
+  font-weight: 400;
   transition: all $transition-duration ease;
   cursor: pointer;
   border: none;
