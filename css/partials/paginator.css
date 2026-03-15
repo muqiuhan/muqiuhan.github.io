@@ -20,3 +20,9 @@
 .pagination .space {
   margin-left: $margin-l-0;
 }
+@media (max-width: 688px) {
+  .paginator {
+    margin-top: $margin-m-1;
+    margin-bottom: $margin-m-1;
+  }
+}
