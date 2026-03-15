@@ -250,6 +250,46 @@ template {
 .highlight .code .strong {
   font-weight: bold;
 }
+@font-face {
+  font-family: 'GoogleSansCode';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/latin-base.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F;
+}
+@font-face {
+  font-family: 'GoogleSansCode';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/latin-ext.woff2") format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'GoogleSansCode';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/cjk-common.woff2") format('woff2');
+  unicode-range: U+4E00-62FF;
+}
+@font-face {
+  font-family: 'GoogleSansCode';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/cjk-ext.woff2") format('woff2');
+  unicode-range: U+6300-9FFF, U+3400-4DBF;
+}
+@font-face {
+  font-family: 'GoogleSansCode';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/symbols.woff2") format('woff2');
+  unicode-range: U+3000-303F, U+FF00-FFEF;
+}
 body {
   margin: 0;
 }
@@ -288,7 +328,7 @@ input {
   border: none;
 }
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 0.9375rem;
   font-weight: 400;
   line-height: 1.375rem;
@@ -321,7 +361,7 @@ input[type="search"]::-webkit-search-results-decoration {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid #e4e4e7;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 0.8125rem;
   font-weight: 500;
   line-height: 1.125rem;
@@ -454,7 +494,7 @@ input[type="search"]::-webkit-search-results-decoration {
 .footer {
   margin-top: auto;
   border-top: 1px solid #e4e4e7;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 0.6875rem;
   font-weight: 400;
   line-height: 1.125rem;
@@ -487,7 +527,7 @@ input[type="search"]::-webkit-search-results-decoration {
 .year-title {
   margin-top: 2rem;
   margin-bottom: 0.75rem;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 1.625rem;
   font-weight: 700;
   line-height: 2rem;
@@ -501,7 +541,7 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 .post-list-item .post-title {
   flex-grow: 1;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 0.9375rem;
   font-weight: 400;
   line-height: 1.375rem;
@@ -512,7 +552,7 @@ input[type="search"]::-webkit-search-results-decoration {
   margin-left: 1.5rem;
   min-width: 8rem;
   text-align: right;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 0.8125rem;
   font-weight: 400;
   line-height: 1.125rem;
@@ -552,14 +592,14 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 .post-gallery-item .post-info .post-title {
   margin-bottom: 0.75rem;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 1.625rem;
   font-weight: 700;
   line-height: 2rem;
   color: #09090b;
 }
 .post-gallery-item .post-info .post-date {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 0.8125rem;
   font-weight: 400;
   line-height: 1.125rem;
@@ -595,7 +635,7 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 .pagination {
   margin-top: 0.75rem;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 0.8125rem;
   font-weight: 500;
   line-height: 1.125rem;
@@ -655,14 +695,14 @@ input[type="search"]::-webkit-search-results-decoration {
   color: #71717a;
 }
 .profile .profile-content .profile-title {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 1.625rem;
   font-weight: 700;
   line-height: 2rem;
   color: #09090b;
 }
 .profile .profile-content .profile-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 0.9375rem;
   font-weight: 400;
   line-height: 1.375rem;
@@ -745,7 +785,7 @@ input[type="search"]::-webkit-search-results-decoration {
   padding: 0.75rem 0.75rem;
 }
 .search-result-container .search-result-message {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-family: monospace;
   font-size: 0.8125rem;
   line-height: 0.9375rem;
@@ -754,7 +794,7 @@ input[type="search"]::-webkit-search-results-decoration {
   color: #71717a;
 }
 .search-result-container .search-result-title {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 0.9375rem;
   font-weight: 700;
   line-height: 1.25rem;
@@ -776,7 +816,7 @@ input[type="search"]::-webkit-search-results-decoration {
   padding-top: 1rem;
 }
 .search-result-container .search-result {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 0.9375rem;
   font-weight: 400;
   line-height: 1.375rem;
@@ -801,7 +841,7 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 .search-header .search-input-container .search-input {
   width: 100%;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 0.875rem;
   font-weight: 500;
   line-height: 1.125rem;
@@ -839,63 +879,63 @@ h6 {
   margin-bottom: 0.75rem;
 }
 h1 {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 1.625rem;
   font-weight: 700;
   line-height: 2rem;
   color: #09090b;
 }
 h2 {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 1.375rem;
   font-weight: 700;
   line-height: 1.75rem;
   color: #09090b;
 }
 h3 {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 1.0625rem;
   font-weight: 700;
   line-height: 1.375rem;
   color: #09090b;
 }
 h4 {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 0.9375rem;
   font-weight: 700;
   line-height: 1.25rem;
   color: #09090b;
 }
 h5 {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 0.875rem;
   font-weight: 600;
   line-height: 1.125rem;
   color: #09090b;
 }
 h6 {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 0.875rem;
   font-weight: 500;
   line-height: 1.125rem;
   color: #09090b;
 }
 p {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 0.9375rem;
   font-weight: 400;
   line-height: 1.375rem;
   color: #09090b;
 }
 strong {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 0.9375rem;
   font-weight: 700;
   line-height: 1.375rem;
   color: #09090b;
 }
 em {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 0.9375rem;
   font-weight: 400;
   font-style: italic;
@@ -903,7 +943,7 @@ em {
   color: #09090b;
 }
 del {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 0.9375rem;
   font-weight: 400;
   line-height: 1.375rem;
@@ -941,7 +981,7 @@ blockquote blockquote {
   margin-bottom: 0;
 }
 .post-content li {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 0.9375rem;
   font-weight: 400;
   line-height: 1.375rem;
@@ -977,7 +1017,7 @@ blockquote blockquote {
 }
 dl dt {
   padding: 0.5rem 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 0.9375rem;
   font-weight: 700;
   line-height: 1.375rem;
@@ -999,14 +1039,14 @@ dl dd {
 }
 .post-head .post-info .post-title {
   margin-bottom: 0.75rem;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 1.625rem;
   font-weight: 700;
   line-height: 2rem;
   color: #09090b;
 }
 .post-head .post-info .post-date {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 0.8125rem;
   font-weight: 400;
   line-height: 1.125rem;
@@ -1032,7 +1072,7 @@ dl dd {
   margin-top: 0.75rem;
   display: flex;
   flex-wrap: wrap;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 0.8125rem;
   font-weight: 500;
   line-height: 1.125rem;
@@ -1069,14 +1109,14 @@ dl dd {
   color: #09090b !important;
 }
 code {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-family: monospace;
   font-size: 0.8125rem;
   line-height: 0.9375rem;
   color: #2563eb;
 }
 .code pre span {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-family: monospace;
   font-size: 0.8125rem;
   line-height: 0.9375rem;
@@ -1281,6 +1321,94 @@ ul li.task-list-item>input[type=checkbox]:before {
   background-position-y: center;
   --webkit-touch-callout: none;
 }
+.mermaid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1.5rem auto;
+  padding: 1rem;
+  background: #e4e4e7;
+  border: 1px solid #e4e4e7;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: all 200ms ease;
+  max-width: 100%;
+  overflow: auto;
+  position: relative;
+}
+.mermaid:hover {
+  border-color: #2563eb;
+  box-shadow: 0 0.25rem 0.75rem rgba(0,0,0,0.1);
+}
+.mermaid::after {
+  content: "点击放大";
+  position: absolute;
+  bottom: 0.25rem;
+  right: 0.25rem;
+  font-size: 0.6875rem;
+  color: #71717a;
+  opacity: 0;
+  transition: opacity 200ms;
+}
+.mermaid:hover::after {
+  opacity: 1;
+}
+.mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+.mermaid-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  z-index: 10000;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+}
+.mermaid-modal.active {
+  display: flex;
+}
+.mermaid-modal .mermaid-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 3rem;
+  height: 3rem;
+  background: #fff;
+  border: 1px solid #e4e4e7;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  color: #09090b;
+  transition: all 200ms;
+}
+.mermaid-modal .mermaid-close:hover {
+  background: #2563eb;
+  color: #fff;
+  border-color: #2563eb;
+}
+.mermaid-modal .mermaid-content {
+  max-width: 95vw;
+  max-height: 90vh;
+  overflow: auto;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 0.25rem;
+  box-shadow: 0 0.5rem 2rem rgba(0,0,0,0.3);
+}
+.mermaid-modal .mermaid-content svg {
+  display: block;
+  max-width: none;
+  max-height: none;
+}
 .icon {
   display: block;
   background-color: #09090b;
@@ -1330,7 +1458,7 @@ hr {
   color: #71717a;
 }
 .post-tag {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 0.6875rem;
   font-weight: 500;
   line-height: 0.875rem;
