@@ -1,78 +1,68 @@
-// Global searchConfig
+// Search functionality for standalone search page
 
-document.addEventListener('DOMContentLoaded', () => {
+(function () {
+  'use strict';
 
-  const input = document.querySelector('.search-input');
-  const container = document.querySelector('.search-result-container');
+  let localSearch = null;
+  let isDataLoaded = false;
 
-  const localSearch = new LocalSearch({
-    path             : searchConfig.path,
-    top_n_per_article: searchConfig.top_n_per_article,
-    unescape         : searchConfig.unescape
-  });
+  function initSearch() {
+    const input = document.getElementById('search-input');
+    const container = document.getElementById('search-results');
 
-  if (searchConfig.preload) {
-    // preload the search data when the page loads
-    console.log("loading page");
+    if (!input || !container || typeof LocalSearch === 'undefined') {
+      container.innerHTML = '<div class="search-result-message">搜索功能初始化失败</div>';
+      return;
+    }
+
+    localSearch = new LocalSearch({
+      path: searchConfig.path,
+      top_n_per_article: searchConfig.top_n_per_article,
+      unescape: searchConfig.unescape
+    });
+
     localSearch.fetchData();
-  }
 
-  function openSearchPopup() {
-    document.querySelector('.search-popup').classList.add('search-activate');
-    if (!localSearch.isfetched) {
-      localSearch.fetchData();
-    } 
-  }
+    window.addEventListener('search:loaded', function () {
+      isDataLoaded = true;
+      container.innerHTML = '<div class="search-result-message"></div>';
+    });
 
-  function closeSearchPopup() {
-    document.querySelector('.search-popup').classList.remove('search-activate');
-    // refresh search box
-    input.value = '';
-    container.innerHTML = `<div class="search-result-message" ></div>`;
-  }
-
-  // open search box
-  document.querySelector('.search-btn').addEventListener('click', openSearchPopup);
-
-  // close search box
-  document.querySelector('.search-popup-overlay').addEventListener('click', closeSearchPopup);
-  document.querySelector('.search-close-btn').addEventListener('click', closeSearchPopup);
-
-  function displaySearchResult() {
-    if (!localSearch.isfetched) return;
-    const searchText = input.value.trim().toLowerCase();
-    const keywords = searchText.split(/[-\s]+/);
-    if (searchText.length > 0) {
-      resultItems = localSearch.getResultItems(keywords);
-    }
-
-    if (keywords.length === 1 && keywords[0] === '') {
-      // no input
-      container.innerHTML = `<div class="search-result-message" ></div>`
-    } else if (resultItems.length === 0) {
-      // no result
-      container.innerHTML = `<div class="search-result-message" >No result found</div>`;
-    } else {
-      // display result(s)
-      container.innerHTML = `
-      <div class="search-result-message">${resultItems.length} result(s) found</div>
-      <ul class="search-result-list">${resultItems.map(result => result.item).join('<div class="h-line-secondary"></div>')}
-      </ul>`;
-    }
-
-  };
-
-  if (searchConfig.trigger == 'auto') {
-    // whenever there is input, update search result
-    input.addEventListener('input', displaySearchResult);
-  } else {
-    // update search result when press "enter"
-    input.addEventListener('keypress', event => {
-      if (event.key === 'Enter') {
-        displaySearchResult();
+    function displaySearchResult() {
+      if (!isDataLoaded) {
+        container.innerHTML = '<div class="search-result-message">加载中...</div>';
+        return;
       }
-    })
+
+      const searchText = input.value.trim().toLowerCase();
+
+      if (searchText.length === 0) {
+        container.innerHTML = '<div class="search-result-message"></div>';
+        return;
+      }
+
+      const keywords = searchText.split(/[-\s]+/);
+      const resultItems = localSearch.getResultItems(keywords);
+
+      if (resultItems.length === 0) {
+        container.innerHTML = '<div class="search-result-message">未找到相关结果</div>';
+      } else {
+        container.innerHTML = `
+          <div class="search-result-message">找到 ${resultItems.length} 个结果</div>
+          <ul class="search-result-list">
+            ${resultItems.map(result => result.item).join('')}
+          </ul>
+        `;
+      }
+    }
+
+    input.addEventListener('input', displaySearchResult);
+    input.focus();
   }
-  window.addEventListener('search:loaded', displaySearchResult);
-});
-  
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSearch);
+  } else {
+    initSearch();
+  }
+})();

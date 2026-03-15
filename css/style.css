@@ -751,120 +751,72 @@ input[type="search"]::-webkit-search-results-decoration {
     max-height: 25vh;
   }
 }
-.search-popup {
-  visibility: hidden;
+.search-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1.5rem 0.75rem;
 }
-.search-activate {
-  visibility: visible;
+.search-input-container {
+  margin-bottom: 1.5rem;
 }
-.search-popup-overlay {
-  position: fixed;
-  left: 0;
-  top: 0;
-  height: 100%;
+.search-input {
   width: 100%;
-  background: rgba(0,0,0,0.4);
-}
-.search-popup-window {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  background: #fff;
-  transform: translate(-50%, -50%);
-  width: 640px;
-  height: 60%;
+  padding: 0.75rem 1rem;
+  font-size: 0.9375rem;
   border: 1px solid #e4e4e7;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
+  border-radius: 0.25rem;
+  background: #fff;
+  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 400;
+}
+.search-input:focus {
+  outline: none;
+  border-color: #2563eb;
 }
 .search-result-container {
-  flex-grow: 1;
-  overflow: scroll;
-  padding: 0.75rem 0.75rem;
+  min-height: 200px;
 }
-.search-result-container .search-result-message {
-  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-weight: 400;
-  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-size: 0.8125rem;
-  line-height: 0.9375rem;
-  color: #a1a1aa;
-  text-transform: lowercase;
+.search-result-message {
   color: #71717a;
+  padding: 1.5rem 0;
+  text-align: center;
 }
-.search-result-container .search-result-title {
-  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-weight: 400;
+.search-result-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.search-result-item {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e4e4e7;
+}
+.search-result-item:last-child {
+  border-bottom: none;
+}
+.search-result-item .search-result-title {
+  margin-bottom: 0.25rem;
   font-size: 0.9375rem;
-  line-height: 1.25rem;
-  color: #09090b;
-  color: #09090b;
 }
-.search-result-container a {
-  background-image: linear-gradient(#fff, #fff), linear-gradient(#2563eb, #2563eb);
-  background-size: 100% 1px, 0% 1px;
-  background-position: 100% 100%, 0 100%;
-  background-repeat: no-repeat, no-repeat;
-  transition: background-size 200ms ease;
+.search-result-item .search-result-title a {
+  color: #2563eb;
+  text-decoration: none;
 }
-.search-result-container a:hover {
-  background-size: 0 1px, 100% 1px;
+.search-result-item .search-result-title a:hover {
+  text-decoration: underline;
 }
-.search-result-container li {
-  padding-bottom: 0.75rem;
-  padding-top: 1rem;
-}
-.search-result-container .search-result {
+.search-result-item .search-result {
   font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-weight: 400;
   font-size: 0.9375rem;
   line-height: 1.375rem;
   color: #09090b;
   color: #09090b;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0;
 }
-.search-result-container mark {
+.search-result-item mark {
   color: #09090b;
   background-color: #fde68a;
-}
-.search-header {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 0.75rem 0.75rem;
-  border-bottom: 1px solid #e4e4e7;
-}
-.search-header .search-input-container {
-  flex-grow: 1;
-}
-.search-header .search-input-container .search-input {
-  width: 100%;
-  font-family: 'GoogleSansCode', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-weight: 400;
-  font-size: 0.875rem;
-  line-height: 1.125rem;
-  color: #09090b;
-  color: #09090b;
-  background-color: #fff;
-}
-.search-header .search-input-container .search-input::placeholder {
-  color: #71717a;
-}
-.search-header .search-close-btn {
-  flex-grow: 0;
-  margin-left: 0.75rem;
-  margin: auto;
-  cursor: pointer;
-}
-@media (max-width: 688px) {
-  .search-popup-window {
-    width: 100%;
-    height: 100%;
-    top: 3rem;
-    transform: translate(-50%, 0);
-  }
 }
 .post-content {
   margin-top: 2rem;

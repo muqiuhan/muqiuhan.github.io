@@ -140,8 +140,8 @@
                 
                   
                     
-                      <li class="menu-item search-btn">
-                        <a href="#">搜索</a>
+                      <li class="menu-item">
+                        <a href="/search">搜索</a>
                       </li>
                       
         </ul>
@@ -354,39 +354,6 @@ await prisma.$transaction(async tx =&gt; &#123;
 
 
     </div>
-
-    
-      <div class="search-popup">
-    <div class="search-popup-overlay">  
-    </div>
-    <div class="search-popup-window" >
-        <div class="search-header">
-            <div class="search-input-container">
-              <input autocomplete="off" autocapitalize="off" maxlength="80"
-                     placeholder="Search Anything" spellcheck="false"
-                     type="search" class="search-input">
-            </div>
-            <div class="search-close-btn">
-                <div class="icon close-btn"></div>
-            </div>
-        </div>
-        <div class="search-result-container">
-        </div>
-    </div>
-</div>
-
-<script>
-    const searchConfig = {
-        path             : "/search.xml",
-        top_n_per_article: "1",
-        unescape         : "false",
-        trigger: "auto",
-        preload: "false"
-    }
-</script>
-<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js"></script>
-<script src="/js/search.js"></script>
-    
     
     <script src="/js/mermaid-zoom.js"></script>
 
