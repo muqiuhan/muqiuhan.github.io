@@ -1,17 +1,26 @@
+// 统一字体权重
+font-weight-normal()
+    font-weight 400
+
+// 代码块基础样式
 code
     text-style(code-highlight)
-    
-.code 
+    font-weight 400
+
+.code
     pre
         span
             text-style(code-default)
+            font-weight 400
 
+// 代码高亮区域 - 设置整体背景色
 .highlight
     margin 0 0 $margin-m-2 0
     overflow-x auto
     border 1px solid $color-border
     border-radius $margin-s-1
-    padding $margin-m-0
+    // 代码块背景色
+    background-color $color-code-background
 
     .line
         width $margin-l-2
@@ -20,10 +29,17 @@ code
         margin 0
         border-spacing 0
         border none
-    
+        // 表格继承背景色
+        background-color transparent
+
     td.code
         padding 0 $margin-s-1 0 $margin-m-0
 
+    pre
+        font-weight 400
+        background-color transparent
+
+// 行号列 - 与代码块背景色保持一致
 td.gutter
     width $margin-l-0
     padding 0 $margin-m-0
@@ -31,33 +47,51 @@ td.gutter
     position -webkit-sticky
     position sticky
     left 0
-    background $color-background
-    
+    // 与代码块背景色一致
+    background-color $color-code-background
+    // 添加右边框分隔
+    border-right 1px solid $color-border
+    // 确保层级正确
+    z-index 1
+
     pre
         margin 0
         color $color-code-marker
         font-size $font-size-code
+        font-weight 400
+        background-color transparent
 
+// 代码列
 td.code
     vertical-align top
-    
+    background-color transparent
+
     pre
         margin 0
+        font-weight 400
+        background-color transparent
 
+// 所有 pre 标签
 pre
     margin 0
     overflow-x auto
+    font-weight 400
+
+// 移除内联代码背景（在代码块中不需要）
+.highlight code
+    background-color transparent
+    padding 0
 
 @media (max-width: 688px)
     code
         font-size 12*$px
-    
+
     .highlight
         pre
             font-size 12*$px
-        
+
         td.gutter
             width $margin-m-2
             padding-right $margin-s-2
             font-size 11*$px
-
+            background-color $color-code-background

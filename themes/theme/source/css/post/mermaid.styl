@@ -1,0 +1,96 @@
+// Mermaid 图表样式
+
+// 基础容器样式
+.mermaid
+    display flex
+    justify-content center
+    align-items center
+    margin $margin-l-0 auto
+    padding $margin-m-2
+    background $color-text-fourth
+    border $line-third solid $color-border
+    border-radius $margin-s-2
+    cursor pointer
+    transition all $transition-duration ease
+    max-width 100%
+    overflow auto
+    position relative
+
+    // 悬停效果
+    &:hover
+        border-color $color-accent
+        box-shadow 0 4*$px 12*$px rgba(0, 0, 0, 0.1)
+
+    // 提示文字
+    &::after
+        content "点击放大"
+        position absolute
+        bottom $margin-s-2
+        right $margin-s-2
+        font-size $font-size-post-tag
+        color $color-text-secondary
+        opacity 0
+        transition opacity $transition-duration
+
+    &:hover::after
+        opacity 1
+
+    // SVG 图表样式
+    svg
+        max-width 100%
+        height auto
+
+// Mermaid 放大模态框
+.mermaid-modal
+    display none
+    position fixed
+    top 0
+    left 0
+    width 100%
+    height 100%
+    background $color-overlay
+    z-index 10000
+    justify-content center
+    align-items center
+    padding $margin-primary
+
+    &.active
+        display flex
+
+    // 关闭按钮
+    .mermaid-close
+        position absolute
+        top $margin-m-2
+        right $margin-m-2
+        width 48*$px
+        height 48*$px
+        background $color-background
+        border $line-third solid $color-border
+        border-radius 50%
+        cursor pointer
+        display flex
+        justify-content center
+        align-items center
+        font-size 24*$px
+        color $color-text-primary
+        transition all $transition-duration
+
+        &:hover
+            background $color-accent
+            color $color-background
+            border-color $color-accent
+
+    // 放大后的图表容器
+    .mermaid-content
+        max-width 95vw
+        max-height 90vh
+        overflow auto
+        background $color-background
+        padding $margin-l-0
+        border-radius $margin-s-2
+        box-shadow 0 8*$px 32*$px rgba(0, 0, 0, 0.3)
+
+        svg
+            display block
+            max-width none
+            max-height none
