@@ -3,11 +3,11 @@
   height: $line-third;
 }
 .h-line-secondary {
-  background-color: $color-text-secondary;
+  background-color: $color-border;
   height: $line-third;
 }
 hr {
-  background-color: $color-text-third;
+  background-color: $color-border;
   height: $line-third;
   border: 0;
 }
@@ -25,18 +25,20 @@ hr {
   color: $color-text-secondary;
 }
 .post-tag {
-  border: $line-third solid $color-text-primary;
+  border: 1px solid $color-border;
   margin-right: $margin-s-2;
   margin-bottom: $margin-s-2;
   padding: $margin-s-2 $margin-m-0 $margin-s-2 $margin-m-0;
   border-radius: $margin-m-2;
+  transition: all $transition-duration ease;
 }
 .post-tag a {
   background-image: none !important;
 }
 .post-tag:hover {
-  background-color: $color-text-primary;
+  border-color: $color-accent;
+  background-color: $color-accent;
 }
 .post-tag:hover a {
-  color: $color-background;
+  color: #fff;
 }

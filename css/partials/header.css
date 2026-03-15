@@ -1,12 +1,24 @@
 .header {
-  border: $line-secondary solid $color-text-primary;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: $color-glass;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid $color-border;
+}
+@supports not (backdrop-filter: blur(12px)) {
+  .header {
+    background: $color-background;
+  }
 }
 .header-inner {
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  margin-top: $margin-m-2;
-  margin-bottom: $margin-m-2;
+  height: $header-height;
 }
 .header-inner #menu-btn {
   display: none;
@@ -15,20 +27,24 @@
   flex-grow: 1;
   overflow-x: auto;
 }
+.site-brand-container a {
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
 .menu-list {
   text-align: right;
   display: flex;
-}
-.menu-list .menu-item {
-  position: relative;
-  margin-left: $margin-l-0;
 }
 .menu-list:before {
   content: "";
   flex-grow: 1;
 }
+.menu-item {
+  position: relative;
+  margin-left: $margin-l-0;
+}
 .menu-item-active:after {
-  border-bottom: solid $line-secondary;
+  border-bottom: solid $line-secondary $color-accent;
   width: 100%;
 }
 .logo-img {
@@ -40,17 +56,25 @@
 @media (max-width: 688px) {
   .header-inner {
     flex-wrap: wrap;
+    align-items: center;
+    height: $header-height;
+    padding-top: 0;
+    padding-bottom: 0;
   }
   .header-inner #menu-btn {
-    display: block !important;
-    text-align: right;
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-end;
     width: 50%;
-  }
-  .header-inner #menu-btn .icon {
-    float: right;
+    height: 100%;
+    cursor: pointer;
+    color: $color-text-primary;
   }
   .header-inner .site-brand-container {
+    display: flex;
+    align-items: center;
     width: 50%;
+    height: 100%;
   }
   .header-inner .site-nav {
     width: 100%;
@@ -58,14 +82,17 @@
   .header-inner .site-nav .menu-list {
     height: 0;
     overflow: hidden;
+    margin-top: 0;
   }
   .header-inner .site-nav .menu-list .menu-item {
     margin-right: 0;
     margin-left: auto;
-    margin-top: $margin-m-0;
+    margin-top: $margin-s-1;
+    padding: $margin-s-1 0;
   }
   .header-inner .site-nav .active {
-    margin-top: $margin-m-1;
+    margin-top: $margin-s-0;
+    margin-bottom: $margin-s-0;
     height: auto;
     flex-direction: column;
   }

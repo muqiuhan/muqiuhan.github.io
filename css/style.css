@@ -22,11 +22,14 @@ html {
   }
 }
 @media (max-width: 688px) {
+  html {
+    font-size: 16px;
+  }
   .flex-container {
     display: block;
-    width: calc(100% - 48px);
-    padding-left: 24px;
-    padding-right: 24px;
+    width: calc(100% - 32px);
+    padding-left: 16px;
+    padding-right: 16px;
   }
 }
 /* normalize.css v8.0.0 | MIT License | github.com/necolas/normalize.css */
@@ -174,59 +177,72 @@ template {
   display: none;
 }
 .highlight {
-  color: #657b83;
-}
-.highlight table {
-  background: #fdf6e3;
+  color: #333;
+  background: #f8f8f8;
 }
 .highlight .code .comment,
 .highlight .code .quote {
-  color: #93a1a1;
+  color: #998;
+  font-style: italic;
 }
 .highlight .code .keyword,
 .highlight .code .selector-tag,
-.highlight .code .addition {
-  color: #859900;
+.highlight .code .subst {
+  color: #333;
+  font-weight: bold;
 }
 .highlight .code .number,
-.highlight .code .string,
-.highlight .code .meta .meta-string,
 .highlight .code .literal,
-.highlight .code .doctag,
-.highlight .code .regexp {
-  color: #2aa198;
+.highlight .code .variable,
+.highlight .code .template-variable,
+.highlight .code .tag .attr {
+  color: #008080;
+}
+.highlight .code .string,
+.highlight .code .doctag {
+  color: #d14;
 }
 .highlight .code .title,
 .highlight .code .section,
-.highlight .code .name,
-.highlight .code .selector-id,
-.highlight .code .selector-class {
-  color: #268bd2;
+.highlight .code .selector-id {
+  color: #900;
+  font-weight: bold;
 }
-.highlight .code .attribute,
-.highlight .code .attr,
-.highlight .code .variable,
-.highlight .code .template-variable,
-.highlight .code .class .title,
-.highlight .code .type {
-  color: #b58900;
+.highlight .code .subst {
+  font-weight: normal;
+}
+.highlight .code .type,
+.highlight .code .class .title {
+  color: #458;
+  font-weight: bold;
+}
+.highlight .code .tag,
+.highlight .code .name,
+.highlight .code .attribute {
+  color: #000080;
+  font-weight: normal;
+}
+.highlight .code .regexp,
+.highlight .code .link {
+  color: #009926;
 }
 .highlight .code .symbol,
-.highlight .code .bullet,
-.highlight .code .subst,
-.highlight .code .meta,
-.highlight .code .meta .keyword,
-.highlight .code .selector-attr,
-.highlight .code .selector-pseudo,
-.highlight .code .link {
-  color: #cb4b16;
+.highlight .code .bullet {
+  color: #990073;
 }
 .highlight .code .built_in,
-.highlight .code .deletion {
-  color: #dc322f;
+.highlight .code .builtin-name {
+  color: #0086b3;
 }
-.highlight .code .formula {
-  background: #eee8d5;
+.highlight .code .meta {
+  color: #999;
+  font-weight: bold;
+}
+.highlight .code .deletion {
+  background: #fdd;
+}
+.highlight .code .addition {
+  background: #dfd;
 }
 .highlight .code .emphasis {
   font-style: italic;
@@ -237,21 +253,11 @@ template {
 body {
   margin: 0;
 }
-.mask-border::before {
-  content: '';
-  width: 100%;
-  height: 100vh;
-  border: 4px #373633 solid;
-  position: fixed;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  z-index: 8;
-}
 .wrapper {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  padding-top: 3rem;
 }
 .main {
   flex-grow: 1;
@@ -268,24 +274,25 @@ ul {
   padding: 0;
   margin: 0;
 }
+*,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 a {
   text-decoration: none;
-  color: #373633;
+  color: #09090b;
 }
 input {
   outline: none;
   border: none;
 }
 body {
-  font-family: 'Carrois Song';
-  font-size: 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.9375rem;
   font-weight: 400;
-  line-height: 1.5rem;
-  color: #373633;
+  line-height: 1.375rem;
+  color: #09090b;
   background-color: #fff;
 }
 input[type=search]::-ms-clear {
@@ -305,19 +312,31 @@ input[type="search"]::-webkit-search-results-decoration {
   display: none;
 }
 .header {
-  border: 2px solid #373633;
-  font-family: 'Carrois Song';
-  font-size: 0.875rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid #e4e4e7;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.8125rem;
   font-weight: 500;
-  line-height: 1.25rem;
-  color: #373633;
+  line-height: 1.125rem;
+  color: #09090b;
+}
+@supports not (backdrop-filter: blur(12px)) {
+  .header {
+    background: #fff;
+  }
 }
 .header-inner {
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  height: 3rem;
 }
 .header-inner #menu-btn {
   display: none;
@@ -326,37 +345,40 @@ input[type="search"]::-webkit-search-results-decoration {
   flex-grow: 1;
   overflow-x: auto;
 }
+.site-brand-container a {
+  font-weight: 600;
+  color: #09090b;
+}
 .menu-list {
   text-align: right;
   display: flex;
-}
-.menu-list .menu-item {
-  position: relative;
-  margin-left: 1.5rem;
 }
 .menu-list:before {
   content: "";
   flex-grow: 1;
 }
+.menu-item {
+  position: relative;
+  margin-left: 1.5rem;
+}
 .menu-item:after {
   content: "";
-  -webkit-transition: width 0.4s ease-in-out;
-  transition: width 0.4s ease-in-out;
+  transition: width 200ms ease;
   position: absolute;
   left: 0;
   bottom: 0;
   width: 0;
-  border-bottom: solid 1px #373633;
+  border-bottom: solid 1px #2563eb;
 }
 .menu-item:hover:after {
   width: 100%;
 }
 .menu-item-active:after {
-  border-bottom: solid 2px;
+  border-bottom: solid 2px #2563eb;
   width: 100%;
 }
 .logo-img {
-  max-height: 2.25rem;
+  max-height: 2rem;
   width: auto;
   max-width: 100%;
   display: flex;
@@ -364,17 +386,25 @@ input[type="search"]::-webkit-search-results-decoration {
 @media (max-width: 688px) {
   .header-inner {
     flex-wrap: wrap;
+    align-items: center;
+    height: 3rem;
+    padding-top: 0;
+    padding-bottom: 0;
   }
   .header-inner #menu-btn {
-    display: block !important;
-    text-align: right;
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-end;
     width: 50%;
-  }
-  .header-inner #menu-btn .icon {
-    float: right;
+    height: 100%;
+    cursor: pointer;
+    color: #09090b;
   }
   .header-inner .site-brand-container {
+    display: flex;
+    align-items: center;
     width: 50%;
+    height: 100%;
   }
   .header-inner .site-nav {
     width: 100%;
@@ -382,76 +412,86 @@ input[type="search"]::-webkit-search-results-decoration {
   .header-inner .site-nav .menu-list {
     height: 0;
     overflow: hidden;
+    margin-top: 0;
   }
   .header-inner .site-nav .menu-list .menu-item {
     margin-right: 0;
     margin-left: auto;
-    margin-top: 0.5rem;
+    margin-top: 0.125rem;
+    padding: 0.125rem 0;
   }
   .header-inner .site-nav .active {
-    margin-top: 0.75rem;
+    margin-top: 0.0625rem;
+    margin-bottom: 0.0625rem;
     height: auto;
     flex-direction: column;
   }
 }
 .footer {
-  margin-top: 3.5rem;
-  border: 2px #373633 solid;
-  font-family: 'Carrois Song';
-  font-size: 0.75rem;
+  margin-top: auto;
+  border-top: 1px solid #e4e4e7;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.6875rem;
   font-weight: 400;
-  line-height: 1.25rem;
-  color: #373633;
+  line-height: 1.125rem;
+  color: #71717a;
 }
 .footer .footer-text {
-  margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+@media (max-width: 688px) {
+  .footer .footer-text {
+    font-size: 0.625rem;
+    margin-top: 0.125rem;
+    margin-bottom: 0.125rem;
+  }
 }
 .post-list a {
-  background-image: linear-gradient(#fff, #fff), linear-gradient(#373633, #373633);
+  background-image: linear-gradient(#fff, #fff), linear-gradient(#2563eb, #2563eb);
   background-size: 100% 1px, 0% 1px;
   background-position: 100% 100%, 0 100%;
   background-repeat: no-repeat, no-repeat;
-  transition: background-size 0.6s linear;
+  transition: background-size 200ms ease;
 }
 .post-list a:hover {
   background-size: 0 1px, 100% 1px;
 }
 .year-title {
-  margin-top: 3.5rem;
+  margin-top: 2rem;
   margin-bottom: 0.75rem;
-  font-family: 'Carrois Song';
-  font-size: 1.75rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 1.625rem;
   font-weight: 700;
-  line-height: 2.25rem;
-  color: #e8e8e8;
+  line-height: 2rem;
+  color: #a1a1aa;
 }
 .post-list-item {
   display: flex;
   flex-wrap: nowrap;
-  margin-top: 0.75rem;
+  margin-top: 0.5rem;
   align-items: top;
 }
 .post-list-item .post-title {
   flex-grow: 1;
-  font-family: 'Carrois Song';
-  font-size: 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.9375rem;
   font-weight: 400;
-  line-height: 1.5rem;
-  color: #373633;
+  line-height: 1.375rem;
+  color: #09090b;
   font-variation-settings: 'wght' 500;
 }
 .post-list-item .post-date {
   margin-left: 1.5rem;
   min-width: 8rem;
   text-align: right;
-  font-family: 'Carrois Song';
-  font-size: 0.875rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.8125rem;
   font-weight: 400;
-  line-height: 1.25rem;
-  color: #373633;
-  line-height: 1.5rem;
-  color: #afaea9;
+  line-height: 1.125rem;
+  color: #71717a;
+  line-height: 1.375rem;
+  color: #71717a;
 }
 @media (max-width: 480px) {
   .post-list-item {
@@ -474,8 +514,8 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 .post-gallery-item {
   display: flex;
-  margin-top: 3.5rem;
-  margin-bottom: 0.75rem;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
 }
 .post-gallery-item .post-info {
   margin-right: 1.5rem;
@@ -485,28 +525,28 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 .post-gallery-item .post-info .post-title {
   margin-bottom: 0.75rem;
-  font-family: 'Carrois Song';
-  font-size: 1.75rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 1.625rem;
   font-weight: 700;
-  line-height: 2.25rem;
-  color: #373633;
+  line-height: 2rem;
+  color: #09090b;
 }
 .post-gallery-item .post-info .post-date {
-  font-family: 'Carrois Song';
-  font-size: 0.875rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.8125rem;
   font-weight: 400;
-  line-height: 1.25rem;
-  color: #373633;
+  line-height: 1.125rem;
+  color: #71717a;
 }
 .post-gallery-item .post-img {
   width: 50%;
 }
 .post-gallery-item a {
-  background-image: linear-gradient(#fff, #fff), linear-gradient(#373633, #373633);
+  background-image: linear-gradient(#fff, #fff), linear-gradient(#2563eb, #2563eb);
   background-size: 100% 1px, 0% 1px;
   background-position: 100% 100%, 0 100%;
   background-repeat: no-repeat, no-repeat;
-  transition: background-size 0.6s linear;
+  transition: background-size 200ms ease;
 }
 .post-gallery-item a:hover {
   background-size: 0 1px, 100% 1px;
@@ -524,15 +564,15 @@ input[type="search"]::-webkit-search-results-decoration {
   }
 }
 .paginator {
-  margin-top: 3.5rem;
+  margin-top: 2rem;
 }
 .pagination {
   margin-top: 0.75rem;
-  font-family: 'Carrois Song';
-  font-size: 0.875rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.8125rem;
   font-weight: 500;
-  line-height: 1.25rem;
-  color: #373633;
+  line-height: 1.125rem;
+  color: #09090b;
   display: flex;
 }
 .pagination:before {
@@ -545,28 +585,28 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 .page-number:after {
   content: "";
-  -webkit-transition: width 0.4s ease-in-out;
-  transition: width 0.4s ease-in-out;
+  transition: width 200ms ease;
   position: absolute;
   left: 0;
   bottom: 0;
   width: 0;
-  border-bottom: solid 1px #373633;
+  border-bottom: solid 1px #2563eb;
 }
 .page-number:hover:after {
   width: 100%;
 }
 .pagination .current:after {
-  border-bottom: solid 2px;
+  border-bottom: solid 2px #2563eb;
   width: 100%;
 }
 .pagination .space {
   margin-left: 1.5rem;
 }
 .profile {
-  margin-top: 3.5rem;
+  margin-top: 1.5rem;
   display: flex;
   flex-direction: row-reverse;
+  align-items: center;
 }
 .profile .profile-content {
   width: 50%;
@@ -578,44 +618,65 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 .profile .profile-content .profile-body {
   margin-top: 0;
-  margin-bottom: 2rem;
+  margin-bottom: 0.75rem;
+  color: #71717a;
 }
 .profile .profile-content .profile-title {
-  font-family: 'Carrois Song';
-  font-size: 1.75rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 1.625rem;
   font-weight: 700;
-  line-height: 2.25rem;
-  color: #373633;
+  line-height: 2rem;
+  color: #09090b;
 }
 .profile .profile-content .profile-body {
-  font-family: 'Carrois Song';
-  font-size: 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.9375rem;
   font-weight: 400;
-  line-height: 1.5rem;
-  color: #373633;
+  line-height: 1.375rem;
+  color: #09090b;
 }
 .profile .profile-content .profile-link {
   margin-top: 0;
-  margin-bottom: 0.75rem;
-  font-family: 'Carrois Song';
-  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.8125rem;
   font-weight: 500;
-  line-height: 1.25rem;
-  color: #373633;
+  line-height: 1.125rem;
+  color: #09090b;
+}
+.profile .profile-content .profile-link a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 200ms ease;
+}
+.profile .profile-content .profile-link a:hover {
+  color: #2563eb;
 }
 .profile .profile-image {
   width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.profile .profile-image img {
+  max-width: 100%;
+  max-height: 35vh;
+  object-fit: contain;
 }
 @media (max-width: 480px) {
   .profile {
     flex-wrap: wrap;
+    align-items: flex-start;
   }
   .profile .profile-content {
     width: 100%;
-    margin-top: 0.75rem;
+    margin-top: 0.5rem;
   }
   .profile .profile-image {
     width: 100%;
+  }
+  .profile .profile-image img {
+    max-height: 25vh;
   }
 }
 .search-popup {
@@ -630,7 +691,7 @@ input[type="search"]::-webkit-search-results-decoration {
   top: 0;
   height: 100%;
   width: 100%;
-  background: rgba(0,0,0,0.2);
+  background: rgba(0,0,0,0.4);
 }
 .search-popup-window {
   position: absolute;
@@ -640,7 +701,7 @@ input[type="search"]::-webkit-search-results-decoration {
   transform: translate(-50%, -50%);
   width: 640px;
   height: 60%;
-  border: 2px solid #373633;
+  border: 1px solid #e4e4e7;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -651,27 +712,28 @@ input[type="search"]::-webkit-search-results-decoration {
   padding: 0.75rem 0.75rem;
 }
 .search-result-container .search-result-message {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-family: monospace;
-  font-size: 0.875rem;
-  line-height: 1rem;
-  color: #e8e8e8;
+  font-size: 0.8125rem;
+  line-height: 0.9375rem;
+  color: #a1a1aa;
   text-transform: lowercase;
-  color: #afaea9;
+  color: #71717a;
 }
 .search-result-container .search-result-title {
-  font-family: 'Carrois Song';
-  font-size: 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.9375rem;
   font-weight: 700;
   line-height: 1.25rem;
-  color: #373633;
-  color: #373633;
+  color: #09090b;
+  color: #09090b;
 }
 .search-result-container a {
-  background-image: linear-gradient(#fff, #fff), linear-gradient(#373633, #373633);
+  background-image: linear-gradient(#fff, #fff), linear-gradient(#2563eb, #2563eb);
   background-size: 100% 1px, 0% 1px;
   background-position: 100% 100%, 0 100%;
   background-repeat: no-repeat, no-repeat;
-  transition: background-size 0.6s linear;
+  transition: background-size 200ms ease;
 }
 .search-result-container a:hover {
   background-size: 0 1px, 100% 1px;
@@ -681,41 +743,41 @@ input[type="search"]::-webkit-search-results-decoration {
   padding-top: 1rem;
 }
 .search-result-container .search-result {
-  font-family: 'Carrois Song';
-  font-size: 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.9375rem;
   font-weight: 400;
-  line-height: 1.5rem;
-  color: #373633;
-  color: #373633;
+  line-height: 1.375rem;
+  color: #09090b;
+  color: #09090b;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
 }
 .search-result-container mark {
-  color: #373633;
-  background-color: #fff59b;
+  color: #09090b;
+  background-color: #fde68a;
 }
 .search-header {
   display: flex;
   flex-direction: row;
   align-items: center;
   padding: 0.75rem 0.75rem;
-  border-bottom: 2px solid #373633;
+  border-bottom: 1px solid #e4e4e7;
 }
 .search-header .search-input-container {
   flex-grow: 1;
 }
 .search-header .search-input-container .search-input {
   width: 100%;
-  font-family: 'Carrois Song';
-  font-size: 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.875rem;
   font-weight: 500;
-  line-height: 1.25rem;
-  color: #373633;
-  color: #373633;
+  line-height: 1.125rem;
+  color: #09090b;
+  color: #09090b;
   background-color: #fff;
 }
 .search-header .search-input-container .search-input::placeholder {
-  color: #afaea9;
+  color: #71717a;
 }
 .search-header .search-close-btn {
   flex-grow: 0;
@@ -727,6 +789,8 @@ input[type="search"]::-webkit-search-results-decoration {
   .search-popup-window {
     width: 100%;
     height: 100%;
+    top: 3rem;
+    transform: translate(-50%, 0);
   }
 }
 .post-content {
@@ -742,84 +806,84 @@ h6 {
   margin-bottom: 0.75rem;
 }
 h1 {
-  font-family: 'Carrois Song';
-  font-size: 1.75rem;
-  font-weight: 700;
-  line-height: 2.25rem;
-  color: #373633;
-}
-h2 {
-  font-family: 'Carrois Song';
-  font-size: 1.5rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 1.625rem;
   font-weight: 700;
   line-height: 2rem;
-  color: #373633;
+  color: #09090b;
+}
+h2 {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 1.375rem;
+  font-weight: 700;
+  line-height: 1.75rem;
+  color: #09090b;
 }
 h3 {
-  font-family: 'Carrois Song';
-  font-size: 1.125rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 1.0625rem;
   font-weight: 700;
-  line-height: 1.5rem;
-  color: #373633;
+  line-height: 1.375rem;
+  color: #09090b;
 }
 h4 {
-  font-family: 'Carrois Song';
-  font-size: 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.9375rem;
   font-weight: 700;
   line-height: 1.25rem;
-  color: #373633;
+  color: #09090b;
 }
 h5 {
-  font-family: 'Carrois Song';
-  font-size: 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.875rem;
   font-weight: 600;
-  line-height: 1.25rem;
-  color: #373633;
+  line-height: 1.125rem;
+  color: #09090b;
 }
 h6 {
-  font-family: 'Carrois Song';
-  font-size: 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.875rem;
   font-weight: 500;
-  line-height: 1.25rem;
-  color: #373633;
+  line-height: 1.125rem;
+  color: #09090b;
 }
 p {
-  font-family: 'Carrois Song';
-  font-size: 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.9375rem;
   font-weight: 400;
-  line-height: 1.5rem;
-  color: #373633;
+  line-height: 1.375rem;
+  color: #09090b;
 }
 strong {
-  font-family: 'Carrois Song';
-  font-size: 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.9375rem;
   font-weight: 700;
-  line-height: 1.5rem;
-  color: #373633;
+  line-height: 1.375rem;
+  color: #09090b;
 }
 em {
-  font-family: 'Carrois Song';
-  font-size: 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.9375rem;
   font-weight: 400;
   font-style: italic;
-  line-height: 1.5rem;
-  color: #373633;
+  line-height: 1.375rem;
+  color: #09090b;
 }
 del {
-  font-family: 'Carrois Song';
-  font-size: 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.9375rem;
   font-weight: 400;
-  line-height: 1.5rem;
+  line-height: 1.375rem;
   text-decoration: line-through;
-  color: #373633;
+  color: #09090b;
 }
 .post-content a {
   padding-bottom: 2px;
-  background-image: linear-gradient(#373633, #373633), linear-gradient(#373633, #373633);
+  background-image: linear-gradient(#09090b, #09090b), linear-gradient(#2563eb, #2563eb);
   background-size: 100% 1px, 0 2px;
   background-position: 100% 100%, 0 100%;
   background-repeat: no-repeat, no-repeat;
-  transition: background-size 0.6s linear;
+  transition: background-size 200ms ease;
 }
 .post-content a:hover {
   background-size: 100% 1px, 100% 2px;
@@ -828,7 +892,7 @@ blockquote {
   margin-left: 0;
   margin-right: 0;
   margin-top: 1rem;
-  border-left: 0.25rem solid #afaea9;
+  border-left: 0.25rem solid #71717a;
 }
 blockquote p {
   margin-left: 1rem;
@@ -844,11 +908,11 @@ blockquote blockquote {
   margin-bottom: 0;
 }
 .post-content li {
-  font-family: 'Carrois Song';
-  font-size: 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.9375rem;
   font-weight: 400;
-  line-height: 1.5rem;
-  color: #373633;
+  line-height: 1.375rem;
+  color: #09090b;
   margin-top: 0.5rem;
 }
 .post-content ol {
@@ -880,11 +944,11 @@ blockquote blockquote {
 }
 dl dt {
   padding: 0.5rem 0;
-  font-family: 'Carrois Song';
-  font-size: 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.9375rem;
   font-weight: 700;
-  line-height: 1.5rem;
-  color: #373633;
+  line-height: 1.375rem;
+  color: #09090b;
 }
 dl dt::after {
   content: " :";
@@ -893,7 +957,7 @@ dl dd {
   margin: 0;
 }
 .post-head {
-  margin-top: 3.5rem;
+  margin-top: 2rem;
 }
 .post-head .post-info {
   width: 100%;
@@ -902,31 +966,31 @@ dl dd {
 }
 .post-head .post-info .post-title {
   margin-bottom: 0.75rem;
-  font-family: 'Carrois Song';
-  font-size: 1.75rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 1.625rem;
   font-weight: 700;
-  line-height: 2.25rem;
-  color: #373633;
+  line-height: 2rem;
+  color: #09090b;
 }
 .post-head .post-info .post-date {
-  font-family: 'Carrois Song';
-  font-size: 0.875rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.8125rem;
   font-weight: 400;
-  line-height: 1.25rem;
-  color: #373633;
+  line-height: 1.125rem;
+  color: #71717a;
 }
 .post-head .post-img {
   margin-top: 2rem;
 }
 .post-footer {
-  margin-top: 3.5rem;
+  margin-top: 2rem;
 }
 .post-footer a {
-  background-image: linear-gradient(#fff, #fff), linear-gradient(#373633, #373633);
+  background-image: linear-gradient(#fff, #fff), linear-gradient(#2563eb, #2563eb);
   background-size: 100% 1px, 0% 1px;
   background-position: 100% 100%, 0 100%;
   background-repeat: no-repeat, no-repeat;
-  transition: background-size 0.6s linear;
+  transition: background-size 200ms ease;
 }
 .post-footer a:hover {
   background-size: 0 1px, 100% 1px;
@@ -935,11 +999,11 @@ dl dd {
   margin-top: 0.75rem;
   display: flex;
   flex-wrap: wrap;
-  font-family: 'Carrois Song';
-  font-size: 0.875rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.8125rem;
   font-weight: 500;
-  line-height: 1.25rem;
-  color: #373633;
+  line-height: 1.125rem;
+  color: #09090b;
 }
 .post-nav .prev-item {
   display: flex;
@@ -961,85 +1025,116 @@ dl dd {
   margin-left: 0.25rem;
 }
 .post-comment {
-  margin-top: 3.5rem;
+  margin-top: 2rem;
 }
 .v[data-class="v"] .vsys {
   display: none !important;
 }
 .vcontent p {
   margin-top: 0 !important;
-  font-size: 0.875rem !important;
-  color: #373633 !important;
+  font-size: 0.8125rem !important;
+  color: #09090b !important;
 }
 code {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-family: monospace;
-  font-size: 0.875rem;
-  line-height: 1rem;
-  color: #0177aa;
+  font-size: 0.8125rem;
+  line-height: 0.9375rem;
+  color: #2563eb;
 }
 .code pre span {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-family: monospace;
-  font-size: 0.875rem;
-  line-height: 1rem;
-  color: #7d7c78;
+  font-size: 0.8125rem;
+  line-height: 0.9375rem;
+  color: #52525b;
 }
 .highlight {
   margin: 0 0 1rem 0;
+  overflow-x: auto;
+  border: 1px solid #e4e4e7;
+  border-radius: 0.125rem;
+  padding: 0.5rem;
 }
 .highlight .line {
-  width: 3rem;
+  width: 2.5rem;
+}
+.highlight table {
+  margin: 0;
+  border-spacing: 0;
+  border: none;
+}
+.highlight td.code {
+  padding: 0 0.125rem 0 0.5rem;
 }
 td.gutter {
-  width: 1rem;
+  width: 1.5rem;
+  padding: 0 0.5rem;
+  vertical-align: top;
   position: -webkit-sticky;
   position: sticky;
   left: 0;
-}
-td.gutter span {
-  font-family: monospace;
-  font-size: 0.875rem;
-  line-height: 1rem;
-  color: #bababa;
+  background: #fff;
 }
 td.gutter pre {
-  overflow-x: visible;
+  margin: 0;
+  color: #a1a1aa;
+  font-size: 0.8125rem;
 }
-td span {
-  line-height: 0.25rem;
+td.code {
+  vertical-align: top;
+}
+td.code pre {
+  margin: 0;
 }
 pre {
   margin: 0;
   overflow-x: auto;
 }
-table,
-td,
-th {
-  border: #373633 solid 1px;
+@media (max-width: 688px) {
+  code {
+    font-size: 0.75rem;
+  }
+  .highlight pre {
+    font-size: 0.75rem;
+  }
+  .highlight td.gutter {
+    width: 1rem;
+    padding-right: 0.25rem;
+    font-size: 0.6875rem;
+  }
+}
+.post-content table {
+  border: #09090b solid 1px;
   width: 100%;
   text-align: left;
-}
-table {
   border-collapse: collapse;
   table-layout: fixed;
 }
-td,
-th {
+.post-content table td,
+.post-content table th {
   padding: 0.75rem;
 }
-th {
+.post-content table th {
   font-variation-settings: 'wght' 500;
 }
-td {
+.post-content table td {
   font-variation-settings: 'wght' 300;
 }
-table,
-tboby,
-tr,
-td {
+.post-content table table,
+.post-content table tboby,
+.post-content table tr,
+.post-content table td {
   background-color: inherit;
 }
 .highlight>table {
+  width: auto;
   min-width: fit-content;
+  border: none;
+}
+.highlight>table td {
+  padding: 0;
+  border: none;
 }
 @media (max-width: 480px) {
   .block-table {
@@ -1067,14 +1162,14 @@ img {
   border: 0;
 }
 .gist a {
-  color: #afaea9;
+  color: #71717a;
   background-image: none !important;
 }
 blockquote>footer {
   margin: 0 1rem;
   padding: 0.5rem 0;
-  font-size: 0.75rem;
-  color: #afaea9;
+  font-size: 0.6875rem;
+  color: #71717a;
 }
 blockquote>footer cite {
   margin-left: 0.5rem;
@@ -1083,24 +1178,24 @@ blockquote>footer cite::before {
   content: " — ";
 }
 blockquote>footer strong {
-  color: #afaea9;
-  font-size: 0.75rem;
+  color: #71717a;
+  font-size: 0.6875rem;
 }
 blockquote>footer a {
-  color: #afaea9;
+  color: #71717a;
   background-image: none !important;
 }
 figcaption {
   font-family: monospace;
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   padding: 0.5rem 0;
-  color: #afaea9;
+  color: #71717a;
 }
 figcaption span {
   padding-right: 0.5rem;
 }
 figcaption a {
-  color: #afaea9;
+  color: #71717a;
   background-image: none !important;
 }
 blockquote.pullquote.left {
@@ -1124,14 +1219,14 @@ ul li.task-list-item>input[type=checkbox] {
   opacity: 1;
 }
 ul li.task-list-item>input[type=checkbox][checked]:before {
-  background: #373633;
+  background: #09090b;
   -webkit-mask-image: url("../icon/checkbox-checked.svg");
   -webkit-mask-position: center center;
   mask-image: url("../icon/checkbox-checked.svg");
   -webkit-mask-repeat: no-repeat;
 }
 ul li.task-list-item>input[type=checkbox]:before {
-  background: #373633;
+  background: #09090b;
   -webkit-mask-image: url("../icon/checkbox-default.svg");
   -webkit-mask-position: center center;
   mask-image: url("../icon/checkbox-default.svg");
@@ -1146,7 +1241,7 @@ ul li.task-list-item>input[type=checkbox]:before {
   left: 0;
   top: 0;
   width: 1.25rem;
-  height: 1.5rem;
+  height: 1.375rem;
   background-size: contain;
   background-repeat: no-repeat;
   background-position-x: 0;
@@ -1155,7 +1250,7 @@ ul li.task-list-item>input[type=checkbox]:before {
 }
 .icon {
   display: block;
-  background-color: #373633;
+  background-color: #09090b;
   width: 1.25rem;
   height: 1.25rem;
 }
@@ -1176,15 +1271,15 @@ ul li.task-list-item>input[type=checkbox]:before {
   mask-image: url("../icon/close-btn.svg");
 }
 .h-line-primary {
-  background-color: #373633;
+  background-color: #09090b;
   height: 1px;
 }
 .h-line-secondary {
-  background-color: #afaea9;
+  background-color: #e4e4e7;
   height: 1px;
 }
 hr {
-  background-color: #e8e8e8;
+  background-color: #e4e4e7;
   height: 1px;
   border: 0;
 }
@@ -1195,28 +1290,31 @@ hr {
 }
 .tag-title {
   margin: 0.75rem 0;
-  color: #afaea9;
-  font-size: 0.875rem;
+  color: #71717a;
+  font-size: 0.8125rem;
 }
 .tag-title a {
-  color: #afaea9;
+  color: #71717a;
 }
 .post-tag {
-  font-family: 'Carrois Song';
-  font-size: 0.75rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.6875rem;
   font-weight: 500;
-  line-height: 1rem;
-  border: 1px solid #373633;
+  line-height: 0.875rem;
+  color: #71717a;
+  border: 1px solid #e4e4e7;
   margin-right: 0.25rem;
   margin-bottom: 0.25rem;
   padding: 0.25rem 0.5rem 0.25rem 0.5rem;
   border-radius: 1rem;
+  transition: all 200ms ease;
 }
 .post-tag a {
   background-image: none !important;
 }
 .post-tag:hover {
-  background-color: #373633;
+  border-color: #2563eb;
+  background-color: #2563eb;
 }
 .post-tag:hover a {
   color: #fff;

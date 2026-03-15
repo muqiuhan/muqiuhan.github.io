@@ -1,11 +1,11 @@
 .year-title {
-  margin-top: $margin-primary;
+  margin-top: $margin-l-1;
   margin-bottom: $margin-m-1;
 }
 .post-list-item {
   display: flex;
   flex-wrap: nowrap;
-  margin-top: $margin-m-1;
+  margin-top: $margin-m-0;
   align-items: top;
 }
 .post-list-item .post-title {

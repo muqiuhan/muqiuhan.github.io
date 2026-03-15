@@ -1,32 +1,34 @@
-table,
-td,
-th {
+.post-content table {
   border: $color-text-primary solid $line-third;
   width: 100%;
   text-align: left;
-}
-table {
   border-collapse: collapse;
   table-layout: fixed;
 }
-td,
-th {
+.post-content table td,
+.post-content table th {
   padding: $margin-m-1;
 }
-th {
+.post-content table th {
   font-variation-settings: 'wght' $font-weight-medium;
 }
-td {
+.post-content table td {
   font-variation-settings: 'wght' $font-weight-light;
 }
-table,
-tboby,
-tr,
-td {
+.post-content table table,
+.post-content table tboby,
+.post-content table tr,
+.post-content table td {
   background-color: inherit;
 }
 .highlight>table {
+  width: auto;
   min-width: fit-content;
+  border: none;
+}
+.highlight>table td {
+  padding: 0;
+  border: none;
 }
 @media (max-width: 480px) {
   .block-table {
