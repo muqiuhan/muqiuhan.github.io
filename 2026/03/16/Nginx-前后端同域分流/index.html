@@ -21,7 +21,7 @@
 
                                     <title>
                                         
-                                            Tag: Technique | 
+                                            Nginx 前后端同域分流 | 
                                                     暮秋小屋
                                     </title>
 
@@ -153,216 +153,93 @@
 
       <div class="main">
         <div class="flex-container">
-          <div id="tag">
-  
-
-    <p class="tag-title">
-      / <a href="/tag/">tags</a>
-      / <a href="">Technique</a> /
-    </p>
-    <div class="post-list">
-    
-    
-
-        
-
-        
-            <div class="year-title">2024</div>
-        
-
-        <div class="post-list-item">
-            <div class="post-title">
-            <a href="/2024/02/26/OCaml-News-2024-3/">
-                
-                    OCaml News 2024-3
-                
-                </a> 
-            </div>
-            
-            <span class="post-date">Feb 26, 2024</span>
-        </div>
-
-    
-
-        
-
-        
-
-        <div class="post-list-item">
-            <div class="post-title">
-            <a href="/2024/01/23/G-Machine/">
-                
-                    G-Machine
-                
-                </a> 
-            </div>
-            
-            <span class="post-date">Jan 23, 2024</span>
-        </div>
-
-    
-
-        
-
-        
-
-        <div class="post-list-item">
-            <div class="post-title">
-            <a href="/2024/01/22/Rescript-React-Native/">
-                
-                    Rescript and React Native
-                
-                </a> 
-            </div>
-            
-            <span class="post-date">Jan 22, 2024</span>
-        </div>
-
-    
-
-        
-
-        
-
-        <div class="post-list-item">
-            <div class="post-title">
-            <a href="/2024/01/18/OCaml-News-2024-2/">
-                
-                    OCaml News 2024-2
-                
-                </a> 
-            </div>
-            
-            <span class="post-date">Jan 18, 2024</span>
-        </div>
-
-    
-
-        
-
-        
-
-        <div class="post-list-item">
-            <div class="post-title">
-            <a href="/2024/01/08/OCaml-News-2024-1/">
-                
-                    OCaml News 2024-1
-                
-                </a> 
-            </div>
-            
-            <span class="post-date">Jan 8, 2024</span>
-        </div>
-
-    
-
-        
-
-        
-            <div class="year-title">2023</div>
-        
-
-        <div class="post-list-item">
-            <div class="post-title">
-            <a href="/2023/10/21/OCaml-Core-Int-pow-%E7%9A%84%E5%AE%9E%E7%8E%B0/">
-                
-                    OCaml Core.Int.pow 的实现
-                
-                </a> 
-            </div>
-            
-            <span class="post-date">Oct 21, 2023</span>
-        </div>
-
-    
-
-        
-
-        
-
-        <div class="post-list-item">
-            <div class="post-title">
-            <a href="/2023/10/05/v8%E4%B8%AD%E7%9A%84Number-toString/">
-                
-                    v8中的Number.toString()
-                
-                </a> 
-            </div>
-            
-            <span class="post-date">Oct 5, 2023</span>
-        </div>
-
-    
-
-        
-
-        
-
-        <div class="post-list-item">
-            <div class="post-title">
-            <a href="/2023/09/28/A-Brief-History-of-Just-In-Time/">
-                
-                    A Brief History of Just-In-Time
-                
-                </a> 
-            </div>
-            
-            <span class="post-date">Sep 28, 2023</span>
-        </div>
-
-    
-
-        
-
-        
-
-        <div class="post-list-item">
-            <div class="post-title">
-            <a href="/2023/08/15/tick-thread%E5%9C%A8Multicore-OCaml%E4%B8%AD%E7%9A%84%E4%BD%9C%E7%94%A8/">
-                
-                    tick thread在Multicore OCaml中的作用
-                
-                </a> 
-            </div>
-            
-            <span class="post-date">Aug 15, 2023</span>
-        </div>
-
-    
-
-        
-
-        
-
-        <div class="post-list-item">
-            <div class="post-title">
-            <a href="/2023/08/15/poll-error-attribute-in-OCaml/">
-                
-                    使用 [@poll error] 实现线程安全的数据结构
-                
-                </a> 
-            </div>
-            
-            <span class="post-date">Aug 15, 2023</span>
-        </div>
-
-    
-    <div id="paginator">
-        
-    <div class=paginator>
-        <div class="h-line-primary"></div>
-        <nav class="pagination">
-            <a class="page-number" href="/tags/Technique/">1</a><span class="space">&hellip;</span><a class="page-number" href="/tags/Technique/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/tags/Technique/page/6/">6</a>
-        </nav>
-    </div>
-
-    </div>
-</div>
-
+          <article id="post">
 
   
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/Technique/">
+                            Technique
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                Nginx 前后端同域分流
+            
+            
+        </div>
+        <span class="post-date">
+            Mar 16, 2026
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <p>今天我想在服务器上的 docker nginx 中配置：同一主域下，前端走 <code>/</code>，后端 API 走 <code>/api/*</code>，认证框架 Better Auth 走 <code>/api/auth/*</code>。后端还有自己的 <code>/auth/*</code> 业务接口。</p>
+<p>例如 xxx.yyy.zzz 是前端，xxx.yyy.zzz/api 是后端，后端基于 NestJS 用了 better-auth 会自动挂 /auth 路径。</p>
+<p>Nginx 跑在 Docker 容器里，配置和证书从宿主机挂载进去：</p>
+<ul>
+<li><code>/opt/nginx/conf.d</code> → <code>/etc/nginx/conf.d</code></li>
+<li><code>/opt/nginx/ssl</code> → <code>/etc/nginx/ssl</code></li>
+<li><code>/opt/nginx/nginx.conf</code> → <code>/etc/nginx/nginx.conf</code></li>
+</ul>
+<p>容器通过 <code>extra_hosts: host.docker.internal:host-gateway</code> 访问宿主机服务，所以前后端进程可以继续跑在宿主机上（比如 PM2 管理），Nginx 容器只做反代。</p>
+<p>遇到的第一个坑：<code>/api/auth/*</code> 和 <code>/api/*</code> 不能用同一个 rewrite 规则。</p>
+<p>如果这么写：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">location</span> /api/ &#123;</span><br><span class="line">  <span class="attribute">proxy_pass</span> http://host.docker.internal:&lt;backend&gt;/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Nginx 会把 <code>/api</code> 前缀裁掉。于是 <code>/api/auth/sign-in/email</code> 变成了 <code>/auth/sign-in/email</code>，但 better-auth 挂在 <code>/api/auth/*</code>，直接 404。</p>
+<p>正确的做法是分开处理。更麻烦的是业务身份接口 <code>/auth/me</code> 也存在，如果后端业务接口是 <code>/auth/me</code>，而认证框架是 <code>/api/auth/*</code>，那 <code>/api/auth/me</code> 应该转发给业务而不是认证框架。</p>
+<p>正确顺序：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">location</span> = /api/auth/me &#123;</span><br><span class="line">  <span class="comment"># 精确匹配，业务身份接口</span></span><br><span class="line">  <span class="attribute">rewrite</span><span class="regexp"> ^/api(.*)$</span> <span class="variable">$1</span> <span class="literal">break</span>;</span><br><span class="line">  <span class="attribute">proxy_pass</span> http://host.docker.internal:&lt;backend&gt;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">location</span><span class="regexp"> ^~</span> /api/auth/ &#123;</span><br><span class="line">  <span class="comment"># 认证框架路由，保留前缀</span></span><br><span class="line">  <span class="attribute">proxy_pass</span> http://host.docker.internal:&lt;auth-port&gt;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">location</span><span class="regexp"> ^~</span> /api/ &#123;</span><br><span class="line">  <span class="comment"># 其余 API，裁掉 /api</span></span><br><span class="line">  <span class="attribute">rewrite</span><span class="regexp"> ^/api(.*)$</span> <span class="variable">$1</span> <span class="literal">break</span>;</span><br><span class="line">  <span class="attribute">proxy_pass</span> http://host.docker.internal:&lt;backend&gt;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">location</span> / &#123;</span><br><span class="line">  <span class="comment"># 前端</span></span><br><span class="line">  <span class="attribute">proxy_pass</span> http://host.docker.internal:&lt;frontend&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里的顺序很重要。Nginx 匹配规则是：精确匹配 <code>=</code> 优先，然后是前缀匹配 <code>^~</code>，然后是正则匹配，最后是普通前缀匹配。<code>^~</code> 表示一旦匹配成功就不再检查正则。</p>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2026/03/12/%E7%AE%80%E5%8D%95%E8%AF%B4%E8%AF%B4-FHIR-Transaction-Bundle/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
 
 </div>
+     
+  
+</article>
         </div>
       </div>
       

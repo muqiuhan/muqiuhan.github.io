@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="韩暮秋">
+    
+        
+            <meta name="subtitle" content="暮秋小屋">
+            
+                
+                    <meta name="description" content="这里是暮秋小屋，思念和灵感的寄存处">
+                    
+                        
+                            <meta name="keywords" content="韩暮秋,MuqiuHan,'Muqiu Han', 'muqiu han', muqiuhan">
+                            
+
+                                
+
+                                    <title>
+                                        
+                                            简单说说 FHIR Transaction Bundle | 
+                                                    暮秋小屋
+                                    </title>
+
+                                    
+                                        
+                                            <link rel="icon" href="/favicon.ico">
+                                            
+
+                                                        
+                                                            
+                                                                <!-- stylesheets list from _config.yml -->
+                                                                
+                                                                    <link rel="stylesheet" href="/css/style.css">
+                                                                    
+                                                                        
+
+                                                                            
+                                                                                <link rel="preload" href="/fonts/latin-base.woff2" as="font" type="font/woff2" crossorigin>
+                                                                                <link rel="preload" href="/fonts/cjk-common.woff2" as="font" type="font/woff2" crossorigin>
+
+                                                                    
+                                                                        
+                                                                            <!-- scripts list from _config.yml -->
+                                                                            
+                                                                                <script
+                                                                                    src="/js/menu.js"></script>
+                                                                                
+                                                                                    
+
+                                                                                        
+                                                                                            
+                                                                                                <script
+                                                                                                    src="https://polyfill.alicdn.com/polyfill.js?features=es6"></script>
+                                                                                                <script
+                                                                                                    id="MathJax-script"
+                                                                                                    async
+                                                                                                    src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/mathjax/3.2.0/es5/tex-mml-chtml.js"></script>
+                                                                                                
+
+                                                                                                    
+                                                                                                        
+  <meta name="generator" content="Hexo 6.3.0"></head>
+  <body>
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+              暮秋小屋
+                
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        菜单
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+                <li class="menu-item">
+                  <a href="/">
+                    主页
+                  </a>
+                </li>
+                
+                  
+            
+                <li class="menu-item">
+                  <a href="/categories/gallery/">
+                    日记本
+                  </a>
+                </li>
+                
+                  
+            
+                <li class="menu-item">
+                  <a href="/tags/Medicine/">
+                    泛医学
+                  </a>
+                </li>
+                
+                  
+            
+                <li class="menu-item">
+                  <a href="/tags/Technique/">
+                    计算机
+                  </a>
+                </li>
+                
+                  
+            
+                <li class="menu-item">
+                  <a href="/tags/Life/">
+                    生活
+                  </a>
+                </li>
+                
+                  
+            
+                <li class="menu-item">
+                  <a href="/archives">
+                    全部
+                  </a>
+                </li>
+                
+                  
+            
+                <li class="menu-item">
+                  <a href="/about">
+                    关于
+                  </a>
+                </li>
+                
+                  
+                    
+                      <li class="menu-item">
+                        <a href="/search">搜索</a>
+                      </li>
+                      
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/Technique/">
+                            Technique
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                简单说说 FHIR Transaction Bundle
+            
+            
+        </div>
+        <span class="post-date">
+            Mar 12, 2026
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <p>FHIR Transaction Bundle 主要解决这一类问题:</p>
+<blockquote>
+<p>假设你要创建一个 Patient，再创建一个属于这个患者的 Observation，两个必须同时成功或同时失败。用普通 REST API，你得先 POST Patient，拿到 ID，再 POST Observation，如果中间失败了还得自己回滚。FHIR 的 transaction 就是把这个流程标准化成类似数据库的事务操作或说是 “原子操作” ，整组操作要么全成功，要么全失败，而且可以在同一个 bundle 里直接引用还没创建的资源。</p>
+</blockquote>
+<p>transaction bundle 和 batch bundle 的区别是，batch 把多个请求一起提交，每个独立处理，一部分成功一部分失败是允许的。Transaction 是把所有请求当原子单元处理，任一失败则整体回滚。Medplum 文档说得很直接：batch 是独立处理，transaction 是原子处理。</p>
+<p>然后看一个最基础的例子。同时创建 Patient 和 Observation，Observation 引用这个新建的 Patient：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;resourceType&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Bundle&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;transaction&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;entry&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;fullUrl&quot;</span><span class="punctuation">:</span> <span class="string">&quot;urn:uuid:patient-1&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;method&quot;</span><span class="punctuation">:</span> <span class="string">&quot;POST&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;url&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Patient&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;resource&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;resourceType&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Patient&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span> <span class="attr">&quot;family&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Doe&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;given&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;Jane&quot;</span><span class="punctuation">]</span> <span class="punctuation">&#125;</span><span class="punctuation">]</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;fullUrl&quot;</span><span class="punctuation">:</span> <span class="string">&quot;urn:uuid:observation-1&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;method&quot;</span><span class="punctuation">:</span> <span class="string">&quot;POST&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;url&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Observation&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;resource&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;resourceType&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Observation&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;status&quot;</span><span class="punctuation">:</span> <span class="string">&quot;final&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;code&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Body Weight&quot;</span> <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;subject&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;reference&quot;</span><span class="punctuation">:</span> <span class="string">&quot;urn:uuid:patient-1&quot;</span> <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;valueQuantity&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;value&quot;</span><span class="punctuation">:</span> <span class="number">68</span><span class="punctuation">,</span> <span class="attr">&quot;unit&quot;</span><span class="punctuation">:</span> <span class="string">&quot;kg&quot;</span> <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>这里的关键是 <code>fullUrl</code> 和 <code>urn:uuid</code>。<code>fullUrl</code> 给 bundle 内还没创建的资源一个临时身份，其他资源通过这个 <code>urn:uuid</code> 引用它。服务端创建资源后会把内部引用替换成真实地址。</p>
+<p>FHIR R4 规范对 transaction 有几个硬性规则，这些规则直接影响你怎么设计 bundle。</p>
+<p>第一，原子性，要么全成功要么全失败。</p>
+<p>第二，处理结果不依赖 entry 顺序。这是我踩坑的地方。不能把 transaction 当成&quot;按顺序执行的脚本&quot;。FHIR 明确规定了服务端处理顺序：先 DELETE，再 POST，再 PUT/PATCH，最后 GET 和解析条件引用。所以写 bundle 的时候不能依赖&quot;先 A 再 B&quot;这种逻辑。</p>
+<p>第三，同一资源身份在一个 transaction 中只能出现一次。这是规范层面的限制，不是&quot;可能出问题&quot;，而是规范直接说 SHALL fail。</p>
+<p>举个反面例子。我想在一个 transaction 里先 PATCH 一个资源补审计字段，再 DELETE 同一个资源：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;resourceType&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Bundle&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;transaction&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;entry&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;method&quot;</span><span class="punctuation">:</span> <span class="string">&quot;PATCH&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;url&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Observation/obs-1&quot;</span> <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;resource&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;resourceType&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Parameters&quot;</span> <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;method&quot;</span><span class="punctuation">:</span> <span class="string">&quot;DELETE&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;url&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Observation/obs-1&quot;</span> <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>这个 bundle 从规范层面就不合法。原因有两个：一是服务端不会按你写的顺序处理，DELETE 先于 PATCH；二是同一个资源 <code>Observation/obs-1</code> 在 transaction 里出现了两次，构成身份重叠，规范要求失败。</p>
+<p>再说 DELETE。FHIR 的 DELETE 不是物理删除。从普通读取角度看，资源返回 410 Gone；从搜索角度看，资源不再出现；但如果服务端维护版本历史，<code>_history</code> 里仍然有记录，而且删除本身会形成一个&quot;被标记为 deleted 的特殊历史版本&quot;。规范还提到被删除的资源可以通过后续 PUT update “bring back to life”。</p>
+<p>这对审计设计有直接影响。如果想把删除审计写在主资源的 extension 里（比如 deletedBy、deletedAt），就不能用一个 transaction 搞定，因为同一个资源不能既 PATCH 又 DELETE。你得接受两步法：先更新资源写审计信息，再执行 DELETE。代价是多出一个预删除版本，但好处是审计信息确实留在了主资源历史里。</p>
+<p>什么时候该用 transaction？比如多资源必须原子操作的场景，资源间存在内部引用的场景，希望服务端负责一致性边界的场景。</p>
+<p>什么时候不该用？比如只是想减少 HTTP 请求次数的，用 batch；bundle 太大事务太重的，某些资源本来就适合异步处理的。</p>
+<h2 id="参考资料"><a class="header-anchor" href="#参考资料">¶</a>参考资料</h2>
+<ul>
+<li>FHIR R4 RESTful API<br>
+<a target="_blank" rel="noopener" href="https://hl7.org/fhir/R4/http.html">https://hl7.org/fhir/R4/http.html</a></li>
+<li>FHIR R4 Transaction Processing Rules<br>
+<a target="_blank" rel="noopener" href="https://hl7.org/fhir/R4/http.html#transaction">https://hl7.org/fhir/R4/http.html#transaction</a></li>
+<li>FHIR R4 Delete Interaction<br>
+<a target="_blank" rel="noopener" href="https://hl7.org/fhir/R4/http.html#delete">https://hl7.org/fhir/R4/http.html#delete</a></li>
+<li>Medplum: FHIR Batch Requests<br>
+<a target="_blank" rel="noopener" href="https://www.medplum.com/docs/fhir-datastore/fhir-batch-requests">https://www.medplum.com/docs/fhir-datastore/fhir-batch-requests</a></li>
+</ul>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+                <div class="icon arrow-left"></div>
+                <div class="post-link">
+                    <a href="/2026/03/16/Nginx-%E5%89%8D%E5%90%8E%E7%AB%AF%E5%90%8C%E5%9F%9F%E5%88%86%E6%B5%81/">Prev</a>
+                </div>
+            
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2026/03/06/Tacrolimus-for-Stasis-Dermatitis-in-Palliative-Heart-Failure-and-COPD/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+                        
+                            韩暮秋 |
+                                
+                                    
+                                        希望路过的人可以添点柴火让这里暖和点
+                                        
+        </div>
+    </div>
+</div>
+
+
+    </div>
+    
+    <script src="/js/mermaid-zoom.js"></script>
+
+  </body>
+</html>
