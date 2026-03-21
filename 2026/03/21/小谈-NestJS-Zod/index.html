@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="韩暮秋">
+    
+        
+            <meta name="subtitle" content="暮秋小屋">
+            
+                
+                    <meta name="description" content="这里是暮秋小屋，思念和灵感的寄存处">
+                    
+                        
+                            <meta name="keywords" content="韩暮秋,MuqiuHan,'Muqiu Han', 'muqiu han', muqiuhan">
+                            
+
+                                
+
+                                    <title>
+                                        
+                                            小谈 NestJS Zod | 
+                                                    暮秋小屋
+                                    </title>
+
+                                    
+                                        
+                                            <link rel="icon" href="/favicon.ico">
+                                            
+
+                                                        
+                                                            
+                                                                <!-- stylesheets list from _config.yml -->
+                                                                
+                                                                    <link rel="stylesheet" href="/css/style.css">
+                                                                    
+                                                                        
+
+                                                                            
+                                                                                <link rel="preload" href="/fonts/latin-base.woff2" as="font" type="font/woff2" crossorigin>
+                                                                                <link rel="preload" href="/fonts/cjk-common.woff2" as="font" type="font/woff2" crossorigin>
+
+                                                                    
+                                                                        
+                                                                            <!-- scripts list from _config.yml -->
+                                                                            
+                                                                                <script
+                                                                                    src="/js/menu.js"></script>
+                                                                                
+                                                                                    
+
+                                                                                        
+                                                                                            
+                                                                                                <script
+                                                                                                    src="https://polyfill.alicdn.com/polyfill.js?features=es6"></script>
+                                                                                                <script
+                                                                                                    id="MathJax-script"
+                                                                                                    async
+                                                                                                    src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/mathjax/3.2.0/es5/tex-mml-chtml.js"></script>
+                                                                                                
+
+                                                                                                    
+                                                                                                        
+  <meta name="generator" content="Hexo 6.3.0"></head>
+  <body>
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+              暮秋小屋
+                
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        菜单
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+                <li class="menu-item">
+                  <a href="/">
+                    主页
+                  </a>
+                </li>
+                
+                  
+            
+                <li class="menu-item">
+                  <a href="/categories/gallery/">
+                    日记本
+                  </a>
+                </li>
+                
+                  
+            
+                <li class="menu-item">
+                  <a href="/tags/Medicine/">
+                    泛医学
+                  </a>
+                </li>
+                
+                  
+            
+                <li class="menu-item">
+                  <a href="/tags/Technique/">
+                    计算机
+                  </a>
+                </li>
+                
+                  
+            
+                <li class="menu-item">
+                  <a href="/tags/Life/">
+                    生活
+                  </a>
+                </li>
+                
+                  
+            
+                <li class="menu-item">
+                  <a href="/archives">
+                    全部
+                  </a>
+                </li>
+                
+                  
+            
+                <li class="menu-item">
+                  <a href="/about">
+                    关于
+                  </a>
+                </li>
+                
+                  
+                    
+                      <li class="menu-item">
+                        <a href="/search">搜索</a>
+                      </li>
+                      
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/Technique/">
+                            Technique
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                小谈 NestJS Zod
+            
+            
+        </div>
+        <span class="post-date">
+            Mar 21, 2026
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <p>NestJS Zod 理论上是可以成为一层真正的契约系统的：请求校验、类型推导、OpenAPI 生成、领域约束复用，前后端一致的输入语义，都在同一份定义里。</p>
+<blockquote>
+<p>领域约束是否要复用需要讨论，但只说技术上可行。</p>
+</blockquote>
+<p>最简单的用法是用 <code>z.object(...)</code> 定义 schema，用 <code>createZodDto(schema)</code> 生成 DTO，然后引入一个全局的 <code>ZodValidationPipe</code>。大概是这样：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Module</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="variable constant_">APP_PIPE</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">ZodValidationPipe</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;nestjs-zod&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Module</span>(&#123;</span><br><span class="line">  <span class="attr">providers</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">provide</span>: <span class="variable constant_">APP_PIPE</span>,</span><br><span class="line">      <span class="attr">useClass</span>: <span class="title class_">ZodValidationPipe</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppModule</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>DTO 只是 schema 的包装：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createZodDto &#125; <span class="keyword">from</span> <span class="string">&#x27;nestjs-zod&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; z &#125; <span class="keyword">from</span> <span class="string">&#x27;zod&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> createItemSchema = z.<span class="title function_">object</span>(&#123;</span><br><span class="line">  <span class="attr">name</span>: z.<span class="title function_">string</span>().<span class="title function_">trim</span>().<span class="title function_">min</span>(<span class="number">1</span>),</span><br><span class="line">  <span class="attr">price</span>: z.<span class="title function_">number</span>().<span class="title function_">nonnegative</span>()</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">CreateItemDto</span> <span class="keyword">extends</span> <span class="title class_ inherited__">createZodDto</span>(createItemSchema) &#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>这样运行时校验和 TypeScript 类型就共享同一份定义了。</p>
+<hr>
+<p>Zod 可以很简单的实现字符串非空、数字范围、枚举取值、对象结构、Discriminated Union。DU 比传统 DTO 写法强，因为不同 <code>type</code> 对应的字段集合可以天然收敛：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> requestSchema = z.<span class="title function_">discriminatedUnion</span>(<span class="string">&#x27;type&#x27;</span>, [</span><br><span class="line">  z.<span class="title function_">object</span>(&#123;</span><br><span class="line">    <span class="attr">type</span>: z.<span class="title function_">literal</span>(<span class="string">&#x27;A&#x27;</span>),</span><br><span class="line">    <span class="attr">payload</span>: z.<span class="title function_">object</span>(&#123;</span><br><span class="line">      <span class="attr">foo</span>: z.<span class="title function_">string</span>()</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;),</span><br><span class="line">  z.<span class="title function_">object</span>(&#123;</span><br><span class="line">    <span class="attr">type</span>: z.<span class="title function_">literal</span>(<span class="string">&#x27;B&#x27;</span>),</span><br><span class="line">    <span class="attr">payload</span>: z.<span class="title function_">object</span>(&#123;</span><br><span class="line">      <span class="attr">bar</span>: z.<span class="title function_">number</span>()</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
+<p>但真实业务的问题通常不止于单字段合法。我遇到的一些情况有：</p>
+<ul>
+<li>某个数组元素本身没问题，但数组整体不能重复</li>
+<li>某个字段语法上合法，但必须属于当前 <code>recordType</code> 允许的字段集合</li>
+<li>两个字段分别没问题，但组合起来语义冲突</li>
+</ul>
+<p>这类规则会比较严重的影响接口可维护性，它们的特点是 &quot;结构正确，语义错误”，假设请求结构是这样的：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">recordType</span>: <span class="string">&#x27;A&#x27;</span>,</span><br><span class="line">  <span class="attr">structuredData</span>: &#123; ... &#125;,</span><br><span class="line">  <span class="attr">fieldExceptions</span>: [</span><br><span class="line">    &#123; <span class="attr">fieldKey</span>: <span class="string">&#x27;x&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">fieldKey</span>: <span class="string">&#x27;y&#x27;</span> &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此处 <code>fieldExceptions</code> 的意思是 “标记 structuredData 中的某个字段在业务上的特殊情况”，例如在数据标注系统中，数据标注人员无法结构化录入某个字段。</p>
+<p>单看每一项 <code>&#123; fieldKey: z.string(), reason?: z.string() &#125;</code> 完全合法。但可能出现这种情况：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">fieldExceptions</span>: [</span><br><span class="line">  &#123; <span class="attr">fieldKey</span>: <span class="string">&#x27;x&#x27;</span> &#125;,</span><br><span class="line">  &#123; <span class="attr">fieldKey</span>: <span class="string">&#x27;x&#x27;</span> &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>JSON 结构没问题，类型也没问题，但业务语义上明显重复了。NestJS Zod 处理这类问题的方法是直接在 schema 层面操作：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> withUniqueFieldExceptions&lt;T <span class="keyword">extends</span> z.<span class="property">ZodTypeAny</span>&gt;(<span class="attr">schema</span>: T) &#123;</span><br><span class="line">  <span class="keyword">return</span> schema.<span class="title function_">superRefine</span>(<span class="function">(<span class="params">value, ctx</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> fieldExceptions = (value <span class="keyword">as</span> &#123;</span><br><span class="line">      <span class="attr">fieldExceptions</span>?: <span class="title class_">Array</span>&lt;&#123; <span class="attr">fieldKey</span>: <span class="built_in">string</span> &#125;&gt;;</span><br><span class="line">    &#125;).<span class="property">fieldExceptions</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!fieldExceptions) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> seen = <span class="keyword">new</span> <span class="title class_">Set</span>&lt;<span class="built_in">string</span>&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> [index, item] <span class="keyword">of</span> fieldExceptions.<span class="title function_">entries</span>()) &#123;</span><br><span class="line">      <span class="keyword">if</span> (seen.<span class="title function_">has</span>(item.<span class="property">fieldKey</span>)) &#123;</span><br><span class="line">        ctx.<span class="title function_">addIssue</span>(&#123;</span><br><span class="line">          <span class="attr">code</span>: z.<span class="property">ZodIssueCode</span>.<span class="property">custom</span>,</span><br><span class="line">          <span class="attr">message</span>: <span class="string">`Duplicate field exception for <span class="subst">$&#123;item.fieldKey&#125;</span>.`</span>,</span><br><span class="line">          <span class="attr">path</span>: [<span class="string">&#x27;fieldExceptions&#x27;</span>, index, <span class="string">&#x27;fieldKey&#x27;</span>]</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      seen.<span class="title function_">add</span>(item.<span class="property">fieldKey</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果把去重校验写在 service/command/query 中，系统中的其他任何组件（例如测试）都可能绕过去。但如果写在 schema 中，所有入口只要用的是这份 schema，就天然继承这个约束。</p>
+<p>注意在这个 helper 中有一个细节：错误路径要详细到具体数组项。<code>path: ['fieldExceptions', index, 'fieldKey']</code> 这个写法可以让前端拿到错误后不只是知道请求失败，而是能知道哪一项重复/错误。对于复杂表单，这种可定位性比一条顶层报错有用。</p>
+<p>另外我这里给出的 helper 主要向展示的是 schema 层面的约束能力，不是业务对象， <code>withUniqueFieldExceptions</code> 不是某个接口私有逻辑，而是一种可复用的 schema 装饰器模式。同理可以有 <code>withUniqueAttachmentChanges</code>、<code>withNonOverlappingRanges</code>、<code>withConsistentDateOrder</code>。这类 helper 一旦抽出来，schema 层就具备组合能力，业务约束可以像搭积木一样拼装。</p>
+<p>沿着这个思路，我们可以进一步的表示 “<code>fieldExceptions[].fieldKey</code> 不应该是任意字符串，它必须属于当前 <code>recordType</code> 允许的字段集合”：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">createFieldExceptionSchema</span>(<span class="params"><span class="attr">fieldKeys</span>: [<span class="built_in">string</span>, ...<span class="built_in">string</span>[]]</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> z.<span class="title function_">object</span>(&#123;</span><br><span class="line">    <span class="attr">fieldKey</span>: z.<span class="title function_">enum</span>(fieldKeys),</span><br><span class="line">    <span class="attr">reason</span>: z.<span class="title function_">string</span>().<span class="title function_">trim</span>().<span class="title function_">max</span>(<span class="number">500</span>).<span class="title function_">optional</span>()</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后在 <code>discriminatedUnion</code> 的每个分支里绑定自己的字段白名单：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> requestSchema = z.<span class="title function_">discriminatedUnion</span>(<span class="string">&#x27;recordType&#x27;</span>, [</span><br><span class="line">  <span class="title function_">withUniqueFieldExceptions</span>(</span><br><span class="line">    z.<span class="title function_">object</span>(&#123;</span><br><span class="line">      <span class="attr">recordType</span>: z.<span class="title function_">literal</span>(<span class="string">&#x27;A&#x27;</span>),</span><br><span class="line">      <span class="attr">structuredData</span>: z.<span class="title function_">object</span>(&#123;</span><br><span class="line">        <span class="attr">foo</span>: z.<span class="title function_">union</span>([z.<span class="title function_">number</span>(), z.<span class="title function_">string</span>(), z.<span class="title function_">null</span>()])</span><br><span class="line">      &#125;).<span class="title function_">strict</span>(),</span><br><span class="line">      <span class="attr">fieldExceptions</span>: z.<span class="title function_">array</span>(<span class="title function_">createFieldExceptionSchema</span>([<span class="string">&#x27;foo&#x27;</span>])).<span class="title function_">default</span>([])</span><br><span class="line">    &#125;)</span><br><span class="line">  ),</span><br><span class="line">  <span class="title function_">withUniqueFieldExceptions</span>(</span><br><span class="line">    z.<span class="title function_">object</span>(&#123;</span><br><span class="line">      <span class="attr">recordType</span>: z.<span class="title function_">literal</span>(<span class="string">&#x27;B&#x27;</span>),</span><br><span class="line">      <span class="attr">structuredData</span>: z.<span class="title function_">object</span>(&#123;</span><br><span class="line">        <span class="attr">bar</span>: z.<span class="title function_">union</span>([z.<span class="title function_">number</span>(), z.<span class="title function_">string</span>(), z.<span class="title function_">null</span>()])</span><br><span class="line">      &#125;).<span class="title function_">strict</span>(),</span><br><span class="line">      <span class="attr">fieldExceptions</span>: z.<span class="title function_">array</span>(<span class="title function_">createFieldExceptionSchema</span>([<span class="string">&#x27;bar&#x27;</span>])).<span class="title function_">default</span>([])</span><br><span class="line">    &#125;)</span><br><span class="line">  )</span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
+<p>这样 <code>recordType</code> 和合法字段天然绑定，不需要额外写一堆 if/else，错误会在 parse 阶段就暴露而不是进入业务流程后才抛异常。schema 在这里承担了类型分支的职责。</p>
+<hr>
+<p>但对于复杂输入的场景，需要注意分层，validator 和 normalizer 应该分开。schema 不一定负责把所有值变干净，但它应该负责把输入约束在一个可以被 normalizer 处理的范围内。比如数值输入，前端可能传 <code>12.3</code>、<code>&quot;12.3&quot;</code>、<code>null</code>，schema 可以先允许 <code>z.union([z.number(), z.string(), z.null()])</code>，parse 成功之后再进入统一的 normalizer。这种分层比在 schema 里直接做满所有 coercion 会更加可维护，因为它把两个问题拆开了：schema 负责数据能不能被系统处理，normalizer 负责进来的数据如何变成领域标准格式。这能避免 schema 逐渐膨胀成一个难以维护的黑盒。</p>
+<p>运行时 schema 和文档 schema 可以适度分离。有些真实运行时 schema 很复杂，比如 DU、<code>superRefine</code>、动态字段白名单等，有些约束还依赖运行时上下文，这些对 OpenAPI JSON Spec 的生成不一定友好。可以考虑保留两套：<code>requestSchema</code> 真实运行时校验用，<code>requestDtoSchema</code> 专门服务 OpenAPI 的描述性 schema。controller 的 DTO 从 <code>requestDtoSchema</code> 生成，但真正执行业务前，再对原始 payload 走一次 <code>requestSchema.safeParse(...)</code>。</p>
+<blockquote>
+<p>文档可读性和运行时严谨性不必强行绑定在同一份 schema 表达能力上。如果一份 schema 同时满足两者当然最好，如果不能，优先保证运行时正确性。</p>
+</blockquote>
+<p>注意，虽然 Controller 已经有 <code>ZodValidationPipe</code>，但如果用 CQRS，那么在 command/query handler 最好还要再次 <code>safeParse</code> 一下，因为进入 handler 的 payload 未必只来自 HTTP，还可能来自 cron、queue consumer、internal dispatch、test fixture、script。如果 handler 是真正的业务入口，那它就应该自己守住边界。这不是重复，而是分层后更加清晰的职责，因为 Pipe 只保护 HTTP 入口，handler 内 <code>safeParse</code> 主要保护业务入口。</p>
+<p>最后，直接对 schema 写测试：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">it</span>(<span class="string">&#x27;rejects duplicated field exceptions&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> result = requestSchema.<span class="title function_">safeParse</span>(&#123;</span><br><span class="line">    <span class="attr">recordType</span>: <span class="string">&#x27;A&#x27;</span>,</span><br><span class="line">    <span class="attr">structuredData</span>: &#123; <span class="attr">foo</span>: <span class="string">&#x27;1&#x27;</span> &#125;,</span><br><span class="line">    <span class="attr">fieldExceptions</span>: [</span><br><span class="line">      &#123; <span class="attr">fieldKey</span>: <span class="string">&#x27;foo&#x27;</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">fieldKey</span>: <span class="string">&#x27;foo&#x27;</span> &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="title function_">expect</span>(result.<span class="property">success</span>).<span class="title function_">toBe</span>(<span class="literal">false</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>这种测试验证的是契约本身，不是某个 service 逻辑的分支，这种测试看起来更有价值也更清晰。</p>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2026/03/16/Nginx-%E5%89%8D%E5%90%8E%E7%AB%AF%E5%90%8C%E5%9F%9F%E5%88%86%E6%B5%81/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+                        
+                            韩暮秋 |
+                                
+                                    
+                                        希望路过的人可以添点柴火让这里暖和点
+                                        
+        </div>
+    </div>
+</div>
+
+
+    </div>
+    
+    <script src="/js/mermaid-zoom.js"></script>
+
+  </body>
+</html>
