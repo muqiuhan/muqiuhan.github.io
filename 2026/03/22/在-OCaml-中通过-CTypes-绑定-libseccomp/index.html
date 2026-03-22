@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="韩暮秋">
+    
+        
+            <meta name="subtitle" content="暮秋小屋">
+            
+                
+                    <meta name="description" content="这里是暮秋小屋，思念和灵感的寄存处">
+                    
+                        
+                            <meta name="keywords" content="韩暮秋,MuqiuHan,'Muqiu Han', 'muqiu han', muqiuhan">
+                            
+
+                                
+
+                                    <title>
+                                        
+                                            在 OCaml 中通过 CTypes 绑定 libseccomp | 
+                                                    暮秋小屋
+                                    </title>
+
+                                    
+                                        
+                                            <link rel="icon" href="/favicon.ico">
+                                            
+
+                                                        
+                                                            
+                                                                <!-- stylesheets list from _config.yml -->
+                                                                
+                                                                    <link rel="stylesheet" href="/css/style.css">
+                                                                    
+                                                                        
+
+                                                                            
+                                                                                <link rel="preload" href="/fonts/latin-base.woff2" as="font" type="font/woff2" crossorigin>
+                                                                                <link rel="preload" href="/fonts/cjk-common.woff2" as="font" type="font/woff2" crossorigin>
+
+                                                                    
+                                                                        
+                                                                            <!-- scripts list from _config.yml -->
+                                                                            
+                                                                                <script
+                                                                                    src="/js/menu.js"></script>
+                                                                                
+                                                                                    
+
+                                                                                        
+                                                                                            
+                                                                                                <script
+                                                                                                    src="https://polyfill.alicdn.com/polyfill.js?features=es6"></script>
+                                                                                                <script
+                                                                                                    id="MathJax-script"
+                                                                                                    async
+                                                                                                    src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/mathjax/3.2.0/es5/tex-mml-chtml.js"></script>
+                                                                                                
+
+                                                                                                    
+                                                                                                        
+  <meta name="generator" content="Hexo 6.3.0"></head>
+  <body>
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+              暮秋小屋
+                
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        菜单
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+                <li class="menu-item">
+                  <a href="/">
+                    主页
+                  </a>
+                </li>
+                
+                  
+            
+                <li class="menu-item">
+                  <a href="/categories/gallery/">
+                    日记本
+                  </a>
+                </li>
+                
+                  
+            
+                <li class="menu-item">
+                  <a href="/tags/Medicine/">
+                    泛医学
+                  </a>
+                </li>
+                
+                  
+            
+                <li class="menu-item">
+                  <a href="/tags/Technique/">
+                    计算机
+                  </a>
+                </li>
+                
+                  
+            
+                <li class="menu-item">
+                  <a href="/tags/Life/">
+                    生活
+                  </a>
+                </li>
+                
+                  
+            
+                <li class="menu-item">
+                  <a href="/archives">
+                    全部
+                  </a>
+                </li>
+                
+                  
+            
+                <li class="menu-item">
+                  <a href="/about">
+                    关于
+                  </a>
+                </li>
+                
+                  
+                    
+                      <li class="menu-item">
+                        <a href="/search">搜索</a>
+                      </li>
+                      
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/Technique/">
+                            Technique
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                在 OCaml 中通过 CTypes 绑定 libseccomp
+            
+            
+        </div>
+        <span class="post-date">
+            Mar 22, 2026
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <p>CTypes 允许我们用纯 OCaml 代码绑定 C lib 而不用编写任何 C 代码。这篇文章是以 <a target="_blank" rel="noopener" href="https://github.com/muqiuhan/bonding">bonding</a> 项目中的 <code>libseccomp</code> 绑定为例写的。</p>
+<p>CTypes 的核心概念是建立 OCaml 类型与 C 类型的双向映射，ctypes 中有如下基本类型：</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">open</span> <span class="type">Ctypes</span></span><br><span class="line"></span><br><span class="line"><span class="comment">(* C 类型与 OCaml 类型的对应关系 *)</span></span><br><span class="line"><span class="keyword">let</span> c_int : <span class="built_in">int</span> typ = <span class="built_in">int</span>                    <span class="comment">(* int *)</span></span><br><span class="line"><span class="keyword">let</span> c_uint : <span class="type">Unsigned</span>.<span class="type">UInt</span>.t typ = uint      <span class="comment">(* unsigned int *)</span></span><br><span class="line"><span class="keyword">let</span> c_long : <span class="type">Signed</span>.<span class="type">Long</span>.t typ = long        <span class="comment">(* long *)</span></span><br><span class="line"><span class="keyword">let</span> c_int64 : <span class="type">Unsigned</span>.<span class="type">UInt64</span>.t typ = uint64_t  <span class="comment">(* int64_t / uint64_t *)</span></span><br><span class="line"><span class="keyword">let</span> c_float : <span class="built_in">float</span> typ = <span class="built_in">float</span>              <span class="comment">(* float *)</span></span><br><span class="line"><span class="keyword">let</span> c_double : <span class="built_in">float</span> typ = double            <span class="comment">(* double *)</span></span><br><span class="line"><span class="keyword">let</span> c_char : <span class="built_in">char</span> typ = <span class="built_in">char</span>                 <span class="comment">(* char *)</span></span><br><span class="line"><span class="keyword">let</span> c_void : <span class="built_in">unit</span> typ = void                 <span class="comment">(* void *)</span></span><br></pre></td></tr></table></figure>
+<h2 id="指针"><a class="header-anchor" href="#指针">¶</a>指针</h2>
+<p>对于 C 的指针，CTypes 提供了多种指针表示：</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">(* 通用指针：void* *)</span></span><br><span class="line"><span class="keyword">let</span> void_ptr : <span class="built_in">unit</span> ptr typ = ptr void</span><br><span class="line"></span><br><span class="line"><span class="comment">(* 类型化指针：int* *)</span></span><br><span class="line"><span class="keyword">let</span> int_ptr : <span class="built_in">int</span> ptr typ = ptr <span class="built_in">int</span></span><br><span class="line"></span><br><span class="line"><span class="comment">(* 不透明指针：用于表示我们不知道内部结构的 C 结构体 *)</span></span><br><span class="line"><span class="keyword">let</span> scmp_filter_ctx : <span class="built_in">unit</span> ptr typ = ptr void</span><br></pre></td></tr></table></figure>
+<p>bonding 中的 seccomp_stubs.ml 中是这么写的：</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> scmp_filter_ctx = <span class="built_in">unit</span> ptr</span><br><span class="line"><span class="keyword">let</span> scmp_filter_ctx : scmp_filter_ctx typ = ptr void</span><br></pre></td></tr></table></figure>
+<p>这里 <code>scmp_filter_ctx</code> 是 libseccomp 的核心类型，它是一个不透明指针。C 库不暴露其内部结构，我们只能通过库函数操作它。使用 <code>ptr void</code> 是表示不透明指针的标准做法。</p>
+<h2 id="结构体"><a class="header-anchor" href="#结构体">¶</a>结构体</h2>
+<p>对于结构体，ctypes 通过 <code>structure</code> 和 <code>field</code> 函数定义:</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">(* 定义 C 结构体：</span></span><br><span class="line"><span class="comment">   struct scmp_arg_cmp &#123;</span></span><br><span class="line"><span class="comment">     unsigned int arg;</span></span><br><span class="line"><span class="comment">     unsigned int op;</span></span><br><span class="line"><span class="comment">     uint64_t datum_a;</span></span><br><span class="line"><span class="comment">     uint64_t datum_b;</span></span><br><span class="line"><span class="comment">   &#125;;</span></span><br><span class="line"><span class="comment">*)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> scmp_arg_cmp : <span class="built_in">unit</span> structure typ =</span><br><span class="line">  <span class="keyword">let</span> s = structure <span class="string">&quot;scmp_arg_cmp&quot;</span> <span class="keyword">in</span>         <span class="comment">(* 1. 创建结构体模板 *)</span></span><br><span class="line">  <span class="keyword">let</span> _arg = field s <span class="string">&quot;arg&quot;</span> uint <span class="keyword">in</span>            <span class="comment">(* 2. 添加字段 *)</span></span><br><span class="line">  <span class="keyword">let</span> _op = field s <span class="string">&quot;op&quot;</span> uint <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> _datum_a = field s <span class="string">&quot;datum_a&quot;</span> uint64_t <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> _datum_b = field s <span class="string">&quot;datum_b&quot;</span> uint64_t <span class="keyword">in</span></span><br><span class="line">  seal s;                                      <span class="comment">(* 3. 封印结构体 *)</span></span><br><span class="line">  s                                            <span class="comment">(* 4. 返回类型描述符 *)</span></span><br></pre></td></tr></table></figure>
+<p>注意：</p>
+<ul>
+<li><code>structure &quot;name&quot;</code> 创建一个未完成的类型描述符</li>
+<li><code>field s &quot;fieldname&quot; typ</code> 添加字段，返回字段访问器</li>
+<li><code>seal s</code> 完成结构体定义，之后不可再添加字段</li>
+<li>返回的 <code>s</code> 可以作为类型使用</li>
+</ul>
+<p>例如：</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> scmp_arg_cmp : <span class="built_in">unit</span> structure typ =</span><br><span class="line">  <span class="keyword">let</span> s = structure <span class="string">&quot;scmp_arg_cmp&quot;</span> <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> _arg = field s <span class="string">&quot;arg&quot;</span> uint <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> _op = field s <span class="string">&quot;op&quot;</span> uint <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> _datum_a = field s <span class="string">&quot;datum_a&quot;</span> uint64_t <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> _datum_b = field s <span class="string">&quot;datum_b&quot;</span> uint64_t <span class="keyword">in</span></span><br><span class="line">  seal s;</span><br><span class="line">  s</span><br></pre></td></tr></table></figure>
+<p>定义结构体后，可以通过字段访问器读写值：</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">(* 写入字段值 *)</span></span><br><span class="line"><span class="keyword">let</span> set_arg_cmp_values struct_ptr arg_val op_val datum_a_val datum_b_val =</span><br><span class="line">  <span class="keyword">let</span> s = structure <span class="string">&quot;scmp_arg_cmp&quot;</span> <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> arg = field s <span class="string">&quot;arg&quot;</span> uint <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> op = field s <span class="string">&quot;op&quot;</span> uint <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> datum_a = field s <span class="string">&quot;datum_a&quot;</span> uint64_t <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> datum_b = field s <span class="string">&quot;datum_b&quot;</span> uint64_t <span class="keyword">in</span></span><br><span class="line">  seal s;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">(* 使用 setf 设置字段值 *)</span></span><br><span class="line">  setf struct_ptr arg (<span class="type">Unsigned</span>.<span class="type">UInt</span>.of_int arg_val);</span><br><span class="line">  setf struct_ptr op (<span class="type">Unsigned</span>.<span class="type">UInt</span>.of_int op_val);</span><br><span class="line">  setf struct_ptr datum_a (<span class="type">Unsigned</span>.<span class="type">UInt64</span>.of_int64 datum_a_val);</span><br><span class="line">  setf struct_ptr datum_b (<span class="type">Unsigned</span>.<span class="type">UInt64</span>.of_int64 datum_b_val)</span><br></pre></td></tr></table></figure>
+<p>这里展示了如何创建辅助函数来操作结构体。注意：</p>
+<ul>
+<li>每次都需要重新定义结构体和字段访问器</li>
+<li><code>setf</code> 的参数顺序：结构体指针、字段访问器、值</li>
+<li>OCaml 的无符号类型需要显式转换</li>
+</ul>
+<h2 id="动态库"><a class="header-anchor" href="#动态库">¶</a>动态库</h2>
+<p>使用 CTypes 绑定 C 库只需要：加载库、然后绑定函数。</p>
+<p>首先，加载共享库：</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> libseccomp =</span><br><span class="line">  <span class="keyword">let</span> paths = [ <span class="string">&quot;libseccomp.so.2&quot;</span>; <span class="string">&quot;libseccomp.so.1&quot;</span>; <span class="string">&quot;libseccomp.so&quot;</span> ] <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> <span class="keyword">rec</span> try_paths = <span class="keyword">function</span></span><br><span class="line">    | <span class="literal">[]</span> -&gt;</span><br><span class="line">      <span class="type">Dl</span>.dlopen ~filename:<span class="string">&quot;libseccomp.so.2&quot;</span> ~flags:[ <span class="type">Dl</span>.<span class="type">RTLD_NOW</span> ]</span><br><span class="line">    | path :: rest -&gt; (</span><br><span class="line">      <span class="keyword">try</span> <span class="type">Dl</span>.dlopen ~filename:path ~flags:[ <span class="type">Dl</span>.<span class="type">RTLD_NOW</span> ] <span class="keyword">with</span></span><br><span class="line">      | _ -&gt;</span><br><span class="line">        try_paths rest)</span><br><span class="line">  <span class="keyword">in</span></span><br><span class="line">  try_paths paths</span><br></pre></td></tr></table></figure>
+<p>这段代码用了一个提升动态库加载稳定性的小技巧：</p>
+<ul>
+<li>尝试多个可能的库文件名（不同系统可能版本不同）</li>
+<li>依次尝试，直到成功</li>
+<li>如果全部失败，使用默认路径（触发异常）</li>
+</ul>
+<p>注意 <code>Dl.dlopen</code> 的参数：</p>
+<ul>
+<li><code>filename</code>: 库文件名（可以是绝对路径或库文件名）</li>
+<li><code>flags</code>: 加载标志
+<ul>
+<li><code>RTLD_NOW</code>: 立即解析所有符号</li>
+<li><code>RTLD_LAZY</code>: 延迟解析符号</li>
+</ul>
+</li>
+</ul>
+<p>加载完成后使用 <code>Foreign.foreign</code> 绑定到函数，基本语法：</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> function_name = </span><br><span class="line">  <span class="type">Foreign</span>.foreign</span><br><span class="line">    ~from:library</span><br><span class="line">    <span class="string">&quot;c_function_name&quot;</span></span><br><span class="line">    (arg1_type @-&gt; arg2_type @-&gt; ... @-&gt; returning return_type)</span><br></pre></td></tr></table></figure>
+<p>单参数函数：</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> seccomp_init =</span><br><span class="line">  <span class="type">Foreign</span>.foreign</span><br><span class="line">    ~from:libseccomp</span><br><span class="line">    <span class="string">&quot;seccomp_init&quot;</span></span><br><span class="line">    (uint32_t @-&gt; returning scmp_filter_ctx)</span><br></pre></td></tr></table></figure>
+<p>对应的 C 函数原型：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scmp_filter_ctx <span class="title function_">seccomp_init</span><span class="params">(<span class="type">uint32_t</span> def_action)</span>;</span><br></pre></td></tr></table></figure>
+<p><code>Foreign.foreign</code> 的参数：</p>
+<ul>
+<li><code>~from:libseccomp</code>: 指定函数所在的库</li>
+<li><code>&quot;seccomp_init&quot;</code>: C 函数名</li>
+<li><code>uint32_t @-&gt; returning scmp_filter_ctx</code>: 函数签名
+<ul>
+<li><code>@-&gt;</code> 分隔参数</li>
+<li><code>returning</code> 标记返回类型</li>
+</ul>
+</li>
+</ul>
+<p>对于多参数函数：</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> seccomp_rule_add =</span><br><span class="line">  <span class="type">Foreign</span>.foreign</span><br><span class="line">    ~from:libseccomp</span><br><span class="line">    <span class="string">&quot;seccomp_rule_add&quot;</span></span><br><span class="line">    (scmp_filter_ctx @-&gt; uint32_t @-&gt; <span class="built_in">int</span> @-&gt; uint @-&gt; returning <span class="built_in">int</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>C 函数原型</strong>：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">seccomp_rule_add</span><span class="params">(scmp_filter_ctx ctx, <span class="type">uint32_t</span> action, </span></span><br><span class="line"><span class="params">                      <span class="type">int</span> syscall, <span class="type">unsigned</span> <span class="type">int</span> arg_cnt)</span>;</span><br></pre></td></tr></table></figure>
+<p>对于无参数函数：</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> seccomp_arch_native =</span><br><span class="line">  <span class="type">Foreign</span>.foreign </span><br><span class="line">    ~from:libseccomp </span><br><span class="line">    <span class="string">&quot;seccomp_arch_native&quot;</span> </span><br><span class="line">    (void @-&gt; returning uint32_t)</span><br></pre></td></tr></table></figure>
+<p>对于指针参数：</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> seccomp_load =</span><br><span class="line">  <span class="type">Foreign</span>.foreign </span><br><span class="line">    ~from:libseccomp </span><br><span class="line">    <span class="string">&quot;seccomp_load&quot;</span> </span><br><span class="line">    (scmp_filter_ctx @-&gt; returning <span class="built_in">int</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>C 函数原型</strong>：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">seccomp_load</span><span class="params">(scmp_filter_ctx ctx)</span>;</span><br></pre></td></tr></table></figure>
+<p>对于字符串参数：</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> seccomp_syscall_resolve_name =</span><br><span class="line">  <span class="type">Foreign</span>.foreign</span><br><span class="line">    ~from:libseccomp</span><br><span class="line">    <span class="string">&quot;seccomp_syscall_resolve_name&quot;</span></span><br><span class="line">    (<span class="built_in">string</span> @-&gt; returning <span class="built_in">int</span>)</span><br></pre></td></tr></table></figure>
+<p>这里 CTypes 会自动处理 OCaml 字符串与 C 字符串的转换。</p>
+<p>对于返回 NULL 的情况：</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> seccomp_syscall_resolve_num_arch =</span><br><span class="line">  <span class="type">Foreign</span>.foreign</span><br><span class="line">    ~from:libseccomp</span><br><span class="line">    <span class="string">&quot;seccomp_syscall_resolve_num_arch&quot;</span></span><br><span class="line">    (uint32_t @-&gt; <span class="built_in">int</span> @-&gt; returning string_opt)</span><br></pre></td></tr></table></figure>
+<p><code>string_opt</code> 处理可能返回 NULL 的字符串指针。</p>
+<h2 id="内存管理"><a class="header-anchor" href="#内存管理">¶</a>内存管理</h2>
+<p>C 需要手动管理内存，CTypes 提供了相应的工具。</p>
+<p>分配单个值：</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">(* 分配并初始化单个值 *)</span></span><br><span class="line"><span class="keyword">let</span> ptr = allocate <span class="built_in">int</span> <span class="number">42</span></span><br><span class="line"></span><br><span class="line"><span class="comment">(* 读取值 *)</span></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">value</span> = !@ ptr</span><br><span class="line"></span><br><span class="line"><span class="comment">(* 写入值 *)</span></span><br><span class="line">ptr &lt;-@ <span class="number">100</span></span><br></pre></td></tr></table></figure>
+<p>分配数组：</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">(* 分配数组（未初始化） *)</span></span><br><span class="line"><span class="keyword">let</span> arr = allocate_n <span class="built_in">int</span> ~count:<span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="comment">(* 分配并初始化数组 *)</span></span><br><span class="line"><span class="keyword">let</span> arr = allocate_n <span class="built_in">int</span> ~count:<span class="number">5</span> ~initial:<span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>例如：</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> cmp_array = <span class="type">Ctypes</span>.allocate_n <span class="type">Stubs</span>.<span class="type">Types</span>.scmp_arg_cmp ~count:n <span class="keyword">in</span></span><br></pre></td></tr></table></figure>
+<h3 id="指针算术"><a class="header-anchor" href="#指针算术">¶</a>指针算术</h3>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = allocate_n <span class="built_in">int</span> ~count:<span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="comment">(* 访问第 i 个元素 *)</span></span><br><span class="line"><span class="keyword">let</span> elem_ptr = arr +@ i</span><br><span class="line"></span><br><span class="line"><span class="comment">(* 读写元素 *)</span></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">value</span> = !@ elem_ptr</span><br><span class="line">elem_ptr &lt;-@ <span class="number">42</span></span><br></pre></td></tr></table></figure>
+<p>例如：</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Stubs</span>.<span class="type">Types</span>.set_arg_cmp_values</span><br><span class="line">  !@(cmp_array +@ i)  <span class="comment">(* 第 i 个结构体的指针 *)</span></span><br><span class="line">  cmp.arg</span><br><span class="line">  (cmp_op_to_int cmp.op)</span><br><span class="line">  cmp.datum_a</span><br><span class="line">  cmp.datum_b</span><br></pre></td></tr></table></figure>
+<p><code>!@</code> 运算符解引用指针，<code>+@</code> 进行指针算术。</p>
+<h3 id="指针转换"><a class="header-anchor" href="#指针转换">¶</a>指针转换</h3>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">(* 类型化指针转 void 指针 *)</span></span><br><span class="line"><span class="keyword">let</span> void_p = to_voidp int_ptr</span><br><span class="line"></span><br><span class="line"><span class="comment">(* void 指针转类型化指针 *)</span></span><br><span class="line"><span class="keyword">let</span> int_p = from_voidp <span class="built_in">int</span> void_p</span><br><span class="line"></span><br><span class="line"><span class="comment">(* 获取空指针 *)</span></span><br><span class="line"><span class="keyword">let</span> null_ptr : <span class="built_in">unit</span> ptr = null</span><br><span class="line"></span><br><span class="line"><span class="comment">(* 检查是否为空指针 *)</span></span><br><span class="line"><span class="keyword">if</span> is_null ptr <span class="keyword">then</span> ...</span><br></pre></td></tr></table></figure>
+<p><strong>实例解析（<a target="_blank" rel="noopener" href="http://seccomp.ml:96">seccomp.ml:96</a>）</strong>：</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="type">Ctypes</span>.ptr_compare ctx <span class="type">Ctypes</span>.null = <span class="number">0</span> <span class="keyword">then</span></span><br><span class="line">  <span class="type">Error</span> <span class="type">Init_failed</span></span><br></pre></td></tr></table></figure>
+<p>检查 <code>seccomp_init</code> 是否返回了 NULL（失败）。</p>
+<h2 id="一些模式"><a class="header-anchor" href="#一些模式">¶</a>一些模式</h2>
+<h3 id="类型视图（Type-Views）"><a class="header-anchor" href="#类型视图（Type-Views）">¶</a>类型视图（Type Views）</h3>
+<p>当 C 类型与 OCaml 类型不能直接对应时，使用 <code>view</code> 创建自定义转换：</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">(* 将 C int 转换为 OCaml bool *)</span></span><br><span class="line"><span class="keyword">let</span> c_bool = view</span><br><span class="line">  ~read:(<span class="keyword">fun</span> i -&gt; i &lt;&gt; <span class="number">0</span>)</span><br><span class="line">  ~write:(<span class="keyword">fun</span> b -&gt; <span class="keyword">if</span> b <span class="keyword">then</span> <span class="number">1</span> <span class="keyword">else</span> <span class="number">0</span>)</span><br><span class="line">  <span class="built_in">int</span></span><br></pre></td></tr></table></figure>
+<h3 id="枚举类型映射"><a class="header-anchor" href="#枚举类型映射">¶</a>枚举类型映射</h3>
+<p>在 seccomp 实现中，使用 OCaml 变体和转换函数映射 C 枚举：</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">(* OCaml 端的类型定义（seccomp.ml:18-25） *)</span></span><br><span class="line"><span class="keyword">type</span> action =</span><br><span class="line">  | <span class="type">Allow</span></span><br><span class="line">  | <span class="type">Errno</span> <span class="keyword">of</span> <span class="built_in">int</span></span><br><span class="line">  | <span class="type">KillProcess</span></span><br><span class="line">  | <span class="type">KillThread</span></span><br><span class="line">  | <span class="type">Log</span></span><br><span class="line">  | <span class="type">Trace</span> <span class="keyword">of</span> <span class="built_in">int</span></span><br><span class="line">  | <span class="type">Trap</span></span><br><span class="line"></span><br><span class="line"><span class="comment">(* C 端的常量定义（seccomp_stubs.ml:58-73） *)</span></span><br><span class="line"><span class="keyword">module</span> <span class="type">Constants</span> = <span class="keyword">struct</span></span><br><span class="line">  <span class="keyword">let</span> scmp_act_allow = <span class="number">0x7fff0000l</span></span><br><span class="line">  <span class="keyword">let</span> scmp_act_kill_thread = <span class="number">0x00000000l</span></span><br><span class="line">  <span class="keyword">let</span> scmp_act_kill_process = <span class="number">0x00000000l</span></span><br><span class="line">  <span class="keyword">let</span> scmp_act_trap = <span class="number">0x00030000l</span></span><br><span class="line">  <span class="keyword">let</span> scmp_act_log = <span class="number">0x7ffc0000l</span></span><br><span class="line">  <span class="keyword">let</span> scmp_act_errno code = </span><br><span class="line">    <span class="type">Int32</span>.(logor <span class="number">0x00050000l</span> (logand (of_int code) <span class="number">0x0000ffffl</span>))</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">(* 转换函数（seccomp.ml:60-75） *)</span></span><br><span class="line"><span class="keyword">let</span> action_to_uint32 = <span class="keyword">function</span></span><br><span class="line">  | <span class="type">Allow</span> -&gt; int32_to_uint32 <span class="type">Stubs</span>.<span class="type">Constants</span>.scmp_act_allow</span><br><span class="line">  | <span class="type">KillThread</span> -&gt; int32_to_uint32 <span class="type">Stubs</span>.<span class="type">Constants</span>.scmp_act_kill_thread</span><br><span class="line">  | <span class="type">KillProcess</span> -&gt; int32_to_uint32 <span class="type">Stubs</span>.<span class="type">Constants</span>.scmp_act_kill_process</span><br><span class="line">  | <span class="type">Trap</span> -&gt; int32_to_uint32 <span class="type">Stubs</span>.<span class="type">Constants</span>.scmp_act_trap</span><br><span class="line">  | <span class="type">Log</span> -&gt; int32_to_uint32 <span class="type">Stubs</span>.<span class="type">Constants</span>.scmp_act_log</span><br><span class="line">  | <span class="type">Errno</span> code -&gt; int32_to_uint32 (<span class="type">Stubs</span>.<span class="type">Constants</span>.scmp_act_errno code)</span><br><span class="line">  | <span class="type">Trace</span> code -&gt; int32_to_uint32 (<span class="type">Stubs</span>.<span class="type">Constants</span>.scmp_act_trace code)</span><br></pre></td></tr></table></figure>
+<p>这种模式的优势：</p>
+<ul>
+<li>OCaml 端使用类型安全的变体</li>
+<li>C 端使用整数常量</li>
+<li>转换函数处理映射</li>
+<li>编译器帮助捕获类型错误</li>
+</ul>
+<h3 id="错误处理模式"><a class="header-anchor" href="#错误处理模式">¶</a>错误处理模式</h3>
+<p>C 那边通常用返回值表示错误。OCaml 使用 result 类型，例如在 seccomp 的 binding 中我这么做：</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> error =</span><br><span class="line">  | <span class="type">Init_failed</span></span><br><span class="line">  | <span class="type">Rule_add_failed</span> <span class="keyword">of</span> <span class="built_in">int</span></span><br><span class="line">  | <span class="type">Load_failed</span> <span class="keyword">of</span> <span class="built_in">int</span></span><br><span class="line">  | <span class="type">Unknown_syscall</span> <span class="keyword">of</span> <span class="built_in">string</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> init default_action =</span><br><span class="line">  <span class="keyword">let</span> ctx = <span class="type">Stubs</span>.<span class="type">Functions</span>.seccomp_init (action_to_uint32 default_action) <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">if</span> <span class="type">Ctypes</span>.ptr_compare ctx <span class="type">Ctypes</span>.null = <span class="number">0</span> <span class="keyword">then</span></span><br><span class="line">    <span class="type">Error</span> <span class="type">Init_failed</span></span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="type">Ok</span> ctx</span><br></pre></td></tr></table></figure>
+<h2 id="完整示例"><a class="header-anchor" href="#完整示例">¶</a>完整示例</h2>
+<p>让我们来看看一个完整的 <code>rule_add_conditional</code> 函数的实现：</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> rule_add_conditional ctx action syscall cmps =</span><br><span class="line">  <span class="keyword">let</span> n = <span class="type">Array</span>.length cmps <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">if</span> n = <span class="number">0</span> <span class="keyword">then</span></span><br><span class="line">    rule_add ctx action syscall</span><br><span class="line">  <span class="keyword">else</span> (</span><br><span class="line">    <span class="comment">(* 1. 分配 C 数组 *)</span></span><br><span class="line">    <span class="keyword">let</span> cmp_array = <span class="type">Ctypes</span>.allocate_n <span class="type">Stubs</span>.<span class="type">Types</span>.scmp_arg_cmp ~count:n <span class="keyword">in</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">(* 2. 填充每个结构体 *)</span></span><br><span class="line">    <span class="type">Array</span>.iteri</span><br><span class="line">      (<span class="keyword">fun</span> i cmp -&gt;</span><br><span class="line">         <span class="type">Stubs</span>.<span class="type">Types</span>.set_arg_cmp_values</span><br><span class="line">           !@(cmp_array +@ i)  <span class="comment">(* 解引用第 i 个元素 *)</span></span><br><span class="line">           cmp.arg</span><br><span class="line">           (cmp_op_to_int cmp.op)</span><br><span class="line">           cmp.datum_a</span><br><span class="line">           cmp.datum_b)</span><br><span class="line">      cmps;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">(* 3. 调用 C 函数 *)</span></span><br><span class="line">    <span class="keyword">let</span> result =</span><br><span class="line">      <span class="type">Stubs</span>.<span class="type">Functions</span>.seccomp_rule_add_array</span><br><span class="line">        ctx</span><br><span class="line">        (action_to_uint32 action)</span><br><span class="line">        syscall</span><br><span class="line">        (<span class="type">Unsigned</span>.<span class="type">UInt</span>.of_int n)</span><br><span class="line">        cmp_array</span><br><span class="line">    <span class="keyword">in</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">(* 4. 检查结果 *)</span></span><br><span class="line">    <span class="keyword">if</span> result &lt; <span class="number">0</span> <span class="keyword">then</span></span><br><span class="line">      <span class="type">Error</span> (<span class="type">Rule_add_failed</span> result)</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      <span class="type">Ok</span> <span class="literal">()</span></span><br><span class="line">  )</span><br></pre></td></tr></table></figure>
+<ul>
+<li>数组分配: <code>allocate_n</code> 分配 <code>n</code> 个 <code>scmp_arg_cmp</code> 结构体的空间</li>
+<li>结构体填充:
+<ul>
+<li><code>cmp_array +@ i</code> 获取第 i 个元素的指针</li>
+<li><code>!@</code> 解引用得到结构体</li>
+<li><code>set_arg_cmp_values</code> 填充字段</li>
+</ul>
+</li>
+<li>函数调用: 传递数组和长度给 C 函数</li>
+<li>返回值: C 函数返回负值表示错误</li>
+</ul>
+<p>对应的 C API：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">seccomp_rule_add_array</span><span class="params">(scmp_filter_ctx ctx, <span class="type">uint32_t</span> action,</span></span><br><span class="line"><span class="params">                            <span class="type">int</span> syscall, <span class="type">unsigned</span> <span class="type">int</span> arg_cnt,</span></span><br><span class="line"><span class="params">                            <span class="type">const</span> <span class="keyword">struct</span> scmp_arg_cmp *arg_array)</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="双层架构-Binding"><a class="header-anchor" href="#双层架构-Binding">¶</a>双层架构 Binding</h3>
+<p>seccomp 绑定用了清晰的三层架构：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://seccomp.ml">seccomp.ml</a> / seccomp.mli 是顶层 API 纯粹的OCaml 风格的类型和函数</li>
+<li>seccomp_stubs.ml 绑定层，放 CTypes 绑定，类型和函数定义</li>
+</ul>
+<h3 id="模块组织"><a class="header-anchor" href="#模块组织">¶</a>模块组织</h3>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">(* seccomp_stubs.ml 的模块组织 *)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">module</span> <span class="type">Types</span> = <span class="keyword">struct</span>        <span class="comment">(* C 类型定义 *)</span></span><br><span class="line">  <span class="keyword">type</span> scmp_filter_ctx = <span class="built_in">unit</span> <span class="type">Ctypes</span>.ptr</span><br><span class="line">  <span class="keyword">val</span> scmp_filter_ctx : ...</span><br><span class="line">  <span class="keyword">val</span> scmp_arg_cmp : ...</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">module</span> <span class="type">Constants</span> = <span class="keyword">struct</span>    <span class="comment">(* C 常量 *)</span></span><br><span class="line">  <span class="keyword">let</span> scmp_act_allow = ...</span><br><span class="line">  <span class="keyword">let</span> scmp_cmp_ne = ...</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">module</span> <span class="type">Functions</span> = <span class="keyword">struct</span>    <span class="comment">(* C 函数绑定 *)</span></span><br><span class="line">  <span class="keyword">let</span> seccomp_init = ...</span><br><span class="line">  <span class="keyword">let</span> seccomp_load = ...</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>类型，常量，函数分离。</p>
+<h2 id="常见问题"><a class="header-anchor" href="#常见问题">¶</a>常见问题</h2>
+<h3 id="1-内存泄漏"><a class="header-anchor" href="#1-内存泄漏">¶</a>1. 内存泄漏</h3>
+<p>C 分配的内存需要手动释放：</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">(* 始终提供 release 函数 *)</span></span><br><span class="line"><span class="keyword">let</span> release ctx = <span class="type">Stubs</span>.<span class="type">Functions</span>.seccomp_release ctx</span><br><span class="line"></span><br><span class="line"><span class="comment">(* 使用 Fun.protect 确保清理 *)</span></span><br><span class="line"><span class="keyword">let</span> with_filter default_action f =</span><br><span class="line">  <span class="keyword">match</span> init default_action <span class="keyword">with</span></span><br><span class="line">  | <span class="type">Error</span> e -&gt; <span class="type">Error</span> e</span><br><span class="line">  | <span class="type">Ok</span> ctx -&gt;</span><br><span class="line">    <span class="keyword">try</span></span><br><span class="line">      <span class="keyword">let</span> result = f ctx <span class="keyword">in</span></span><br><span class="line">      release ctx;</span><br><span class="line">      result</span><br><span class="line">    <span class="keyword">with</span> e -&gt;</span><br><span class="line">      release ctx;</span><br><span class="line">      raise e</span><br></pre></td></tr></table></figure>
+<h3 id="2-类型不匹配"><a class="header-anchor" href="#2-类型不匹配">¶</a>2. 类型不匹配</h3>
+<p>OCaml 和 C 的类型表示不同：</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">(* 使用 Unsigned 模块的转换函数 *)</span></span><br><span class="line"><span class="keyword">let</span> int32_to_uint32 n = <span class="type">Unsigned</span>.<span class="type">UInt32</span>.of_int32 n</span><br><span class="line"></span><br><span class="line"><span class="comment">(* 显式类型转换 *)</span></span><br><span class="line"><span class="keyword">let</span> c_uint = <span class="type">Unsigned</span>.<span class="type">UInt</span>.of_int <span class="number">42</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-空指针检查"><a class="header-anchor" href="#3-空指针检查">¶</a>3. 空指针检查</h3>
+<p>C 函数可能返回 NULL：</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">(* 始终检查返回的指针 *)</span></span><br><span class="line"><span class="keyword">if</span> <span class="type">Ctypes</span>.ptr_compare ctx <span class="type">Ctypes</span>.null = <span class="number">0</span> <span class="keyword">then</span></span><br><span class="line">  <span class="type">Error</span> <span class="type">Init_failed</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  <span class="type">Ok</span> ctx</span><br></pre></td></tr></table></figure>
+<h3 id="4-字符串所有权"><a class="header-anchor" href="#4-字符串所有权">¶</a>4. 字符串所有权</h3>
+<p>C 返回的字符串生命周期不确定：</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">(* 如果 C 返回需要释放的字符串，使用 string 并复制 *)</span></span><br><span class="line"><span class="keyword">let</span> result = <span class="type">Bytes</span>.of_string c_string <span class="keyword">in</span></span><br><span class="line"><span class="comment">(* 释放 C 字符串 *)</span></span><br><span class="line"><span class="type">C</span>.free c_string_ptr;</span><br><span class="line"><span class="type">Bytes</span>.to_string result</span><br></pre></td></tr></table></figure>
+<h2 id="调试技巧"><a class="header-anchor" href="#调试技巧">¶</a>调试技巧</h2>
+<h3 id="1-检查库加载"><a class="header-anchor" href="#1-检查库加载">¶</a>1. 检查库加载</h3>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="literal">()</span> =</span><br><span class="line">  <span class="keyword">try</span></span><br><span class="line">    <span class="keyword">let</span> _ = <span class="type">Dl</span>.dlopen ~filename:<span class="string">&quot;libseccomp.so.2&quot;</span> ~flags:[ <span class="type">Dl</span>.<span class="type">RTLD_NOW</span> ] <span class="keyword">in</span></span><br><span class="line">    print_endline <span class="string">&quot;Library loaded successfully&quot;</span></span><br><span class="line">  <span class="keyword">with</span></span><br><span class="line">  | <span class="type">Dl</span>.<span class="type">DL_error</span> msg -&gt;</span><br><span class="line">    <span class="type">Printf</span>.eprintf <span class="string">&quot;Failed to load library: %s\n&quot;</span> msg</span><br></pre></td></tr></table></figure>
+<h3 id="2-检查函数绑定"><a class="header-anchor" href="#2-检查函数绑定">¶</a>2. 检查函数绑定</h3>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="literal">()</span> =</span><br><span class="line">  <span class="keyword">try</span></span><br><span class="line">    <span class="keyword">let</span> _ = <span class="type">Foreign</span>.foreign ~from:libseccomp <span class="string">&quot;seccomp_init&quot;</span> </span><br><span class="line">      (<span class="type">Ctypes</span>.uint32_t @-&gt; returning <span class="type">Ctypes</span>.ptr <span class="type">Ctypes</span>.void) <span class="keyword">in</span></span><br><span class="line">    print_endline <span class="string">&quot;Function bound successfully&quot;</span></span><br><span class="line">  <span class="keyword">with</span></span><br><span class="line">  | _ -&gt;</span><br><span class="line">    print_endline <span class="string">&quot;Function binding failed&quot;</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-检查结构体大小"><a class="header-anchor" href="#3-检查结构体大小">¶</a>3. 检查结构体大小</h3>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="literal">()</span> =</span><br><span class="line">  <span class="keyword">let</span> s = structure <span class="string">&quot;scmp_arg_cmp&quot;</span> <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> _ = field s <span class="string">&quot;arg&quot;</span> uint <span class="keyword">in</span></span><br><span class="line">  seal s;</span><br><span class="line">  <span class="type">Printf</span>.printf <span class="string">&quot;Struct size: %d\n&quot;</span> (sizeof s)</span><br></pre></td></tr></table></figure>
+<h2 id="参考资源"><a class="header-anchor" href="#参考资源">¶</a>参考资源</h2>
+<ul>
+<li>CTypes 官方文档: <a target="_blank" rel="noopener" href="https://github.com/yallop/ocaml-ctypes">https://github.com/yallop/ocaml-ctypes</a></li>
+<li>CTypes 教程: <a target="_blank" rel="noopener" href="https://github.com/yallop/ocaml-ctypes/wiki/ctypes-tutorial">https://github.com/yallop/ocaml-ctypes/wiki/ctypes-tutorial</a></li>
+<li>CTypes Wiki: <a target="_blank" rel="noopener" href="https://github.com/yallop/ocaml-ctypes/wiki">https://github.com/yallop/ocaml-ctypes/wiki</a></li>
+<li>libseccomp 文档: <a target="_blank" rel="noopener" href="https://man7.org/linux/man-pages/man3/seccomp.3.html">https://man7.org/linux/man-pages/man3/seccomp.3.html</a></li>
+<li>bonding 项目: <a target="_blank" rel="noopener" href="https://github.com/muqiuhan/bonding">https://github.com/muqiuhan/bonding</a></li>
+</ul>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2026/03/21/%E5%B0%8F%E8%B0%88-NestJS-Zod/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+                        
+                            韩暮秋 |
+                                
+                                    
+                                        希望路过的人可以添点柴火让这里暖和点
+                                        
+        </div>
+    </div>
+</div>
+
+
+    </div>
+    
+    <script src="/js/mermaid-zoom.js"></script>
+
+  </body>
+</html>
